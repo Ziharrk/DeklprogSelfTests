@@ -1,16 +1,16 @@
+#import "@preview/ctheorems:1.1.3": *
+
 #show link: underline
+#show: thmrules
 
-#let count = counter("Test")
-#count.update(1)
-
-#let test(content) = {
-  context {
-    let k = count.display()
-    count.step()
-    [*Test #k* #h(0.75em)]
-  }
-  content
-}
+#let test = thmplain(
+    "test",
+    "Test",
+    titlefmt: strong, 
+    separator: h(0.5em)
+  ).with(
+    numbering: (_, counter) => counter
+  )
 
 Dieses Dokument enthält Fragen, kleine Aufgaben und andere Ressourcen zum Thema
 Deklarative Programmierung. Die Inhalte dieses Dokuments sollen dir helfen,
