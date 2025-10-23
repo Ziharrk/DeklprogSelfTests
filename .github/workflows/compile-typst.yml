@@ -1,0 +1,35 @@
+name: Compile Typst Document
+
+permissions:
+  contents: write
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install Typst
+        run: |
+          sudo snap install typst
+
+      - name: Compile Typst
+        run: |
+          typst compile main.typ
+
+      - name: Commit PDF to repository
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add main.pdf
+          git commit -m "update pdf" || echo "No changes to commit"
+          git push
