@@ -17,7 +17,7 @@ jobs:
       # 2. Install Typst (via package or prebuilt binary)
       - name: Install Typst
         run: |
-          sudo apt install typst
+          sudo snap install typst
 
       # 3. Compile your Typst file to PDF
       - name: Compile Typst
