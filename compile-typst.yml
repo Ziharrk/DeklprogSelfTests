@@ -1,0 +1,32 @@
+name: Compile Typst Document
+
+on:
+  push:
+    branches:
+      - main   # Trigger only when something is pushed/merged into main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Checkout repository
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # 2. Install Typst (via package or prebuilt binary)
+      - name: Install Typst
+        run: |
+          apt install typst
+
+      # 3. Compile your Typst file to PDF
+      - name: Compile Typst
+        run: |
+          typst compile main.typ
+
+      # 4. Upload the resulting PDF as a downloadable artifact
+      - name: Upload PDF
+        uses: actions/upload-artifact@v4
+        with:
+          name: typst-output
+          path: main.pdf
