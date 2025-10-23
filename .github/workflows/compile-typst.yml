@@ -1,5 +1,8 @@
 name: Compile Typst Document
 
+permissions:
+  contents: write
+
 on:
   push:
     branches:
