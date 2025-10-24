@@ -87,7 +87,7 @@ dein Verständnis über Haskell und Prolog zu prüfen.
   #footnote[#link("https://de.wikipedia.org/wiki/Bin%C3%A4re_Exponentiation")[Binäre Exponentiation -- Wikipedia]].
   Dafür betrachten wir
   $
-  x^n = cases((x^(n/2))^2 & "falls" n "gerade", x dot x(x^(n/2))^2 & "sonst")
+  x^n = cases((x^(n/2))^2 & "falls" n "gerade", x dot x(x^((n-1)/2))^2 & "sonst")
   $
   Implementiere eine Funktion, die diese Variante des Potenzierens umsetzt.
 ]
