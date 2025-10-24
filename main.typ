@@ -1,6 +1,7 @@
 #import "@preview/ctheorems:1.1.3": *
 
 #show link: underline
+#show heading.where(level: 1): set block(below: 1.25em)
 #show: thmrules
 
 #let test = thmplain(
@@ -17,8 +18,6 @@ Deklarative Programmierung. Die Inhalte dieses Dokuments sollen dir helfen,
 dein Verständnis über Haskell und Prolog zu prüfen.
 
 = Funktionale Programmierung
-#v(1em)
-
 
 // Ausdrücke und Funktionen
 
@@ -107,6 +106,11 @@ dein Verständnis über Haskell und Prolog zu prüfen.
   ausrechnen?
 ]
 
+#test[
+  Ist der folgende Ausdruck typkorrekt?
+  #align(center)[```hs if 0 then 3.141 else 3141```]
+]
+
 
 // Datentypen
 
@@ -152,6 +156,7 @@ an. Lösungen sind ebenso auf der Seite verfügbar. Für Haskell gibt es eine
 ähnliche Seite #link("https://wiki.haskell.org/H-99:_Ninety-Nine_Haskell_Problems")[H-99: Ninety-Nine Haskell Problems].
 
 Weitere Links:
+- #link("https://learnyouahaskell.github.io/")[Learn You A Haskell]
 - #link("https://pbv.github.io/haskelite/site/index.html")[Haskelite]: Ein Schritt-für-Schritt Interpreter für (eine Teilmenge von) Haskell
 // - #link("https://www.adit.io/posts/2013-04-17-functors,_applicatives,_and_monads_in_pictures.html")[Functors, Applicatives, And Monads In Pictures]
 - #link("https://hackage.haskell.org/package/CheatSheet-1.7/src/CheatSheet.pdf")[Haskell Cheatsheet]
