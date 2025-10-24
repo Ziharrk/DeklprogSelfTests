@@ -138,7 +138,7 @@ dein Verständnis über Haskell und Prolog zu prüfen.
 ]
 
 #test[
-  Wie ist die Funktion `lengthIntList :: IntList -> Int` aus dem vorherigen
+  Wie ist die Funktion ```hs lengthIntList :: IntList -> Int``` aus dem vorherigen
   Test definiert?
 ]
 
