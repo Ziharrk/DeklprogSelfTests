@@ -45,6 +45,14 @@ dein Verständnis über Haskell und Prolog zu prüfen.
       n //= 2
       k += 1
     return 64 - k
+
+  def popcnt(n):
+    k = 0
+    while n > 0:
+      if n % 2 == 1:
+        k += 1
+      n //= 2
+    return k
   ```
   In Haskell sind Variablen keine Namen für Speicherzellen. Wie können wir
   dieses Programm in Haskell umsetzen? Wo wandert das `k` hin?
@@ -149,6 +157,11 @@ dein Verständnis über Haskell und Prolog zu prüfen.
 
 #test[
   Wie definieren wir Funktionen?
+]
+
+#test[
+  Gebe ein Listendatentypen an, für den es nicht möglich ist, kein Element
+  zu enthalten.
 ]
 
 // Polymorphismus
