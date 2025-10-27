@@ -147,6 +147,57 @@ dein Verständnis über Haskell und Prolog zu prüfen.
   z.B. im GHCi anzeigen lassen. Was kannst du tun, um an dieses Ziel zu kommen?
 ]
 
+
+#test[
+  In Einführung in die Algorithmik hast du verschiedene Varianten des 
+  `mergesort`-Algorithmus kennengelernt. Eine davon hat ausgenutzt, dass in
+  einer Eingabeliste bereits aufsteigend sortierte Teillisten vorkommen können,
+  um den Algorithmus zu beschleunigen.
+  #footnote[
+    Falls du interessiert bist: In der Haskell `base`-library wird `sort` aus 
+    `Data.List` sehr ähnlich implementiert:
+    #link("https://hackage.haskell.org/package/ghc-internal-9.1201.0/docs/src/GHC.Internal.Data.OldList.html#sort")[Data.List.sort].
+  ] 
+  Implementiere diese Variante in Haskell. 
+
+  #text(0.8em)[
+    Für den Anfang kannst du annehmen, dass die Eingabelisten vom Typ 
+    ```hs [Int]``` sind. Wenn wir Typklassen behandelt haben, kannst du 
+    ```hs Ord a => [a]``` nutzen.
+  ]
+]
+
+// ```hs
+// mergesort :: [Int] -> [Int]
+// mergesort xs = mergeAll (runs xs)
+//   where 
+//     runs :: [Int] -> [[Int]]
+//     runs []     = []
+//     runs (x:[]) = [[x]]
+//     runs (x:xs) = 
+//       let (r:rs) = runs xs 
+//        in case r of
+//             (y:_) | x < y -> (x:r) : rs
+//             _             -> [x] : (r:rs)
+//
+//     merge2 :: [Int] -> [Int] -> [Int]
+//     merge2 xs     []                 = xs
+//     merge2 []     ys                 = ys
+//     merge2 (x:xs) (y:ys) | x < y     = x : merge2 xs (y:ys)
+//                          | otherwise = y : merge2 (x:xs) ys
+//
+//     reduce :: [[Int]] -> [[Int]]
+//     reduce []       = []
+//     reduce [x]      = [x]
+//     reduce (x:y:xs) = merge2 x y : reduce xs
+//
+//     mergeAll :: [[Int]] -> [Int]
+//     mergeAll []       = []
+//     mergeAll [x]      = x
+//     mergeAll (x:y:xs) = mergeAll (reduce (x:y:xs))
+// ```
+
+
 #pagebreak()
 
 Wenn du auf der Suche nach weiteren Übungsaufgaben bist, mit denen du deine
