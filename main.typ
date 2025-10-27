@@ -131,7 +131,7 @@ dein Verständnis über Haskell und Prolog zu prüfen.
   lengthIntList Nil         = 0
   lengthIntList (Cons _ xs) = 1 + lengthIntList xs
   ```
-  die Länge einer solchen Liste berechnet werden. Du möchtest nun auch
+  die qLänge einer solchen Liste berechnet werden. Du möchtest nun auch
   die Längen von Listen berechnen, die Buchstaben, Booleans oder Gleitkommazahlen
   enthalten. Was stört dich am bisherigen Vorgehen? Kennst du ein Konzept
   mit dessen Hilfe du besser an dein Ziel kommst?
@@ -187,6 +187,14 @@ dein Verständnis über Haskell und Prolog zu prüfen.
   Welches Konzept erlaubt es uns, dass wir Funktionen auf Listen nicht für 
   jeden konkreten Typen angeben müssen?
 ]
+
+#test[
+  Visualisiere `[1, 2, 3]` als Baum, wie du es in der Vorlesung kennengelernt 
+  hast. Zur Erinnerung: die inneren Knoten sind Funktionen und die Blätter
+  Werte, die nicht weiter ausgerechnet werden können.
+]
+
+
 
 #test[
   In Einführung in die Algorithmik hast du verschiedene Varianten des 
