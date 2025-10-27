@@ -42,7 +42,7 @@ dein Verständnis über Haskell und Prolog zu prüfen.
   def clz(n):
     k = 0
     while n > 0:
-      n /= 2
+      n //= 2
       k += 1
     return 64 - k
   ```
