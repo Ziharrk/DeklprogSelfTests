@@ -147,6 +147,46 @@ dein Verständnis über Haskell und Prolog zu prüfen.
   z.B. im GHCi anzeigen lassen. Was kannst du tun, um an dieses Ziel zu kommen?
 ]
 
+#test[
+  Wie definieren wir Funktionen?
+]
+
+// Polymorphismus
+
+#test[
+  Wie sieht eine Datentypdefinition im Allgemeinen aus?
+]
+
+#test[
+  Welchen Typ haben
+  - `(:)` und `[]`,
+  - `Just` und `Nothing`?
+]
+
+#test[
+  Was ist parametrischer Polymorphismus?
+]
+
+#test[
+  Welche Typkonstruktoren des kinds ```hs * -> *``` kennst du?
+]
+
+#test[
+  Welchen kind hat ```hs Either a```?
+]
+
+// TODO Wir nutzen viele Funktionen auf Listen. Überprüfe, ob du sie 
+//      implementieren kannst.
+
+#test[
+  Beim Programmieren vernachlässigen redundante Syntax. 
+  Gibt es einen Unterschied zwischen ```hs f 1 2``` und ```hs f(1, 2)```
+]
+
+#test[
+  Welches Konzept erlaubt es uns, dass wir Funktionen auf Listen nicht für 
+  jeden konkreten Typen angeben müssen?
+]
 
 #test[
   In Einführung in die Algorithmik hast du verschiedene Varianten des 
@@ -166,6 +206,9 @@ dein Verständnis über Haskell und Prolog zu prüfen.
     ```hs Ord a => [a]``` nutzen.
   ]
 ]
+
+
+
 
 // ```hs
 // mergesort :: [Int] -> [Int]
