@@ -172,7 +172,7 @@ dein Verständnis über Haskell und Prolog zu prüfen.
 // mergesort xs = mergeAll (runs xs)
 //   where 
 //     runs :: [Int] -> [[Int]]
-//     runs []     = []
+//     runs []     = [[]]
 //     runs (x:[]) = [[x]]
 //     runs (x:xs) = 
 //       let (r:rs) = runs xs 
@@ -192,9 +192,8 @@ dein Verständnis über Haskell und Prolog zu prüfen.
 //     reduce (x:y:xs) = merge2 x y : reduce xs
 //
 //     mergeAll :: [[Int]] -> [Int]
-//     mergeAll []       = []
 //     mergeAll [x]      = x
-//     mergeAll (x:y:xs) = mergeAll (reduce (x:y:xs))
+//     mergeAll xs = mergeAll (reduce xs)
 // ```
 
 
