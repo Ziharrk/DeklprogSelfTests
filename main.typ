@@ -22,6 +22,12 @@
     numbering: (_, counter) => counter
   )
 
+// TODO there is possible a better way to get the label implicitly if the hint
+//      is moved into the content of the thmenv
+#let hint(label, content) = {
+  let value = strong[Hinweis zu #ref(label)] + h(0.5em) + content
+  metadata((type: "hint", value: value))
+}
 
 Dieses Dokument enthält Fragen, kleine Aufgaben und andere Ressourcen zum Thema
 Deklarative Programmierung. Die Inhalte dieses Dokuments sollen dir helfen,
@@ -238,6 +244,17 @@ Lösen der Aufgabe wichtig sind.
     wobei $"PF"$ die Menge der Primfaktoren der gegebenen Zahl (mit 
     entsprechenden Mehrfachvorkommen) beschreiben soll. Implementiere diesen 
     Ansatz.
+] <gcd>
+
+#hint(<gcd>)[
+  Zur Darstellung der Multimengen eignen sich sortierte Listen gut.
+]
+
+#hint(<gcd>)[
+  Zur Berechnung des Schnittes können zwei sortierte Listen parallel durchlaufen
+  werden. Wenn zwei gleiche Elemente zu Beginn der Liste stehen, wird eines
+  der Elemente zum Ergebnis hinzugefügt. Im anderen Fall überspringen wir
+  das jeweils kleinere Element der beiden.
 ]
 
 #challenge[
@@ -327,7 +344,19 @@ Lösen der Aufgabe wichtig sind.
 // ```
 
 
-#pagebreak()
+#pagebreak(weak: true)
+
+= Hinweise zu Tests und Challenges
+
+#context {
+  for data in query(metadata).map(el => el.value) {
+    if type(data) == dictionary and "type" in data and data.type == "hint" {
+      data.value
+    }
+  }
+}
+
+#pagebreak(weak: true)
 
 Wenn du auf der Suche nach weiteren Übungsaufgaben bist, mit denen du deine
 Programmierkenntnisse in Prolog verbessern möchtest, bietet sich die Liste
