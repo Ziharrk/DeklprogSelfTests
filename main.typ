@@ -210,6 +210,51 @@ dein Verständnis über Haskell und Prolog zu prüfen.
 
 
 #test[
+  - Der größte gemeinsamen Teiler (ggT) zweier Ganzzahlen kann mithilfe des
+    euklidschen Algorithmus berechnet werden. Implementiere das Verfahren.
+    $
+    "gcd"(x, y) = cases(
+      abs(x) & quad "falls" y = 0,
+      gcd(y, x "mod" y) & quad "sonst"
+    )
+    $
+  - Alternativ kann der ggT auch berechnet werden, indem wir das Produkt des
+    Schnittes der Primfaktorzerlegung der beiden Zahlen betrachten, also
+    $ product ("PF"(x) inter "PF"(y)) $
+    wobei $"PF"$ die Menge der Primfaktoren der gegebenen Zahl (mit 
+    entsprechenden Mehrfachvorkommen) beschreiben soll. Implementiere diesen 
+    Ansatz.
+]
+
+
+#test[
+  Die Ableitung einer Funktion $f : RR -> RR$ kann mithilfe des 
+  Differenzenquotienten $(f(x+h)-f(x))/h$ für kleines $h$ approximiert werden.
+  Ein andere Methode zur Berechnung der Ableitung ist symbolisches Differenzen
+  und ähnelt dem, wie wir analytisch Ableitungen berechnen.
+  Eine Funktion sei dargestellt durch den folgenden Typ:
+  ```hs
+  data Fun = X            -- x     (Variable x)
+           | E            -- e     (Euler's constant)
+           | Num Double   -- c     (Constant)
+           | Ln Fun       -- ln    (Natural logarithm)
+           | Fun :+: Fun  -- f + g (Addition)
+           | Fun :-: Fun  -- f - g (Subtraction)
+           | Fun :*: Fun  -- f * g (Multiplication)
+           | Fun :/: Fun  -- f / g (Division)
+           | Fun :<: Fun  -- f o g (Composition)
+           | Fun :^: Fun  -- f ^ g (Exponentiation)
+  ```
+  - Implementiere eine Funktion ```hs ($$) :: Fun -> Double -> Double```, die
+    eine gegebene Funktion in einem gegebenen Punkt auswertet.
+  - Implementiere eine Funktion ```hs derive :: Fun -> Fun```, die eine gegebene
+    Funktion ableitet.
+    #footnote[
+      #link("https://de.wikipedia.org/wiki/Differentialrechnung#Zusammenfassung")[Zusammenfassung der Ableitungsregeln]
+    ]
+]
+
+#test[
   In Einführung in die Algorithmik hast du verschiedene Varianten des 
   `mergesort`-Algorithmus kennengelernt. Eine davon hat ausgenutzt, dass in
   einer Eingabeliste bereits aufsteigend sortierte Teillisten vorkommen können,
