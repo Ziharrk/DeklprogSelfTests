@@ -13,9 +13,24 @@
     numbering: (_, counter) => counter
   )
 
+#let challenge = thmplain(
+    "challenge",
+    "Challenge",
+    titlefmt: strong, 
+    separator: h(0.5em)
+  ).with(
+    numbering: (_, counter) => counter
+  )
+
+
 Dieses Dokument enthält Fragen, kleine Aufgaben und andere Ressourcen zum Thema
 Deklarative Programmierung. Die Inhalte dieses Dokuments sollen dir helfen,
-dein Verständnis über Haskell und Prolog zu prüfen.
+dein Verständnis über Haskell und Prolog zu prüfen. 
+
+Größere Aufgaben haben wir als Challenges markiert. Diese Aufgaben benötigen 
+öfter mehrere Konzepte und führen zusätzlich Konzepte ein, die nur für das 
+Lösen der Aufgabe wichtig sind.
+
 
 = Funktionale Programmierung
 
@@ -164,6 +179,7 @@ dein Verständnis über Haskell und Prolog zu prüfen.
   zu enthalten.
 ]
 
+
 // Polymorphismus
 
 #test[
@@ -207,9 +223,7 @@ dein Verständnis über Haskell und Prolog zu prüfen.
   Werte, die nicht weiter ausgerechnet werden können.
 ]
 
-
-
-#test[
+#challenge[
   - Der größte gemeinsamen Teiler (ggT) zweier Ganzzahlen kann mithilfe des
     euklidschen Algorithmus berechnet werden. Implementiere das Verfahren.
     $
@@ -226,8 +240,7 @@ dein Verständnis über Haskell und Prolog zu prüfen.
     Ansatz.
 ]
 
-
-#test[
+#challenge[
   Die Ableitung einer Funktion $f : RR -> RR$ kann mithilfe des 
   Differenzenquotienten $(f(x+h)-f(x))/h$ für kleines $h$ approximiert werden.
   Ein andere Methode zur Berechnung der Ableitung ist symbolisches Differenzen
@@ -244,6 +257,17 @@ dein Verständnis über Haskell und Prolog zu prüfen.
            | Fun :/: Fun  -- f / g (Division)
            | Fun :<: Fun  -- f o g (Composition)
            | Fun :^: Fun  -- f ^ g (Exponentiation)
+
+  -- Example
+  f :: Fun
+  f = (E :^: X) :<: (X :*: X)  -- (e^x) o (x * x) = e^(x^2)
+
+  -- Example
+  g :: Fun
+  g :: let x = X
+           x2 = x :*: x      
+           x3 = x2 :*: x
+        in x3 :+: x2 :+: x :+: Num 1.0  -- x^3 + x^2 + x + 1
   ```
   - Implementiere eine Funktion ```hs ($$) :: Fun -> Double -> Double```, die
     eine gegebene Funktion in einem gegebenen Punkt auswertet.
@@ -254,7 +278,7 @@ dein Verständnis über Haskell und Prolog zu prüfen.
     ]
 ]
 
-#test[
+#challenge[
   In Einführung in die Algorithmik hast du verschiedene Varianten des 
   `mergesort`-Algorithmus kennengelernt. Eine davon hat ausgenutzt, dass in
   einer Eingabeliste bereits aufsteigend sortierte Teillisten vorkommen können,
@@ -272,9 +296,6 @@ dein Verständnis über Haskell und Prolog zu prüfen.
     ```hs Ord a => [a]``` nutzen.
   ]
 ]
-
-
-
 
 // ```hs
 // mergesort :: [Int] -> [Int]
