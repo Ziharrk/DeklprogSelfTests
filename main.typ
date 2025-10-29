@@ -22,11 +22,13 @@
     numbering: (_, counter) => counter
   )
 
-// TODO there is possible a better way to get the label implicitly if the hint
-//      is moved into the content of the thmenv
-#let hint(label, content) = {
-  let value = strong[Hinweis zu #ref(label)] + h(0.5em) + content
-  metadata((type: "hint", value: value))
+#let hint(content) = {
+  context {
+    let fig = query(figure.where(kind: "thmenv").before(here())).last()
+    let num = thmcounters.get().counters.at(lower(fig.supplement.text)).last()
+    let value = strong[Hinweis zu #fig.supplement #num] + h(0.5em) + content
+    metadata((type: "hint", value: value))
+  }
 }
 
 Dieses Dokument enthält Fragen, kleine Aufgaben und andere Ressourcen zum Thema
@@ -244,17 +246,17 @@ Lösen der Aufgabe wichtig sind.
     wobei $"PF"$ die Menge der Primfaktoren der gegebenen Zahl (mit 
     entsprechenden Mehrfachvorkommen) beschreiben soll. Implementiere diesen 
     Ansatz.
-] <gcd>
 
-#hint(<gcd>)[
-  Zur Darstellung der Multimengen eignen sich sortierte Listen gut.
-]
+  #hint[
+    Zur Darstellung der Multimengen eignen sich sortierte Listen gut.
+  ]
 
-#hint(<gcd>)[
-  Zur Berechnung des Schnittes können zwei sortierte Listen parallel durchlaufen
-  werden. Wenn zwei gleiche Elemente zu Beginn der Liste stehen, wird eines
-  der Elemente zum Ergebnis hinzugefügt. Im anderen Fall überspringen wir
-  das jeweils kleinere Element der beiden.
+  #hint[
+    Zur Berechnung des Schnittes können zwei sortierte Listen parallel durchlaufen
+    werden. Wenn zwei gleiche Elemente zu Beginn der Liste stehen, wird eines
+    der Elemente zum Ergebnis hinzugefügt. Im anderen Fall überspringen wir
+    das jeweils kleinere Element der beiden.
+  ]
 ]
 
 #challenge[
