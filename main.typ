@@ -444,15 +444,14 @@ schickt uns diese gerne über z.B. mattermost - oder
 
 // ```hs
 // real :: Int -> Ratio Int -> String
-// real k x = let y = p `div` q in show y ++ "." ++ go k (10 * (p - y * q)) q
+// real k x = go 1 p ++ "." ++ go k (10 * (p `mod` q))
 //   where
 //     p = numerator x
 //     q = denominator x
 // 
-//     go 0 _ _ = ""
-//     go _ 0 _ = ""
-//     go k a b = let y = a `div` b
-//                 in show y ++ go (k - 1) (10 * (a - y * b)) b
+//     go 0 _ = ""
+//     go _ 0 = ""
+//     go k a = show (a `div` q) ++ go (k - 1) (10 * (a `mod` q))
 // ```
 
 #test[
