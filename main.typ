@@ -201,6 +201,11 @@ schickt uns diese gerne über z.B. mattermost - oder
   zu enthalten.
 ]
 
+#test[
+  In Programmiersprachen wie Java greifen wir Daten komplexer Datentypen zu, 
+  indem wir auf Attribute von Objekten zugreifen oder getter-Methoden verwenden.
+  Wie greifen wir auf Daten in Haskell zu?
+]
 
 // Polymorphismus
 
@@ -428,6 +433,27 @@ schickt uns diese gerne über z.B. mattermost - oder
 //     mergeAll xs = mergeAll (reduce xs)
 // ```
 
+#challenge[
+  Entwickle einen Datentyp ```hs Ratio``` um rationale Zahlen 
+  $ p/q in QQ, quad p in ZZ, q in NN, p "und" q "teilerfremd" $ 
+  darzustellen. Implementiere die Operationen: Addition, Subtraktion, 
+  Multiplikation, Divison. Implementiere weiter eine Funktion, die die
+  rationale Zahl als reelle Zahl mit einer festen Anzahl von Nachkommastellen 
+  darstellt.
+]
+
+// ```hs
+// real :: Int -> Ratio Int -> String
+// real k x = let y = p `div` q in show y ++ "." ++ go k (10 * (p - y * q)) q
+//   where
+//     p = numerator x
+//     q = denominator x
+// 
+//     go 0 _ _ = ""
+//     go _ 0 _ = ""
+//     go k a b = let y = a `div` b
+//                 in show y ++ go (k - 1) (10 * (a - y * b)) b
+// ```
 
 #test[
   Wie können wir es hinkriegen, dass die invalide Liste ```hs [32, True, "Hello, world!"]``` 
