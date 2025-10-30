@@ -237,9 +237,21 @@ schickt uns diese gerne über z.B. mattermost - oder
 ]
 
 #test[
+  Wie gewinnt man aus einem Typkonstruktor einen Typ?
+]
+
+#test[
   Visualisiere `[1, 2, 3]` als Baum, wie du es in der Vorlesung kennengelernt 
   hast. Zur Erinnerung: die inneren Knoten sind Funktionen und die Blätter
   Werte, die nicht weiter ausgerechnet werden können.
+]
+
+#test[
+  Ist ```hs [32, True, "Hello, world!"]``` ein valider Haskell-Wert? Warum ja oder nein?
+]
+
+#test[
+  Was ist der Unterschied zwischen einem Typ und einem Typkonstruktor?
 ]
 
 #challenge[
@@ -269,6 +281,33 @@ schickt uns diese gerne über z.B. mattermost - oder
     das jeweils kleinere Element der beiden.
   ]
 ]
+
+// ```hs
+// gcd :: Int -> Int -> Int
+// gcd a 0 = a
+// gcd a b = gcd b (a `mod` b)
+//
+//
+// pf :: Int -> [Int]
+// pf a = go a [2..a]
+//   where
+//     go :: Int -> [Int] -> [Int]
+//     go 1 _      = []
+//     go a (p:xs) | a `mod` p == 0 = p : go (a `div` p) (p:xs)
+//                 | otherwise      = go a xs
+//
+// -- assumes both lists are sorted
+// intersect :: [Int] -> [Int] -> [Int]
+// intersect []     _      = []
+// intersect _      []     = []
+// intersect (x:xs) (y:ys) 
+//   | x == y    = x : intersect xs ys
+//   | x < y     = intersect xs (y:ys)
+//   | otherwise = intersect (x:xs) ys
+//
+// gcd :: Int -> Int -> Int
+// gcd a b = product (pf a `intersection` pf b)
+// ```
 
 #challenge[
   Die Ableitung einer Funktion $f : RR -> RR$ kann mithilfe des 
@@ -389,6 +428,12 @@ schickt uns diese gerne über z.B. mattermost - oder
 //     mergeAll xs = mergeAll (reduce xs)
 // ```
 
+
+#test[
+  Wie können wir es hinkriegen, dass die invalide Liste ```hs [32, True, "Hello, world!"]``` 
+  ein valider Haskell-Wert wird? Mithilfe welches Hilfstypen kriegen das hin?
+]
+
 #test[
   Du hast bereits viele Funktionen kennengelernt, die in der Haskell
   `base`-library implementiert sind. Anstatt eine konkrete Liste dieser 
@@ -443,7 +488,22 @@ schickt uns diese gerne über z.B. mattermost - oder
   #footnote[Diese Funktion ist auch bereits vorimplementiert: #link("https://hackage.haskell.org/package/base-4.21.0.0/docs/Data-List.html#v:-33--63-")[```hs (!?)``` in ```hs Data.List```].]
 ]
 
+#test[
+  `(++) :: [a] -> [a] -> [a]` wird verwendet, um zwei Listen aneinander zu hängen.
+  Wenn wir eine Funktion induktiv über den Listentypen definieren wie z.B.
+  ```hs square :: [Int] -> [Int]```, die jeden Listeneintrag quadrieren soll,
+  dann können wir das wie folgt tun.
+  ```hs
+  square :: [Int] -> [Int]
+  square []     = []
+  square (x:xs) = [x * x] ++ square xs
+  ```
+  Dann ist Funktion zwar korrekt aber nicht Haskell-idiomatisch. Was müssten
+  wir an der Funktion ändern, damit sie idiomatisch ist.
+]
+
 #pagebreak(weak: true)
+
 
 = Hinweise zu Tests und Challenges
 
