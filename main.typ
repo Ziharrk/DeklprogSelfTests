@@ -434,7 +434,7 @@ schickt uns diese gerne über z.B. mattermost - oder
 // ```
 
 #challenge[
-  Entwickle einen Datentyp ```hs Ratio``` um rationale Zahlen 
+  Entwickle einen Datentyp ```hs Ratio```, um rationale Zahlen 
   $ p/q in QQ, quad p in ZZ, q in NN, p "und" q "teilerfremd" $ 
   darzustellen. Implementiere die Operationen: Addition, Subtraktion, 
   Multiplikation, Divison. Implementiere weiter eine Funktion, die die
