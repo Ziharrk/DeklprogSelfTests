@@ -31,6 +31,17 @@
   }
 }
 
+#set page(
+  paper: "a4",
+  numbering: "1"
+)
+
+#text(0.8em)[
+  Dieses Dokument ist vom #datetime.today().display("[day].[month].[year]"). Die 
+  aktuelle Version des Dokuments kannst du im moodle oder 
+  #link("https://github.com/Ziharrk/DeklprogSelfTests/raw/refs/heads/main/main.pdf")[direkt von GitHub herunterladen].
+]
+
 Dieses Dokument enthält Fragen, kleine Aufgaben und andere Ressourcen zum Thema
 Deklarative Programmierung. Die Inhalte dieses Dokuments sollen dir helfen,
 dein Verständnis über Haskell und Prolog zu prüfen. 
@@ -39,6 +50,9 @@ Größere Aufgaben haben wir als Challenges markiert. Diese Aufgaben benötigen
 öfter mehrere Konzepte und führen zusätzlich Konzepte ein, die nur für das 
 Lösen der Aufgabe wichtig sind.
 
+Wenn du Anmerkungen oder weitere Ideen für Inhalte für dieses Dokument hast,
+schickt uns diese gerne über z.B. mattermost - oder 
+#link("https://github.com/Ziharrk/DeklprogSelfTests/")[stellt eine PR auf GitHub].
 
 = Funktionale Programmierung
 
@@ -103,7 +117,7 @@ Lösen der Aufgabe wichtig sind.
   - Wie sieht der Auswertungsgraph für den Ausdruck `odd (1 + 1)` aus?
     - Welcher Pfad entspricht deiner händischen Auswertung?
     - Welcher Pfad entspricht der Auswertung wie sie in Haskell stattfindet?
-    - Welcher Pfad entspricht der Auswertung wie sie in Python stattfindet?
+    - Welcher Pfad entspricht der Auswertung wie sie in Python sinngemäß stattfindet?
 ]
 
 #test[
@@ -211,9 +225,6 @@ Lösen der Aufgabe wichtig sind.
 #test[
   Welchen kind hat ```hs Either a```?
 ]
-
-// TODO Wir nutzen viele Funktionen auf Listen. Überprüfe, ob du sie 
-//      implementieren kannst.
 
 #test[
   Beim Programmieren vernachlässigen redundante Syntax. 
@@ -440,11 +451,14 @@ Lösen der Aufgabe wichtig sind.
   for data in query(metadata).map(el => el.value) {
     if type(data) == dictionary and "type" in data and data.type == "hint" {
       data.value
+      v(1em, weak: true)
     }
   }
 }
 
 #pagebreak(weak: true)
+
+= Weitere Ressourcen
 
 Wenn du auf der Suche nach weiteren Übungsaufgaben bist, mit denen du deine
 Programmierkenntnisse in Prolog verbessern möchtest, bietet sich die Liste
