@@ -99,11 +99,11 @@ Lösen der Aufgabe wichtig sind.
   odd n = even (n - 1)
   ```
 
-  - Berechne das Ergebnis von `odd 1` händisch.
-  - Wie sieht der Auswertungsgraph für den Ausdruck `odd 1` aus?
+  - Berechne das Ergebnis von `odd (1 + 1)` händisch.
+  - Wie sieht der Auswertungsgraph für den Ausdruck `odd (1 + 1)` aus?
     - Welcher Pfad entspricht deiner händischen Auswertung?
     - Welcher Pfad entspricht der Auswertung wie sie in Haskell stattfindet?
-    - Wie sieht es mit Python aus?
+    - Welcher Pfad entspricht der Auswertung wie sie in Python stattfindet?
 ]
 
 #test[
@@ -297,6 +297,39 @@ Lösen der Aufgabe wichtig sind.
     ]
 ]
 
+// ```hs
+// ($$) :: Fun -> Double -> Double
+// X         $$ x = x
+// E         $$ _ = exp 1
+// (Ln f)    $$ x = log (f $$ x)
+// (Num x)   $$ _ = x
+// (f :+: g) $$ x = f $$ x + g $$ x
+// (f :*: g) $$ x = f $$ x * g $$ x
+// (f :-: g) $$ x = f $$ x - g $$ x
+// (f :/: g) $$ x = f $$ x / g $$ x
+// (f :<: g) $$ x = f $$ (g $$ x)
+// (f :^: g) $$ x = (f $$ x) ** (g $$ x)
+//
+//
+// derive :: Fun -> Fun
+// derive X         = Num 1.0
+// derive E         = Num 0.0
+// derive (Num _)   = Num 0.0
+// derive (f :+: g) = derive f :+: derive g
+// derive (f :-: g) = derive f :-: derive g
+// derive (f :*: g) = let f' = derive f 
+//                        g' = derive g
+//                     in (f' :*: g) :+: (f :*: g')
+// derive (f :/: g) = let f' = derive f 
+//                        g' = derive g
+//                     in ((f' :*: g) :+: (f :*: g')) :/: (g :*: g)
+// derive (f :<: g) = let f' = derive f 
+//                        g' = derive g
+//                     in g' :*: (f' :<: g)
+// derive (f :^: g) = let h = Ln f :*: g
+//                     in derive h :*: (E :^: h)
+// ```
+
 #challenge[
   In Einführung in die Algorithmik hast du verschiedene Varianten des 
   `mergesort`-Algorithmus kennengelernt. Eine davon hat ausgenutzt, dass in
@@ -354,6 +387,49 @@ Lösen der Aufgabe wichtig sind.
   - #link("https://hackage.haskell.org/package/base/docs/Data-List.html")[Data.List]
   Wenn du merkst, die Implementierung einer bekannten Funktion fällt dir ad hoc 
   nicht ein, nehme dir Zeit und überlege, wie du sie implementieren könntest.
+]
+
+#test[
+  Hier ist eine fehlerhafte Implementierung eines Datentyps für einen 
+  knotenbeschrifteten Binärbäumen.
+  ```hs
+  data Tree a = Empty | Node Tree a Tree
+  ```
+  Was ist der Fehler?
+]
+
+#test[
+  In imperativen Programmierung iterieren wir über Listen oft in folgender
+  Form (in Java).
+  ```java
+  List<Integer> a = new ArrayList<>();
+  a.add(3); a.add(1); a.add(4); a.add(1); a.add(5);
+
+  List<Integer> b = new ArrayList<>();
+  for (int i = 0; i < a.size(); i++) {
+    b.add(2 * a.get(i));
+  }
+  ```
+  Wenn wir diesen Code naiv in Haskell übersetzen, könnten wir z.B.
+  ```hs
+  double :: [Int] -> Int -> [Int]
+  double xs i | i < length xs = 2 * xs !! i : double xs (i + 1)
+              | otherwise     = []
+  ```
+  Das wollen wir niemals so tun.
+  - Wie unterscheiden sich die Laufzeiten?
+  - Optimiere die Funktion `double`, sodass sie lineare Laufzeit in der Länge
+    der Liste hat.
+]
+
+#test[
+  Die ```hs (!!)```-Funktion ist unsicher in dem Sinne, dass sie für invalide
+  Listenzugriffe einen Fehler wirft. Die Funktion 
+  ```hs (!?) :: [a] -> Int -> Maybe a``` ist eine sichere Variante von 
+  ```hs (!!)```. Sie macht den Fehlerfall explizit durch die Wahl des 
+  Ergebnistypen. Was tut diese Funktion voraussichtlich? Implementiere diese
+  Funktion.
+  #footnote[Diese Funktion ist auch bereits vorimplementiert: #link("https://hackage.haskell.org/package/base-4.21.0.0/docs/Data-List.html#v:-33--63-")[```hs (!?)``` in ```hs Data.List```].]
 ]
 
 #pagebreak(weak: true)
