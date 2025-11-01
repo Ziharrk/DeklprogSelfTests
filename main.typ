@@ -129,7 +129,7 @@ schickt uns diese gerne über z.B. mattermost - oder
 #test[
   Das Potenzieren einer Zahl $x$ (oder eines Elements einer Halbgruppe) mit
   einem natürlich-zahligen Exponent $n$ ist in $cal(O)(log n)$ Laufzeit möglich
-  #footnote[#link("https://de.wikipedia.org/wiki/Bin%C3%A4re_Exponentiation")[Binäre Exponentiation -- Wikipedia]].
+  #footnote[#link("https://de.wikipedia.org/wiki/Bin%C3%A4re_Exponentiation")[Binäre Exponentiation]].
   Dafür betrachten wir
   $
   x^n = cases((x^(n/2))^2 & "falls" n "gerade", x dot x(x^((n-1)/2))^2 & "sonst")
@@ -526,6 +526,55 @@ schickt uns diese gerne über z.B. mattermost - oder
   Dann ist Funktion zwar korrekt aber nicht Haskell-idiomatisch. Was müssten
   wir an der Funktion ändern, damit sie idiomatisch ist.
 ]
+
+
+// Pattern Matching
+
+#challenge[
+  In den Übungsaufgaben hast du einen Suchbaum ohne Höhenbalancierung 
+  implementiert. Die Rotationen für einen AVL-Baum lassen sich durch das
+  pattern matching in Haskell vergleichsweise elegant implementieren - erinnere 
+  dich z.B. an die Implementierung aus Einführung in die Algorithmik, die recht 
+  verbos ist.
+  #footnote[#link("https://de.wikipedia.org/wiki/AVL-Baum#Rebalancierung")[Rebalancierung eines AVL-Baum]]
+
+  Die Höhe eines Teilbaums kann z.B. als weiteres Attribut im Knoten gespeichert
+  werden. Eine ineffizientere Variante ist die Höhe mit einer Funktion 
+  wiederkehrend zu berechnen. Letztere Variante ist für den Anfang 
+  übersichtlicher.
+
+  Implementiere eine Funktion ```hs rotate :: SearchTree a -> SearchTree a```,
+  die einen Teilbaum rebalanciert, sollte der Teilbaum unbalanciert sein.
+  Diese Funktion kannst du dann nutzen, um die gängigen Operationen auf
+  Suchbäumen anzupassen.
+]
+
+// ```hs
+// height :: SearchTree a -> Int
+// height Empty        = 0
+// height (Node l _ r) = max (height l) (height r) + 1
+// 
+// balance :: SearchTree a -> Int
+// balance Empty        = 0
+// balance (Node l _ r) = height r - height l
+// 
+// rotate :: SearchTree a -> SearchTree a
+// rotate Empty          = Empty
+// rotate t@(Node l v r) =
+//   case (balance t, balance l, balance r) of
+//     (2, _, -1) -> rotateL (Node l v (rotateR r))
+//     (2, _, _)  -> rotateL (Node l v r)
+//     (-2, _, 1) -> rotateR (Node (rotateL l) v r)
+//     (-2, _, _) -> rotateR (Node l v r)
+//     _          -> t
+//   where
+//     rotateR (Node (Node ll lv lr) v r) = Node ll lv (Node lr v r)
+//     rotateR _                          = error "should not happen"
+// 
+//     rotateL (Node l v (Node rl rv rr)) = Node (Node l v rl) rv rr
+//     rotateL _                          = error "should not happen"
+// ```
+
 
 #pagebreak(weak: true)
 
