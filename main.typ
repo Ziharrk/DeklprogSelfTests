@@ -42,9 +42,15 @@
   #link("https://github.com/Ziharrk/DeklprogSelfTests/raw/refs/heads/main/main.pdf")[direkt von GitHub herunterladen].
 ]
 
-Dieses Dokument enthält Fragen, kleine Aufgaben und andere Ressourcen zum Thema
-Deklarative Programmierung. Die Inhalte dieses Dokuments sollen dir helfen,
-dein Verständnis über Haskell und Prolog zu prüfen. 
+#context {
+  let (test: (_, test), challenge: (_, challenge)) = thmcounters.final().counters
+  [
+    Dieses Dokument enthält #test Fragen, #challenge kleinere bis 
+    größere Aufgaben und andere Ressourcen zum Thema Deklarative Programmierung.
+    Die Inhalte dieses Dokuments sollen dir helfen, dein Verständnis über 
+    Haskell und Prolog zu prüfen. 
+  ]
+}
 
 Größere Aufgaben haben wir als Challenges markiert. Diese Aufgaben benötigen 
 öfter mehrere Konzepte und führen zusätzlich Konzepte ein, die nur für das 
