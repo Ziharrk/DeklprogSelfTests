@@ -1,5 +1,19 @@
 #import "@preview/ctheorems:1.1.3": *
 
+#set document(
+  title: "Verständnisfragen zum Modul Deklarative Programmierung",
+  author: ("Melf Kammholz",),
+  description: "Verständnisfragen zum Modul Deklarative Programmierung",
+  keywords: (
+    "Deklarative Programmierung",
+    "Funktionale Programmierung",
+    "Logische Programmierung",
+    "Haskell",
+    "Prolog",
+    "Verständnisfragen"
+  )
+)
+
 #show link: underline
 #show heading.where(level: 1): set block(below: 1.25em)
 #show: thmrules
