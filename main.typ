@@ -216,7 +216,8 @@ schickt uns diese gerne über z.B. mattermost - oder
 #test[
   Welchen Typ haben
   - `(:)` und `[]`,
-  - `Just` und `Nothing`?
+  - `Just` und `Nothing`,
+  - `Left` und `Right`?
 ]
 
 #test[
@@ -257,6 +258,17 @@ schickt uns diese gerne über z.B. mattermost - oder
 
 #test[
   Was ist der Unterschied zwischen einem Typ und einem Typkonstruktor?
+]
+
+#test[
+  Gegeben ist
+  ```hs
+  data Pair a b = Pair a b
+  ```
+  Wie unterscheidet sich der Typ von
+  ```hs
+  data Pair a = Pair a a
+  ```
 ]
 
 #challenge[
@@ -525,6 +537,13 @@ schickt uns diese gerne über z.B. mattermost - oder
   ```
   Dann ist Funktion zwar korrekt aber nicht Haskell-idiomatisch. Was müssten
   wir an der Funktion ändern, damit sie idiomatisch ist.
+]
+
+#test[
+  Die Funktion ```hs show``` kann genutzt werden, um Werte eines beliebigen
+  Datentyp in eine String-Representation zu überführen. Warum kann
+  ```hs show``` nicht als Funktion vom Typ ```hs a -> String``` implementiert
+  sein?
 ]
 
 
