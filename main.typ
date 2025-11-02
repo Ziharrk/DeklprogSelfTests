@@ -196,7 +196,7 @@ schickt uns diese gerne über z.B. mattermost - oder
   lengthIntList Nil         = 0
   lengthIntList (Cons _ xs) = 1 + lengthIntList xs
   ```
-  die qLänge einer solchen Liste berechnet werden. Du möchtest nun auch
+  die Länge einer solchen Liste berechnet werden. Du möchtest nun auch
   die Längen von Listen berechnen, die Buchstaben, Booleans oder Gleitkommazahlen
   enthalten. Was stört dich am bisherigen Vorgehen? Kennst du ein Konzept
   mit dessen Hilfe du besser an dein Ziel kommst?
