@@ -615,6 +615,147 @@ schickt uns diese gerne über z.B. mattermost - oder
 // ```
 
 
+// Automatisches Testen
+
+#test[
+  Formuliere QuickCheck-Eigenschaften, die die Funktionen 
+  - ```hs isElem :: Int -> SearchTree Int -> Bool```,
+  - ```hs toList :: SearchTree Int -> Int```,
+  - ```hs insert :: Int -> SearchTree Int -> SearchTree Int``` und
+  - ```hs delete :: Int -> SearchTree Int -> SearchTree Int```
+  erfüllen sollen. ```hs isElem``` überprüft, ob eine Ganzzahl in gegebenen
+  Suchbaum enthalten ist. ```hs toList``` konvertiert einen Suchbaum in eine 
+  Liste. ```hs insert``` fügt eine Ganzzahl in einen Suchbaum ein. 
+  ```hs delete``` löscht eine Ganzzahl aus einen Suchbaum.
+
+  Wie kannst du die Suchbaum-Eigenschaft spezifizieren (dafür brauchst du 
+  weitere Funktionen)?
+]
+
+#test[
+  QuickCheck-Eigenschaften werden mit zufällig generierten Werten getestet.
+  Hin und wieder kommt es vor, dass diese Werte Vorbedingung erfüllen müssen,
+  damit wir Eigenschaften von Funktionen testen können. Wie können wir das 
+  erreichen?
+]
+
+#test[
+  Wie können wir eine Funktionen teilweise auf Korrektheit testen -- also
+  wie können wir für eine beliebige Eingabe verifizieren, dass die Ausgabe
+  korrekt ist?
+]
+
+
+// Funktionen höherer Ordnung
+
+#test[
+  Was sind Funktionen höherer Ordnung?
+]
+
+#test[
+  Wie definieren wir Lambda-Abstraktionen bzw. anonyme Funktionen?
+]
+
+#test[
+  Warum ist der Typ ```hs (a -> b) -> c``` nicht identisch zum Typ 
+  ```hs a -> b -> c```? Welcher andere Typ identisch zu letzterem?
+]
+
+#test[
+  Mit welchen Konzepten gehen die Linksassoziativität der Funktionsapplikation
+  und die Rechtsassoziatvität des Typkonstruktors ```hs ->``` Hand in Hand?
+]
+
+// TODO möglicherweise gibt es coolere Funktionen, die auch noch ohne folds
+//      auskommen - für folds wollte ich einen Test extra haben
+#test[
+  Zu welchen partiell applizierten Funktionen verhalten sich folgenden 
+  Funktionen identisch?
+  - ```hs succ :: Int -> Int``` (die Inkrementfunktion)
+  - ```hs pred :: Int -> Int``` (die Dekrementfunktion)
+  - ```hs length :: [a] -> Int```
+  - ```hs sum :: [Int] -> Int```
+  - ```hs product :: [Int] -> Int```
+]
+
+#test[
+  Welche Funktionen höherer Ordnung hast du kennengelernt im Kontext der 
+  generischen Programmierung? Was ist das Ziel dieser Funktionen?
+]
+
+#test[
+  Die Funktionen ```hs map :: (a -> b) -> [a] -> [b]``` und 
+  ```hs filter :: (a -> Bool) -> [a] -> [a]``` lassen sich alle mithilfe 
+  ```hs foldr :: (a -> r -> r) -> r -> [a] -> r``` ausdrücken. Wie erreichen wir
+  dies?
+]
+
+#test[
+  Wann liefern ```hs foldl``` und ```hs foldr``` das gleiche Ergebnis?
+]
+
+#test[
+  Wie gewinnen wir aus ```hs foldr``` die Identitätsfunktion auf Listen?
+  In den Übungen hast du gelernt, wie man Werte anderer Typen falten kann.
+  Wie gewinne aus diesen Funktionen die Identitätsfunktionen auf den jeweiligen
+  Typen?
+]
+
+#test[
+  Gegeben sind folgende Datentypen
+  - ```hs data Tree a = Empty | Leaf a | Branch (Tree a) (Tree a)```,
+  - ```hs data RoseTree a = Node [RoseTree a] | Leaf a```.
+  Welche Typen haben die jeweiligen Datenkonstruktoren und wie führen wir diese
+  in die Signatur der jeweiligen Faltungsfunktion über?
+]
+
+#test[
+  Betrachte die Funktion
+  ```hs
+  f :: [a] -> b
+  f []     = e
+  f (x:xs) = g x (f xs)
+  ```
+  Nach diesem induktiven Muster sind viele Funktionen auf Listen implementiert.
+  Nehme als Beispiel die Funktion ```hs sum :: [Int] -> [Int]```.
+  ```hs
+  sum :: [Int] -> Int
+  sum []     = 0
+  sum (x:xs) = x + sum xs
+  ```
+  Dieses Muster haben wir in ```hs foldr``` abstrahiert. Wo wandern die 
+  jeweiligen Bestandteile der abstrakten Funktion ```hs f``` hin, wenn wir 
+  ```hs f``` mithilfe von ```hs foldr``` definieren. Was passiert insbesondere
+  mit dem rekursiven Aufruf von ```hs f```?
+]
+
+#test[
+  Wie kannst du mithilfe von Faltung viele Elemente in einen Suchbaum einfügen
+  oder lösen? Implementiere
+  - ```hs insertMany :: [Int] -> SearchTree Int -> SearchTree Int``` und
+  - ```hs deleteMany :: [Int] -> SearchTree Int -> SearchTree Int```.
+  Du kannst davon ausgehen, dass du die Einfüge- und Löschfunktion für einzelne
+  Elemente bereits hast.
+]
+
+#test[
+  Es gibt viele andere hilfreiche Funktionen höherer Ordnung in der Haskell
+  Prelude. Eine von diesen ist ```hs zipWith :: (a -> b -> c) -> [a] -> [b] -> [c]```.
+  Sie verknüpft jeweils zwei Elemente aus den jeweiligen Listen unter der 
+  gegeben Funktion.
+  - Implementiere ```hs zipWith``` mithilfe von ```hs map, uncurry, zip```.
+  - Implementiere das Prädikat ```hs isSorted``` mithilfe von ```hs zipWith```.
+]
+
+// Lazy Evaluation
+
+// #test[
+//   Wie können wir mit ```hs foldl``` auf unendlichen Listen mit keinem Ergebnis
+//   rechnen?
+// ]
+
+
+
 #pagebreak(weak: true)
 
 
