@@ -679,6 +679,14 @@ schickt uns diese gerne über z.B. mattermost - oder
 ]
 
 #test[
+  Was ist partielle Applikation?
+]
+
+#test[
+  Was ist Currying?
+]
+
+#test[
   Welche Funktionen höherer Ordnung hast du kennengelernt im Kontext der 
   generischen Programmierung? Was ist das Ziel dieser Funktionen?
 ]
@@ -691,6 +699,11 @@ schickt uns diese gerne über z.B. mattermost - oder
 ]
 
 #test[
+  Was sind sections im Kontext von Funktionen höherer Ordnung?
+]
+
+#test[
+  Was ist der Unterschied zwischen ```hs foldl``` und ```hs foldr```?
   Wann liefern ```hs foldl``` und ```hs foldr``` das gleiche Ergebnis?
 ]
 
@@ -745,8 +758,39 @@ schickt uns diese gerne über z.B. mattermost - oder
   Sie verknüpft jeweils zwei Elemente aus den jeweiligen Listen unter der 
   gegeben Funktion.
   - Implementiere ```hs zipWith``` mithilfe von ```hs map, uncurry, zip```.
+  - Implementiere ```hs zip``` mithilfe von ```hs zipWith```.
   - Implementiere das Prädikat ```hs isSorted``` mithilfe von ```hs zipWith```.
 ]
+
+#challenge[
+  Gegeben sei die Funktion Faltungsfunktion 
+  ```hs foldTree :: (r -> a -> r -> r) -> r -> Tree a -> r```
+  für einen knotenbeschrifteten Binärbaum gegeben durch
+  ```data Tree a = Empty | Node (Tree a) a (Tree a)```.
+
+  Wie auch für Listen lassen sich eine Reihe von bekannten Funktionen
+  auf Bäume übertragen. 
+  #footnote[
+    Diese Funktionen lassen sich auf alle faltbaren Datentypen verallgemeinern.
+    Für Interessierte: Dies wird mithilfe der #link("https://hackage.haskell.org/package/base-4.21.0.0/docs/Data-Foldable.html")[Typklasse ```hs Foldable```] 
+    festgehalten -- diese Typklasse behandeln wir aber in der Vorlesung 
+    voraussichtlich nicht.
+  ]
+  Implementiere die Funktionen
+  - ```hs any :: (a -> Bool) -> Tree a -> Bool``` und ```hs and :: (a -> Bool) -> Tree a -> Bool```,
+  - ```hs elem :: a -> Tree a -> Bool``` und ```hs notElem :: a -> Tree a -> Bool```,
+  - ```hs toList :: Tree a -> Bool```,
+  - ```hs null :: Tree a -> Bool``` (überprüft, ob der Baum leer ist),
+  - ```hs length :: Tree a -> Int```,
+  - ```hs maximum :: Tree Int -> Int``` und ```hs minimum :: Tree Int -> Int```, und
+  - ```hs sum :: Tree Int -> Int``` und ```hs product :: Tree Int -> Int```.
+]
+
+#test[
+  Welche Funktion verbirgt sich hinter ```hs foldr ((++) . f) []``` und was ist
+  ihr Typ?
+]
+
 
 // Lazy Evaluation
 
