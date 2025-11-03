@@ -701,6 +701,7 @@ schickt uns diese gerne über z.B. mattermost - oder
   Typen?
 ]
 
+// TODO Kopie aus Übung, überlege möglicherweise andere Typen?
 #test[
   Gegeben sind folgende Datentypen
   - ```hs data Tree a = Empty | Leaf a | Branch (Tree a) (Tree a)```,
