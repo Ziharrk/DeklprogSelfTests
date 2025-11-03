@@ -703,6 +703,11 @@ schickt uns diese gerne über z.B. mattermost - oder
 ]
 
 #test[
+  Welche der Faltungsfunktion auf Listen ergibt sich aus dem Verfahren, das
+  du für beliebige Datentypen kennengelernt hast?
+]
+
+#test[
   Was ist der Unterschied zwischen ```hs foldl``` und ```hs foldr```?
   Wann liefern ```hs foldl``` und ```hs foldr``` das gleiche Ergebnis?
 ]
@@ -714,13 +719,13 @@ schickt uns diese gerne über z.B. mattermost - oder
   Typen?
 ]
 
-// TODO Kopie aus Übung, überlege möglicherweise andere Typen?
 #test[
   Gegeben sind folgende Datentypen
   - ```hs data Tree a = Empty | Leaf a | Branch (Tree a) (Tree a)```,
-  - ```hs data RoseTree a = Node [RoseTree a] | Leaf a```.
+  - ```hs data Rose a = Node [Rose a]```.
   Welche Typen haben die jeweiligen Datenkonstruktoren und wie führen wir diese
   in die Signatur der jeweiligen Faltungsfunktion über?
+  Wo benötigen rekursive Aufrufe der jeweiligen Faltungsfunktionen?
 ]
 
 #test[
