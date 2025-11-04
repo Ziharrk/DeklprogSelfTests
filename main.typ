@@ -798,6 +798,23 @@ schickt uns diese gerne über z.B. mattermost - oder
   ihr Typ?
 ]
 
+#test[
+  Versuche in den folgenden Ausdrücken, Teilausdrücke schrittweise durch
+  bekannte Funktionen zu ersetzen und gegebenenfalls zu vereinfachen.
+  - ```hs foldr (\x ys -> f x : ys) [] (foldr (\x ys -> g x : ys) [] xs)```,
+  - ```hs map (\_ -> y) xs```,
+  - ```hs foldl (\ys x -> x : ys) []``` und
+  - ```hs flip (curry fst) x```.
+    #footnote[
+      #link("https://www.youtube.com/watch?v=_oNgyUAEv0Q")["Your scientists were
+      so preoccupied with whether or not they could, that they didn't stop to
+      think if they should."] Jenseits solcher kleinen Verständnisfragen gilt
+      weiterhin, dass wir verständlichen Code schreiben wollen. Solche Ausdrücke
+      sind häufig schwieriger zu verstehen -- auch wenn es unterhaltsam ist, sich
+      solche Ausdrücke auszudenken.
+    ]
+]
+
 
 // Lazy Evaluation
 
