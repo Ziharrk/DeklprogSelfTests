@@ -786,7 +786,7 @@ schickt uns diese gerne über z.B. mattermost - oder
   ]
   Implementiere die Funktionen
   - ```hs any :: (a -> Bool) -> Tree a -> Bool``` und ```hs and :: (a -> Bool) -> Tree a -> Bool```,
-  - ```hs elem :: a -> Tree a -> Bool``` und ```hs notElem :: a -> Tree a -> Bool```,
+  - ```hs elem :: Int -> Tree Int -> Bool``` und ```hs notElem :: Int -> Tree Int -> Bool```,
   - ```hs toList :: Tree a -> Bool```,
   - ```hs null :: Tree a -> Bool``` (überprüft, ob der Baum leer ist),
   - ```hs length :: Tree a -> Int```,
