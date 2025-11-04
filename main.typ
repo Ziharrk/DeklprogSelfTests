@@ -804,7 +804,8 @@ schickt uns diese gerne über z.B. mattermost - oder
   bekannte Funktionen zu ersetzen und gegebenenfalls zu vereinfachen.
   - ```hs foldr (\x ys -> f x : ys) [] (foldr (\x ys -> g x : ys) [] xs)```,
   - ```hs map (\_ -> y) xs```,
-  - ```hs foldl (\ys x -> x : ys) []``` und
+  - ```hs foldr (\x ys -> if x `mod` 2 == 1 then x - 1 : ys else ys) [] xs```,
+  - ```hs foldl (\ys x -> x : ys) [] xs``` und
   - ```hs flip (curry fst) x```.
     #footnote[
       #link("https://www.youtube.com/watch?v=_oNgyUAEv0Q")["Your scientists were
