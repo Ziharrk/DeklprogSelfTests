@@ -330,8 +330,10 @@ schickt uns diese gerne über z.B. mattermost - oder
 //   where
 //     go :: Int -> [Int] -> [Int]
 //     go 1 _      = []
-//     go a (p:xs) | a `mod` p == 0 = p : go (a `div` p) (p:xs)
-//                 | otherwise      = go a xs
+//     go a (p:xs) | a < p * p = [a]  -- optimization
+//                 | r == 0    = p : go q (p:xs)
+//                 | otherwise = go a xs
+//       where (q, r) = quotRem a p  -- same as (a `div` p, a `mod` p)
 //
 // -- assumes both lists are sorted
 // intersect :: [Int] -> [Int] -> [Int]
