@@ -19,6 +19,17 @@
 #show heading.where(level: 1): set block(below: 1.25em)
 #show: thmrules
 
+#let is-type = type => {
+  val => std.type(val) == dictionary and "type" in val and val.type == type
+}
+
+#let get-metadata = type => {
+  query(metadata)
+    .map(res => res.value)
+    .filter(is-type(type))
+    .map(res => res.value)
+}
+
 #let test = thmplain(
     "test",
     "Test",
@@ -832,16 +843,10 @@ schickt uns diese gerne über z.B. mattermost - oder
 
 = Hinweise zu Tests und Challenges
 
-#context {
-  for data in query(metadata).map(el => el.value) {
-    if type(data) == dictionary and "type" in data and data.type == "hint" {
-      data.value
-      v(1em, weak: true)
-    }
-  }
-}
+#context get-metadata("hint").join(v(1em, weak: true)) \
 
 #pagebreak(weak: true)
+
 
 = Weitere Ressourcen
 
