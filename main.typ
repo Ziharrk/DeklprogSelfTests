@@ -560,17 +560,18 @@ schickt uns diese gerne über z.B. mattermost - oder
 ]
 
 #test[
-  `(++) :: [a] -> [a] -> [a]` wird verwendet, um zwei Listen aneinander zu hängen.
-  Wenn wir eine Funktion induktiv über den Listentypen definieren wie z.B.
-  ```hs square :: [Int] -> [Int]```, die jeden Listeneintrag quadrieren soll,
-  dann können wir das wie folgt tun.
+  ```hs (++) :: [a] -> [a] -> [a]``` wird verwendet, um zwei Listen 
+  aneinanderzuhängen. Wenn wir eine Funktion induktiv über den Listentypen 
+  definieren wie z.B. ```hs square :: [Int] -> [Int]```, die jeden Listeneintrag
+  quadrieren soll, dann können wir das wie folgt tun.
   ```hs
   square :: [Int] -> [Int]
   square []     = []
   square (x:xs) = [x * x] ++ square xs
   ```
-  Dann ist Funktion zwar korrekt aber nicht Haskell-idiomatisch. Was müssten
-  wir an der Funktion ändern, damit sie idiomatisch ist.
+  Die Funktion ist zwar korrekt aber nicht Haskell-idiomatisch, d.h., eine 
+  Person, die Erfahren im Programmieren von Haskell ist, würde dies nicht so
+  schreiben. Was müssten wir an der Funktion ändern, damit sie idiomatisch ist.
 ]
 
 #test[
@@ -589,17 +590,17 @@ schickt uns diese gerne über z.B. mattermost - oder
   pattern matching in Haskell vergleichsweise elegant implementieren - erinnere 
   dich z.B. an die Implementierung aus Einführung in die Algorithmik, die recht 
   verbos ist.
-  #footnote[#link("https://de.wikipedia.org/wiki/AVL-Baum#Rebalancierung")[Rebalancierung eines AVL-Baum]]
 
   Die Höhe eines Teilbaums kann z.B. als weiteres Attribut im Knoten gespeichert
-  werden. Eine ineffizientere Variante ist die Höhe mit einer Funktion 
+  werden. Eine ineffizientere Variante ist es, die Höhe mit einer Funktion 
   wiederkehrend zu berechnen. Letztere Variante ist für den Anfang 
   übersichtlicher.
 
   Implementiere eine Funktion ```hs rotate :: SearchTree a -> SearchTree a```,
-  die einen Teilbaum rebalanciert, sollte der Teilbaum unbalanciert sein.
-  Diese Funktion kannst du dann nutzen, um die gängigen Operationen auf
-  Suchbäumen anzupassen.
+  die einen Teilbaum an der Wurzel rebalanciert, sollte der Teilbaum 
+  unbalanciert sein. Diese Funktion kannst du dann nutzen, um die gängigen 
+  Operationen auf Suchbäumen anzupassen.
+  #footnote[#link("https://de.wikipedia.org/wiki/AVL-Baum#Rebalancierung")[Rebalancierung eines AVL-Baum]]
 ]
 
 // ```hs
@@ -648,7 +649,7 @@ schickt uns diese gerne über z.B. mattermost - oder
 
 #test[
   QuickCheck-Eigenschaften werden mit zufällig generierten Werten getestet.
-  Hin und wieder kommt es vor, dass diese Werte Vorbedingung erfüllen müssen,
+  Hin und wieder kommt es vor, dass diese Werte Vorbedingungen erfüllen müssen,
   damit wir Eigenschaften von Funktionen testen können. Wie können wir das 
   erreichen?
 ]
@@ -672,12 +673,13 @@ schickt uns diese gerne über z.B. mattermost - oder
 
 #test[
   Warum ist der Typ ```hs (a -> b) -> c``` nicht identisch zum Typ 
-  ```hs a -> b -> c```? Welcher andere Typ identisch zu letzterem?
+  ```hs a -> b -> c```? Welcher andere Typ ist identisch zu letzterem?
 ]
 
 #test[
   Mit welchen Konzepten gehen die Linksassoziativität der Funktionsapplikation
-  und die Rechtsassoziatvität des Typkonstruktors ```hs ->``` Hand in Hand?
+  und die Rechtsassoziatvität des Typkonstruktors ```hs (->)``` gut Hand in 
+  Hand?
 ]
 
 // TODO möglicherweise gibt es coolere Funktionen, die auch noch ohne folds
@@ -717,8 +719,9 @@ schickt uns diese gerne über z.B. mattermost - oder
 ]
 
 #test[
-  Welche der Faltungsfunktion auf Listen ergibt sich aus dem Verfahren, das
-  du für beliebige Datentypen kennengelernt hast?
+  Welche der Faltungsfunktion auf Listen ergibt sich aus dem Verfahren zur 
+  Erzeugung von Faltungsfunktionen, das du für beliebige Datentypen 
+  kennengelernt hast?
 ]
 
 #test[
@@ -729,8 +732,8 @@ schickt uns diese gerne über z.B. mattermost - oder
 #test[
   Wie gewinnen wir aus ```hs foldr``` die Identitätsfunktion auf Listen?
   In den Übungen hast du gelernt, wie man Werte anderer Typen falten kann.
-  Wie gewinne aus diesen Funktionen die Identitätsfunktionen auf den jeweiligen
-  Typen?
+  Wie gewinnt man aus diesen Funktionen die Identitätsfunktionen auf den 
+  jeweiligen Typen?
 ]
 
 #test[
@@ -739,7 +742,7 @@ schickt uns diese gerne über z.B. mattermost - oder
   - ```hs data Rose a = Node [Rose a]```.
   Welche Typen haben die jeweiligen Datenkonstruktoren und wie führen wir diese
   in die Signatur der jeweiligen Faltungsfunktion über?
-  Wo benötigen rekursive Aufrufe der jeweiligen Faltungsfunktionen?
+  Wo benötigen wir rekursive Aufrufe der jeweiligen Faltungsfunktionen?
 ]
 
 #test[
