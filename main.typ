@@ -247,9 +247,9 @@ schickt uns diese gerne über z.B. mattermost - oder
 
 #test[
   Welchen Typ haben
-  - `(:)` und `[]`,
-  - `Just` und `Nothing`,
-  - `Left` und `Right`?
+  - ```hs (:)``` und ```hs []```,
+  - ```hs Just``` und ```hs Nothing```,
+  - ```hs Left``` und ```hs Right```?
 ]
 
 #test[
