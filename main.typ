@@ -893,18 +893,17 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
 //      Verständnisfrage dazu
 
 #test[
-  In nicht strengen getypten Programmiersprachen haben wir oft, mit impliziter
+  In nicht streng getypten Programmiersprachen haben wir oft, mit impliziter
   Typkonversion zu tun. #footnote[Diese wollen nun für einen Moment nach Haskell 
-  zurückholen, um sie dann ganz schnell wieder zu vergessen.]
-
-  Implementiere eine Funktion ```hs ifThenElse```, die als Bedingung Werte 
-  _beliebiger_ Typen entgegennehmen kann. Ziel ist es, dass das folgende 
-  Ausdruck ausgewertet werden kann.
+  zurückholen, um sie dann ganz schnell wieder zu vergessen.] Implementiere eine
+  Funktion ```hs ifThenElse```, die als Bedingung Werte _beliebiger_ Typen 
+  entgegennehmen kann. Ziel ist es, dass das folgende Ausdruck ausgewertet 
+  werden kann.
   ```hs
   let a = ifThenElse 0 3 4
       b = ifThenElse [5] 6 7
       c = ifThenElse Nothing 8 9
-   in a + b + c -- 19
+   in a + b + c  -- 19
   ```
 ]
 
