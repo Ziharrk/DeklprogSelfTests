@@ -788,7 +788,7 @@ schickt uns diese gerne über z.B. mattermost - oder
   Gegeben sei die Funktion Faltungsfunktion 
   ```hs foldTree :: (r -> a -> r -> r) -> r -> Tree a -> r```
   für einen knotenbeschrifteten Binärbaum gegeben durch
-  ```data Tree a = Empty | Node (Tree a) a (Tree a)```.
+  ```hs data Tree a = Empty | Node (Tree a) a (Tree a)```.
 
   Wie auch für Listen lassen sich eine Reihe von bekannten Funktionen
   auf Bäume übertragen. 
