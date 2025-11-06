@@ -840,6 +840,21 @@ schickt uns diese gerne über z.B. mattermost - oder
 // ]
 
 
+// Funktoren, Applicatives, Monaden
+
+// #test[
+//   Gegeben ist der Typ
+//   ```hs data Deep a b = Deep [Maybe (Either a (Deep a b))]```.
+//   Die Faltungsfunktion sieht im Wesentlichen so aus.
+//   ```hs
+//   foldDeep :: ([Maybe (Either a r)] -> r) -> Deep a b -> r
+//   foldDeep fdeep (Deep x) = fdeep (f x)
+//   ```
+//   Wie können wir 
+//   ```hs f :: [Maybe (Either a (Deep a b))] -> [Maybe (Either a r)]``` 
+//   mithilfe von ```hs foldDeep fdeep :: Deep a b -> r``` definieren?
+// ]
+
 
 #pagebreak(weak: true)
 
