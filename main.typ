@@ -877,7 +877,7 @@ An vielen Stellen in den bisherigen Selbsttests haben wir oft einen konkreten
 Typen (z.B. ```hs Int```) genutzt, für den es bestimmte Typklasseninstanzen 
 gibt. Das ist meistens der Fall gewesen, wenn wir Gleichheit auf Werten oder 
 eine Vergleichsoperation auf Werten brauchten. Schau dir die bisherigen 
-Selbsttests erneut und überlege dir, wo du Typen verallgemeinern kannst.
+Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
 
 #test[
   Welche Funktionen musst du implementieren, damit eine ```hs Eq```-Instanz
