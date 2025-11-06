@@ -715,6 +715,20 @@ schickt uns diese gerne über z.B. mattermost - oder
 ]
 
 #test[
+  Gegeben seien folgende Funktionen:
+  - ```hs rgbToHsv :: RGB -> HSV```, die eine Farbe von einer Darstellung
+    in einen anderen konvertiert, und
+  - ```hs hue :: HSV -> Float```, die den Farbwert einer Farbe im Wertebereich 
+    $[0°, 360°)$ im HSV-Farbraum zurückgibt.
+  Du bekommst als Eingabe einen Bild, das hier als Liste von ```hs RGB```-Werten
+  dargestellt ist. Jeder ```hs RGB```-Wert korrespondiert zu einem Pixel. 
+  Schreibe eine Funktion, die berechnet, wie viele blaue Pixel das Bild hat.
+  Hier bezeichene eine Farbe als blau, wenn ihr Farbwert zwischen $200°$ und
+  $250°$ (inklusiv) liegt. Nutze für die Definition der Funktion sowohl 
+  ```hs map``` als auch ```hs filter```.
+]
+
+#test[
   Was sind sections im Kontext von Funktionen höherer Ordnung?
 ]
 
