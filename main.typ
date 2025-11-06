@@ -832,6 +832,83 @@ schickt uns diese gerne über z.B. mattermost - oder
 ]
 
 
+// Typklassen und Überladung
+
+#test[
+  Was sind Typklassen?
+]
+
+#test[
+  Wie unterscheidet sich der Polymorphismus, der durch Typklassen ermöglicht 
+  wird, vom parametrischen Polymorphismus?
+]
+
+#test[
+  In einem vorherigen Test wurdest du bereits gefragt, wieso ```hs show```
+  nicht als Funktion mit dem Typ ```hs a -> String``` implementiert sein.
+  Wieso wird die Funktion durch ```hs Show a => a -> String``` gerettet?
+]
+
+#test[
+  Welche Typklassen kennst du? Was ermöglichen sie konkret in den Einzelfällen?
+]
+
+#test[
+  Überlade die Operationen ```hs (+), (-), (*), abs, signum, fromInteger```
+  für den Datentypen ```hs data Mat22 a = Mat22 a a a a```, der 
+  $(2 times 2)$-Matrizen representieren soll -- ```hs abs, signum, fromInteger``` 
+  kannst du z.B. komponentenweise implementieren.
+  #footnote[
+    Oft sind an Funktionen von Typklassen Bedingungen bzw. Gesetze, die erfüllt
+    werden sollen, gekoppelt. Das für ```hs abs``` und ```hs signum``` wird
+    durch den Vorschlag nicht erfüllt.
+  ]
+  #footnote[
+    Mit $ mat(f_(n+1), f_n; f_n, f_(n-1))^n = mat(1, 1; 1, 0)^n $ und der 
+    binären Exponentiation aus einem vorherigen Test kannst du nun die $n$-te
+    Fibonacci-Zahl in logarithmischer Laufzeit in $n$ berechnen. Da du eine
+    ```hs Num```-Instanz auf ```hs Mat22``` definiert hast, kannst du nun auch
+    den ```hs (^)```-Operator zum Potenzieren nutzen. Dieser nutzt auch binäre
+    Exponentiation.
+  ]
+]
+
+An vielen Stellen in den bisherigen Selbsttests haben wir oft einen konkreten
+Typen (z.B. ```hs Int```) genutzt, für den es bestimmte Typklasseninstanzen 
+gibt. Das ist meistens der Fall gewesen, wenn wir Gleichheit auf Werten oder 
+eine Vergleichsoperation auf Werten brauchten. Schau dir die bisherigen 
+Selbsttests erneut und überlege dir, wo du Typen verallgemeinern kannst.
+
+#test[
+  Welche Funktionen musst du implementieren, damit eine ```hs Eq```-Instanz
+  vollständig definiert ist?
+]
+
+#test[
+  Welche Funktionen musst du implementieren, damit eine ```hs Ord```-Instanz
+  vollständig definiert ist?
+]
+
+// TODO Händische `compare` Implementierung für irgendwie einen Typen bzw.
+//      Verständnisfrage dazu
+
+#test[
+  In nicht strengen getypten Programmiersprachen haben wir oft, mit impliziter
+  Typkonversion zu tun. #footnote[Diese wollen nun für einen Moment nach Haskell 
+  zurückholen, um sie dann ganz schnell wieder zu vergessen.]
+
+  Implementiere eine Funktion ```hs ifThenElse```, die als Bedingung Werte 
+  _beliebiger_ Typen entgegennehmen kann. Ziel ist es, dass das folgende 
+  Ausdruck ausgewertet werden kann.
+  ```hs
+  let a = ifThenElse 0 3 4
+      b = ifThenElse [5] 6 7
+      c = ifThenElse Nothing 8 9
+   in a + b + c -- 19
+  ```
+]
+
+
 // Lazy Evaluation
 
 // #test[
