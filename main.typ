@@ -911,7 +911,7 @@ Selbsttests erneut und überlege dir, wo du Typen verallgemeinern kannst.
 #test[
   Eine Halbgruppe ist eine Struktur $(H, ast.op)$, wobei $ast.op$ eine 
   assoziative, binäre Verknüpfung $ast.op : H times H -> H$ ist. Ein Monoid
-  erweitert die Halbgruppe um ein neutrales Element.
+  erweitert die Halbgruppe um ein neutrales Element bzgl. $ast.op$.
 
   Definiere Typklassen ```hs Semigroup``` und ```hs Monoid```, diese Strukturen
   implementieren. Gebe auch beispielhaft ein paar Instanzen für diese an.
