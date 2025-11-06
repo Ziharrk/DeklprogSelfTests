@@ -863,13 +863,13 @@ schickt uns diese gerne über z.B. mattermost - oder
     werden sollen, gekoppelt. Das für ```hs abs``` und ```hs signum``` wird
     durch den Vorschlag nicht erfüllt.
   ]
+  // TODO Verarbeite diesen Hinweis besser.
   #footnote[
     Mit $ mat(f_(n+1), f_n; f_n, f_(n-1))^n = mat(1, 1; 1, 0)^n $ und der 
-    binären Exponentiation aus einem vorherigen Test kannst du nun die $n$-te
+    binären Exponentiation aus einem vorherigen Test kannst du die $n$-te
     Fibonacci-Zahl in logarithmischer Laufzeit in $n$ berechnen. Da du eine
-    ```hs Num```-Instanz auf ```hs Mat22``` definiert hast, kannst du nun auch
-    den ```hs (^)```-Operator zum Potenzieren nutzen. Dieser nutzt auch binäre
-    Exponentiation.
+    ```hs Num```-Instanz auf ```hs Mat22``` definiert hast, kannst du
+    den ```hs (^)```-Operator zum binären Exponentiation nutzen.
   ]
 ]
 
