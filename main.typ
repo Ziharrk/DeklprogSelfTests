@@ -882,6 +882,55 @@ stellt eine PR auf GitHub].
     ]
 ]
 
+#challenge[
+  Sei $m, n in NN$. Gegeben seien
+  - die Identitätsfunktion auf ${0, ..., n - 1}$ mit
+    $pi_0 : {0, ..., n - 1} -> {0, ..., n - 1}, x |-> x$ und
+  - eine endliche Folge von Paaren $((a_i, b_i))_(i in {1, ..., m})$ mit
+    $a_i in {0, ..., n - 1}, b_i in {0, ..., n - 1}$ für alle
+    $i in {1, ..., m}$.
+
+  Wir definieren $pi_(i,j)$ als
+  $
+  pi_(i,j) (k) = cases(
+    i & quad "falls" k = j,
+    j & quad "falls" k = i,
+    k & quad "sonst"
+  )
+  $
+  für alle $k in {0, ..., n - 1}$.
+
+  Wir betrachten die Paare als Vertauschungen der Bilder der Abbildung
+  $pi_0$, d.h., $ pi_i = pi_(a_i, b_i) compose pi_(i - 1) "für" i in {1, ..., m}. $
+  - Implementiere eine Funktion ```hs swaps :: Int -> [(Int, Int)] -> [Int]```,
+    die $pi_m$ mithilfe von Listen berechnet. Der erste Parameter bestimmt die
+    Menge ${0, ..., n - 1}$ und der zweite die Folge.
+  - Implementiere eine Funktion
+    ```hs swaps :: Int -> [(Int, Int)] -> Int -> Int```, die $pi_m$
+    mithilfe von Funktion berechnet.
+  - Welche Vor- und Nachteile haben die jeweiligen Ansätze im Vergleich?
+    #footnote[
+      Für Interessierte: Mithilfe von #link("https://hackage.haskell.org/package/array/docs/Data-Array.html")[Data.Array]
+      lässt sich die Komposition effizient berechnen.
+    ]
+]
+
+// ```hs
+// swaps :: Int -> [(Int, Int)] -> [Int]
+// swaps n = foldl (\p ab -> map (sw ab) p) [0..n - 1]
+//   where
+//     sw (a, b) x | x == a    = b
+//                 | x == b    = a
+//                 | otherwise = x
+//
+// swaps :: Int -> [(Int, Int)] -> Int -> Int
+// swaps n = foldl (\p ab -> sw ab . p) id
+//   where
+//     sw (a, b) x | x == a    = b
+//                 | x == b    = a
+//                 | otherwise = x
+// ```
+
 
 // Typklassen und Überladung
 
