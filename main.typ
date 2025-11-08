@@ -33,7 +33,7 @@
 #let test = thmplain(
     "test",
     "Test",
-    titlefmt: strong, 
+    titlefmt: strong,
     separator: h(0.5em)
   ).with(
     numbering: (_, counter) => counter
@@ -42,7 +42,7 @@
 #let challenge = thmplain(
     "challenge",
     "Challenge",
-    titlefmt: strong, 
+    titlefmt: strong,
     separator: h(0.5em)
   ).with(
     numbering: (_, counter) => counter
@@ -63,28 +63,28 @@
 )
 
 #text(0.8em)[
-  Dieses Dokument ist vom #datetime.today().display("[day].[month].[year]"). Die 
-  aktuelle Version des Dokuments kannst du im moodle oder 
+  Dieses Dokument ist vom #datetime.today().display("[day].[month].[year]"). Die
+  aktuelle Version des Dokuments kannst du im moodle oder
   #link("https://github.com/Ziharrk/DeklprogSelfTests/raw/refs/heads/main/main.pdf")[direkt von GitHub herunterladen].
 ]
 
 #context {
   let (test: (_, test), challenge: (_, challenge)) = thmcounters.final().counters
   [
-    Dieses Dokument enthält #test Fragen, #challenge kleinere bis 
+    Dieses Dokument enthält #test Fragen, #challenge kleinere bis
     größere Aufgaben und andere Ressourcen zum Thema Deklarative Programmierung.
-    Die Inhalte dieses Dokuments sollen dir helfen, dein Verständnis über 
-    Haskell und Prolog zu prüfen. 
+    Die Inhalte dieses Dokuments sollen dir helfen, dein Verständnis über
+    Haskell und Prolog zu prüfen.
   ]
 }
 
-Größere Aufgaben haben wir als Challenges markiert. Diese Aufgaben benötigen 
-öfter mehrere Konzepte und führen zusätzlich Konzepte ein, die nur für das 
+Größere Aufgaben haben wir als Challenges markiert. Diese Aufgaben benötigen
+öfter mehrere Konzepte und führen zusätzlich Konzepte ein, die nur für das
 Lösen der Aufgabe wichtig sind.
 
 Wenn du Anmerkungen oder weitere Ideen für Inhalte für dieses Dokument hast,
-dann schreibe uns gerne über z.B. mattermost an -- oder 
-#link("https://github.com/Ziharrk/DeklprogSelfTests/")[erstellt ein issue oder 
+dann schreibe uns gerne über z.B. mattermost an -- oder
+#link("https://github.com/Ziharrk/DeklprogSelfTests/")[erstellt ein issue oder
 stellt eine PR auf GitHub].
 
 = Funktionale Programmierung
@@ -235,7 +235,7 @@ stellt eine PR auf GitHub].
 ]
 
 #test[
-  In Programmiersprachen wie Java greifen wir Daten komplexer Datentypen zu, 
+  In Programmiersprachen wie Java greifen wir Daten komplexer Datentypen zu,
   indem wir auf Attribute von Objekten zugreifen oder getter-Methoden verwenden.
   Wie greifen wir auf Daten in Haskell zu?
 ]
@@ -266,12 +266,12 @@ stellt eine PR auf GitHub].
 ]
 
 #test[
-  Beim Programmieren vernachlässigen redundante Syntax. 
+  Beim Programmieren vernachlässigen redundante Syntax.
   Gibt es einen Unterschied zwischen ```hs f 1 2``` und ```hs f(1, 2)```
 ]
 
 #test[
-  Welches Konzept erlaubt es uns, dass wir Funktionen auf Listen nicht für 
+  Welches Konzept erlaubt es uns, dass wir Funktionen auf Listen nicht für
   jeden konkreten Typen angeben müssen?
 ]
 
@@ -280,7 +280,7 @@ stellt eine PR auf GitHub].
 ]
 
 #test[
-  Visualisiere `[1, 2, 3]` als Baum, wie du es in der Vorlesung kennengelernt 
+  Visualisiere `[1, 2, 3]` als Baum, wie du es in der Vorlesung kennengelernt
   hast. Zur Erinnerung: die inneren Knoten sind Funktionen und die Blätter
   Werte, die nicht weiter ausgerechnet werden können.
 ]
@@ -316,8 +316,8 @@ stellt eine PR auf GitHub].
   - Alternativ kann der ggT auch berechnet werden, indem wir das Produkt des
     Schnittes der Primfaktorzerlegung der beiden Zahlen betrachten, also
     $ product ("PF"(x) inter "PF"(y)) $
-    wobei $"PF"$ die Menge der Primfaktoren der gegebenen Zahl (mit 
-    entsprechenden Mehrfachvorkommen) beschreiben soll. Implementiere diesen 
+    wobei $"PF"$ die Menge der Primfaktoren der gegebenen Zahl (mit
+    entsprechenden Mehrfachvorkommen) beschreiben soll. Implementiere diesen
     Ansatz.
 
   #hint[
@@ -352,7 +352,7 @@ stellt eine PR auf GitHub].
 // intersect :: [Int] -> [Int] -> [Int]
 // intersect []     _      = []
 // intersect _      []     = []
-// intersect (x:xs) (y:ys) 
+// intersect (x:xs) (y:ys)
 //   | x == y    = x : intersect xs ys
 //   | x < y     = intersect xs (y:ys)
 //   | otherwise = intersect (x:xs) ys
@@ -362,7 +362,7 @@ stellt eine PR auf GitHub].
 // ```
 
 #challenge[
-  Die Ableitung einer Funktion $f : RR -> RR$ kann mithilfe des 
+  Die Ableitung einer Funktion $f : RR -> RR$ kann mithilfe des
   Differenzenquotienten $(f(x+h)-f(x))/h$ für kleines $h$ approximiert werden.
   Ein andere Methode zur Berechnung der Ableitung ist symbolisches Differenzen
   und ähnelt dem, wie wir analytisch Ableitungen berechnen.
@@ -386,7 +386,7 @@ stellt eine PR auf GitHub].
   -- Example
   g :: Fun
   g :: let x = X
-           x2 = x :*: x      
+           x2 = x :*: x
            x3 = x2 :*: x
         in x3 :+: x2 :+: x :+: Num 1.0  -- x^3 + x^2 + x + 1
   ```
@@ -419,13 +419,13 @@ stellt eine PR auf GitHub].
 // derive (Num _)   = Num 0.0
 // derive (f :+: g) = derive f :+: derive g
 // derive (f :-: g) = derive f :-: derive g
-// derive (f :*: g) = let f' = derive f 
+// derive (f :*: g) = let f' = derive f
 //                        g' = derive g
 //                     in (f' :*: g) :+: (f :*: g')
-// derive (f :/: g) = let f' = derive f 
+// derive (f :/: g) = let f' = derive f
 //                        g' = derive g
 //                     in ((f' :*: g) :+: (f :*: g')) :/: (g :*: g)
-// derive (f :<: g) = let f' = derive f 
+// derive (f :<: g) = let f' = derive f
 //                        g' = derive g
 //                     in g' :*: (f' :<: g)
 // derive (f :^: g) = let h = Ln f :*: g
@@ -433,20 +433,20 @@ stellt eine PR auf GitHub].
 // ```
 
 #challenge[
-  In Einführung in die Algorithmik hast du verschiedene Varianten des 
+  In Einführung in die Algorithmik hast du verschiedene Varianten des
   `mergesort`-Algorithmus kennengelernt. Eine davon hat ausgenutzt, dass in
   einer Eingabeliste bereits aufsteigend sortierte Teillisten vorkommen können,
   um den Algorithmus zu beschleunigen.
   #footnote[
-    Falls du interessiert bist: In der Haskell `base`-library wird `sort` aus 
+    Falls du interessiert bist: In der Haskell `base`-library wird `sort` aus
     `Data.List` sehr ähnlich implementiert:
     #link("https://hackage.haskell.org/package/ghc-internal-9.1201.0/docs/src/GHC.Internal.Data.OldList.html#sort")[Data.List.sort].
-  ] 
-  Implementiere diese Variante in Haskell. 
+  ]
+  Implementiere diese Variante in Haskell.
 
   #text(0.8em)[
-    Für den Anfang kannst du annehmen, dass die Eingabelisten vom Typ 
-    ```hs [Int]``` sind. Wenn wir Typklassen behandelt haben, kannst du 
+    Für den Anfang kannst du annehmen, dass die Eingabelisten vom Typ
+    ```hs [Int]``` sind. Wenn wir Typklassen behandelt haben, kannst du
     ```hs Ord a => [a]``` nutzen.
   ]
 ]
@@ -454,12 +454,12 @@ stellt eine PR auf GitHub].
 // ```hs
 // mergesort :: [Int] -> [Int]
 // mergesort xs = mergeAll (runs xs)
-//   where 
+//   where
 //     runs :: [Int] -> [[Int]]
 //     runs []     = [[]]
 //     runs (x:[]) = [[x]]
-//     runs (x:xs) = 
-//       let (r:rs) = runs xs 
+//     runs (x:xs) =
+//       let (r:rs) = runs xs
 //        in case r of
 //             (y:_) | x < y -> (x:r) : rs
 //             _             -> [x] : (r:rs)
@@ -481,11 +481,11 @@ stellt eine PR auf GitHub].
 // ```
 
 #challenge[
-  Entwickle einen Datentyp ```hs Ratio```, um rationale Zahlen 
-  $ p/q in QQ, quad p in ZZ, q in NN, p "und" q "teilerfremd" $ 
-  darzustellen. Implementiere die Operationen: Addition, Subtraktion, 
+  Entwickle einen Datentyp ```hs Ratio```, um rationale Zahlen
+  $ p/q in QQ, quad p in ZZ, q in NN, p "und" q "teilerfremd" $
+  darzustellen. Implementiere die Operationen: Addition, Subtraktion,
   Multiplikation, Divison. Implementiere weiter eine Funktion, die die
-  rationale Zahl als reelle Zahl mit einer festen Anzahl von Nachkommastellen 
+  rationale Zahl als reelle Zahl mit einer festen Anzahl von Nachkommastellen
   darstellt.
 ]
 
@@ -495,30 +495,30 @@ stellt eine PR auf GitHub].
 //   where
 //     p = numerator x
 //     q = denominator x
-// 
+//
 //     go 0 _ = ""
 //     go _ 0 = ""
 //     go k a = show (a `div` q) ++ go (k - 1) (10 * (a `mod` q))
 // ```
 
 #test[
-  Wie können wir es hinkriegen, dass die invalide Liste ```hs [32, True, "Hello, world!"]``` 
+  Wie können wir es hinkriegen, dass die invalide Liste ```hs [32, True, "Hello, world!"]```
   ein valider Haskell-Wert wird? Mithilfe welches Hilfstypen kriegen das hin?
 ]
 
 #test[
   Du hast bereits viele Funktionen kennengelernt, die in der Haskell
-  `base`-library implementiert sind. Anstatt eine konkrete Liste dieser 
+  `base`-library implementiert sind. Anstatt eine konkrete Liste dieser
   Funktionen anzugeben, möchten wir dich motivieren, folgende Dokumentationen
   verschiedener Module anzuschauen.
   - #link("https://hackage.haskell.org/package/base/docs/Prelude.html")[Prelude]
   - #link("https://hackage.haskell.org/package/base/docs/Data-List.html")[Data.List]
-  Wenn du merkst, die Implementierung einer bekannten Funktion fällt dir ad hoc 
+  Wenn du merkst, die Implementierung einer bekannten Funktion fällt dir ad hoc
   nicht ein, nehme dir Zeit und überlege, wie du sie implementieren könntest.
 ]
 
 #test[
-  Hier ist eine fehlerhafte Implementierung eines Datentyps für einen 
+  Hier ist eine fehlerhafte Implementierung eines Datentyps für einen
   knotenbeschrifteten Binärbäumen.
   ```hs
   data Tree a = Empty | Node Tree a Tree
@@ -552,17 +552,17 @@ stellt eine PR auf GitHub].
 
 #test[
   Die ```hs (!!)```-Funktion ist unsicher in dem Sinne, dass sie für invalide
-  Listenzugriffe einen Fehler wirft. Die Funktion 
-  ```hs (!?) :: [a] -> Int -> Maybe a``` ist eine sichere Variante von 
-  ```hs (!!)```. Sie macht den Fehlerfall explizit durch die Wahl des 
+  Listenzugriffe einen Fehler wirft. Die Funktion
+  ```hs (!?) :: [a] -> Int -> Maybe a``` ist eine sichere Variante von
+  ```hs (!!)```. Sie macht den Fehlerfall explizit durch die Wahl des
   Ergebnistypen. Was tut diese Funktion voraussichtlich? Implementiere diese
   Funktion.
   #footnote[Diese Funktion ist auch bereits vorimplementiert: #link("https://hackage.haskell.org/package/base-4.21.0.0/docs/Data-List.html#v:-33--63-")[```hs (!?)``` in ```hs Data.List```].]
 ]
 
 #test[
-  ```hs (++) :: [a] -> [a] -> [a]``` wird verwendet, um zwei Listen 
-  aneinanderzuhängen. Wenn wir eine Funktion induktiv über den Listentypen 
+  ```hs (++) :: [a] -> [a] -> [a]``` wird verwendet, um zwei Listen
+  aneinanderzuhängen. Wenn wir eine Funktion induktiv über den Listentypen
   definieren wie z.B. ```hs square :: [Int] -> [Int]```, die jeden Listeneintrag
   quadrieren soll, dann können wir das wie folgt tun.
   ```hs
@@ -570,7 +570,7 @@ stellt eine PR auf GitHub].
   square []     = []
   square (x:xs) = [x * x] ++ square xs
   ```
-  Die Funktion ist zwar korrekt aber nicht Haskell-idiomatisch, d.h., eine 
+  Die Funktion ist zwar korrekt aber nicht Haskell-idiomatisch, d.h., eine
   Person, die Erfahren im Programmieren von Haskell ist, würde dies nicht so
   schreiben. Was müssten wir an der Funktion ändern, damit sie idiomatisch ist.
 ]
@@ -586,20 +586,20 @@ stellt eine PR auf GitHub].
 // Pattern Matching
 
 #challenge[
-  In den Übungsaufgaben hast du einen Suchbaum ohne Höhenbalancierung 
+  In den Übungsaufgaben hast du einen Suchbaum ohne Höhenbalancierung
   implementiert. Die Rotationen für einen AVL-Baum lassen sich durch das
-  pattern matching in Haskell vergleichsweise elegant implementieren - erinnere 
-  dich z.B. an die Implementierung aus Einführung in die Algorithmik, die recht 
+  pattern matching in Haskell vergleichsweise elegant implementieren - erinnere
+  dich z.B. an die Implementierung aus Einführung in die Algorithmik, die recht
   verbos ist.
 
   Die Höhe eines Teilbaums kann z.B. als weiteres Attribut im Knoten gespeichert
-  werden. Eine ineffizientere Variante ist es, die Höhe mit einer Funktion 
-  wiederkehrend zu berechnen. Letztere Variante ist für den Anfang 
+  werden. Eine ineffizientere Variante ist es, die Höhe mit einer Funktion
+  wiederkehrend zu berechnen. Letztere Variante ist für den Anfang
   übersichtlicher.
 
   Implementiere eine Funktion ```hs rotate :: SearchTree a -> SearchTree a```,
-  die einen Teilbaum an der Wurzel rebalanciert, sollte der Teilbaum 
-  unbalanciert sein. Diese Funktion kannst du dann nutzen, um die gängigen 
+  die einen Teilbaum an der Wurzel rebalanciert, sollte der Teilbaum
+  unbalanciert sein. Diese Funktion kannst du dann nutzen, um die gängigen
   Operationen auf Suchbäumen anzupassen.
   #footnote[#link("https://de.wikipedia.org/wiki/AVL-Baum#Rebalancierung")[Rebalancierung eines AVL-Baum]]
 ]
@@ -608,11 +608,11 @@ stellt eine PR auf GitHub].
 // height :: SearchTree a -> Int
 // height Empty        = 0
 // height (Node l _ r) = max (height l) (height r) + 1
-// 
+//
 // balance :: SearchTree a -> Int
 // balance Empty        = 0
 // balance (Node l _ r) = height r - height l
-// 
+//
 // rotate :: SearchTree a -> SearchTree a
 // rotate Empty          = Empty
 // rotate t@(Node l v r) =
@@ -625,7 +625,7 @@ stellt eine PR auf GitHub].
 //   where
 //     rotateR (Node (Node ll lv lr) v r) = Node ll lv (Node lr v r)
 //     rotateR _                          = error "should not happen"
-// 
+//
 //     rotateL (Node l v (Node rl rv rr)) = Node (Node l v rl) rv rr
 //     rotateL _                          = error "should not happen"
 // ```
@@ -634,24 +634,24 @@ stellt eine PR auf GitHub].
 // Automatisches Testen
 
 #test[
-  Formuliere QuickCheck-Eigenschaften, die die Funktionen 
+  Formuliere QuickCheck-Eigenschaften, die die Funktionen
   - ```hs isElem :: Int -> SearchTree Int -> Bool```,
   - ```hs toList :: SearchTree Int -> Int```,
   - ```hs insert :: Int -> SearchTree Int -> SearchTree Int``` und
   - ```hs delete :: Int -> SearchTree Int -> SearchTree Int```
   erfüllen sollen. ```hs isElem``` überprüft, ob eine Ganzzahl in gegebenen
-  Suchbaum enthalten ist. ```hs toList``` konvertiert einen Suchbaum in eine 
-  Liste. ```hs insert``` fügt eine Ganzzahl in einen Suchbaum ein. 
+  Suchbaum enthalten ist. ```hs toList``` konvertiert einen Suchbaum in eine
+  Liste. ```hs insert``` fügt eine Ganzzahl in einen Suchbaum ein.
   ```hs delete``` löscht eine Ganzzahl aus einen Suchbaum.
 
-  Wie kannst du die Suchbaum-Eigenschaft spezifizieren (dafür brauchst du 
+  Wie kannst du die Suchbaum-Eigenschaft spezifizieren (dafür brauchst du
   weitere Funktionen)?
 ]
 
 #test[
   QuickCheck-Eigenschaften werden mit zufällig generierten Werten getestet.
   Hin und wieder kommt es vor, dass diese Werte Vorbedingungen erfüllen müssen,
-  damit wir Eigenschaften von Funktionen testen können. Wie können wir das 
+  damit wir Eigenschaften von Funktionen testen können. Wie können wir das
   erreichen?
 ]
 
@@ -673,20 +673,20 @@ stellt eine PR auf GitHub].
 ]
 
 #test[
-  Warum ist der Typ ```hs (a -> b) -> c``` nicht identisch zum Typ 
+  Warum ist der Typ ```hs (a -> b) -> c``` nicht identisch zum Typ
   ```hs a -> b -> c```? Welcher andere Typ ist identisch zu letzterem?
 ]
 
 #test[
   Mit welchen Konzepten gehen die Linksassoziativität der Funktionsapplikation
-  und die Rechtsassoziatvität des Typkonstruktors ```hs (->)``` gut Hand in 
+  und die Rechtsassoziatvität des Typkonstruktors ```hs (->)``` gut Hand in
   Hand?
 ]
 
 // TODO möglicherweise gibt es coolere Funktionen, die auch noch ohne folds
 //      auskommen - für folds wollte ich einen Test extra haben
 #test[
-  Zu welchen partiell applizierten Funktionen verhalten sich folgenden 
+  Zu welchen partiell applizierten Funktionen verhalten sich folgenden
   Funktionen identisch?
   - ```hs succ :: Int -> Int``` (die Inkrementfunktion)
   - ```hs pred :: Int -> Int``` (die Dekrementfunktion)
@@ -704,13 +704,13 @@ stellt eine PR auf GitHub].
 ]
 
 #test[
-  Welche Funktionen höherer Ordnung hast du kennengelernt im Kontext der 
+  Welche Funktionen höherer Ordnung hast du kennengelernt im Kontext der
   generischen Programmierung? Was ist das Ziel dieser Funktionen?
 ]
 
 #test[
-  Die Funktionen ```hs map :: (a -> b) -> [a] -> [b]``` und 
-  ```hs filter :: (a -> Bool) -> [a] -> [a]``` lassen sich alle mithilfe 
+  Die Funktionen ```hs map :: (a -> b) -> [a] -> [b]``` und
+  ```hs filter :: (a -> Bool) -> [a] -> [a]``` lassen sich alle mithilfe
   ```hs foldr :: (a -> r -> r) -> r -> [a] -> r``` ausdrücken. Wie erreichen wir
   dies?
 ]
@@ -719,13 +719,13 @@ stellt eine PR auf GitHub].
   Gegeben seien folgende Funktionen:
   - ```hs rgbToHsv :: RGB -> HSV```, die eine Farbe von einer Darstellung
     in einen anderen konvertiert, und
-  - ```hs hue :: HSV -> Float```, die den Farbwert einer Farbe im Wertebereich 
+  - ```hs hue :: HSV -> Float```, die den Farbwert einer Farbe im Wertebereich
     $[0°, 360°)$ im HSV-Farbraum zurückgibt.
   Du bekommst als Eingabe einen Bild, das hier als Liste von ```hs RGB```-Werten
-  dargestellt ist. Jeder ```hs RGB```-Wert korrespondiert zu einem Pixel. 
+  dargestellt ist. Jeder ```hs RGB```-Wert korrespondiert zu einem Pixel.
   Schreibe eine Funktion, die berechnet, wie viele blaue Pixel das Bild hat.
   Hier bezeichene eine Farbe als blau, wenn ihr Farbwert zwischen $200°$ und
-  $250°$ (inklusiv) liegt. Nutze für die Definition der Funktion sowohl 
+  $250°$ (inklusiv) liegt. Nutze für die Definition der Funktion sowohl
   ```hs map``` als auch ```hs filter```.
 ]
 
@@ -734,8 +734,8 @@ stellt eine PR auf GitHub].
 ]
 
 #test[
-  Welche der Faltungsfunktion auf Listen ergibt sich aus dem Verfahren zur 
-  Erzeugung von Faltungsfunktionen, das du für beliebige Datentypen 
+  Welche der Faltungsfunktion auf Listen ergibt sich aus dem Verfahren zur
+  Erzeugung von Faltungsfunktionen, das du für beliebige Datentypen
   kennengelernt hast?
 ]
 
@@ -747,7 +747,7 @@ stellt eine PR auf GitHub].
 #test[
   Wie gewinnen wir aus ```hs foldr``` die Identitätsfunktion auf Listen?
   In den Übungen hast du gelernt, wie man Werte anderer Typen falten kann.
-  Wie gewinnt man aus diesen Funktionen die Identitätsfunktionen auf den 
+  Wie gewinnt man aus diesen Funktionen die Identitätsfunktionen auf den
   jeweiligen Typen?
 ]
 
@@ -774,8 +774,8 @@ stellt eine PR auf GitHub].
   sum []     = 0
   sum (x:xs) = x + sum xs
   ```
-  Dieses Muster haben wir in ```hs foldr``` abstrahiert. Wo wandern die 
-  jeweiligen Bestandteile der abstrakten Funktion ```hs f``` hin, wenn wir 
+  Dieses Muster haben wir in ```hs foldr``` abstrahiert. Wo wandern die
+  jeweiligen Bestandteile der abstrakten Funktion ```hs f``` hin, wenn wir
   ```hs f``` mithilfe von ```hs foldr``` definieren. Was passiert insbesondere
   mit dem rekursiven Aufruf von ```hs f```?
 ]
@@ -790,7 +790,7 @@ stellt eine PR auf GitHub].
 ]
 
 #test[
-  Wir können ```hs map :: (a -> b) -> [a] -> [b]``` mithilfe von 
+  Wir können ```hs map :: (a -> b) -> [a] -> [b]``` mithilfe von
   ```hs foldr``` wie folgt implementieren:
   #align(center)[```hs map f xs = foldr (\x ys -> f x : ys) [] xs```]
   Vereinfache den Lambda-Ausdruck mithilfe von Funktionen höherer Ordnung.
@@ -800,7 +800,7 @@ stellt eine PR auf GitHub].
   Wenn wir die Listenkonstruktoren in ```hs foldr``` einsetzen, erhalten wir die
   Identitätsfunktion auf Listen, also
   #align(center)[```hs foldr (:) [] :: [a] -> [a]```.]
-  Wenn wir das Gleiche mit ```hs foldl``` und angepassten ```hs (:)``` machen, 
+  Wenn wir das Gleiche mit ```hs foldl``` und angepassten ```hs (:)``` machen,
   also
   #align(center)[```hs foldl (flip (:)) [] :: [a] -> [a]```,]
   dann erhalten wir nicht die Identitätsfunktion auf Listen. Warum und was
@@ -810,7 +810,7 @@ stellt eine PR auf GitHub].
 #test[
   Es gibt viele andere hilfreiche Funktionen höherer Ordnung in der Haskell
   Prelude. Eine von diesen ist ```hs zipWith :: (a -> b -> c) -> [a] -> [b] -> [c]```.
-  Sie verknüpft jeweils zwei Elemente aus den jeweiligen Listen unter der 
+  Sie verknüpft jeweils zwei Elemente aus den jeweiligen Listen unter der
   gegeben Funktion.
   - Implementiere ```hs zipWith``` mithilfe von ```hs map, uncurry, zip```.
   - Implementiere ```hs zip``` mithilfe von ```hs zipWith```.
@@ -818,17 +818,17 @@ stellt eine PR auf GitHub].
 ]
 
 #challenge[
-  Gegeben sei die Funktion Faltungsfunktion 
+  Gegeben sei die Funktion Faltungsfunktion
   ```hs foldTree :: (r -> a -> r -> r) -> r -> Tree a -> r```
   für einen knotenbeschrifteten Binärbaum gegeben durch
   ```hs data Tree a = Empty | Node (Tree a) a (Tree a)```.
 
   Wie auch für Listen lassen sich eine Reihe von bekannten Funktionen
-  auf Bäume übertragen. 
+  auf Bäume übertragen.
   #footnote[
     Diese Funktionen lassen sich auf alle faltbaren Datentypen verallgemeinern.
-    Für Interessierte: Dies wird mithilfe der #link("https://hackage.haskell.org/package/base-4.21.0.0/docs/Data-Foldable.html")[Typklasse ```hs Foldable```] 
-    festgehalten -- diese Typklasse behandeln wir aber in der Vorlesung 
+    Für Interessierte: Dies wird mithilfe der #link("https://hackage.haskell.org/package/base-4.21.0.0/docs/Data-Foldable.html")[Typklasse ```hs Foldable```]
+    festgehalten -- diese Typklasse behandeln wir aber in der Vorlesung
     voraussichtlich nicht.
   ]
   Implementiere die Funktionen
@@ -888,7 +888,7 @@ stellt eine PR auf GitHub].
 ]
 
 #test[
-  Wie unterscheidet sich der Polymorphismus, der durch Typklassen ermöglicht 
+  Wie unterscheidet sich der Polymorphismus, der durch Typklassen ermöglicht
   wird, vom parametrischen Polymorphismus?
 ]
 
@@ -904,8 +904,8 @@ stellt eine PR auf GitHub].
 
 #test[
   Überlade die Operationen ```hs (+), (-), (*), abs, signum, fromInteger```
-  für den Datentypen ```hs data Mat22 a = Mat22 a a a a```, der 
-  $(2 times 2)$-Matrizen representieren soll -- ```hs abs, signum, fromInteger``` 
+  für den Datentypen ```hs data Mat22 a = Mat22 a a a a```, der
+  $(2 times 2)$-Matrizen representieren soll -- ```hs abs, signum, fromInteger```
   kannst du z.B. komponentenweise implementieren.
   #footnote[
     Oft sind an Funktionen von Typklassen Bedingungen bzw. Gesetze, die erfüllt
@@ -914,7 +914,7 @@ stellt eine PR auf GitHub].
   ]
   // TODO Verarbeite diesen Hinweis besser.
   #footnote[
-    Mit $ mat(f_(n+1), f_n; f_n, f_(n-1))^n = mat(1, 1; 1, 0)^n $ und der 
+    Mit $ mat(f_(n+1), f_n; f_n, f_(n-1))^n = mat(1, 1; 1, 0)^n $ und der
     binären Exponentiation aus einem vorherigen Test kannst du die $n$-te
     Fibonacci-Zahl in logarithmischer Laufzeit in $n$ berechnen. Da du eine
     ```hs Num```-Instanz auf ```hs Mat22``` definiert hast, kannst du
@@ -923,9 +923,9 @@ stellt eine PR auf GitHub].
 ]
 
 An vielen Stellen in den bisherigen Selbsttests haben wir oft einen konkreten
-Typen (z.B. ```hs Int```) genutzt, für den es bestimmte Typklasseninstanzen 
-gibt. Das ist meistens der Fall gewesen, wenn wir Gleichheit auf Werten oder 
-eine Vergleichsoperation auf Werten brauchten. Schau dir die bisherigen 
+Typen (z.B. ```hs Int```) genutzt, für den es bestimmte Typklasseninstanzen
+gibt. Das ist meistens der Fall gewesen, wenn wir Gleichheit auf Werten oder
+eine Vergleichsoperation auf Werten brauchten. Schau dir die bisherigen
 Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
 
 #test[
@@ -943,10 +943,10 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
 
 #test[
   In nicht streng getypten Programmiersprachen haben wir oft, mit impliziter
-  Typkonversion zu tun. #footnote[Diese wollen nun für einen Moment nach Haskell 
+  Typkonversion zu tun. #footnote[Diese wollen nun für einen Moment nach Haskell
   zurückholen, um sie dann ganz schnell wieder zu vergessen.] Implementiere eine
-  Funktion ```hs ifThenElse```, die als Bedingung Werte _beliebiger_ Typen 
-  entgegennehmen kann. Ziel ist es, dass das folgende Ausdruck ausgewertet 
+  Funktion ```hs ifThenElse```, die als Bedingung Werte _beliebiger_ Typen
+  entgegennehmen kann. Ziel ist es, dass das folgende Ausdruck ausgewertet
   werden kann.
   ```hs
   let a = ifThenElse 0 3 4
@@ -957,7 +957,7 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
 ]
 
 #test[
-  Eine Halbgruppe ist eine Struktur $(H, ast.op)$, wobei $ast.op$ eine 
+  Eine Halbgruppe ist eine Struktur $(H, ast.op)$, wobei $ast.op$ eine
   assoziative, binäre Verknüpfung $ast.op : H times H -> H$ ist. Ein Monoid
   erweitert die Halbgruppe um ein neutrales Element bzgl. $ast.op$.
 
@@ -985,8 +985,8 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
 //   foldDeep :: ([Maybe (Either a r)] -> r) -> Deep a b -> r
 //   foldDeep fdeep (Deep x) = fdeep (f x)
 //   ```
-//   Wie können wir 
-//   ```hs f :: [Maybe (Either a (Deep a b))] -> [Maybe (Either a r)]``` 
+//   Wie können wir
+//   ```hs f :: [Maybe (Either a (Deep a b))] -> [Maybe (Either a r)]```
 //   mithilfe von ```hs foldDeep fdeep :: Deep a b -> r``` definieren?
 // ]
 
