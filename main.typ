@@ -87,6 +87,8 @@ dann schreibe uns gerne über z.B. mattermost an -- oder
 #link("https://github.com/Ziharrk/DeklprogSelfTests/")[erstellt ein issue oder
 stellt eine PR auf GitHub].
 
+
+
 = Funktionale Programmierung
 
 // Ausdrücke und Funktionen
@@ -912,13 +914,17 @@ stellt eine PR auf GitHub].
     werden sollen, gekoppelt. Das für ```hs abs``` und ```hs signum``` wird
     durch den Vorschlag nicht erfüllt.
   ]
-  // TODO Verarbeite diesen Hinweis besser.
-  #footnote[
-    Mit $ mat(f_(n+1), f_n; f_n, f_(n-1))^n = mat(1, 1; 1, 0)^n $ und der
-    binären Exponentiation aus einem vorherigen Test kannst du die $n$-te
-    Fibonacci-Zahl in logarithmischer Laufzeit in $n$ berechnen. Da du eine
-    ```hs Num```-Instanz auf ```hs Mat22``` definiert hast, kannst du
-    den ```hs (^)```-Operator zum binären Exponentiation nutzen.
+]
+
+#test[
+  Mit $ mat(f_(n+1), f_n; f_n, f_(n-1))^n = mat(1, 1; 1, 0)^n $ und der
+  binären Exponentiation und ```hs Mat22 Integer``` aus einem vorherigen Tests
+  kannst du die $n$-te Fibonacci-Zahl in logarithmischer Laufzeit in $n$
+  berechnen. Implementiere das Verfahren.
+
+  #text(0.8em)[
+    Da du eine ```hs Num```-Instanz auf ```hs Mat22``` definiert hast, kannst
+    du den ```hs (^)```-Operator zum binären Exponentiation nutzen.
   ]
 ]
 
