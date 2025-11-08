@@ -83,8 +83,9 @@ Größere Aufgaben haben wir als Challenges markiert. Diese Aufgaben benötigen
 Lösen der Aufgabe wichtig sind.
 
 Wenn du Anmerkungen oder weitere Ideen für Inhalte für dieses Dokument hast,
-schickt uns diese gerne über z.B. mattermost - oder 
-#link("https://github.com/Ziharrk/DeklprogSelfTests/")[stellt eine PR auf GitHub].
+dann schreibe uns gerne über z.B. mattermost an -- oder 
+#link("https://github.com/Ziharrk/DeklprogSelfTests/")[erstellt ein issue oder 
+stellt eine PR auf GitHub].
 
 = Funktionale Programmierung
 
@@ -789,6 +790,24 @@ schickt uns diese gerne über z.B. mattermost - oder
 ]
 
 #test[
+  Wir können ```hs map :: (a -> b) -> [a] -> [b]``` mithilfe von 
+  ```hs foldr``` wie folgt implementieren:
+  #align(center)[```hs map f xs = foldr (\x ys -> f x : ys) [] xs```]
+  Vereinfache den Lambda-Ausdruck mithilfe von Funktionen höherer Ordnung.
+]
+
+#test[
+  Wenn wir die Listenkonstruktoren in ```hs foldr``` einsetzen, erhalten wir die
+  Identitätsfunktion auf Listen, also
+  #align(center)[```hs foldr (:) [] :: [a] -> [a]```.]
+  Wenn wir das Gleiche mit ```hs foldl``` und angepassten ```hs (:)``` machen, 
+  also
+  #align(center)[```hs foldl (flip (:)) [] :: [a] -> [a]```,]
+  dann erhalten wir nicht die Identitätsfunktion auf Listen. Warum und was
+  bekommen wir stattdessen heraus?
+]
+
+#test[
   Es gibt viele andere hilfreiche Funktionen höherer Ordnung in der Haskell
   Prelude. Eine von diesen ist ```hs zipWith :: (a -> b -> c) -> [a] -> [b] -> [c]```.
   Sie verknüpft jeweils zwei Elemente aus den jeweiligen Listen unter der 
@@ -820,6 +839,22 @@ schickt uns diese gerne über z.B. mattermost - oder
   - ```hs length :: Tree a -> Int```,
   - ```hs maximum :: Tree Int -> Int``` und ```hs minimum :: Tree Int -> Int```, und
   - ```hs sum :: Tree Int -> Int``` und ```hs product :: Tree Int -> Int```.
+]
+
+#test[
+  Gegeben seien die Funktion
+  ```hs
+  f :: a -> b
+  g :: a -> b -> c
+  ```
+  sowie die Kompositionsfunktion ```hs (.) :: (b -> c) -> (a -> b) -> a -> c```.
+
+  In der Typdefinition von ```hs (.)``` scheint das erste Argument, eine
+  einstellige Funktion zu sein. Ist der Ausdruck
+  #align(center)[```hs g . f```]
+  trotzdem typkorrekt, obwohl ```hs g``` eine zweistellige Funktion ist?
+  Wenn ja, wie werden die Typvariablen -- insbesondere das ```hs c``` der
+  Komposition -- unifiziert?
 ]
 
 #test[
