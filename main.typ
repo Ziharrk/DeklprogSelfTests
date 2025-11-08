@@ -909,10 +909,6 @@ stellt eine PR auf GitHub].
     ```hs swaps :: Int -> [(Int, Int)] -> Int -> Int```, die $pi_m$
     mithilfe von Funktion berechnet.
   - Welche Vor- und Nachteile haben die jeweiligen Ansätze im Vergleich?
-    #footnote[
-      Für Interessierte: Mithilfe von #link("https://hackage.haskell.org/package/array/docs/Data-Array.html")[Data.Array]
-      lässt sich die Komposition effizient berechnen.
-    ]
 ]
 
 // ```hs
