@@ -907,20 +907,21 @@ stellt eine PR auf GitHub].
     Menge ${0, ..., n - 1}$ und der zweite die Folge.
   - Implementiere eine Funktion
     ```hs swaps :: Int -> [(Int, Int)] -> Int -> Int```, die $pi_m$
-    mithilfe von Funktion berechnet.
+    mithilfe von Funktion berechnet. (Hier ist der erste Parameter unter
+    Umständen redundant.)
   - Welche Vor- und Nachteile haben die jeweiligen Ansätze im Vergleich?
 ]
 
 // ```hs
 // swaps :: Int -> [(Int, Int)] -> [Int]
-// swaps n = foldl (\p ab -> map (sw ab) p) [0..n - 1]
+// swaps n = foldr (map . sw) [0..n - 1]
 //   where
 //     sw (a, b) x | x == a    = b
 //                 | x == b    = a
 //                 | otherwise = x
 //
 // swaps :: Int -> [(Int, Int)] -> Int -> Int
-// swaps n = foldl (\p ab -> sw ab . p) id
+// swaps n = foldr (\ab p -> sw ab . p) id
 //   where
 //     sw (a, b) x | x == a    = b
 //                 | x == b    = a
