@@ -997,7 +997,7 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
   In nicht streng getypten Programmiersprachen haben wir oft, mit impliziter
   Typkonversion zu tun. #footnote[Diese wollen nun für einen Moment nach Haskell
   zurückholen, um sie dann ganz schnell wieder zu vergessen.] Implementiere eine
-  Funktion ```hs ifThenElse```, die als Bedingung Werte _beliebiger_ Typen
+  Funktion ```hs ifThenElse```, die als Bedingung Werte beliebiger Typen
   entgegennehmen kann. Ziel ist es, dass das folgende Ausdruck ausgewertet
   werden kann.
   ```hs
