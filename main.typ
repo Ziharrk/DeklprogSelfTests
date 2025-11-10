@@ -961,6 +961,7 @@ stellt eine PR auf GitHub].
   Die ```hs Map``` ist wie folgt repräsentiert ```hs type Map k v = k -> v```.
 ]
 
+
 // Abstrakte Datentypen
 
 #test[
@@ -969,7 +970,7 @@ stellt eine PR auf GitHub].
 ]
 
 #test[
-  Wie definieren wir die Semantik der einem abstrakten Datentyp gehörenden
+  Wie definieren wir die Semantik der zu einem abstrakten Datentyp gehörenden
   Operationen? Wie definieren wir sie insbesondere nicht?
 ]
 
