@@ -579,7 +579,7 @@ stellt eine PR auf GitHub].
 
 #test[
   Die Funktion ```hs show``` kann genutzt werden, um Werte eines beliebigen
-  Datentyp in eine String-Representation zu überführen. Warum kann
+  Datentyp in eine String-Repräsentation zu überführen. Warum kann
   ```hs show``` nicht als Funktion vom Typ ```hs a -> String``` implementiert
   sein?
 ]
@@ -928,6 +928,54 @@ stellt eine PR auf GitHub].
 //                 | otherwise = x
 // ```
 
+#test[
+  Eta-reduziere die folgende Ausdrücke:
+  - ```hs sum xs = foldr (+) 0 xs```,
+  - ```hs add a b = a + b``` und
+  - ```hs \x ys -> (:) x ys```.
+]
+
+#test[
+  Implementiere die Funktion
+  ```hs insert :: Int -> a -> Map Int a -> Map Int a```,
+  die ein Schlüssel-Wert-Paar in eine ```hs Map Int a``` einfügt.
+  Die ```hs Map``` ist wie folgt repräsentiert ```hs type Map k v = k -> v```.
+]
+
+// Abstrakte Datentypen
+
+#test[
+  Was ist ein abstrakter Datentyp? Was sind die Bestandteile eines abstrakten
+  Datentyps?
+]
+
+#test[
+  Wie definieren wir die Semantik der einem abstrakten Datentyp gehörenden
+  Operationen? Wie definieren wir sie insbesondere nicht?
+]
+
+#test[
+  Wieso ist das sofortige Nutzen einer Gleichheit auf einem abstrakten Datentypen
+  problematisch? Was sollte man stattdessen tun?
+]
+
+#test[
+  Zur Spezifikation der Semantik nutzen wir Gesetze, die bestimmen, wie
+  verschiedene Operationen miteinander interagieren. Dafür benötigen wir
+  verschiedene Werte oftmals unterschiedlicher Datentypen. Wo kommen diese her
+  und wie sind sie quantifiziert?
+]
+
+#test[
+  Welche Eigenschaften sollten die für einen abstrakten Datentypen formulierten
+  Gesetze erfüllen?
+]
+
+#challenge[
+  Gebe folgende abstrakte Datentypen an: Paar, Menge, stack, queue,
+  double-ended queue, knotenbeschrifteter Binärbaum, priority queue.
+]
+
 
 // Typklassen und Überladung
 
@@ -953,7 +1001,7 @@ stellt eine PR auf GitHub].
 #test[
   Überlade die Operationen ```hs (+), (-), (*), abs, signum, fromInteger```
   für den Datentypen ```hs data Mat22 a = Mat22 a a a a```, der
-  $(2 times 2)$-Matrizen representieren soll -- ```hs abs, signum, fromInteger```
+  $(2 times 2)$-Matrizen repräsentieren soll -- ```hs abs, signum, fromInteger```
   kannst du z.B. komponentenweise implementieren.
   #footnote[
     Oft sind an Funktionen von Typklassen Bedingungen bzw. Gesetze, die erfüllt
