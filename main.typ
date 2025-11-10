@@ -1089,8 +1089,8 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
 // Lazy Evaluation
 
 #test[
-  Wie können wir mit ```hs foldl``` auf unendlichen Listen mit keinem Ergebnis
-  rechnen?
+  Wieso können wir mit ```hs foldl``` auf unendlichen Listen mit keinem
+  Ergebnis rechnen?
 ]
 
 
