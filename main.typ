@@ -62,6 +62,25 @@
   numbering: "1"
 )
 
+#let stopHere = block(
+  fill: red.lighten(90%),
+  inset: 1em,
+  above: 2em,
+  below: 2em,
+  align(center)[
+    #text(weight: "bold", fill: red)[
+      Welcome weary traveler, you've come far. Why don't you stop here and get
+      some rest before you continue your journey.
+    ]
+
+    #text(0.8em, fill: red)[
+      (Mit den Inhalten der Vorlesung kannst du die Tests und Challenges aktuell
+      bis hier hin lösen.)
+    ]
+  ]
+)
+
+
 #text(0.8em)[
   Dieses Dokument ist vom #datetime.today().display("[day].[month].[year]"). Die
   aktuelle Version des Dokuments kannst du im moodle oder
@@ -976,6 +995,7 @@ stellt eine PR auf GitHub].
   double-ended queue, knotenbeschrifteter Binärbaum, priority queue.
 ]
 
+#stopHere
 
 // Typklassen und Überladung
 
@@ -1066,29 +1086,28 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
 ]
 
 
-
 // Lazy Evaluation
 
-// #test[
-//   Wie können wir mit ```hs foldl``` auf unendlichen Listen mit keinem Ergebnis
-//   rechnen?
-// ]
+#test[
+  Wie können wir mit ```hs foldl``` auf unendlichen Listen mit keinem Ergebnis
+  rechnen?
+]
 
 
 // Funktoren, Applicatives, Monaden
 
-// #test[
-//   Gegeben ist der Typ
-//   ```hs data Deep a b = Deep [Maybe (Either a (Deep a b))]```.
-//   Die Faltungsfunktion sieht im Wesentlichen so aus.
-//   ```hs
-//   foldDeep :: ([Maybe (Either a r)] -> r) -> Deep a b -> r
-//   foldDeep fdeep (Deep x) = fdeep (f x)
-//   ```
-//   Wie können wir
-//   ```hs f :: [Maybe (Either a (Deep a b))] -> [Maybe (Either a r)]```
-//   mithilfe von ```hs foldDeep fdeep :: Deep a b -> r``` definieren?
-// ]
+#test[
+  Gegeben ist der Typ
+  ```hs data Deep a b = Deep [Maybe (Either a (Deep a b))]```.
+  Die Faltungsfunktion sieht im Wesentlichen so aus.
+  ```hs
+  foldDeep :: ([Maybe (Either a r)] -> r) -> Deep a b -> r
+  foldDeep fdeep (Deep x) = fdeep (f x)
+  ```
+  Wie können wir
+  ```hs f :: [Maybe (Either a (Deep a b))] -> [Maybe (Either a r)]```
+  mithilfe von ```hs foldDeep fdeep :: Deep a b -> r``` definieren?
+]
 
 
 #pagebreak(weak: true)
