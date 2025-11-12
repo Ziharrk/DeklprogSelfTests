@@ -992,8 +992,8 @@ stellt eine PR auf GitHub].
           case Empty():
             return e
           case Node(l, x, r):
-            x = f(self.value)(self.right.foldr(f)(e))
-            y = self.left.foldr(f)(x)
+            y = f(self.value)(self.right.foldr(f)(e))
+            z = self.left.foldr(f)(y)
             return y
       return foldr_with_f
 
@@ -1022,8 +1022,9 @@ stellt eine PR auf GitHub].
   - Funktionen höherer Ordnung,
   - pattern matching,
   - algebraische Datentypen (Typkonstruktoren, Datenkonstruktoren),
-  - parametrischen Polymorphismus und
-  - ad-hoc Polymorphismus (Typklassen bzw. Überladung).
+  - parametrischen Polymorphismus,
+  - ad-hoc Polymorphismus (Typklassen bzw. Überladung) und
+  - lokale Definitionen.
 
   #text(0.8em)[
     Data classes und match statements brauchst du dir jenseits dieses Tests
