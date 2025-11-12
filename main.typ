@@ -1042,6 +1042,24 @@ stellt eine PR auf GitHub].
   ]
 ]
 
+#test[
+  In das folgende Python-Programm hat sich ein bug hineingeschlichen.
+  ```py
+  text = 'Ja, ja, ich back mir \'nen Kakao!'
+  say_words = []
+
+  for word in text.split():
+    say_words.append(lambda sep: print(word, end=sep))
+
+  for i, say_word in enumerate(say_words):
+    say_word(' ' if i + 1 < len(say_words) else '\n')
+  ```
+  Dieses Programm gibt sieben Mal "Kakao!" aus. Erkläre wie dieses Verhalten
+  zustande kommt? Wie kannst du den bug beheben? Kann der gleiche Fehler in
+  Haskell passieren?
+]
+
+
 // Abstrakte Datentypen
 
 #test[
