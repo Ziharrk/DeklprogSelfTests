@@ -1051,8 +1051,9 @@ stellt eine PR auf GitHub].
   for word in text.split():
     say_words.append(lambda sep: print(word, end=sep))
 
-  for i, say_word in enumerate(say_words):
-    say_word(' ' if i + 1 < len(say_words) else '\n')
+  for say_word in say_words[:-1]:
+    say_word(' ')
+  say_words[-1]('\n')
   ```
   Dieses Programm gibt sieben Mal "Kakao!" aus. Erkläre wie dieses Verhalten
   zustande kommt? Wie kannst du den bug beheben? Kann der gleiche Fehler in
