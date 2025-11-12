@@ -1086,6 +1086,11 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
   implementieren. Gebe auch beispielhaft ein paar Instanzen für diese an.
 ]
 
+#test[
+  Wo findest du das Konzept der Typklassen in Programmiersprachen wie z.B.
+  Python oder Java wieder? Gibt es z.B. ein Pendant zur ```hs Show```-Typklasse
+  in diesen Programmiersprachen?
+]
 
 // Lazy Evaluation
 
