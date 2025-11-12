@@ -1103,6 +1103,37 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
 // Funktoren, Applicatives, Monaden
 
 #test[
+  Gegeben sei der Datentyp ```hs Tree a = Leaf a | Tree a :+: Tree a```.
+  Implementiere eine Funktion ```hs allTrees :: [a] -> [Tree a]```, die alle
+  Binärbäume generiert, deren Blätter von links nach rechts die Eingabeliste
+  lesen. Um ```hs allTrees``` zu implementieren, implementiere zuerst eine
+  Hilfsfunktion ```hs splits :: [a] -> [([a], [a])]```, die alle nicht-leeren
+  Aufteilungen der Eingabelisten berechnet.
+  Zum Beispiel soll ```hs splits [1..4]``` die Liste
+  ```hs [([1], [2, 3, 4]), ([1, 2], [3, 4]), ([1, 2, 3], [4])]``` ergeben.
+  Versuche, ```hs allTrees``` mithilfe von list comprehensions oder der
+  Listenmonade zu implementieren.
+]
+
+// ```hs
+// allTrees []  = []
+// allTrees [x] = [Leaf x]
+// allTrees xs  = [l :+: r | (ls, rs) <- splits xs
+//                         , l <- allTrees ls
+//                         , r <- allTrees rs
+//                         ]
+//
+// splits :: [a] -> [([a], [a])]
+// splits xs = init (tail (zip (inits xs) (tails xs)))  -- import Data.List (inits, tails)
+//
+// splits :: [a] -> [([a], [a])]
+// splits []     = []
+// splits [_]    = []
+// splits [x,y]  = [([x], [y])]
+// splits (x:xs) = ([x], xs) : ((\(ys, zs) -> (x:ys, zs)) <$> splits xs)
+// ```
+
+#test[
   Gegeben ist der Typ
   ```hs data Deep a b = Deep [Maybe (Either a (Deep a b))]```.
   Die Faltungsfunktion sieht im Wesentlichen so aus.
