@@ -1028,7 +1028,7 @@ stellt eine PR auf GitHub].
   #text(0.8em)[
     Data classes und match statements brauchst du dir jenseits dieses Tests
     nicht anschauen (wenn es dich nicht weiter interessiert). Es soll in dem
-    Test nur darum gehen, die Konzepte zu erkennen.
+    Test nur darum gehen, die Haskell-Konzepte zu erkennen.
   ]
 ]
 
