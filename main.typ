@@ -988,7 +988,7 @@ stellt eine PR auf GitHub].
 
 #test[
   Welche Eigenschaften sollten die für einen abstrakten Datentypen formulierten
-  Gesetze erfüllen?
+  Gesetze erfüllen, damit sie eine sinnvolle Semantik beschreiben?
 ]
 
 #challenge[
