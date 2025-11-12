@@ -965,6 +965,8 @@ stellt eine PR auf GitHub].
   Gegeben sei folgendes Python-Programm.
   ```py
   from dataclasses import dataclass
+  from typing import Generic, TypeVar
+
 
   class Foldable():
     def foldr(self, f):
@@ -985,27 +987,29 @@ stellt eine PR auf GitHub].
     # ...
 
 
-  class Tree(Foldable):
+  T = TypeVar('T')
+
+  class Tree(Generic[T], Foldable):
     def foldr(self, f):
       def foldr_with_f(e):
         match self:
           case Empty():
             return e
           case Node(l, x, r):
-            y = f(self.value)(self.right.foldr(f)(e))
-            z = self.left.foldr(f)(y)
+            y = f(x)(r.foldr(f)(e))
+            z = l.foldr(f)(y)
             return y
       return foldr_with_f
 
   @dataclass
-  class Empty(Tree):
+  class Empty(Tree[T]):
     pass
 
   @dataclass
-  class Node(Tree):
-    left: Tree
-    value: any
-    right: Tree
+  class Node(Tree[T]):
+    left: Tree[T]
+    value: T
+    right: Tree[T]
 
 
   tree = Node(Empty(), 3, Node(Node(Empty(), 7, Empty()), 4, Empty()))
@@ -1022,7 +1026,12 @@ stellt eine PR auf GitHub].
   - Funktionen höherer Ordnung,
   - pattern matching,
   - algebraische Datentypen (Typkonstruktoren, Datenkonstruktoren),
-  - parametrischen Polymorphismus,
+  - parametrischen Polymorphismus
+    #footnote[
+      Typannotationen in Python sind nicht sonderlich elegant. Deshalb sind
+      nur die angegeben, um den parametrischen Polymorphismus zu identifizieren
+      und data classes anständig zu nutzen.
+    ],
   - ad-hoc Polymorphismus (Typklassen bzw. Überladung) und
   - lokale Definitionen.
 
