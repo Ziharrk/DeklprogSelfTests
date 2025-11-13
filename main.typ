@@ -682,6 +682,38 @@ stellt eine PR auf GitHub].
   korrekt ist?
 ]
 
+// TODO Finde ein besseres Beispiel dafür, dass es keine gute Idee ist, eine
+// Implementierung mit einer Referenz-Implementierung zu vergleichen, wenn diese
+// sich nicht wesentlich unterscheiden (Fehler in beiden Implementierungen).
+//
+// #test[
+//   Gegeben sei folgendes Haskell-Programm.
+//   ```hs
+//   data Rose a = Rose a [Rose a]
+//
+//   sumRose :: Rose Int -> Int
+//   sumRose (Rose x ts) = x + sumSubtrees ts
+//     where
+//       sumSubtrees []     = 0
+//       sumSubtrees (t:ts) = sumRose t + sumSubtrees ts
+//
+//   prop_sum :: Rose a -> Bool
+//   prop_sum t = sumRose t == sumRose' t
+//     where
+//       sumRose' :: Rose Int -> Int
+//       sumRose' (Rose x ts) = x + sumSubtrees' ts
+//         where
+//           sumSubtrees' []     = 0
+//           sumSubtrees' (t:ts) = sumRose' t + sumSubtrees' ts
+//   ```
+//   Bewerte dieses Programm hinsichtlich ```hs prop_sum```. Ist die
+//   Referenz-Implementierung ```hs sumRose'``` geeignet gewählt? Wie könnte
+//   ```hs sumRose``` besser getestet werden?#footnote[Die Funktion ist
+//     vergleichweise einfach, sodass Referenz-Implementierungen vermutlich sehr
+//     dicht an der tatsächlichen Implementierung liegen werden. Für komplexere
+//     Algorithmen ist der Vergleich mit einer Referenz-Implementierung geeigneter.
+//   ]
+// ]
 
 // Funktionen höherer Ordnung
 
