@@ -1153,19 +1153,21 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
 
 #test[
   Welche Funktionen musst du implementieren, damit eine ```hs Eq```-Instanz
-  vollständig definiert ist?
+  vollständig definiert ist? Welche Gesetze sollten die Funktionen einer
+  ```hs Eq```-Instanz erfüllen?
 ]
 
 #test[
   Welche Funktionen musst du implementieren, damit eine ```hs Ord```-Instanz
-  vollständig definiert ist?
+  vollständig definiert ist? Welche Gesetze sollten die Funktionen einer
+  ```hs Ord```-Instanz erfüllen?
 ]
 
 // TODO Händische `compare` Implementierung für irgendwie einen Typen bzw.
 //      Verständnisfrage dazu
 
 #test[
-  In nicht streng getypten Programmiersprachen haben wir oft, mit impliziter
+  In nicht streng getypten Programmiersprachen haben wir oft mit impliziter
   Typkonversion zu tun. #footnote[Diese wollen nun für einen Moment nach Haskell
   zurückholen, um sie dann ganz schnell wieder zu vergessen.] Implementiere eine
   Funktion ```hs ifThenElse```, die als Bedingung Werte beliebiger Typen
