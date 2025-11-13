@@ -1114,11 +1114,11 @@ stellt eine PR auf GitHub].
 #test[
   In einem vorherigen Test wurdest du bereits gefragt, wieso ```hs show```
   nicht als Funktion mit dem Typ ```hs a -> String``` implementiert sein.
-  Wieso wird die Funktion durch ```hs Show a => a -> String``` gerettet?
+  Wieso wird die Funktion durch den Typ ```hs Show a => a -> String``` gerettet?
 ]
 
 #test[
-  Welche Typklassen kennst du? Was ermöglichen sie konkret in den Einzelfällen?
+  Welche Typklassen kennst du? Was ermöglichen sie konkret?
 ]
 
 #test[
@@ -1146,7 +1146,7 @@ stellt eine PR auf GitHub].
 ]
 
 An vielen Stellen in den bisherigen Selbsttests haben wir oft einen konkreten
-Typen (z.B. ```hs Int```) genutzt, für den es bestimmte Typklasseninstanzen
+Typ (z.B. ```hs Int```) genutzt, für den es bestimmte Typklasseninstanzen
 gibt. Das ist meistens der Fall gewesen, wenn wir Gleichheit auf Werten oder
 eine Vergleichsoperation auf Werten brauchten. Schau dir die bisherigen
 Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
@@ -1171,7 +1171,7 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
   Typkonversion zu tun. #footnote[Diese wollen nun für einen Moment nach Haskell
   zurückholen, um sie dann ganz schnell wieder zu vergessen.] Implementiere eine
   Funktion ```hs ifThenElse```, die als Bedingung Werte beliebiger Typen
-  entgegennehmen kann. Ziel ist es, dass das folgende Ausdruck ausgewertet
+  entgegennehmen kann. Ziel ist es, dass der folgende Ausdruck ausgewertet
   werden kann.
   ```hs
   let a = ifThenElse 0 3 4
