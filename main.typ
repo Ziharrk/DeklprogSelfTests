@@ -1239,6 +1239,28 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
 // Funktoren, Applicatives, Monaden
 
 #test[
+  Die ```hs Applicative```-Typkonstruktorklasse erlaubt es uns, ```hs fmap```
+  auf Funktionen mit mehreren Argumenten zu verallgemeinern. Dadurch können wir
+  etwa
+  #align(center)[
+    ```hs (+) <$> Just 1 <*> Just 2``` oder ```hs Just (+) <*> Just 1 <*> Just 2```
+  ]
+  schreiben. Die Operatoren ```hs (<$>)``` und ```hs (<*>)``` funktionieren
+  dabei ähnlich wie ```hs ($)``` -- mit ```hs (<$>)``` muss die Funktion nicht
+  explizit in den entsprechenden ```hs Applicative``` gehoben werden.
+
+  Ein Typ, der uns konzeptionell noch näher an gewöhnliche Funktionsapplikation
+  heranführt, ist
+  #align(center)[```hs newtype Identity a = Identity { runIdentity :: a }```.]
+  Implementiere ```hs Functor```-, ```hs Applicative```- und
+  ```hs Monad```-Instanzen für ```hs Identity```.
+
+  Wenn du die Instanzen definierst, solltest du feststellen, dass du im
+  Wesentlichen nur den enthaltenden Wert aus der ```hs Identity``` holst,
+  verarbeitest und anschließend wieder hereinpackst.
+]
+
+#test[
   Gegeben sei der Datentyp ```hs Tree a = Leaf a | Tree a :+: Tree a```.
   Implementiere eine Funktion ```hs allTrees :: [a] -> [Tree a]```, die alle
   Binärbäume generiert, deren Blätter von links nach rechts die Eingabeliste
