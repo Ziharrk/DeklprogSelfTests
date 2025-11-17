@@ -1130,7 +1130,6 @@ stellt eine PR auf GitHub].
   testen, indem du deine formulierten Gesetze mit QuickCheck implementierst.
 ]
 
-#stopHere
 
 // Typklassen und Überladung
 
@@ -1190,17 +1189,82 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
 ]
 
 #test[
+  Gegeben sei der Typ
+  #align(center)[```hs data Tree a b c = Empty | Leaf a | Node (Tree a b c) Int c (Tree a b c)```.]
+  Implementiere eine ```hs Eq```-Instanz für diesen Typen. Die Gleichheit soll
+  sich so verhalten, wie die die wir durch das Ableiten bekommen würden.
+  Bevor du die Instanz implementierst, überlege dir:
+  - Wie viele Regeln brauchst du mindestens, um ```hs (==)``` zu definieren?
+  - Benötigst du für die Implementierung Typeinschränkungen? Wenn ja, für welche
+    Typen?
+  - An welchen Stellen wirst du ```hs (==)``` rekursiv anwenden?
+  - Die Datenkonstruktoren sind auf den rechten Seiten der Regeln nicht relevant.
+    Auf welchen Typen kannst du die Gleichheit für z.B. ```hs Node```
+    zurückführen, bzw. wenn du dir die rechte Seite der Regel für ```hs Node```
+    anschaust, welche Typen fallen dir ein, für die diese rechte Seite auch
+    eine Gleichheit definieren würde?
+]
+
+#test[
   Welche Funktionen musst du implementieren, damit eine ```hs Ord```-Instanz
   vollständig definiert ist? Welche Gesetze sollten die Funktionen einer
   ```hs Ord```-Instanz erfüllen?
 ]
 
-// TODO Händische `compare` Implementierung für irgendwie einen Typen bzw.
-//      Verständnisfrage dazu
+#test[
+  Gegeben sei der Typ
+  #align(center)[```hs data Tree a b c = Empty | Leaf a | Node (Tree a b c) Int c (Tree a b c)```.]
+  Implementiere eine ```hs Ord```-Instanz für diesen Typen. Die Ordnung soll
+  sich so verhalten, wie die die wir durch das Ableiten bekommen würden.
+  Bevor du die Instanz implementierst, überlege dir:
+  - Spielt die Reihenfolge, in der wir die Datenkonstruktoren definieren eine
+    Rolle für die Ordnung? Wenn ja, wie?
+  - Wie viele Regeln brauchst du mindestens, um ```hs compare``` zu definieren?
+  - Benötigst du für die Implementierung Typeinschränkungen? Wenn ja, für welche
+    Typen?
+  - An welchen Stellen wirst du ```hs compare``` rekursiv anwenden?
+  - Die Datenkonstruktoren sind auf den rechten Seiten der Regeln nicht relevant.
+    Auf welchen Typen kannst du die Ordnung für z.B. ```hs Node```
+    zurückführen, bzw. wenn du dir die rechte Seite der Regel für ```hs Node```
+    anschaust, welche Typen fallen dir ein, für die diese rechte Seite auch
+    eine Ordnung definieren würde?
+
+  Implementiere die Ordnung auch erneut mit ```hs (<=)```.
+]
+
+#test[
+  Die Typklasse ```hs Ord``` ist wie folgt definiert:
+  ```hs
+  class Eq a => Ord a where
+    compare              :: a -> a -> Ordering
+    (<), (<=), (>), (>=) :: a -> a -> Bool
+    max, min             :: a -> a -> a
+
+    -- default definitions
+    -- ...
+
+    {-# MINIMAL compare | (<=) #-}
+  ```
+  Das ```hs {-# MINIMAL compare | (<=) #-}``` bedeutet, dass es genügt,
+  entweder ```hs compare``` oder ```hs (<=)``` zu implementieren.
+  - Gebe Standarddefinitionen für die Funktionen der Typklasse an.
+  - Was ermöglicht es, eine Standarddefinition für ```hs compare``` angeben zu
+    können?
+  - Deine Standarddefinition von ```hs compare``` ist voraussichtlich
+    ineffizient.#footnote[Die Vordefinierte ist es auch, also keine Sorge.]
+    Woran liegt das? Mit Hinsicht auf Effizienz -- welche der beiden Funktionen
+    würdest du implementieren, wenn du nur eine implementieren dürftest?
+    #footnote[
+      Auch wenn Standarddefinitionen für den Anfang hilfreich sind, um
+      mit minimalem Aufwand alle Funktionen einer Typklasse zu verwenden, findet
+      man häufig konkrete Implementierungen für mehr als nur die Funktionen, für
+      die es notwendig ist.
+    ]
+]
 
 #test[
   In nicht streng getypten Programmiersprachen haben wir oft mit impliziter
-  Typkonversion zu tun. #footnote[Diese wollen nun für einen Moment nach Haskell
+  Typkonversion zu tun. #footnote[Diese wollen wir nun für einen Moment nach Haskell
   zurückholen, um sie dann ganz schnell wieder zu vergessen.] Implementiere eine
   Funktion ```hs ifThenElse```, die als Bedingung Werte beliebiger Typen
   entgegennehmen kann. Ziel ist es, dass der folgende Ausdruck ausgewertet
@@ -1227,6 +1291,10 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
   Python oder Java wieder? Gibt es z.B. ein Pendant zur ```hs Show```-Typklasse
   in diesen Programmiersprachen?
 ]
+
+
+#stopHere
+
 
 // Lazy Evaluation
 
