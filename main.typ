@@ -1153,6 +1153,21 @@ stellt eine PR auf GitHub].
 ]
 
 #test[
+  Eine ```hs Show```-Instanz für den Typ
+  ```data Tree a = Leaf a | Tree a :+: Tree a```
+  könnte wie folgt aussehen:
+  ```hs
+  instance Show a => Show (Tree a) where
+    show (Leaf x)  = "Leaf " ++ show x
+    show (l :+: r) = "(" ++ show l ++ ") :+: (" ++ show r ++ ")"
+  ```
+  Welche haben Werte von ```hs Tree a``` führen zur worst-case Laufzeit
+  und welche zur best-case Laufzeit? Die Anzahl der Blätter soll hier frei
+  sein. Welche Eigenschaften von ```hs (++)``` führen zu den jeweiligen
+  Laufzeiten?
+]
+
+#test[
   Überlade die Operationen ```hs (+), (-), (*), abs, signum, fromInteger```
   für den Datentypen ```hs data Mat22 a = Mat22 a a a a```, der
   $(2 times 2)$-Matrizen repräsentieren soll -- ```hs abs, signum, fromInteger```
@@ -1220,6 +1235,10 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
   - Spielt die Reihenfolge, in der wir die Datenkonstruktoren definieren eine
     Rolle für die Ordnung? Wenn ja, wie?
   - Wie viele Regeln brauchst du mindestens, um ```hs compare``` zu definieren?
+    Wie auch bei der Typklasse ```hs Eq``` können wir eine Regel definieren,
+    die alle Fälle abdeckt, in denen wir ```hs GT``` erhalten, wenn wir uns
+    nur die Datenkonstruktoren anschauen. Welches Schema müssen wir für die
+    anderen Regeln verwenden, damit das funktioniert?
   - Benötigst du für die Implementierung Typeinschränkungen? Wenn ja, für welche
     Typen?
   - An welchen Stellen wirst du ```hs compare``` rekursiv anwenden?
