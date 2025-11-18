@@ -1333,6 +1333,29 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
 ]
 
 
+// Ein- und Ausgabe
+
+#test[
+  Was ist referentielle Transparenz?
+]
+
+#test[
+  Welche Rolle spielt der Typ ```hs IO a``` bzgl. Seiteneffekte?
+  Was beschreibt ein Wert vom Typ ```hs IO a```?
+]
+
+#test[
+  Wie können wir zwei ```hs IO```-Aktionen zu einer neuen ```hs IO```-Aktion
+  kombinieren?
+]
+
+#test[
+  Betrachte die ```hs IO```-Aktion ```hs act1 >> act2```.
+  - Welche der beiden Aktionen wird zuerst ausgeführt?
+  - Warum erscheint das bei Lazy Evaluation kontraintuitiv?
+  - Welche Rolle spielt der Typ ```hs RealWorld -> (RealWorld, a)``` bei der Sequenzierung?
+]
+
 // Funktoren, Applicatives, Monaden
 
 #test[
@@ -1355,6 +1378,40 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
   Wenn du die Instanzen definierst, solltest du feststellen, dass du im
   Wesentlichen nur den enthaltenden Wert aus der ```hs Identity``` holst,
   verarbeitest und anschließend wieder hereinpackst.
+]
+
+#test[
+  Betrachten wir die Typen von ```hs fmap``` und ```hs (>>=)```, dann sehen
+  wir gewisse Ähnlichkeiten.
+  #align(center)[
+    ```hs fmap :: (a -> b) -> f a -> f b``` \
+    ```hs (>>=) :: m a -> (a -> m b) -> m b```
+  ]
+  Wie können wir bereits an den Typen sehen, dass ```hs (>>=)``` die mächtigere
+  Funktionen der beiden ist? Beziehe in deine Überlegungen ein, dass
+  #align(center)[
+    ```hs fmap f (Right x) = Left y```
+  ]
+  nie gelten kann.
+]
+
+#test[
+  Argumentiere anhand der Gesetze, die für eine ```hs Functor```-Instanzen
+  gelten sollen, dass die folgenden ```hs Functor```-Instanzen keine gültige
+  Instanzen sind. Gebe auch Beispiele an, die zeigen, dass die Gesetze nicht
+  erfüllt sind.
+  ```hs
+  instance Functor [] where
+    fmap f [] = []
+    fmap f (x:xs) = f x : f x : xs
+
+  data Tree a = Empty | Leaf a | Tree a :+: Tree a
+
+  instance Functor Tree where
+    fmap _ Empty     = Empty
+    fmap f (Leaf _)  = Empty
+    fmap f (l :+: r) = fmap f l :+: fmap f r
+  ```
 ]
 
 #test[
