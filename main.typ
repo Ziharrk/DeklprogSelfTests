@@ -1435,7 +1435,8 @@ Weitere Links:
 #remark[
   In @typeclasses_in_python haben wir gesehen, wie deklarative Programmierkonzepte
   aus Haskell in Python verwendet werden können. In Java haben diese über die
-  letzten Jahre auch einen Platz gefunden. Hier ist das Programm in Java.
+  letzten Jahre auch einen Platz gefunden. Hier ist das Programm in Java (ohne
+  gecurryte Funktionen und partielle Applikation).
   ```java
   import java.util.*;
   import java.util.function.*;
