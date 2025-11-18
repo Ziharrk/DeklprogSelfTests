@@ -30,13 +30,22 @@
     .map(res => res.value)
 }
 
+#let remark = thmplain(
+    "remark",
+    "Bemerkung",
+    titlefmt: strong,
+    separator: h(0.5em)
+  ).with(
+    numbering: (..args) => args.at(-1)
+  )
+
 #let test = thmplain(
     "test",
     "Test",
     titlefmt: strong,
     separator: h(0.5em)
   ).with(
-    numbering: (_, counter) => counter
+    numbering: (..args) => args.at(-1)
   )
 
 #let challenge = thmplain(
@@ -45,7 +54,7 @@
     titlefmt: strong,
     separator: h(0.5em)
   ).with(
-    numbering: (_, counter) => counter
+    numbering: (..args) => args.at(-1)
   )
 
 #let hint(content) = {
@@ -1070,9 +1079,10 @@ stellt eine PR auf GitHub].
   #text(0.8em)[
     Data classes und match statements brauchst du dir jenseits dieses Tests
     nicht anschauen (wenn es dich nicht weiter interessiert). Es soll in dem
-    Test nur darum gehen, die Haskell-Konzepte zu erkennen.
+    Test nur darum gehen, die Haskell-Konzepte zu erkennen. In
+    @typeclasses_in_python_remark kannst du das gleiche Programm in Java sehen.
   ]
-]
+] <typeclasses_in_python>
 
 #test[
   In das folgende Python-Programm hat sich ein bug hineingeschlichen.
@@ -1416,4 +1426,83 @@ Weitere Links:
 // - #link("https://www.adit.io/posts/2013-04-17-functors,_applicatives,_and_monads_in_pictures.html")[Functors, Applicatives, And Monads In Pictures]
 - #link("https://hackage.haskell.org/package/CheatSheet-1.7/src/CheatSheet.pdf")[Haskell Cheatsheet]
 // - #link("https://alhassy.com/PrologCheatSheet/CheatSheet.pdf")[Prolog Cheatsheet]
+
+
+#pagebreak(weak: true)
+
+= Appendix
+
+#remark[
+  In @typeclasses_in_python haben wir gesehen, wie deklarative Programmierkonzepte
+  aus Haskell in Python verwendet werden können. In Java haben diese über die
+  letzten Jahre auch einen Platz gefunden. Hier ist das Programm in Java.
+  ```java
+  import java.util.*;
+  import java.util.function.*;
+
+  interface Numeric<T> {
+    T zero();
+    T add(T a, T b);
+
+    public static Numeric<Integer> integer() {
+      return new Numeric<>() {
+        public Integer zero() { return 0; }
+        public Integer add(Integer a, Integer b) { return a + b; }
+      };
+    }
+  }
+
+  interface Foldable<T> {
+    <R> R foldr(R initial, BiFunction<T, R, R> function);
+
+    default List<T> toList() {
+      return foldr(new LinkedList<>(), (value, list) -> {
+        list.add(value);
+        return list;
+      });
+    }
+
+    default int length() { return foldr(0, (_, result) -> result + 1); }
+
+    default boolean contains(T value) {
+      return foldr(false, (other, result) -> result || other.equals(value));
+    }
+
+    default T sum(Numeric<T> numeric) { return foldr(numeric.zero(), numeric::add); }
+  }
+
+  sealed interface Tree<T> extends Foldable<T>
+    permits Empty, Node {}
+
+  record Empty<T>() implements Tree<T> {
+    @Override
+    public <R> R foldr(R initial, BiFunction<T, R, R> function) { return initial; }
+  }
+
+  record Node<T>(Tree<T> left, T value, Tree<T> right) implements Tree<T> {
+    @Override
+    public <R> R foldr(R initial, BiFunction<T, R, R> function) {
+      R x = right.foldr(initial, function);
+      R y = function.apply(value, x);
+      return left.foldr(y, function);
+    }
+  }
+
+  public class Main {
+    public static void main(String[] args) {
+      Tree<Integer> tree = new Node<>(
+        new Empty<>(),
+        3,
+        new Node<>(new Node<>(new Empty<>(), 7, new Empty<>()), 4, new Empty<>())
+      );
+
+      System.out.println(tree.sum(Numeric.integer()));  // 14
+      System.out.println(tree.toList());  // [4, 7, 3]
+      System.out.println(tree.length());  // 3
+      System.out.println(tree.contains(3));  // true
+      System.out.println(tree.contains(9));  // false
+    }
+  }
+  ```
+] <typeclasses_in_python_remark>
 
