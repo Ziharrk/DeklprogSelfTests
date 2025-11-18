@@ -1469,7 +1469,9 @@ Weitere Links:
       return foldr(false, (other, result) -> result || other.equals(value));
     }
 
-    default T sum(Numeric<T> numeric) { return foldr(numeric.zero(), numeric::add); }
+    default T sum(Numeric<T> numeric) {
+      return foldr(numeric.zero(), numeric::add);
+    }
   }
 
   sealed interface Tree<T> extends Foldable<T>
