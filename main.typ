@@ -1542,7 +1542,8 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
     mithilfe des Heron-Verfahrens. Es ist gegeben durch
     $ x_(n + 1) = 1/2 (x_n + a/x_n) $ Diese Folge nährt den Wert von $sqrt(a)$
     mit jedem Folgeglied besser an. Implementiere das Verfahren mithilfe von
-    ```hs iterate``` für eine beliebige Genauigkeit.
+    ```hs iterate```. Wähle die erste Nährung $x_(n+1)$, die
+    $abs(x_(n+1) - x_n) < epsilon$ erfüllt, für ein gegebenes $epsilon > 0$.
   - Solange eine Liste Inversionen enthält, d.h., es existieren $i, j$ mit
     $i < j$, sodass $a_i > a_j$ gilt, gilt eine Liste als unsortiert. Das
     schrittweise Entfernen solcher Fehlstellungen führt zu einer sortierten
