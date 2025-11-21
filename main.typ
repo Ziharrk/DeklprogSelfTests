@@ -1544,6 +1544,10 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
     mit jedem Folgeglied besser an. Implementiere das Verfahren mithilfe von
     ```hs iterate```. Wähle die erste Nährung $x_(n+1)$, die
     $abs(x_(n+1) - x_n) < epsilon$ erfüllt, für ein gegebenes $epsilon > 0$.
+  - Implementiere die Fibonacci-Folge als unendliche Liste
+    ```hs fibs :: [Integer]``` mithilfe von ```hs iterate```. Du brauchst
+    eine Hilfsfunktion, die die Elemente der Ergebnisliste von ```hs iterate```
+    projeziert.
   - Solange eine Liste Inversionen enthält, d.h., es existieren $i, j$ mit
     $i < j$, sodass $a_i > a_j$ gilt, gilt eine Liste als unsortiert. Das
     schrittweise Entfernen solcher Fehlstellungen führt zu einer sortierten
