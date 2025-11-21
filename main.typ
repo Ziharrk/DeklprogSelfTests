@@ -1388,7 +1388,7 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
         q2: (q2: "a, b")
       ),
       initial: "q0",
-      final: ("q1"),
+      final: ("q0", "q1"),
       style: (
         state: (initial: (label: none)),
         q0: (label: $q_0$),
