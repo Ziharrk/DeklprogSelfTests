@@ -1470,14 +1470,14 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
         q13: (label: none, stroke: none),
         q14: (label: none, stroke: none),
 
-        q3-q7: (label: none, stroke: (dash: "dashed")),
-        q3-q8: (label: none, stroke: (dash: "dashed")),
-        q4-q9: (label: none, stroke: (dash: "dashed")),
-        q4-q10: (label: none, stroke: (dash: "dashed")),
-        q5-q11: (label: none, stroke: (dash: "dashed")),
-        q5-q12: (label: none, stroke: (dash: "dashed")),
-        q6-q13: (label: none, stroke: (dash: "dashed")),
-        q6-q14: (label: none, stroke: (dash: "dashed"))
+        q3-q7: (stroke: (dash: "dashed")),
+        q3-q8: (stroke: (dash: "dashed")),
+        q4-q9: (stroke: (dash: "dashed")),
+        q4-q10: (stroke: (dash: "dashed")),
+        q5-q11: (stroke: (dash: "dashed")),
+        q5-q12: (stroke: (dash: "dashed")),
+        q6-q13: (stroke: (dash: "dashed")),
+        q6-q14: (stroke: (dash: "dashed"))
       )
     )
   ]
