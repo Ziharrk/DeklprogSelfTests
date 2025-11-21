@@ -1,4 +1,5 @@
 #import "@preview/ctheorems:1.1.3": *
+#import "@preview/finite:0.5.0"
 
 #set document(
   title: "Verständnisfragen zum Modul Deklarative Programmierung",
@@ -1003,6 +1004,22 @@ stellt eine PR auf GitHub].
 ]
 
 #test[
+  Wir haben ```hs foldr :: (a -> b -> b) -> b -> [a] -> b``` als natürliche
+  Faltungsfunktion kennengelernt, die einen Ausdruck erzeugt, der rechts
+  geklammert ist. Zum Beispiel gilt
+  #align(center)[```hs foldr (+) 0 [1, 2, 3] = 1 + (2 + (3 + 0))```.]
+
+  Das gleiche Ziel können wir mit anderen Typen verfolgen. Implementiere
+  eine Funktion ```hs foldr :: (a -> b -> b) -> b -> Tree a -> b``` für einen
+  blattbeschrifteten Binärbaum ```hs data Tree a = Leaf a | Tree a :+: Tree a```,
+  die den gleichen Ausdruck erzeugt. Zum Beispiel soll
+  #align(center)[
+    ```hs foldr (+) 0 ((Leaf 1 :+: Leaf 2) :+: Leaf 3) = 1 + (2 + (3 + 0))```
+  ]
+  gelten.
+]
+
+#test[
   Gegeben sei folgendes Python-Programm.
   ```py
   from dataclasses import dataclass
@@ -1322,21 +1339,276 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
 ]
 
 
-#stopHere
-
-
 // Lazy Evaluation
+
+#test[
+  Was ist Lazy Evaluation?
+]
+
+#test[
+  Wie werden Berechnungen in Haskell angestoßen? Wie viel wird berechnet?
+]
+
+#test[
+  Gebe ein Beispiel an, das zeigt, dass die faule Auswertung
+  berechnungsstärker ist?
+]
+
+#test[
+  Welche praktischen Vorteile ergeben sich aus der Lazy Evaluation?
+]
+
+#test[
+  Wie werden mehrfache Berechnungen in einer nicht-strikten
+  Auswertungsstrategie vermieden?
+]
+
+#test[
+  Gegeben sei folgendes Haskell-Ausdruck.
+  ```hs
+  let c = x == 0
+      a = u `div` x
+      b = 0
+   in if c then b else a
+  ```
+  Der Teilausdruck ```hs a = u `div` x``` erscheint auf dem ersten Blick
+  problematisch, da ```hs x``` Null sein könnte. Wieso stellt das mit
+  Lazy Evaluation kein Problem dar?
+]
+
+
+#challenge[
+  Wir können endliche Automaten als unendliche Bäume darstellen.
+  Betrachte z.B. den endlichen Automaten für die reguläre Sprache $a^m b^n$.
+  #align(center)[
+    #finite.automaton(
+      (
+        q0: (q0: "a", q1: "b"),
+        q1: (q1: "b", q2: "a"),
+        q2: (q2: "a, b")
+      ),
+      initial: "q0",
+      final: ("q1"),
+      style: (
+        state: (initial: (label: none)),
+        q0: (label: $q_0$),
+        q1: (label: $q_1$),
+        q2: (label: $q_2$)
+      ),
+    )
+  ]
+  Diesen können wir als unendlichen Baum wie folgt darstellen.
+  #align(center)[
+    #finite.automaton(
+      (
+        q0: (q1: "a", q2: "b"),
+
+        q1: (q3: "a", q4: "b"),
+        q2: (q5: "a", q6: "b"),
+
+        q3: (q7: "a", q8: "b"),
+        q4: (q9: "a", q10: "b"),
+        q5: (q11: "a", q12: "b"),
+        q6: (q13: "a", q14: "b"),
+
+        q7: (),
+        q8: (),
+        q9: (),
+        q10: (),
+        q11: (),
+        q12: (),
+        q13: (),
+        q14: ()
+      ),
+      initial: "q0",
+      final: ("q2", "q4", "q6"),
+      layout: finite.layout.custom.with(
+        positions: (
+          q0: (5.5, 6),
+
+          q1: (2.5, 4),
+          q2: (8.5, 4),
+
+          q3: (1, 2),
+          q4: (4, 2),
+          q5: (7, 2),
+          q6: (10, 2),
+
+          q7: (0, 0),
+          q8: (2, 0),
+          q9: (3, 0),
+          q10: (5, 0),
+          q11: (6, 0),
+          q12: (8, 0),
+          q13: (9, 0),
+          q14: (11, 0),
+        )
+      ),
+      style: (
+        transition: (
+          curve: 0,
+          angle: 0deg
+        ),
+        state: (
+          initial: (label: none),
+        ),
+
+        q0: (label: $q_0$),
+        q1: (label: $q_0$),
+        q2: (label: $q_1$),
+        q3: (label: $q_0$),
+        q4: (label: $q_1$),
+        q5: (label: $q_2$),
+        q6: (label: $q_1$),
+
+        q7: (label: none, stroke: none),
+        q8: (label: none, stroke: none),
+        q9: (label: none, stroke: none),
+        q10: (label: none, stroke: none),
+        q11: (label: none, stroke: none),
+        q12: (label: none, stroke: none),
+        q13: (label: none, stroke: none),
+        q14: (label: none, stroke: none),
+
+        q3-q7: (label: none, stroke: (dash: "dashed")),
+        q3-q8: (label: none, stroke: (dash: "dashed")),
+        q4-q9: (label: none, stroke: (dash: "dashed")),
+        q4-q10: (label: none, stroke: (dash: "dashed")),
+        q5-q11: (label: none, stroke: (dash: "dashed")),
+        q5-q12: (label: none, stroke: (dash: "dashed")),
+        q6-q13: (label: none, stroke: (dash: "dashed")),
+        q6-q14: (label: none, stroke: (dash: "dashed"))
+      )
+    )
+  ]
+  - Konstruiere diesen Baum ```hs ambn :: State Char``` mithilfe des Typs
+    #align(center)[```hs data State a = State Bool [(a, State a)]```.] Der Boolean
+    gibt an, ob der Zustand akzeptiert, und ```hs [(a, State a)]``` gibt die
+    ausgehenden Transitionen an.
+  - Implementiere eine Funktion ```hs accept :: Eq a => [a] -> State a -> Bool```,
+    die bestimmt, ob eine Eingabe akzeptiert wird.
+  - Implementiere eine Funktion ```hs language :: State a -> [[a]]```, die die
+    akzeptierte Sprache des Automaten zurückgibt. (Du kannst davon ausgehen,
+    dass die Sprache nicht leer ist -- wenn du Entscheidungsproblem trotzdem
+    lösen möchtest, halten wir dich nicht auf.)
+  - Warum funktioniert die folgende Implementierung der Funktion
+    ```hs language``` nicht?
+    ```hs
+    language :: State a -> [[a]]
+    language (State False ts) = [c:ws | (c, q) <- ts, ws <- language q]
+    language (State True  ts) = [] : [c:ws | (c, q) <- ts, ws <- language q]
+    ```
+]
+
+// ```hs
+// data State a = State Bool [(a, State a)]
+//
+// ambn :: State Char
+// ambn = q0
+//   where
+//     q0 = State False [('a', q0), ('b', q1)]
+//     q1 = State True  [('a', q2), ('b', q1)]
+//     q2 = State False [('a', q2), ('b', q2)]
+//
+// accept :: Eq a => [a] -> State a -> Bool
+// accept []     (State True _) = True
+// accept (x:xs) (State _ ts)   = any (accept xs) [u | (y, u) <- ts, x == y]
+// accept _      _              = False
+//
+// language :: State a -> [[a]]
+// language q = bfs [([], q)]
+//   where
+//     bfs []                       = []
+//     bfs ((w, State final ts):qs) =
+//         let ws = bfs (qs ++ [(w ++ [c], q) | (c, q) <- ts])
+//          in if final then w:ws else ws
+// ```
 
 #test[
   Wieso können wir mit ```hs foldl``` auf unendlichen Listen mit keinem
   Ergebnis rechnen?
 ]
 
+#challenge[
+  Fixpunktverfahren sind iterative Methoden, bei denen eine Funktion wiederholt
+  auf einen Wert angewendet wird, bis sich ein stabiler Punkt ergibt, der sich
+  durch weitere Anwendungen nicht mehr verändert.
+
+  Dieses Berechnungsmuster wird durch die Funktion
+  ```hs iterate :: (a -> a) -> a -> [a]``` festgehalten.
+
+  - Wie ist ```hs iterate``` definiert?
+  - Ein klassisches Beispiel aus der Numerik ist die Berechnung der Wurzel
+    mithilfe des Heron-Verfahrens. Es ist gegeben durch
+    $ x_(n + 1) = 1/2 (x_n + a/x_n) $ Diese Folge nährt den Wert von $sqrt(a)$
+    mit jedem Folgeglied besser an. Implementiere das Verfahren mithilfe von
+    ```hs iterate``` für eine beliebige Genauigkeit.
+  - Solange eine Liste Inversionen enthält, d.h., es existieren $i, j$ mit
+    $i < j$, sodass $a_i > a_j$ gilt, gilt eine Liste als unsortiert. Das
+    schrittweise Entfernen solcher Fehlstellungen führt zu einer sortierten
+    Liste.
+    - Implementiere eine Funktion ```hs resolve :: Ord a => [a] -> [a]```, die
+      eine Fehlstellung findet und sie auflöst, indem sie die Elemente an den
+      entsprechenden Positionen tauscht.
+    - Implementiere das daraus resultierende Sortierverfahren mithilfe von
+      ```hs iterate```.
+]
+
+// ```hs
+// import Data.List (find)
+// import Data.Maybe (fromJust)
+//
+// heron :: Double -> Double
+// heron a = prec xs
+//   where
+//     xs = iterate (\x -> (x + a / x) / 2) a
+//
+//     prec (x:y:xs) | abs (x - y) < 1e-6 = y
+//                   | otherwise          = prec (y:xs)
+//
+// sort :: Ord a => [a] -> [a]
+// sort xs = fromJust (find sorted (iterate resolve xs))
+//   where
+//     resolve (x:y:xs) | x > y     = y : x : xs
+//                      | otherwise = x : resolve (y:xs)
+//     resolve xs                   = xs
+//
+//     sorted []                   = True
+//     sorted [x]                  = True
+//     sorted (x:y:xs) | x < y     = sorted (y:xs)
+//                     | otherwise = False
+// ```
+
+
+// Sequenzen
+
+// TODO Enum, Bounded
+
+
+// List Comprehensions
+
+#test[
+  An welches mathematische Konzept sind list comprehensions angelehnt?
+]
+
+#test[
+  Aus welchen Teilen besteht eine list comprehension?
+]
+
+#test[
+  Implementiere die Funktionen ```hs map```, ```hs filter``` und
+  ```hs concatMap``` mithilfe von list comprehensions.
+]
+
+
+#stopHere
+
+
 
 // Ein- und Ausgabe
 
 #test[
-  Was ist referentielle Transparenz?
+  Was ist referenzielle Transparenz?
 ]
 
 #test[
