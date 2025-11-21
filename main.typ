@@ -1379,7 +1379,7 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
 
 #challenge[
   Wir können endliche Automaten als unendliche Bäume darstellen.
-  Betrachte z.B. den endlichen Automaten für die reguläre Sprache $a^m b^n$.
+  Betrachte z.B. den endlichen Automaten für die reguläre Sprache $a^* b^*$.
   #align(center)[
     #finite.automaton(
       (
@@ -1481,7 +1481,7 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
       )
     )
   ]
-  - Konstruiere diesen Baum ```hs ambn :: State Char``` mithilfe des Typs
+  - Konstruiere diesen Baum ```hs asbs :: State Char``` mithilfe des Typs
     #align(center)[```hs data State a = State Bool [(a, State a)]```.] Der Boolean
     gibt an, ob der Zustand akzeptiert, und ```hs [(a, State a)]``` gibt die
     ausgehenden Transitionen an.
