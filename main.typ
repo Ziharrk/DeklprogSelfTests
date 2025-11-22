@@ -1645,6 +1645,23 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
     Laufzeit ```hs (!!)``` konstant ist?
 ]
 
+// ```hs
+// editdist :: String -> String -> Int
+// editdist xs ys = table !! m !! n
+//   where
+//     (m, n) = (length xs, length ys)
+//     table = [[ed i j | j <- [0..n]] | i <- [0..m]]
+//
+//     ed 0 j = j
+//     ed i 0 = i
+//     ed i j
+//       | xs !! (i - 1) == ys !! (j - 1) = table !! (i - 1) !! (j - 1)
+//       | otherwise = 1 + minimum [ table !! (i - 1) !! j
+//                                 , table !! i !! (j - 1)
+//                                 , table !! (i - 1) !! (j - 1)
+//                                 ]
+// ```
+
 
 // Sequenzen
 
