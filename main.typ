@@ -1397,7 +1397,7 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
   Python-Programm aussehen zu lassen.
   #footnote[
     Für Interessierte: Die Technik ist als
-    #link("https://wiki.haskell.org/index.php?title=Tying_the_Knot")[Typing the Knot]
+    #link("https://wiki.haskell.org/index.php?title=Tying_the_Knot")[Tying the Knot]
     bekannt.
   ]
 ]
