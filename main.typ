@@ -1688,7 +1688,26 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
 
 // Sequenzen
 
-// TODO Enum, Bounded
+#test[
+  Gegeben sei der Datentyp
+  #align(center)[```hs data Direction = North | East | South | West```.]
+
+  - Implementiere eine ```hs Enum```-Instanz für ```hs Direction```.
+  - Implementiere eine ```hs Bounded```-Instanz für ```hs Direction```.
+  - Implementiere die Funktionen ```hs turnLeft :: Direction -> Direction```
+    und ```hs turnRight :: Direction -> Direction```, die die Himmelsrichtungen
+    entsprechend ihrer Bezeichnung durchgehen.
+  - Implementiere eine Funktion ```hs allDirections :: [Direction]```, die
+    alle Himmelsrichtungen auflistet. Nutze dafür Funktionen, die dir durch
+    die vorherigen Typklassen bereitgestellt werden.
+]
+
+#test[
+  Implementiere Funktion ```hs cycleFrom :: (Enum a, Bounded a) => a -> [a]```,
+  die ab einem gegebenen Wert alle Werte des Typen nicht absteigend durchläuft.
+  Wenn größte Wert erreicht ist, soll die Liste wieder beim kleinsten Wert
+  des Typen beginnen.
+]
 
 
 // List Comprehensions
