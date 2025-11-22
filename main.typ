@@ -1577,6 +1577,30 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
   Ergebnis rechnen?
 ]
 
+#test[
+  ```hs scanl :: (b -> a -> b) -> b -> [a] -> [b]``` und
+  ```hs scanr :: (a -> b -> b) -> b -> [a] -> [b]``` sind ähnlich zu
+  ```hs foldl``` und ```hs foldr```. Beide Funktionen speichern die
+  Zwischenergebnisse der jeweiligen Funktion in Listen.
+  ```hs
+  scanl :: (b -> a -> b) -> b -> [a] -> [b]
+  scanl _ e []     = [e]
+  scanl f e (x:xs) = e : scanl f (f e x) xs
+
+  -- scanl (+) 0 [1..4] = [0, 1, 3, 6, 10]
+
+  scanr :: (a -> b -> b) -> b -> [a] -> [b]
+  scanr _ e []     = [e]
+  scanr f e (x:xs) = f x y : ys
+    where ys@(y:_) = scanr f e xs
+
+  -- scanr (+) (0) [1..4] = [10, 9, 7, 4, 0]
+  ```
+  - Welche der beiden Funktionen kann auf unendlichen Listen arbeiten?
+  - (Implementiere die Fibonacci-Folge ```hs fibs :: [Integer]``` mithilfe
+    von einer der beiden Funktionen.)
+]
+
 #challenge[
   Fixpunktverfahren sind iterative Methoden, bei denen eine Funktion wiederholt
   auf einen Wert angewendet wird, bis sich ein stabiler Punkt ergibt, der sich
@@ -1753,6 +1777,29 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
   - Welche Rolle spielt der Typ ```hs RealWorld -> (RealWorld, a)``` bei der Sequenzierung?
 ]
 
+#test[
+  Implementiere ein Programm, das Zahlen aus einer Datei aufsummiert, bzw.
+  eine implementiere eine Funktion ```sumFile :: FilePath -> IO Int```
+  In jeder Zeile einer Datei steht eine nicht-negative Zahl.
+]
+
+#test[
+  Implementiere folgendes Rate-Spiel als IO-Programm.
+  - Du bekommst ein Orakel vom Typ ```hs a -> Ordering```, das
+    dir verrät, ob dein Rateversuch kleiner als, gleich oder größer als der Wert
+    ist, den das Orakel festgelegt hat.
+  - In jeder Runde des Spiels ratest du eine Zahl.
+  - Wenn die Zahl kleiner als die unbekannte Zahl ist, dann soll der Hinweis
+    "Die gesuchte Zahl ist kleiner." ausgegeben werden. Wenn die unbekannte Zahl
+    größer ist, soll ebenso eine entsprechende Nachricht ausgegeben werden.
+  - Wenn die korrekte Zahl erraten wurde, bricht das Spiel ab.
+  Implementiere das Spiel als Funktion ```hs game :: Read a => (a -> Ordering) -> IO ()```.
+
+  Du kannst das Spiel gerne ausschmücken und erweitern. Zum Beispiel kannst du
+  die Anzahl der Rateversuche begrenzen oder eine weitere Zahl festlegen, die
+  vorzeitig das Spiel beendet und das Orakel gewinnen lässt.
+]
+
 // Funktoren, Applicatives, Monaden
 
 #test[
@@ -1854,6 +1901,9 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
   ```hs f :: [Maybe (Either a (Deep a b))] -> [Maybe (Either a r)]```
   mithilfe von ```hs foldDeep fdeep :: Deep a b -> r``` definieren?
 ]
+
+
+// TODO Tests, die die Funktionsweise von QuickCheck für Studierende erklären
 
 
 #pagebreak(weak: true)
