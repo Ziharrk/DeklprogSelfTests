@@ -1415,6 +1415,8 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
     ```hs value :: Doubly a -> Maybe a``` und
     ```hs next :: Doubly a -> Doubly a```, die den vorherigen Knoten, die
     Beschriftung eines Knoten, und den nächsten Knoten zurückgeben sollen.
+  - Angenommen du möchtest einen weiteren Wert in die doppelt-verkettete Liste
+    einfügen, auf welches Problem stoßt du hinsichtlich Mutierbarkeit?
 
   Der Wert des folgenden Ausdrucks soll ```hs 8``` sein.
   ```hs
