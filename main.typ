@@ -1402,6 +1402,27 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
   ]
 ]
 
+#test[
+  Gegeben sei der Datentyp
+  #align(center)[```hs data Doubly a = Null | Node (Doubly a) a (Doubly a)```.]
+  - Implementiere eine Funktion ```hs fromList :: [a] -> Doubly a```, die
+    die gegebene Liste in eine doppelt-verkettete Liste umwandelt. ```hs Null```
+    soll sowohl das linke als auch das rechte Ende der Liste darstellen. Von
+    diesem brauchst nicht zum anderseitig verketteten Element zurückkommen.
+    ```hs fromList``` soll den Knoten zurückgeben, der mit dem ersten
+    Listenelement korrespondiert.
+  - Weiter implementiere auch ```hs prev :: Doubly a -> Doubly a```,
+    ```hs value :: Doubly a -> Maybe a``` und
+    ```hs next :: Doubly a -> Doubly a```, die den vorherigen Knoten, die
+    Beschriftung eines Knoten, und den nächsten Knoten zurückgeben sollen.
+
+  Der Wert des folgenden Ausdrucks soll ```hs 8``` sein.
+  ```hs
+  let xs = fromList [1, 6, 1, 8, 0, 3]
+   in value . prev . next . next . next . next $ xs
+  ```
+]
+
 #challenge[
   Wir können endliche Automaten als unendliche Bäume darstellen.
   Betrachte z.B. den endlichen Automaten für die reguläre Sprache $a^* b^*$.
