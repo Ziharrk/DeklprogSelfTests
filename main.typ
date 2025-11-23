@@ -1859,6 +1859,46 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
 ]
 
 #test[
+  Wie übersetzen wir
+  ```hs
+  do x <- e1
+     e2
+
+  do e1
+     e2
+  ```
+  in einen äquivalente Ausdrucke mithilfe von ```hs (>>=)``` und ```hs (>>)```?
+
+  Hier ist ein größerer Ausdruck:
+  ```hs
+  do x <- getInt
+     y <- getInt
+     print (x + y)
+     return (x + y)
+  ```
+]
+
+#test[
+  Wie übersetzen wir die Audrücke
+  #align(center)[
+    ```hs
+    eval e1 >>= \x -> eval e2
+            >>= \y -> if y == 0
+                        then Nothing
+                        else return (x + y)
+    ```
+    und
+    ```hs
+    getLine >> read <$> getLine
+            >>= \x -> case f x of
+                        Nothing -> return 0
+                        Just _  -> return x
+    ```
+  ]
+  in einen äquivalenten Ausdruck mithilfe der ```hs do```-Notation?
+]
+
+#test[
   Gegeben sei der Datentyp ```hs Tree a = Leaf a | Tree a :+: Tree a```.
   Implementiere eine Funktion ```hs allTrees :: [a] -> [Tree a]```, die alle
   Binärbäume generiert, deren Blätter von links nach rechts die Eingabeliste
