@@ -1880,6 +1880,112 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
   ```
 ]
 
+#challenge[
+  Gegeben sei der Datentyp
+  #align(center)[
+    ```hs newtype ZipList a = ZipList { getZipList :: [a] }```.
+    #footnote[
+      Das Umwickeln eines Typen mit ```hs newtype```, für den wir bereits
+      Typklasseninstanzen haben, ist ein gängiger Trick, um alternative Instanzen
+      für diese Typklassen bereitzustellen.
+    ]
+  ]
+  Das Ziel ist es, ```hs ZipList``` als $n$-stellige Generalisierung von
+  ```hs zipWith``` zu verwenden:
+  #align(center, block(width: 100%, ```hs f <$> ZipList xs1 <*> ... <*> ZipList xsN```))
+
+  - Implementiere eine ```hs Functor```-Instanz für ```hs ZipList```.
+  - Bevor du eine ```hs Applicative```-Instanz für ```hs ZipList```
+    implementierst, überlege warum
+    ```hs
+    pure :: a -> ZipList a
+    pure x = ZipList [x]
+    ```
+    keine gültige Definition ist? Welche Gesetze wären verletzt, würdest
+    ```hs pure``` so definieren?
+  - Implementiere eine ```hs Applicative```-Instanz für ```hs ZipList```.
+  - Zeige, dass sowohl die ```hs Functor```- als auch die
+    ```hs Applicative```-Instanz die üblichen geforderten Gesetze erfüllen.
+]
+
+// TODO annotate steps properly and polish some steps
+// ```hs
+// instance Functor ZipList where
+//   fmap f = ZipList . fmap f . getZipList
+//
+// -- Identity
+// --
+// --   fmap id (ZipList xs)
+// -- = ZipList (fmap id (getZipList (ZipList xs)))
+// -- = ZipList (fmap id xs)
+// -- = ZipList xs
+// -- = id (ZipList xs)
+//
+// -- Composition
+// --
+// --   fmap (f . g) (ZipList xs)
+// -- = ZipList (fmap (f . g) (getZipList (ZipList xs)))
+// -- = ZipList (fmap (f . g) xs)
+// -- = ZipList ((fmap f . fmap g) xs)
+// -- = ZipList (fmap f (fmap g xs))
+// -- = ZipList (fmap f (getZipList (ZipList (fmap g xs))))
+// -- = fmap f (ZipList (fmap g xs))
+// -- = fmap f (ZipList (fmap g (getZipList (ZipList xs))))
+// -- = fmap f (fmap g (ZipList xs))
+// -- = (fmap f . fmap g) (ZipList xs)
+//
+// instance Applicative ZipList where
+//   pure = ZipList . repeat
+//
+//   zfs <*> zxs = ZipList (zipWith ($) (getZipList zfs) (getZipList zxs))
+//
+//
+// -- Identity
+// --
+// --   pure id <*> ZipList xs
+// -- = ZipList (repeat id) <*> ZipList xs
+// -- = ZipList (zipWith ($) (repeat id) xs)
+// -- = ZipList (($) id x1 : ($) id x2 : ... : ($) id xn : [])
+// -- = ZipList xs
+//
+// -- Composition
+// --
+// --   pure (.) <*> ZipList fs <*> ZipList gs <*> ZipList xs
+// -- = ZipList (repeat (.)) <*> ZipList fs <*> ZipList gs <*> ZipList xs
+// -- = ZipList (zipWith ($) (repeat (.)) fs) <*> ZipList gs <*> ZipList xs
+// -- = ZipList (map (.) fs) <*> ZipList gs <*> ZipList xs
+// -- = ZipList (zipWith ($) (map (.) fs) gs) <*> ZipList xs
+// -- = ZipList (map (map (.) fs) gs) <*> ZipList xs
+// -- = ZipList (zipWith (.) fs gs) <*> ZipList xs
+// -- = ZipList ((f1 . g1) x1 : (f2 . g2) x2 : ... : (fn . gn) xn : [])
+// -- = ZipList (f1 (g1 x1) : f2 (g2 x2) : ... : fn (gn xn))
+// -- = ZipList (zipWith ($) fs (g1 x1 : g2 x2 : ... : gm xm))
+// -- = ZipList (zipWith ($) fs (zipWith ($) gs xs))
+// -- = ZipList fs <*> (ZipList (zipWith ($) gs xs))
+// -- = ZipList fs <*> (ZipList gs <*> ZipList xs)
+//
+//
+// -- Homomorphism
+// --
+// --   pure f <*> pure x
+// -- = ZipList (repeat f) <*> ZipList (repeat x)
+// -- = ZipList (zipWith ($) (repeat f) (repeat x))
+// -- = ZipList (repeat (f x))
+// -- = pure (f x)
+//
+//
+// -- Interchange
+// --
+// --   ZipList fs <*> pure y
+// -- = ZipList fs <*> ZipList (repeat y)
+// -- = ZipList (zipWith ($) fs (repeat y))
+// -- = ZipList (f1 y : f2 y : ... : fn y : [])
+// -- = ZipList (($ y) f1 : ($ y) f2 : ... : ($ y) fn : [])
+// -- = ZipList (zipWith ($) (repeat ($ y)) fs)
+// -- = ZipList (repeat ($ y)) <*> ZipList fs
+// -- = pure ($ y) <*> ZipList fs
+// ```
+
 #test[
   Wie übersetzen wir
   ```hs
