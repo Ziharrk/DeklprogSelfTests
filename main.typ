@@ -1801,12 +1801,13 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
 
 #test[
   Implementiere ein Programm, das Zahlen aus einer Datei aufsummiert, bzw.
-  eine implementiere eine Funktion ```sumFile :: FilePath -> IO Int```
+  implementiere eine Funktion ```hs sumFile :: FilePath -> IO Int```.
   In jeder Zeile einer Datei steht eine nicht-negative Zahl.
 ]
 
 #test[
-  Implementiere folgendes Rate-Spiel als IO-Programm.
+  Implementiere folgendes Rate-Spiel als IO-Programm. Es soll eine Zahl erraten
+  werden.
   - Du bekommst ein Orakel vom Typ ```hs a -> Ordering```, das
     dir verrät, ob dein Rateversuch kleiner als, gleich oder größer als der Wert
     ist, den das Orakel festgelegt hat.
@@ -1835,8 +1836,8 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
   dabei ähnlich wie ```hs ($)``` -- mit ```hs (<$>)``` muss die Funktion nicht
   explizit in den entsprechenden ```hs Applicative``` gehoben werden.
 
-  Ein Typ, der uns konzeptionell noch näher an gewöhnliche Funktionsapplikation
-  heranführt, ist
+  Ein Typ, der uns konzeptionell noch näher an die gewöhnliche
+  Funktionsapplikation heranführt, ist
   #align(center)[```hs newtype Identity a = Identity { runIdentity :: a }```.]
   Implementiere ```hs Functor```-, ```hs Applicative```- und
   ```hs Monad```-Instanzen für ```hs Identity```.
@@ -1844,6 +1845,14 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
   Wenn du die Instanzen definierst, solltest du feststellen, dass du im
   Wesentlichen nur den enthaltenden Wert aus der ```hs Identity``` holst,
   verarbeitest und anschließend wieder hereinpackst.
+]
+
+#test[
+  Monaden sind ausdrucksstärker als applikative Funktoren, und applikative
+  Funktoren sind ausdrucksstärker als Funktoren.
+  - Implementiere ```hs fmap```, ```hs pure``` und ```hs (<*>)``` mithilfe von
+    ```hs return``` und ```hs (>>=)```.
+  - Implementiere ```hs fmap``` mithilfe von ```hs pure``` und ```hs (<*>)```.
 ]
 
 #test[
@@ -1863,7 +1872,7 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
 
 #test[
   Argumentiere anhand der Gesetze, die für eine ```hs Functor```-Instanzen
-  gelten sollen, dass die folgenden ```hs Functor```-Instanzen keine gültige
+  gelten sollen, dass die folgenden ```hs Functor```-Instanzen keine gültigen
   Instanzen sind. Gebe auch Beispiele an, die zeigen, dass die Gesetze nicht
   erfüllt sind.
   ```hs
@@ -1919,7 +1928,7 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
       ```
     ]
     Es muss also dafür gesorgt sein, dass es genügend ```hs id```s in der linken
-    ZipList gibt.
+    ```hs ZipList``` gibt.
   ]
 ]
 
@@ -2003,21 +2012,16 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
 
 #test[
   Wie übersetzen wir
-  ```hs
-  do x <- e1
-     e2
-
-  do e1
-     e2
-  ```
+  #align(center)[```hs do x <- e1; e2``` #h(1em) und #h(1em) ```hs do e1; e2```]
   in einen äquivalente Ausdrucke mithilfe von ```hs (>>=)``` und ```hs (>>)```?
 
   Hier ist ein größerer Ausdruck:
   ```hs
-  do x <- getInt
-     y <- getInt
-     print (x + y)
-     return (x + y)
+  do
+    x <- getInt
+    y <- getInt
+    print (x + y)
+    return (x + y)
   ```
 ]
 
@@ -2043,15 +2047,15 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
 
 #test[
   Gegeben sei der Datentyp ```hs Tree a = Leaf a | Tree a :+: Tree a```.
-  Implementiere eine Funktion ```hs allTrees :: [a] -> [Tree a]```, die alle
-  Binärbäume generiert, deren Blätter von links nach rechts die Eingabeliste
-  lesen. Um ```hs allTrees``` zu implementieren, implementiere zuerst eine
-  Hilfsfunktion ```hs splits :: [a] -> [([a], [a])]```, die alle nicht-leeren
-  Aufteilungen der Eingabelisten berechnet.
-  Zum Beispiel soll ```hs splits [1..4]``` die Liste
-  ```hs [([1], [2, 3, 4]), ([1, 2], [3, 4]), ([1, 2, 3], [4])]``` ergeben.
-  Versuche, ```hs allTrees``` mithilfe von list comprehensions oder der
-  Listenmonade zu implementieren.
+  - Implementiere eine Funktion ```hs splits :: [a] -> [([a], [a])]```, die
+    alle nicht-leeren Aufteilungen der Eingabeliste berechnet.
+
+    Zum Beispiel soll ```hs splits [1..4]``` die Liste
+    ```hs [([1], [2, 3, 4]), ([1, 2], [3, 4]), ([1, 2, 3], [4])]``` ergeben.
+  - Implementiere eine Funktion ```hs allTrees :: [a] -> [Tree a]```, die alle
+    Binärbäume generiert, deren Blätter von links nach rechts die Eingabeliste
+    lesen. Versuche, ```hs allTrees``` mithilfe von list comprehensions oder der
+    Listenmonade zu implementieren.
 ]
 
 // ```hs
@@ -2079,10 +2083,11 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
   ```hs
   foldDeep :: ([Maybe (Either a r)] -> r) -> Deep a b -> r
   foldDeep fdeep (Deep x) = fdeep (f x)
+    where fold = foldDeep fdeep
   ```
   Wie können wir
   ```hs f :: [Maybe (Either a (Deep a b))] -> [Maybe (Either a r)]```
-  mithilfe von ```hs foldDeep fdeep :: Deep a b -> r``` definieren?
+  definieren?
 ]
 
 
