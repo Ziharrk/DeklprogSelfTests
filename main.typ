@@ -921,6 +921,28 @@ stellt eine PR auf GitHub].
 ]
 
 #test[
+  Gegeben sei der Datentyp ```hs data Tree a = Empty | Node (Tree a) a (Tree a)```
+  und die Faltungsfunktion ```hs foldTree :: r -> (r -> a -> r) -> Tree a -> r```.
+
+  Vergewissere dich, dass die Implementierung der folgenden Funktion, die alle
+  Beschriftungen durch den gleichen Wert ersetzt, korrekt ist.
+  ```hs
+  replace :: b -> Tree a -> Tree b
+  replace x = foldTree Empty (const . flip Node x)
+  ```
+  Zeige, dass ```hs const . flip Node x = \l y r -> Node l x r``` ist.
+]
+
+// ```hs
+//   const . flip Node x               -- Definition (.)
+// = \l -> const (flip Node x l)       -- Anwendung flip
+// = \l -> const (Node l x)            -- Anwendung const
+// = \l -> \y -> Node l x              -- Notation
+// = \l y -> Node l x                  -- Eta-Expansion
+// = \l y r -> Node l x r
+// ```
+
+#test[
   Welche Funktion verbirgt sich hinter ```hs foldr ((++) . f) []``` und was ist
   ihr Typ?
 ]
