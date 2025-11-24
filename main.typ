@@ -1906,6 +1906,21 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
   - Implementiere eine ```hs Applicative```-Instanz für ```hs ZipList```.
   - Zeige, dass sowohl die ```hs Functor```- als auch die
     ```hs Applicative```-Instanz die üblichen geforderten Gesetze erfüllen.
+
+  #hint[
+    Das Identitätsgesetz wäre verletzt, wenn man ```hs pure``` wie gegeben
+    definieren würde. Betrachte folgendes Gegenbeispiel.
+    #align(center)[
+      ```hs
+         pure id      <*> ZipList [1, 2]
+      == ZipList [id] <*> ZipList [1, 2]
+      == ZipList [1]
+      /= ZipList [1, 2]
+      ```
+    ]
+    Es muss also dafür gesorgt sein, dass es genügend ```hs id```s in der linken
+    ZipList gibt.
+  ]
 ]
 
 // TODO annotate steps properly and polish some steps
