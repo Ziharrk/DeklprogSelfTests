@@ -922,7 +922,7 @@ stellt eine PR auf GitHub].
 
 #test[
   Gegeben sei der Datentyp ```hs data Tree a = Empty | Node (Tree a) a (Tree a)```
-  und die Faltungsfunktion ```hs foldTree :: r -> (r -> a -> r) -> Tree a -> r```.
+  und die Faltungsfunktion ```hs foldTree :: r -> (r -> a -> r -> r) -> Tree a -> r```.
 
   Vergewissere dich, dass die Implementierung der folgenden Funktion, die alle
   Beschriftungen durch den gleichen Wert ersetzt, korrekt ist.
