@@ -935,8 +935,8 @@ stellt eine PR auf GitHub].
 
 // ```hs
 //   const . flip Node x               -- Definition (.)
-// = \l -> const (flip Node x l)       -- Anwendung flip
-// = \l -> const (Node l x)            -- Anwendung const
+// = \l -> const (flip Node x l)       -- Definition flip
+// = \l -> const (Node l x)            -- Definition const
 // = \l -> \y -> Node l x              -- Notation
 // = \l y -> Node l x                  -- Eta-Expansion
 // = \l y r -> Node l x r
