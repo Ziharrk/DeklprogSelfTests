@@ -1629,9 +1629,9 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
   durch weitere Anwendungen nicht mehr verändert.
 
   Dieses Berechnungsmuster wird durch die Funktion
-  ```hs iterate :: (a -> a) -> a -> [a]``` festgehalten.
+  ```hs iterate :: (a -> a) -> a -> [a]``` in der Prelude festgehalten.
 
-  - Wie ist ```hs iterate``` definiert?
+  - Implementiere ```hs iterate```.
   - Ein klassisches Beispiel aus der Numerik ist die Berechnung der Wurzel
     mithilfe des Heron-Verfahrens. Es ist gegeben durch
     $ x_(n + 1) = 1/2 (x_n + a/x_n) $ Diese Folge nährt den Wert von $sqrt(a)$
