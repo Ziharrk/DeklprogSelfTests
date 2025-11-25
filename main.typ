@@ -2160,6 +2160,15 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
     Anschein erwecken, dass deine Lösung alle Knoten besucht. Wieso ist das
     nicht der Fall? Wieso passiert das nur, wenn wir uns die Liste aller
     besuchten Knoten anschauen?
+    Welche Beobachtungen machst du, wenn du ```hs reachable 0 k (yGraph k)```
+    berechnest?
+    ```hs
+    yGraph :: Int -> Graph () ()
+    yGraph k = Graph [(v, ()) | v <- [0..2 * k]]
+                     (let left = [(v, (), v + 1) | v <- [1..k]]
+                          right = [(v, (), v + 1) | v <- [k + 1..2 * k]]
+                       in (0, (), 1) : (0, (), k + 1) : (left ++ right))
+    ```
 
   #hint[
     Falls du es nicht geschafft hast, in @sequence_state ```hs sequence```
