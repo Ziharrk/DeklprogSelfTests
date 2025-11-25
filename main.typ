@@ -1920,6 +1920,15 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
   Wie lauten die ```hs Functor```-Gesetze?
 ]
 
+#test[
+  Die Funktor-Typkonstruktorklasse ist wie folgt definiert.
+  ```hs
+  class Functor f where
+    fmap :: (a -> b) -> f a -> f b
+  ```
+  Welchen kind hat ```hs f```?
+]
+
 #stopHere
 
 #test[
