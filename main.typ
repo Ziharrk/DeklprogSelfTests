@@ -2207,7 +2207,7 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
   zweite $w_e$.
 
   - Implementiere eine Funktion ```hs succs :: Int -> Graph a b -> [Int]```,
-    die zu einem gegebenen Knoten ausgehenden inzidenten Kanten berechnet.
+    die zu einem gegebenen Knoten die direkten Nachfolger berechnet.
   - Implementiere eine Funktion
     ```hs reachable :: Int -> Int -> Graph a b -> Bool```, die entscheidet, ob
     zwischen zwei Knoten ein gerichteter Pfad existiert. Starte zuerst mit
