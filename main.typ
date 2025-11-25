@@ -110,7 +110,8 @@
 
 Größere Aufgaben haben wir als Challenges markiert. Diese Aufgaben benötigen
 öfter mehrere Konzepte und führen zusätzlich Konzepte ein, die nur für das
-Lösen der Aufgabe wichtig sind.
+Lösen der Aufgabe wichtig sind. Wenn die zusätzlichen Konzepte, dir zu sehr
+Schwierigkeiten bereiten, überspringe die entsprechende Frage oder Aufgabe.
 
 Wenn du Anmerkungen oder weitere Ideen für Inhalte für dieses Dokument hast,
 dann schreibe uns gerne über z.B. mattermost an -- oder
@@ -1240,6 +1241,99 @@ stellt eine PR auf GitHub].
     du den ```hs (^)```-Operator zum binären Exponentiation nutzen.
   ]
 ]
+
+#challenge[
+  In dieser Challenge sollst du automatisches Differenzieren im Rückwärtsmodus
+  mithilfe von (Operator-)Überladung implementieren. Das Überladen von
+  arithmetischen Operatoren und von Funktionen macht es komfortabel, andere
+  Funktionen hinzuschreiben, die wir differenzieren wollen. Dieser Ansatz des
+  Differenzierens führt dabei das Differenzieren komplizierter Funktionen auf
+  einfache, elementare Funktionen zurück.
+
+  Wir verwenden folgenden Datentyp: ```hs data D a = D a a```.
+  Ein Wert vom Typ ```hs D a``` enthält einen Funktionswert und seine Ableitung.
+
+  Der Kern der Idee ist, Funktionen so zu überladen, dass sie auf
+  ```hs D a```-Werte angewendet werden können. Angenommen, es sei eine Funktion
+  ```hs f``` und ihre Ableitungsfunktion ```hs f'``` gegeben. Dann soll ein
+  überladenes ```hs f``` wie folgt funktionieren
+  ```hs
+  f :: D a -> D a
+  f (D x d) = D (f x) (d * f' x)
+  ```
+  Der Wert ```hs x``` ist das Ergebnis einer inneren Funktion ```hs g```,
+  und ```hs d``` entspricht deren Ableitung ```hs g'```. Die Kettenregel führt
+  dann zu ```hs (f . g)' z = g' z * f' x```. Nach dem Muster kannst du nun
+  Standardfunktionen überladen. Für die arithmetischen Operatoren benötigst du
+  an der Stelle deren Ableitungsregeln (Summenregel, Leibnizregel, usw.)
+
+  Implementiere die Typklasseninstanzen ```hs Num```, ```hs Fractional```
+  und ```hs Floating```.
+  #footnote[
+    #link("https://de.wikipedia.org/wiki/Differentialrechnung#Zusammenfassung")[Zusammenfassung der Ableitungsregeln]
+  ]
+
+  Mit den folgenden Funktionen kannst du dann die erste, zweite oder dritte
+  Ableitung bilden.
+  ```hs
+  d1 :: Num a => (D a -> D b) -> a -> b
+  d1 f x = let (D _ d) = f (D x 1) in d
+
+  d2 :: Num a => (D (D a) -> D (D b)) -> a -> b
+  d2 f x = let (D (D _ _) (D _ d)) = f (D (D x 1) 1) in d
+
+  d3 :: Num a => (D (D (D a)) -> D (D (D b))) -> a -> b
+  d3 f x = let (D _ (D _ (D _ d))) = f (D (D (D x 1) 1) 1) in d
+  ```
+
+  #hint[
+    Wenn du Anlaufschwierigkeiten hast, helfen dir möglicherweise diese ersten
+    Implementierungen weiter. Das Muster bleibt ähnlich.
+    ```hs
+    instance Num a => Num (D a) where
+      D x1 d1 + D x2 d2 = D (x1 + x2) (d1 + d2)  -- Summenregel
+      -- ...
+
+    instance Fractional a => Fractional (D a) where
+      -- ...
+
+    instance Floating a => Floating (D a) where
+      exp (D x d) = D (exp x) (d * exp x)  -- Kettenregel und exp'(x) = exp(x)
+      -- ...
+    ```
+  ]
+]
+
+// ```hs
+// instance Num a => Num (D a) where
+//   D x1 d1 + D x2 d2 = D (x1 + x2) (d1 + d2)
+//   D x1 d1 - D x2 d2 = D (x1 - x2) (d1 - d2)
+//   D x1 d1 * D x2 d2 = D (x1 * x2) (d1 * x2 + x1 * d2)
+//   negate (D x d)    = D (negate x) (negate d)
+//   abs (D x d)       = D (abs x) (abs d)
+//   signum (D x d)    = D (signum x) (d * signum x)
+//   fromInteger x     = D (fromInteger x) 0
+//
+// instance Fractional a => Fractional (D a) where
+//   D x1 d1 / D x2 d2 = D (x1 / x2) ((d1 * x2 + x1 * d2) / (x2 * x2))
+//   fromRational r    = D (fromRational r) 0
+//
+// instance Floating a => Floating (D a) where
+//   pi = D pi 0
+//   exp (D x d)   = D (exp x)   (d * exp x)
+//   log (D x d)   = D (log x)   (d / x)
+//   sin (D x d)   = D (sin x)   (d * cos x)
+//   cos (D x d)   = D (cos x)   (d * negate (sin x))
+//   tan (D x d)   = D (tan x)   (d / (cos x) ^ 2)
+//   asin (D x d)  = D (asin x)  (d / sqrt (1 - x * x))
+//   acos (D x d)  = D (acos x)  (d / negate (sqrt (1 - x * x)))
+//   atan (D x d)  = D (atan x)  (d / (1 + x * x))
+//   sinh (D x d)  = D (sinh x)  (d * cosh x)
+//   cosh (D x d)  = D (cosh x)  (d * sinh x)
+//   asinh (D x d) = D (asinh x) (d / sqrt (1 + x * x))
+//   acosh (D x d) = D (acosh x) (d / sqrt (x * x - 1))
+//   atanh (D x d) = D (atanh x) (d / (1 - x * x))
+// ```
 
 An vielen Stellen in den bisherigen Selbsttests haben wir oft einen konkreten
 Typ (z.B. ```hs Int```) genutzt, für den es bestimmte Typklasseninstanzen
