@@ -2192,7 +2192,8 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
       content("stateN.end", padding: 0.25em, anchor: "north", [$s_n$])
     })
   ]
-  Das Ergebnis soll $([y_1, y_2, ..., y_n], s_n)$ sein.
+  Es soll also
+  $"sequence"([f_1, f_2, ..., f_n], s_0) = ([y_1, y_2, ..., y_n], s_n)$ gelten.
 ] <sequence_state>
 // line((0,0), (10, 1), name: "line")
 //
