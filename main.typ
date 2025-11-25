@@ -1867,10 +1867,6 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
 ]
 
 
-#stopHere
-
-
-
 // Ein- und Ausgabe
 
 #test[
@@ -1919,6 +1915,12 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
 ]
 
 // Funktoren, Applicatives, Monaden
+
+#test[
+  Wie lauten die ```hs Functor```-Gesetze?
+]
+
+#stopHere
 
 #test[
   Die ```hs Applicative```-Typkonstruktorklasse erlaubt es uns, ```hs fmap```
