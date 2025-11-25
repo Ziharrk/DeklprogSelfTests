@@ -104,7 +104,7 @@
     Dieses Dokument enthält #test Fragen, #challenge kleinere bis
     größere Aufgaben und andere Ressourcen zum Thema Deklarative Programmierung.
     Die Inhalte dieses Dokuments sollen dir helfen, dein Verständnis über
-    Haskell und Prolog zu prüfen.
+    Haskell und Prolog zu prüfen und zu stärken.
   ]
 }
 
