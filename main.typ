@@ -2287,7 +2287,7 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
     })
   ]
   Es soll also
-  $"sequence"([f_1, f_2, ..., f_n], s_0) = ([y_1, y_2, ..., y_n], s_n)$ gelten.
+  ```hs sequence [f1, f2, ..., fn] s0 = ([y1, y2, ..., yn], sn)``` gelten.
 ] <sequence_state>
 
 #challenge[
