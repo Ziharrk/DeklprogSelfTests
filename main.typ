@@ -2242,9 +2242,9 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
     ```hs
     sequence :: [s -> (a, s)] -> s -> ([a], s)
     sequence []     s = ([], s)
-    sequence (f:fs) s = let (x, s')   = f s
-                            (xs, s'') = sequence fs s'
-                         in (x:xs, s'')
+    sequence (f:fs) s = let (y, s')   = f s
+                            (ys, s'') = sequence fs s'
+                         in (y:ys, s'')
     ```
   ]
 ]
@@ -2265,9 +2265,9 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
 // -- vorimplementiert für Monaden
 // sequence :: [s -> (a, s)] -> s -> ([a], s)
 // sequence []     s = ([], s)
-// sequence (f:fs) s = let (x, s')   = f s
-//                         (xs, s'') = sequence fs s'
-//                      in (x:xs, s'')
+// sequence (f:fs) s = let (y, s')   = f s
+//                         (ys, s'') = sequence fs s'
+//                      in (y:ys, s'')
 //
 // reachable :: Int -> Int -> Graph a b -> Bool
 // reachable v w g = fst (go v [])
