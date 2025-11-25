@@ -1,3 +1,4 @@
+#import "@preview/cetz:0.4.2"
 #import "@preview/ctheorems:1.1.3": *
 #import "@preview/finite:0.5.0"
 
@@ -2129,7 +2130,79 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
   nächsten Fibonacci-Zahl aktualisiert und die kleinere Fibonacci-Zahl des
   Zustands zurückgegeben. Zuletzt projezieren wir mit ```hs fst``` auf das
   Ergebnis von ```hs sequence``` und verwerfen so den letzten Zustand.
+
+  Hier ist der Datenfluss von ```hs sequence``` nochmal visualisiert:
+  #align(center)[
+    #cetz.canvas({
+      import cetz.draw: *
+
+      // s_0 in
+      set-style(mark: (end: ")>"))
+      line((-1.0, 0.35), (0.0, 0.35), name: "state0")
+      content("state0.mid", padding: 0.25em, anchor: "north", [$s_0$])
+
+      // f_1
+      rect((0, 0), (1.0, 1.25))
+      content((0.5, 0.625), [$f_1$])
+
+      // y_1 out
+      set-style(mark: (end: "o"))
+      line((1.0, 0.85), (2.0, 0.85), name: "output1")
+      content("output1.mid", padding: 0.25em, anchor: "south", [$y_1$])
+
+      // s_1 out
+      set-style(mark: (end: ")>"))
+      line((1.0, 0.35), (3.0, 0.35), name: "state1")
+      content("state1.mid", padding: 0.25em, anchor: "north", [$s_1$])
+
+      // f_2
+      rect((3.0, 0), (4.0, 1.25))
+      content((3.5, 0.625), [$f_2$])
+
+      // y_2 out
+      set-style(mark: (end: "o"))
+      line((4.0, 0.85), (5.0, 0.85), name: "output2")
+      content("output2.mid", padding: 0.25em, anchor: "south", [$y_2$])
+
+      // s_2 out with fade out
+      set-style(mark: (end: ")>"))
+      line((5.0, 0.35), (6.0, 0.35), name: "state2", stroke: (dash: "dotted"))
+      content("state2.start", padding: 0.25em, anchor: "north", [$s_2$])
+      set-style(mark: (end: none))
+      line((4.0, 0.35), (5.0, 0.35))
+
+      // s_(n-1) in with fade in
+      line((7.0, 0.35), (8.0, 0.35), stroke: (dash: "dotted"))
+      set-style(mark: (end: ")>"))
+      line((8.0, 0.35), (9.0, 0.35), name: "stateN-1")
+      content("stateN-1.start", padding: 0.25em, anchor: "north", [$s_(n-1)$])
+
+      // f_n
+      rect((9.0, 0), (10.0, 1.25))
+      content((9.5, 0.625), [$f_n$])
+
+      // y_n out
+      set-style(mark: (end: "o"))
+      line((10.0, 0.85), (11.0, 0.85), name: "outputN")
+      content("outputN.mid", padding: 0.25em, anchor: "south", [$y_n$])
+
+      // s_n out
+      set-style(mark: (end: ")>"))
+      line((10.0, 0.35), (11.0, 0.35), name: "stateN")
+      content("stateN.end", padding: 0.25em, anchor: "north", [$s_n$])
+    })
+  ]
+  Das Ergebnis soll $([y_1, y_2, ..., y_n], s_n)$ sein.
 ] <sequence_state>
+// line((0,0), (10, 1), name: "line")
+//
+// set-style(content: (frame: "rect", stroke: none, fill: white, padding: .1))
+// content("line.start", [0%, 0, "start"], anchor: "east")
+// content("line.mid", [50%, "mid"])
+// content("line.end", [100%, "end"], anchor: "west")
+//
+// content((name: "line", anchor: 75%), [75%])
+// content((name: "line", anchor: 50pt), [50pt])
 
 #challenge[
   Im Folgenden modellieren wir einen Graph als Paar $(V, E)$ mit
