@@ -2093,6 +2093,118 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
 
 // TODO Tests, die die Funktionsweise von QuickCheck für Studierende erklären
 
+#test[
+  Oft kommt es vor, dass Berechnungen zustandabhängig verschiedene Ergebnisse
+  liefern. Zum Beispiel merken wir uns in einer Tiefensuche durch einen
+  Graph, welche Knoten bereits besucht wurden, damit die Tiefensuche sich nicht
+  in einem Kreis verläuft. Allgemein können wir solche Berechnungen als
+  Funktionen vom Typ ```hs s -> (a, s)``` auffassen. Sie bekommen ein Zustand
+  vom Typ ```hs s``` und liefern ein Ergebnis vom Typ ```hs a``` und einen
+  (möglicherweise) neuen Zustand (ebenso vom Typ ```hs s```).
+
+  Implementiere eine Funktion ```hs sequence :: [s -> (a, s)] -> s -> ([a], s)```,
+  die Liste zustandabhängiger Berechnungen nimmt und der Reihe nach ausführt.
+  Es wird dabei ein erster Zustand übergegeben, der die erste Berechnung
+  anstößt. Das Ergebnis soll der letzte Zustand mit allen Ergebnissen der
+  Berechnungen sein.
+  #footnote[
+    Für Interessierte: Diese Implementierung von ```hs sequence``` ist ein
+    Spezialfall der
+    #link("https://learnyouahaskell.github.io/for-a-few-monads-more.html#state")[```hs State```-Monade].
+    Mit der Intuition, dass wir hier Berechnungen sequenzieren, sollte es nicht
+    überraschend sein, dass ```hs s -> (a, s)``` eine Monade ist.
+  ]
+
+  Betrachte folgendes Beispiel:
+  ```hs
+  --     Zustand        Ergebnis  neuer Zustand
+  fib :: (Int, Int) -> (Int     , (Int, Int)   )
+  fib (f0, f1) = (f0, (f1, f0 + f1))
+
+  fibs :: Int -> [Int]
+  fibs n = fst (sequence (replicate n fib) (0, 1))
+  ```
+  Hier wird der erste Zustand mit den ersten beiden Fibonacci-Zahlen
+  initialisiert, also $(0, 1)$. In jedem Schritt wird der Zustand mit der
+  nächsten Fibonacci-Zahl aktualisiert und die kleinere Fibonacci-Zahl des
+  Zustands zurückgegeben. Zuletzt projezieren wir mit ```hs fst``` auf das
+  Ergebnis von ```hs sequence``` und verwerfen so den letzten Zustand.
+] <sequence_state>
+
+#challenge[
+  Im Folgenden modellieren wir einen Graph als Paar $(V, E)$ mit
+  einer Knoten- und Kantenbewertung $w_v : V -> A$ und $w_e : E -> B$,
+  und $E subset.eq V times V$.
+
+  Gegeben sei der Datentyp
+  #align(center)[```hs data Graph a b = Graph [(Int, a)] [(Int, b, Int)]```.]
+  Hier entspricht der erste Parameter des Datenkonstruktors $w_v$ und der
+  zweite $w_e$.
+
+  - Implementiere eine Funktion ```hs succs :: Int -> Graph a b -> [Int]```,
+    die zu einem gegebenen Knoten ausgehenden inzidenten Kanten berechnet.
+  - Implementiere eine Funktion
+    ```hs reachable :: Int -> Int -> Graph a b -> Bool```, die entscheidet, ob
+    zwischen zwei Knoten ein gerichteter Pfad existiert. Starte zuerst mit
+    einfachen Graphen und betrachte immer komplexere Graphen. Wie musst du
+    (oder kannst du) deine Implementierung anpassen?
+    - Nehme zuerst an, dass ein gegebener Graph immer ein Baum ist? Wenn also
+      ein Pfad existiert, dann ist er eindeutig.
+    - Nehme jetzt an, dass ein gegebener Graph immer azyklisch ist. Das heißt,
+      falls ein Pfad existiert, muss dieser nicht mehr eindeutig sein.
+      Nutze deine Erkenntnisse aus @sequence_state, um eine Liste aller
+      besuchten Knoten zu verwalten.
+    - Was musst du in deiner Implementierung anpassen, wenn der gegebene Graph
+      auch zyklisch sein kann?
+  - Je nachdem wie du ```hs reachable``` implementiert hast, könnte es denn
+    Anschein erwecken, dass deine Lösung alle Knoten besucht. Wieso ist das
+    nicht der Fall? Wieso passiert das nur, wenn wir uns die Liste aller
+    besuchten Knoten anschauen?
+
+  #hint[
+    Falls du es nicht geschafft hast, in @sequence_state ```hs sequence```
+    zu implementieren, kannst du diese Implementierung verwenden.
+
+    ```hs
+    sequence :: [s -> (a, s)] -> s -> ([a], s)
+    sequence []     s = ([], s)
+    sequence (f:fs) s = let (x, s')   = f s
+                            (xs, s'') = sequence fs s'
+                         in (x:xs, s'')
+    ```
+  ]
+]
+
+// ```hs
+// import Prelude hiding (sequence)
+//
+// data Graph a b = Graph [(Int ,a)] [(Int, b, Int)]
+//   deriving Show
+//
+// succs :: Int -> Graph a b -> [Int]
+// succs v (Graph _ es) = [w | (u, _, w) <- es, u == v]
+//
+// -- für Bäume gut, für DAGs langsam
+// -- reachable :: Int -> Int -> Graph a b -> Bool
+// -- reachable v w g = or [reachableTree u w g | u <- succs v g]
+//
+// -- vorimplementiert für Monaden
+// sequence :: [s -> (a, s)] -> s -> ([a], s)
+// sequence []     s = ([], s)
+// sequence (f:fs) s = let (x, s')   = f s
+//                         (xs, s'') = sequence fs s'
+//                      in (x:xs, s'')
+//
+//
+// reachable :: Int -> Int -> Graph a b -> Bool
+// reachable v w g = fst (go v [])
+//   where
+//     go u us | u == w      = (True, us)
+//             | u `elem` us = (False, us)
+//             | otherwise   = let (rs, us') = sequence (go <$> succs u g) (u:us)
+//                              in (or rs, us')
+// ```
+
 
 #pagebreak(weak: true)
 
