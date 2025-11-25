@@ -2269,7 +2269,6 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
 //                         (xs, s'') = sequence fs s'
 //                      in (x:xs, s'')
 //
-//
 // reachable :: Int -> Int -> Graph a b -> Bool
 // reachable v w g = fst (go v [])
 //   where
