@@ -2338,6 +2338,72 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
                        in (0, (), 1) : (0, (), k + 1) : (left ++ right))
     ```
 
+    #align(center)[
+      #cetz.canvas({
+        import cetz.draw: *
+
+        circle((0, 0), radius: 0.6, name: "v0")
+        content((0, 0), [$v_0$])
+
+        circle((2, 1), radius: 0.6, name: "v1")
+        content((2, 1), [$v_1$])
+
+        set-style(mark: (end: ")>"))
+        line("v0", "v1")
+
+        circle((4, 1), radius: 0.6, name: "v2")
+        content((4, 1), [$v_2$])
+
+        line("v1", "v2")
+
+        circle((6, 1), radius: 0.6, stroke: none, name: "vh1")
+
+        set-style(mark: (end: none))
+        line("v2", "vh1")
+
+        line((5.8, 1), (6.2, 1), stroke: (dash: "dotted"))
+
+        circle((8, 1), radius: 0.6, name: "vk-1")
+        content((8, 1), [$v_(k-1)$])
+
+        set-style(mark: (end: ")>"))
+        line("vh1", "vk-1")
+
+        circle((10, 1), radius: 0.6, name: "vk")
+        content((10, 1), [$v_k$])
+
+        line("vk-1", "vk")
+
+        circle((2, -1), radius: 0.6, name: "vk+1")
+        content((2, -1), [$v_(k+1)$])
+
+        line("v0", "vk+1")
+
+        circle((4, -1), radius: 0.6, name: "vk+2")
+        content((4, -1), [$v_(k+2)$])
+
+        line("vk+1", "vk+2")
+
+        circle((6, -1), radius: 0.6, stroke: none, name: "vh2")
+
+        set-style(mark: (end: none))
+        line("vk+2", "vh2")
+
+        line((5.8, -1), (6.2, -1), stroke: (dash: "dotted"))
+
+        circle((8, -1), radius: 0.6, name: "v2k-1")
+        content((8, -1), [$v_(2k-1)$])
+
+        set-style(mark: (end: ")>"))
+        line("vh2", "v2k-1")
+
+        circle((10, -1), radius: 0.6, name: "v2k")
+        content((10, -1), [$v_(2k)$])
+
+        line("v2k-1", "v2k")
+      })
+    ]
+
   #hint[
     Falls du es nicht geschafft hast, in @sequence_state ```hs sequence```
     zu implementieren, kannst du diese Implementierung verwenden.
