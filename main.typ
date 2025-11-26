@@ -895,6 +895,16 @@ stellt eine PR auf GitHub].
   - Implementiere ```hs map``` mithilfe von ```hs unfoldr```.
 ]
 
+#test[
+  In diesem Test wollen wir einen beliebigen Wert zu einen Baum entfalten.
+  Implementiere eine Funktion ```hs unfoldTree :: (b -> Maybe (b, a, b)) -> b -> Tree a```,
+  die eine Funktion nimmt, die ein Wert von Typ ```hs b``` nimmt und in eine
+  Knotenbeschriftung und zwei weitere Wert vom Typ ```hs b``` aufspaltet, oder
+  das Entfalten stoppt, indem ein ```hs Nothing``` zurückgegeben wird. Bäume
+  sind durch den Datentyp ```hs data Tree a = Empty | Node (Tree a) a (Tree a)```
+  definiert.
+]
+
 #challenge[
   Gegeben sei die Funktion Faltungsfunktion
   ```hs foldTree :: (r -> a -> r -> r) -> r -> Tree a -> r```
@@ -1962,6 +1972,14 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
     fmap :: (a -> b) -> f a -> f b
   ```
   Welchen kind hat ```hs f```?
+]
+
+#test[
+  Wie lauten die ```hs Applicative```-Gesetze?
+]
+
+#test[
+  Wie lauten die ```hs Monad```-Gesetze?
 ]
 
 #test[
