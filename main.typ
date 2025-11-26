@@ -2337,7 +2337,7 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
                           right = [(v, (), v + 1) | v <- [k + 1..2 * k]]
                        in (0, (), 1) : (0, (), k + 1) : (left ++ right))
     ```
-
+    Hier ist der Graph visualiziert.
     #align(center)[
       #cetz.canvas({
         import cetz.draw: *
