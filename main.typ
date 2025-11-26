@@ -427,7 +427,7 @@ stellt eine PR auf GitHub].
     #footnote[
       #link("https://de.wikipedia.org/wiki/Differentialrechnung#Zusammenfassung")[Zusammenfassung der Ableitungsregeln]
     ]
-]
+] <symbolic_diff>
 
 // ```hs
 // ($$) :: Fun -> Double -> Double
@@ -1746,6 +1746,16 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
       entsprechenden Positionen tauscht.
     - Implementiere das daraus resultierende Sortierverfahren mithilfe von
       ```hs iterate```.
+  - Mithilfe des Differenzenquotienten kannst du die erste Ableitung
+    approximieren (oder mit der Lösung von @symbolic_diff oder
+    @reverse_mode_ad). Diese benötigt man unter anderem für das
+    #link("https://de.wikipedia.org/wiki/Gradientenverfahren")[Gradientenverfahren].
+    Die vereinfachte Iterationsvorschrift des Verfahren ist gegeben durch
+    $ x_(k + 1) = x_k - 10^(-4) f'(x_k) quad "für alle" k in NN $
+    und einem Startpunkt $x_0 in RR$. Implementiere das Verfahren mithilfe von
+    ```hs iterate```. Wähle als Ergebnis die erste Nährung $x_(n+1)$, die
+    $abs(x_(n+1) - x_n) < epsilon$ für ein festes $epsilon > 0$ erfüllt (z. B.
+    $epsilon = 10^(-6)$).
 ]
 
 // ```hs
@@ -1771,6 +1781,15 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
 //     sorted [x]                  = True
 //     sorted (x:y:xs) | x < y     = sorted (y:xs)
 //                     | otherwise = False
+//
+// -- mit automatischen Differenzieren
+// minimize :: (Fractional a, Ord a) => (D a -> D a) -> a -> a
+// minimize f x0 = prec xs
+//   where
+//     xs = iterate (\x -> x - 1e-4 * derive f x) x0
+//
+//     prec (x:y:xs) | abs (x - y) < 1e-6 = y
+//                   | otherwise          = prec (y:ys)
 // ```
 
 #challenge[
