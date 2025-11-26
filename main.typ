@@ -879,6 +879,22 @@ stellt eine PR auf GitHub].
   - Implementiere das Prädikat ```hs isSorted``` mithilfe von ```hs zipWith```.
 ]
 
+#test[
+  Das Pendant zum Falten #strike[ist das Bügeln] mit ```hs foldr``` ist
+  ```hs unfoldr``` (aus ```hs Data.List```). Anstatt eine Liste von Werten zu
+  falten, können wir mit ```hs unfoldr``` aus einem Wert eine Liste erzeugen.
+  Die Funktion hat den Typ ```hs (b -> Maybe (a, b)) -> b -> [a]```.
+  - Überlege dir anhand des Typs, wie diese Funktion implementiert sein könnte.
+    Implementiere sie anschließend.
+  - Können wir ```hs foldr (+) 0 [3, 1, 4, 1, 5]``` mit ```hs unfoldr```
+    rückgängig machen? Das heißt, können wir die Eingabeliste rekonstruieren,
+    ohne Annahmen darüber zu machen, wie die Eingabeliste entstanden ist?
+  - Berechne die Binärdarstellung einer natürlichen Zahl mithilfe von
+    ```hs unfoldr```. (Das LSB soll an erster Stelle der Ausgabeliste stehen.)
+    Implementiere dies als Funktion ```hs bits :: Int -> [Int]```.
+  - Implementiere ```hs map``` mithilfe von ```hs unfoldr```.
+]
+
 #challenge[
   Gegeben sei die Funktion Faltungsfunktion
   ```hs foldTree :: (r -> a -> r -> r) -> r -> Tree a -> r```
