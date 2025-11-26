@@ -354,14 +354,11 @@ stellt eine PR auf GitHub].
     Ansatz.
 
   #hint[
-    Zur Darstellung der Multimengen eignen sich sortierte Listen gut.
-  ]
-
-  #hint[
-    Zur Berechnung des Schnittes können zwei sortierte Listen parallel durchlaufen
-    werden. Wenn zwei gleiche Elemente zu Beginn der Liste stehen, wird eines
-    der Elemente zum Ergebnis hinzugefügt. Im anderen Fall überspringen wir
-    das jeweils kleinere Element der beiden.
+    - Zur Darstellung der Multimengen eignen sich sortierte Listen gut.
+    - Zur Berechnung des Schnittes können zwei sortierte Listen parallel
+      durchlaufen werden. Wenn zwei gleiche Elemente zu Beginn der Liste stehen,
+      wird eines der Elemente zum Ergebnis hinzugefügt. Im anderen Fall
+      überspringen wir das jeweils kleinere Element der beiden.
   ]
 ]
 
@@ -1244,9 +1241,7 @@ stellt eine PR auf GitHub].
 
 #challenge[
   In dieser Challenge sollst du automatisches Differenzieren im Rückwärtsmodus
-  mithilfe von (Operator-)Überladung implementieren. Das Überladen von
-  arithmetischen Operatoren und von Funktionen macht es komfortabel, andere
-  Funktionen hinzuschreiben, die wir differenzieren wollen. Dieser Ansatz des
+  mithilfe von (Operator-)Überladung implementieren. Dieser Ansatz des
   Differenzierens führt dabei das Differenzieren komplizierter Funktionen auf
   einfache, elementare Funktionen zurück.
 
@@ -1259,11 +1254,12 @@ stellt eine PR auf GitHub].
   überladenes ```hs f``` wie folgt funktionieren
   ```hs
   f :: D a -> D a
-  f (D x d) = D (f x) (d * f' x)
+  f (D gx dgdx) = D (f gx) (dgdx * f' gx)
   ```
-  Der Wert ```hs x``` ist das Ergebnis einer inneren Funktion ```hs g```,
-  und ```hs d``` entspricht deren Ableitung ```hs g'```. Die Kettenregel führt
-  dann zu ```hs (f . g)' z = g' z * f' x```. Nach dem Muster kannst du nun
+  Der Wert ```hs gx``` ist das Ergebnis einer inneren Funktion ```hs g```,
+  und ```hs dgdx``` entspricht deren Ableitung ```hs g'``` an der Stelle ```hs x```
+  (bzw. $(d g)/(d x) (x)$). Die Kettenregel führt dann zu
+  ```hs (f . g)' z = g' z * f' x```. Nach dem Muster kannst du nun
   Standardfunktionen überladen. Für die arithmetischen Operatoren benötigst du
   an der Stelle deren Ableitungsregeln (Summenregel, Leibnizregel, usw.)
 
@@ -1275,6 +1271,10 @@ stellt eine PR auf GitHub].
 
   Mit den folgenden Funktionen kannst du dann die erste, zweite oder dritte
   Ableitung bilden.
+  #footnote[
+    Für Interessierte: In @reverse_mode_ad_remark kannst du eine allgemeinere
+    Funktion zum Berechnen der Ableitung sehen.
+  ]
   ```hs
   d1 :: Num a => (D a -> D b) -> a -> b
   d1 f x = let (D _ d) = f (D x 1) in d
@@ -1302,7 +1302,7 @@ stellt eine PR auf GitHub].
       -- ...
     ```
   ]
-]
+] <reverse_mode_ad>
 
 // ```hs
 // instance Num a => Num (D a) where
@@ -1929,8 +1929,6 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
   Welchen kind hat ```hs f```?
 ]
 
-#stopHere
-
 #test[
   Die ```hs Applicative```-Typkonstruktorklasse erlaubt es uns, ```hs fmap```
   auf Funktionen mit mehreren Argumenten zu verallgemeinern. Dadurch können wir
@@ -2407,12 +2405,71 @@ Weitere Links:
 - #link("https://pbv.github.io/haskelite/site/index.html")[Haskelite]: Ein Schritt-für-Schritt Interpreter für (eine Teilmenge von) Haskell
 - #link("https://www.adit.io/posts/2013-04-17-functors,_applicatives,_and_monads_in_pictures.html")[Functors, Applicatives, And Monads In Pictures]
 - #link("https://hackage.haskell.org/package/CheatSheet-1.7/src/CheatSheet.pdf")[Haskell Cheatsheet]
-// - #link("https://alhassy.com/PrologCheatSheet/CheatSheet.pdf")[Prolog Cheatsheet]
-
+- #link("https://alhassy.com/PrologCheatSheet/CheatSheet.pdf")[Prolog Cheatsheet]
 
 #pagebreak(weak: true)
 
+
 = Appendix
+
+#remark[
+  In @reverse_mode_ad wurden Funktionen ```hs d1```, ```hs d2``` und ```hs d3```.
+  Diese ver- und entschachteln ```hs D```-Werte. Mit verschiedenen
+  Haskell-Spracherweiterungen können wir eine allgemeinere Funktion angeben.
+  Mit ```hs derive @3 cos (2.0 :: Double)``` können wir jetzt z.B. die dritte
+  Ableitung des Cosinus an der Stelle $2$ berechnen.
+  ```hs
+  {-# LANGUAGE TypeFamilies #-}
+  {-# LANGUAGE DataKinds #-}
+  {-# LANGUAGE UndecidableInstances #-}
+  {-# LANGUAGE AllowAmbiguousTypes #-}
+  {-# LANGUAGE FunctionalDependencies #-}
+
+  import Data.Kind
+  import GHC.TypeLits
+
+  data D a = D a a
+
+  -- Hier könnten deine Num-, Fractional- und Floating-Typklasseninstanzen
+  -- stehen!
+
+  class Derivable (n :: Nat) b where
+    type Derivative n b
+    derive :: (Derivative n b -> Derivative n b) -> b -> b
+
+  instance (Wrap (NatToPeano n) b, Unwrap (DK (NatToPeano n) b) b) => Derivable n b where
+    type Derivative n b = DK (NatToPeano n) b
+    derive f x = unwrap (f (wrap @(NatToPeano n) x))
+
+  data Peano = Z | S Peano
+
+  type family NatToPeano (n :: Nat) where
+    NatToPeano 0 = Z
+    NatToPeano k = S (NatToPeano (k - 1))
+
+  type family DK p a where
+    DK Z     a = a
+    DK (S k) a = D (DK k a)
+
+  class Wrap n t where
+    wrap :: t -> DK n t
+
+  instance Wrap Z t where
+    wrap x = x
+
+  instance (Wrap n t, Num (DK n t)) => Wrap (S n) t where
+    wrap x = D (wrap @n x) 1
+
+  class Unwrap a b | a -> b where
+    unwrap :: a -> b
+
+  instance (Num a) => Unwrap a a where
+    unwrap x = x
+
+  instance (Unwrap a b, Num a) => Unwrap (D a) b where
+    unwrap (D _ d) = unwrap d
+  ```
+] <reverse_mode_ad_remark>
 
 #remark[
   In @typeclasses_in_python haben wir gesehen, wie deklarative Programmierkonzepte
