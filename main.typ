@@ -2500,6 +2500,64 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
 //                              in (or rs, us')
 // ```
 
+#test[
+  Es kommt häufiger vor, dass zufällig generierte Werte bestimmte Eigenschaften
+  erfüllen sollen. QuickCheck bietet auf Generatoren-Ebene z.B. die Funktion
+  ```hs suchThat :: Gen a -> (a -> Bool) -> Gen a``` an. Diese nimmt einen
+  Generator und generiert solange neue Werte, bis eine gewünschte Eigenschaft
+  erfüllt ist. Diese Eigenschaft wird durch ein Prädikat formuliert.
+
+  Implementiere ```hs suchThat```.
+
+  #text(0.8em)[
+    Es gibt ein paar QuickCheck-spezifische Fallstricke, die mit dem
+    ```hs size```-Parameter der Generatoren zu tun haben, die du bei deiner
+    Implementierung nicht beachten brauchst. Falls es dich interessiert, ist
+    hier die
+    #link("https://hackage-content.haskell.org/package/QuickCheck/docs/src/Test.QuickCheck.Gen.html#suchThat")[```hs suchThat```-Implementierung von QuickCheck].
+  ]
+]
+
+// ```hs
+// suchThat :: Gen a -> (a -> Bool) -> Gen a
+// suchThat g p = g >>= \x -> if p x
+//                              then return x
+//                              else g `suchThat` p
+// ```
+
+#test[
+  Wenn du folgende (etwas künstliche) Eigenschaft mithilfe von QuickCheck
+  prüfst, muss im Durchschnitt jeder zweite Test verworfen werden, weil die
+  Vorbedingung der Eigenschaft nicht erfüllt ist.
+  ```hs
+  prop_prop :: Int -> Property
+  prop_prop k = k > 0 ==> True
+  ```
+  Um dieses Verhalten zu unterbinden, können wir die Eigenschaft leicht
+  abändern.
+  #footnote[
+    QuickCheck hat viele solche
+    #link("https://hackage-content.haskell.org/package/QuickCheck/docs/Test-QuickCheck.html")[type-level modifiers],
+    die das Generatoren-Verhalten verändern.
+  ]
+  ```hs
+  prop_prop :: Positive Int -> Property
+  prop_prop (Positive k) = k > 0 ==> True
+  ```
+  Jetzt werden keine Tests verworfen.
+
+  Wie funktioniert das?
+]
+
+// ```hs
+// newtype Positive a = Positive { getPositive :: a }
+//
+// instance (Arbitrary a, Num a) => Arbitrary (Positive a) where
+//   arbitrary = Positive . (+ 1) . abs <$> arbitrary
+//   -- or
+//   -- arbitrary = fmap Positive (fmap abs arbitrary `suchThat` (> 0))
+// ```
+
 
 #pagebreak(weak: true)
 
