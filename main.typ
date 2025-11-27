@@ -1874,7 +1874,8 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
 // ```
 
 #challenge[
-  In dieser Challenge kannst du die Idee aus @editdist auf diese übertragen.
+  Bevor du dich dieser Challenge stellst, bietet es sich an, sich @editdist
+  anzunehmen.
 
   Gegeben sei ein Gitter $G in ZZ^(m times n)$. Gesucht ein Pfad durch das
   Gitter, der oben links startet und unten rechts endet. In jedem Schritt
@@ -1930,7 +1931,7 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
   ]
 
   Implementiere eine Funktion ```hs pathsum :: (Num a, Ord a) => [[a]] -> a```,
-  die minimale Pfadsumme berechnet.
+  die die minimale Pfadsumme berechnet.
 
   #hint[
     Die Rekursionsvorschrift ist gegeben durch
