@@ -449,6 +449,7 @@ stellt eine PR auf GitHub].
 // derive X         = Num 1.0
 // derive E         = Num 0.0
 // derive (Num _)   = Num 0.0
+// derive (Ln f)    = derive f :/: f
 // derive (f :+: g) = derive f :+: derive g
 // derive (f :-: g) = derive f :-: derive g
 // derive (f :*: g) = let f' = derive f
@@ -725,6 +726,7 @@ stellt eine PR auf GitHub].
 //     Algorithmen ist der Vergleich mit einer Referenz-Implementierung geeigneter.
 //   ]
 // ]
+
 
 // Funktionen höherer Ordnung
 
@@ -2055,6 +2057,7 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
   die Anzahl der Rateversuche begrenzen oder eine weitere Zahl festlegen, die
   vorzeitig das Spiel beendet und das Orakel gewinnen lässt.
 ]
+
 
 // Funktoren, Applicatives, Monaden
 
