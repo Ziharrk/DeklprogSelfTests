@@ -2275,6 +2275,66 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
 // ```
 
 #test[
+  ```hs guard :: MonadZero m => Bool -> m ()``` kann genutzt werden, um eine
+  Berechnung bedingt fehlschlagen zu lassen.
+  #footnote[
+    ```hs guard``` ist auf Basis von ```hs Alternative``` bzw. ```hs MonadPlus```
+    implementiert. ```hs MonadZero``` ist nicht Teil der Standardbibliothek,
+    aber es ist definiert als Teil von ```hs MonadPlus```.
+  ]
+  Zum Beispiel können wir mithilfe von ```hs guard``` eine sichere Division
+  definieren.
+  ```hs
+  safeDiv :: (Integral a, MonadZero m) => a -> a -> m a
+  safeDiv a b = guard (b /= 0) >> return (a `div` b)
+  ```
+
+  - Implementiere eine konkrete Funktion
+    ```hs guard :: Bool -> Maybe ()```.
+  - Die Typklasse ```hs MonadZero``` wird gängigerweise wie folgt definiert.
+    ```hs
+    class Monad m => MonadZero m where
+      mzero :: m a
+    ```
+    Implementiere ```hs guard``` nun allgemein.
+  - Führe ```hs 1 `safeDiv` 0 :: m Int``` für ```hs Maybe``` und ```hs []``` aus.
+    Bevor das möglich ist, benötigst du entsprechende ```hs MonadZero```-Instanzen.
+]
+
+// ```hs
+// class Monad m => MonadZero m where
+//   mzero :: m a
+//
+// instance MonadZero Maybe where
+//   mzero = Nothing
+//
+// instance MonadZero [] where
+//   mzero = []
+//
+// guard :: MonadZero m => Bool -> m ()
+// guard False = mzero
+// guard True  = return ()
+// ```
+
+#test[
+  Wie hängen die Listenmonade und list comprehensions zusammen?
+  - Schreibe den folgenden Ausdruck
+    ```hs
+    do
+      x <- [1..10]
+      y <- [1..10]
+      guard (x + y == 0)
+      return (x, y)
+    ```
+    mithilfe von list comprehensions.
+  - Schreibe den folgenden Ausdruck
+    ```hs
+    [f | n <- [0..], let f = fib n, f `mod` 2 == 0]
+    ```
+    mithilfe der Listenmonade.
+]
+
+#test[
   Wie übersetzen wir
   #align(center)[```hs do x <- e1; e2``` #h(1em) und #h(1em) ```hs do e1; e2```]
   in einen äquivalente Ausdrucke mithilfe von ```hs (>>=)``` und ```hs (>>)```?
