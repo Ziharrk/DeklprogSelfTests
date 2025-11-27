@@ -2859,7 +2859,9 @@ Weitere Links:
 
   record Empty<T>() implements Tree<T> {
     @Override
-    public <R> R foldr(R initial, BiFunction<T, R, R> function) { return initial; }
+    public <R> R foldr(R initial, BiFunction<T, R, R> function) {
+      return initial;
+    }
   }
 
   record Node<T>(Tree<T> left, T value, Tree<T> right) implements Tree<T> {
