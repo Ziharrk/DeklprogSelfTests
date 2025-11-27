@@ -2433,10 +2433,12 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
   Berechnungen sein.
   #footnote[
     Für Interessierte: Diese Implementierung von ```hs sequence``` ist ein
-    Spezialfall der
+    Spezialfall für die
     #link("https://learnyouahaskell.github.io/for-a-few-monads-more.html#state")[```hs State```-Monade].
     Mit der Intuition, dass wir hier Berechnungen sequenzieren, sollte es nicht
-    überraschend sein, dass ```hs s -> (a, s)``` eine Monade ist.
+    überraschend sein, dass ```hs s -> (a, s)``` eine Monade ist. Alternativ
+    kannst du die ```hs State```-Monade implementieren und das vorimplementierte
+    (oder von dir implementierte) ```hs sequence``` verwenden.
   ]
 
   Betrachte folgendes Beispiel:
