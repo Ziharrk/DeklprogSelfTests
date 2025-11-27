@@ -19,6 +19,8 @@
 #set text(lang: "de")
 #show link: underline
 #show heading.where(level: 1): set block(below: 1.25em)
+#show math.equation.where(block: false): box
+#show raw.where(block: false): box
 #show: thmrules
 
 #let is-type = type => {
