@@ -2067,11 +2067,26 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
 ]
 
 #test[
+  Wie sind die ```hs Functor```-Instanzen für ```hs Identity```, ```hs Maybe```,
+  ```hs Either e```, ```hs []``` und ```hs ((->) r)``` definiert?
+]
+
+#test[
   Wie lauten die ```hs Applicative```-Gesetze?
 ]
 
 #test[
+  Wie sind die ```hs Applicative```-Instanzen für ```hs Identity```, ```hs Maybe```,
+  ```hs Either e```, ```hs []``` und ```hs ((->) r)``` definiert?
+]
+
+#test[
   Wie lauten die ```hs Monad```-Gesetze?
+]
+
+#test[
+  Wie sind die ```hs Monad```-Instanzen für ```hs Identity```, ```hs Maybe```,
+  ```hs Either e```, ```hs []``` und ```hs ((->) r)``` definiert?
 ]
 
 #test[
