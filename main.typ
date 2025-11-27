@@ -1852,7 +1852,7 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
   - Überlege dir wie hier laziness und memoization zusammenspielen.
   - Welche worst-case Laufzeit hat dein Problem, wenn du annimst, dass die
     Laufzeit ```hs (!!)``` konstant ist?
-]
+] <editdist>
 
 // ```hs
 // editdist :: String -> String -> Int
@@ -1869,6 +1869,95 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
 //                                 , table !! i !! (j - 1)
 //                                 , table !! (i - 1) !! (j - 1)
 //                                 ]
+// ```
+
+#challenge[
+  In dieser Challenge kannst du die Idee aus @editdist auf diese übertragen.
+
+  Gegeben sei ein Gitter $G in ZZ^(m times n)$. Gesucht ein Pfad durch das
+  Gitter, der oben links startet und unten rechts endet. In jedem Schritt
+  kannst du von einer Zelle in die rechtsanschließende oder darunteranschließende
+  Zelle gehen. Die Pfadsumme ist die Summe aller Zellenwerte, durch die gegangen
+  wurde.
+
+  Hier ist ein Beispiel für ein solches Gitter. Der Pfad der minimalen Pfadsumme
+  ist durch die Pfeile angedeutet. Für dieses Beispiel ist die minimale Pfadsumme
+  $6$.
+  #align(center)[
+    #cetz.canvas({
+      import cetz.draw: *
+
+      grid((0, 0), (4, 3))
+
+      let g = (
+        ( 1, 2, 3, 4),
+        (-8, 4, 6, 1),
+        ( 5, 2, 3, 4),
+      )
+
+      for i in range(g.len()) {
+        for j in range(g.at(i).len()) {
+          content(
+            (j, i),
+            (j + 1, i + 1),
+            box(
+              width: 100%,
+              height: 100%,
+              align(center + horizon, str(g.at(g.len() - i - 1).at(j)))
+            )
+          )
+        }
+      }
+
+      set-style(mark: (end: ")>"))
+      rect((0.35, 1.8), (0.65, 2.2), fill: white, stroke: none)
+      line((0.5, 2.2), (0.5, 1.8))
+
+      rect((0.8, 1.65), (1.2, 1.35), fill: white, stroke: none)
+      line((0.8, 1.5), (1.2, 1.5))
+
+      rect((1.35, 0.8), (1.65, 1.2), fill: white, stroke: none)
+      line((1.5, 1.2), (1.5, 0.8))
+
+      rect((1.8, 0.65), (2.2, 0.35), fill: white, stroke: none)
+      line((1.8, 0.5), (2.2, 0.5))
+
+      rect((2.8, 0.65), (3.2, 0.35), fill: white, stroke: none)
+      line((2.8, 0.5), (3.2, 0.5))
+    })
+  ]
+
+  Implementiere eine Funktion ```hs pathsum :: (Num a, Ord a) => [[a]] -> a```,
+  die minimale Pfadsumme berechnet.
+
+  #hint[
+    Die Rekursionsvorschrift ist gegeben durch
+    $
+    "pathsum"(i, j) = cases(
+      G_(0,0) & quad "falls" (i, j) = (0, 0),
+      G_(i,0) + "pathsum"(i-1,0) & quad "falls" j = 0,
+      G_(0,j) + "pathsum"(0,j-1) & quad "falls" i = 0,
+      G_(i,j) + min("pathsum"(i-1,j), "pathsum"(i,j-1)) & quad "sonst"
+    )
+    $
+    für $i in {0, ..., m - 1}, j in {0, ..., n - 1}$. Die minimale Pfadsumme
+    ist dann $"pathsum"(m - 1, n - 1)$.
+  ]
+]
+
+// ```hs
+// pathSum :: (Num a, Ord a) => [[a]] -> a
+// pathSum g = dp !! (m - 1) !! (n - 1)
+//   where
+//     m = length g
+//     n = length (g !! 0)
+//
+//     dp = [[go i j | j <- [0..n - 1]] | i <- [0..m - 1]]
+//
+//     go 0 0 = g !! 0 !! 0
+//     go i 0 = g !! i !! 0 + dp !! (i - 1) !! 0
+//     go 0 j = g !! 0 !! j + dp !! 0 !! (j - 1)
+//     go i j = g !! i !! j + min (dp !! (i - 1) !! j) (dp !! i !! (j - 1))
 // ```
 
 
@@ -2558,6 +2647,81 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
 //   -- arbitrary = fmap Positive (fmap abs arbitrary `suchThat` (> 0))
 // ```
 
+#challenge[
+  Eigenschaften lassen sich mit QuickCheck z.B. mithilfe der Funktion
+  ```hs quickCheck``` prüfen.
+
+  Hier sind Beispiele für Eigenschaften.
+  ```hs
+  prop_comm :: Int -> Int -> Bool
+  prop_comm x y = x + y == y + x
+
+  prop_inv :: Int -> Bool
+  prop_inv x = x + (-x) = 0
+  ```
+
+  - Welchen Typ muss ```hs quickCheck``` scheinbar haben, damit wir
+    ```hs prop_comm``` prüfen können? Wie steht das im Konflikt mit
+    ```hs prop_inv```?
+  - Um ```hs quickCheck``` zu implementieren, benötigen wir die Möglichkeit,
+    beliebig stellige Funktionen anwenden zu können. Das ist mithilfe von
+    Typklassen möglich. Hier ist eine vereinfachte Variante der Typklasse
+    ```hs Testable```, wie sie in QuickCheck zu finden ist.
+    ```hs
+    newtype Property = Property { unProperty :: Bool }
+
+    class Testable a where
+      property :: a -> Property
+    ```
+    - Implementiere ```hs Testable```-Instanzen für ```hs Bool``` und
+      ```hs Property```, und anschließend eine Instanz für den Typ
+      ```hs a -> b```, wobei ```hs a``` eine ```hs Arbitrary```-Instanz haben
+      soll und ```hs b``` wieder ```hs Testable``` sein soll.
+    - Welche Instanzen übernehmen die Rolle eines Basisfalls und welche
+      Instanzen übernehmen die Rolle einer induktiven Regel?
+    - Wie ist es möglich, dass wir Eigenschaften definieren können, die
+      entweder ein ```hs Bool``` oder eine ```hs Property``` als Rückgabewert
+      haben?
+    - Als Nächstes betrachten wir eine Vereinfachung der
+      ```hs Arbitrary```-Typklasse und eine Instanz für den Typ ```hs Int```,
+      damit wir ```hs quickCheck``` implementieren können.
+      ```hs
+      class Arbitrary a where
+        arbitrary :: a
+
+      instance Arbitrary Int where
+        arbitrary = 42  -- Hier werden normalerweise zufällige Werte generiert.
+      ```
+      Implementiere eine Funktion ```hs quickCheck :: Testable a => a -> Bool```,
+      die eine Eigenschaft nimmt und prüft.
+
+  #text(0.8em)[
+    In QuickCheck werden Generatoren genutzt, um zufällige Werte zu generieren.
+    Diese nutzen alle einen Zufallszahlengenerator, der als Zustand mit
+    weiteren Parametern durch alle ```hs arbitrary```-Aufruf durchgetragen wird.
+    Das haben wir uns durch die Vereinfachungen gespart.
+  ]
+]
+
+// ```hs
+// class Arbitrary a where
+//   arbitrary :: a
+//
+// instance Arbitrary a where
+//   arbitrary = 42
+//
+// instance Testable Bool where
+//   property b = Property b
+//
+// instance Testable Property where
+//   property = id
+//
+// instance (Arbitrary a, Testable b) => Testable (a -> b) where
+//   property f = property (f arbitrary)
+//
+// quickCheck :: Testable a => a -> IO Bool
+// quickCheck p = unProperty (property p)
+// ```
 
 #pagebreak(weak: true)
 
