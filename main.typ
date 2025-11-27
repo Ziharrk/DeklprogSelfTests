@@ -1237,7 +1237,7 @@ stellt eine PR auf GitHub].
     show (Leaf x)  = "Leaf " ++ show x
     show (l :+: r) = "(" ++ show l ++ ") :+: (" ++ show r ++ ")"
   ```
-  Welche haben Werte von ```hs Tree a``` führen zur worst-case Laufzeit
+  Welche Werte vom Typ ```hs Tree a``` führen zur worst-case Laufzeit
   und welche zur best-case Laufzeit? Die Anzahl der Blätter soll hier frei
   sein. Welche Eigenschaften von ```hs (++)``` führen zu den jeweiligen
   Laufzeiten?
@@ -1316,7 +1316,7 @@ stellt eine PR auf GitHub].
 
   #hint[
     Wenn du Anlaufschwierigkeiten hast, helfen dir möglicherweise diese ersten
-    Implementierungen weiter. Das Muster bleibt ähnlich.
+    Implementierungen weiter.
     ```hs
     instance Num a => Num (D a) where
       D x1 d1 + D x2 d2 = D (x1 + x2) (d1 + d2)  -- Summenregel
@@ -1533,13 +1533,13 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
   one, two = Node(1), Node(2)
   one.next, two.next = two, one
   ```
-  Wenn wir mit ```py one``` starten, dann haben wir nun die unendliche Liste
-  ```py [1, 2, 1, 2, ...]```.
+  Wenn wir mit ```py one``` starten, dann korrespondiert diese verkettete Liste
+  mit der unendlichen Liste ```py [1, 2, 1, 2, ...]```.
 
-  Die Mutierbarkeit des ```hs next```-Zeigers macht das Verlinken der Knoten
-  möglich. Wie können wir in Haskell, trotz der Abwesenheit von Mutierbarkeit,
-  zyklische Datenstrukturen umsetzen? Versuche, dein Programm ähnlich zum
-  Python-Programm aussehen zu lassen.
+  Die Mutierbarkeit des ```hs next```-Zeigers macht das Verlinken der Knoten in
+  Python möglich. Wie können wir in Haskell, trotz der Abwesenheit von
+  Mutierbarkeit, zyklische Datenstrukturen umsetzen? Versuche, dein Programm
+  ähnlich zum Python-Programm aussehen zu lassen.
   #footnote[
     Für Interessierte: Die Technik ist als
     #link("https://wiki.haskell.org/index.php?title=Tying_the_Knot")[Tying the Knot]
@@ -1553,7 +1553,8 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
   - Implementiere eine Funktion ```hs fromList :: [a] -> Doubly a```, die
     die gegebene Liste in eine doppelt-verkettete Liste umwandelt. ```hs Null```
     soll sowohl das linke als auch das rechte Ende der Liste darstellen. Von
-    diesem brauchst nicht zum anderseitig verketteten Element zurückkommen.
+    diesem muss es nicht möglich sein, zum anderseitig verketteten Element
+    zurückzukommen.
     ```hs fromList``` soll den Knoten zurückgeben, der mit dem ersten
     Listenelement korrespondiert.
   - Weiter implementiere auch ```hs prev :: Doubly a -> Doubly a```,
@@ -1674,7 +1675,7 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
       )
     )
   ]
-  - Konstruiere diesen Baum ```hs asbs :: State Char``` mithilfe des Typs
+  - Konstruiere diesen Baum als ```hs asbs :: State Char``` mithilfe des Typs
     #align(center)[```hs data State a = State Bool [(a, State a)]```.] Der Boolean
     gibt an, ob der Zustand akzeptiert, und ```hs [(a, State a)]``` gibt die
     ausgehenden Transitionen an.
@@ -1753,10 +1754,14 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
 
   Dieses Berechnungsmuster wird durch die Funktion
   ```hs iterate :: (a -> a) -> a -> [a]``` in der Prelude festgehalten.
+  Sie berechnet eine unendliche Liste, bestehend aus den Ergebnissen der
+  wiederholten Anwendungen der übergegebenen Funktion auf den gegebenen Wert.
+  Das erste Ergebnis ist der gegebene Wert, auf den die Funktion noch nicht
+  angewendet wurde.
 
   - Implementiere ```hs iterate```.
-  - Ein klassisches Beispiel aus der Numerik ist die Berechnung der Wurzel
-    mithilfe des Heron-Verfahrens. Es ist gegeben durch
+  - Ein klassisches Beispiel für ein Fixpunktverfahren aus der Numerik ist die
+    Berechnung der Wurzel mithilfe des Heron-Verfahrens. Es ist gegeben durch
     $ x_(n + 1) = 1/2 (x_n + a/x_n) $ Diese Folge nährt den Wert von $sqrt(a)$
     mit jedem Folgeglied besser an. Implementiere das Verfahren mithilfe von
     ```hs iterate```. Wähle die erste Nährung $x_(n+1)$, die
@@ -1778,12 +1783,12 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
     approximieren (oder mit der Lösung von @symbolic_diff oder
     @reverse_mode_ad). Diese benötigt man unter anderem für das
     #link("https://de.wikipedia.org/wiki/Gradientenverfahren")[Gradientenverfahren].
-    Die vereinfachte Iterationsvorschrift des Verfahren ist gegeben durch
+    Eine vereinfachte Iterationsvorschrift des Verfahren ist gegeben durch
     $ x_(k + 1) = x_k - 10^(-4) f'(x_k) quad "für alle" k in NN $
     und einem Startpunkt $x_0 in RR$. Implementiere das Verfahren mithilfe von
     ```hs iterate```. Wähle als Ergebnis die erste Nährung $x_(n+1)$, die
     $abs(x_(n+1) - x_n) < epsilon$ für ein festes $epsilon > 0$ erfüllt (z. B.
-    $epsilon = 10^(-6)$).
+    $epsilon = 10^(-5)$).
 ]
 
 // ```hs
@@ -1877,11 +1882,11 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
   Bevor du dich dieser Challenge stellst, bietet es sich an, sich @editdist
   anzunehmen.
 
-  Gegeben sei ein Gitter $G in ZZ^(m times n)$. Gesucht ein Pfad durch das
-  Gitter, der oben links startet und unten rechts endet. In jedem Schritt
+  Gegeben sei ein Gitter $G in ZZ^(m times n)$. Ein Pfad durch das
+  Gitter startet oben links und endet unten rechts. In jedem Schritt
   kannst du von einer Zelle in die rechtsanschließende oder darunteranschließende
-  Zelle gehen. Die Pfadsumme ist die Summe aller Zellenwerte, durch die gegangen
-  wurde.
+  Zelle gehen. Die Pfadsumme ist die Summe aller Zellenwerte, durch die der Pfad
+  führt.
 
   Hier ist ein Beispiel für ein solches Gitter. Der Pfad der minimalen Pfadsumme
   ist durch die Pfeile angedeutet. Für dieses Beispiel ist die minimale Pfadsumme
@@ -1983,7 +1988,7 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
 #test[
   Implementiere Funktion ```hs cycleFrom :: (Enum a, Bounded a) => a -> [a]```,
   die ab einem gegebenen Wert alle Werte des Typen nicht absteigend durchläuft.
-  Wenn größte Wert erreicht ist, soll die Liste wieder beim kleinsten Wert
+  Wenn der größte Wert erreicht ist, soll die Liste wieder beim kleinsten Wert
   des Typen beginnen.
 ]
 
@@ -2094,7 +2099,7 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
   auf Funktionen mit mehreren Argumenten zu verallgemeinern. Dadurch können wir
   etwa
   #align(center)[
-    ```hs (+) <$> Just 1 <*> Just 2``` oder ```hs Just (+) <*> Just 1 <*> Just 2```
+    ```hs (+) <$> Just 1 <*> Just 2``` #h(1em) oder #h(1em) ```hs Just (+) <*> Just 1 <*> Just 2```
   ]
   schreiben. Die Operatoren ```hs (<$>)``` und ```hs (<*>)``` funktionieren
   dabei ähnlich wie ```hs ($)``` -- mit ```hs (<$>)``` muss die Funktion nicht
@@ -2131,7 +2136,41 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
   #align(center)[
     ```hs fmap f (Right x) = Left y```
   ]
-  nie gelten kann.
+  nie gelten kann. Kann ```hs fmap```, die Struktur in Abhängigkeit
+  des Wertes vom Typ ```hs a``` verändern?
+]
+
+#test[
+  Monaden bieten uns die Möglichkeit, Berechnungen als Folge von kleineren
+  Berechnungen zu sequenzieren. Je nachdem welche Monade wir betrachten,
+  beobachten wir verschiedene Effekte.
+  - Welche Monade drückt eine Berechnung aus, die kein oder genau ein Ergebnis
+    liefern kann?
+  - Welche Monade drückt eine Berechnung aus, die kein Ergebnis oder beliebig
+    viele Ergebnisse liefern kann?
+  - Welche Monade drückt eine Berechnung aus, die entweder fehlschlägt oder
+    erfolgreich ist? Welche kann im Fall eines Fehlschlag zusätzliche
+    Information hervorbringen?
+]
+
+#test[
+  Wir nutzen Monaden zur Sequenzierung von Berechnungen. Identifiziere diese
+  Sequenzierung in den folgenden ```hs Monad```-Instanzen bzw. stelle fest, dass
+  ```hs m``` in ```hs m >>= k``` zuerst berechnet wird, bevor die Berechnung mit
+  ```hs k``` fortgesetzt wird.
+  ```hs
+  instance Monad Maybe where
+    return x = Just x
+
+    Nothing >>= _ = Nothing
+    Just x  >>= k = k x
+
+  instance Monad [] where
+    return x = [x]
+
+    []     >>= _ = []
+    (x:xs) >>= k = k x ++ (xs >>= k)
+  ```
 ]
 
 #test[
@@ -2278,9 +2317,9 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
   ```hs guard :: MonadZero m => Bool -> m ()``` kann genutzt werden, um eine
   Berechnung bedingt fehlschlagen zu lassen.
   #footnote[
-    ```hs guard``` ist auf Basis von ```hs Alternative``` bzw. ```hs MonadPlus```
-    implementiert. ```hs MonadZero``` ist nicht Teil der Standardbibliothek,
-    aber es ist definiert als Teil von ```hs MonadPlus```.
+    Für Interessierte: ```hs guard``` ist auf Basis von ```hs Alternative``` bzw.
+    ```hs MonadPlus``` implementiert. ```hs MonadZero``` ist nicht Teil der
+    Standardbibliothek, aber es ist definiert als Teil von ```hs MonadPlus```.
   ]
   Zum Beispiel können wir mithilfe von ```hs guard``` eine sichere Division
   definieren.
@@ -2289,17 +2328,17 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
   safeDiv a b = guard (b /= 0) >> return (a `div` b)
   ```
 
-  - Implementiere eine konkrete Funktion
-    ```hs guard :: Bool -> Maybe ()```.
+  - Implementiere die Funktion ```hs guard :: Bool -> Maybe ()``` mit
+    ```hs Maybe ()``` als konkreten Ergebnistypen.
   - Die Typklasse ```hs MonadZero``` wird gängigerweise wie folgt definiert.
     ```hs
     class Monad m => MonadZero m where
       mzero :: m a
     ```
     Implementiere ```hs guard``` nun allgemein.
-  - Führe ```hs 1 `safeDiv` 0 :: m Int``` für ```hs Maybe``` und ```hs []``` aus.
+  - Berechne ```hs 1 `safeDiv` 0 :: m Int``` für ```hs Maybe``` und ```hs []```.
     Bevor das möglich ist, benötigst du entsprechende ```hs MonadZero```-Instanzen.
-]
+] <guard>
 
 // ```hs
 // class Monad m => MonadZero m where
@@ -2323,10 +2362,18 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
     do
       x <- [1..10]
       y <- [1..10]
-      guard (x + y == 0)
+      guard (x + y == 10)
       return (x, y)
     ```
-    mithilfe von list comprehensions.
+    mithilfe von list comprehensions. Der Wert des ausgerechneten Ausdrucks ist
+    #align(center)[
+      ```hs
+      [(0, 10), (1, 9), (2, 8), (3, 7), (4, 6), (5, 5),
+       (6, 4), (7, 3), (8, 2), (9, 1), (10, 0)]
+      ```
+    ]
+    Anhand des Ergebnisses kannst du dir die Semantik von ```hs guard```
+    herleiten (oder schaust dir vorher @guard an).
   - Schreibe den folgenden Ausdruck
     ```hs
     [f | n <- [0..], let f = fib n, f `mod` 2 == 0]
@@ -2339,7 +2386,7 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
   #align(center)[```hs do x <- e1; e2``` #h(1em) und #h(1em) ```hs do e1; e2```]
   in einen äquivalente Ausdrucke mithilfe von ```hs (>>=)``` und ```hs (>>)```?
 
-  Hier ist ein größerer Ausdruck:
+  Wie übersetzen wir diesen etwas größeren Ausdruck?
   ```hs
   do
     x <- getInt
@@ -2358,7 +2405,9 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
                         then Nothing
                         else return (x + y)
     ```
-    und
+  ]
+  und
+  #align(center)[
     ```hs
     getLine >> read <$> getLine
             >>= \x -> case f x of
@@ -2375,7 +2424,8 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
     alle nicht-leeren Aufteilungen der Eingabeliste berechnet.
 
     Zum Beispiel soll ```hs splits [1..4]``` die Liste
-    ```hs [([1], [2, 3, 4]), ([1, 2], [3, 4]), ([1, 2, 3], [4])]``` ergeben.
+    #align(center)[```hs [([1], [2, 3, 4]), ([1, 2], [3, 4]), ([1, 2, 3], [4])]```]
+    ergeben.
   - Implementiere eine Funktion ```hs allTrees :: [a] -> [Tree a]```, die alle
     Binärbäume generiert, deren Blätter von links nach rechts die Eingabeliste
     lesen. Versuche, ```hs allTrees``` mithilfe von list comprehensions oder der
@@ -2414,8 +2464,11 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
   definieren?
 ]
 
-
-// TODO Tests, die die Funktionsweise von QuickCheck für Studierende erklären
+-- ```hs
+-- foldDeep :: ([Maybe (Either a r)] -> r) -> Deep a b -> r
+-- foldDeep fdeep (Deep x) = fdeep (fmap . fmap . fmap fold)
+--   where fold = foldDeep fdeep
+-- ```
 
 #test[
   Oft kommt es vor, dass Berechnungen zustandabhängig verschiedene Ergebnisse
@@ -2453,7 +2506,7 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
   Hier wird der erste Zustand mit den ersten beiden Fibonacci-Zahlen
   initialisiert, also $(0, 1)$. In jedem Schritt wird der Zustand mit der
   nächsten Fibonacci-Zahl aktualisiert und die kleinere Fibonacci-Zahl des
-  Zustands zurückgegeben. Zuletzt projezieren wir mit ```hs fst``` auf das
+  Zustands zurückgegeben. Zuletzt projezieren wir mit ```hs fst``` das
   Ergebnis von ```hs sequence``` und verwerfen so den letzten Zustand.
 
   Hier ist der Datenfluss von ```hs sequence``` nochmal visualisiert:
@@ -2536,8 +2589,8 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
   - Implementiere eine Funktion
     ```hs reachable :: Int -> Int -> Graph a b -> Bool```, die entscheidet, ob
     zwischen zwei Knoten ein gerichteter Pfad existiert. Starte zuerst mit
-    einfachen Graphen und betrachte immer komplexere Graphen. Wie musst du
-    (oder kannst du) deine Implementierung anpassen?
+    einfachen Graphen und betrachte immer komplexer werdende Graphen. Wie musst
+    du (oder kannst du) deine Implementierung anpassen?
     - Nehme zuerst an, dass ein gegebener Graph immer ein Baum ist? Wenn also
       ein Pfad existiert, dann ist er eindeutig.
     - Nehme jetzt an, dass ein gegebener Graph immer azyklisch ist. Das heißt,
@@ -2548,8 +2601,8 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
       auch zyklisch sein kann?
   - Je nachdem wie du ```hs reachable``` implementiert hast, könnte es denn
     Anschein erwecken, dass deine Lösung alle Knoten besucht. Wieso ist das
-    nicht der Fall? Wieso passiert das nur, wenn wir uns die Liste aller
-    besuchten Knoten anschauen?
+    nicht unbedingt der Fall? Wieso passiert das nur, wenn wir uns die Liste
+    aller besuchten Knoten anschauen?
     Welche Beobachtungen machst du, wenn du ```hs reachable 0 k (yGraph k)```
     berechnest?
     ```hs
@@ -2715,7 +2768,7 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
   ```
   Jetzt werden keine Tests verworfen.
 
-  Wie funktioniert das?
+  Überlege dir, wie die Lösung des Problems funktioniert und implementiere sie.
 ]
 
 // ```hs
@@ -2731,7 +2784,7 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
   Eigenschaften lassen sich mit QuickCheck z.B. mithilfe der Funktion
   ```hs quickCheck``` prüfen.
 
-  Hier sind Beispiele für Eigenschaften.
+  Hier sind ein paar Eigenschaften.
   ```hs
   prop_comm :: Int -> Int -> Bool
   prop_comm x y = x + y == y + x
@@ -2764,7 +2817,7 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
       haben?
     - Als Nächstes betrachten wir eine Vereinfachung der
       ```hs Arbitrary```-Typklasse und eine Instanz für den Typ ```hs Int```,
-      damit wir ```hs quickCheck``` implementieren können.
+      damit wir ```hs quickCheck``` implementieren und verwenden können.
       ```hs
       class Arbitrary a where
         arbitrary :: a
@@ -2778,8 +2831,8 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
   #text(0.8em)[
     In QuickCheck werden Generatoren genutzt, um zufällige Werte zu generieren.
     Diese nutzen alle einen Zufallszahlengenerator, der als Zustand mit
-    weiteren Parametern durch alle ```hs arbitrary```-Aufruf durchgetragen wird.
-    Das haben wir uns durch die Vereinfachungen gespart.
+    weiteren Parametern durch alle ```hs arbitrary```-Aufrufe durchgetragen wird.
+    Das haben wir uns durch die Vereinfachungen vernachlässigt.
   ]
 ]
 
@@ -2834,11 +2887,11 @@ Weitere Links:
 = Appendix
 
 #remark[
-  In @reverse_mode_ad wurden Funktionen ```hs d1```, ```hs d2``` und ```hs d3```.
-  Diese ver- und entschachteln ```hs D```-Werte. Mit verschiedenen
-  Haskell-Spracherweiterungen können wir eine allgemeinere Funktion angeben.
-  Mit ```hs derive @3 cos (2.0 :: Double)``` können wir jetzt z.B. die dritte
-  Ableitung des Cosinus an der Stelle $2$ berechnen.
+  In @reverse_mode_ad wurden Funktionen ```hs d1```, ```hs d2``` und ```hs d3```
+  definiert. Diese ver- und entschachteln ```hs D```-Werte unterschiedlich tief.
+  Mit verschiedenen Haskell-Spracherweiterungen können wir eine allgemeinere
+  Funktion angeben. Mit ```hs derive @3 cos (2.0 :: Double)``` können wir jetzt
+  z.B. die dritte Ableitung des Cosinus an der Stelle $2$ berechnen.
   ```hs
   {-# LANGUAGE TypeFamilies #-}
   {-# LANGUAGE DataKinds #-}
