@@ -1271,6 +1271,51 @@ stellt eine PR auf GitHub].
   testen, indem du deine formulierten Gesetze mit QuickCheck implementierst.
 ]
 
+#test[
+  Als Teil eines ADTs für Arrays soll eine Operation
+  ```hs reverse :: Array a -> Array a``` spezifiziert werden, die ein Array
+  umdreht. Ihr Verhalten soll unter anderem durch das folgende Gesetz festgehalten sein:
+  #align(center)[```hs reverse (reverse a) == a``` #h(1em) für alle Arrays ```hs a```]
+  Warum ist dieses Gesetz problematisch? Wie können wir das Problem beseitigen?
+]
+
+#test[
+  Als Teil eines ADTs für Array soll eine Operation ```hs at :: Array a -> Int -> a```
+  spezifiziert werden, die das Element an einer Position in einem Array zurückgibt.
+  Weiter soll ```hs update :: Int -> a -> Array a -> Array a``` einen Wert an
+  eine Position in ein Array schreiben.
+
+  Wie können wir spezifizieren, dass durch ein ```hs update``` nur das Element
+  an der gegebenen Position verändert wird?
+]
+
+// update k x a `at` k == x
+// j /= k ==> update k x a `at` j == a `at` j
+
+#test[
+  Eine Teilmenge der Operationen für eine Menge sind
+  - ```hs insert :: a -> Set a -> Set a``` zum Einfügen von einem Wert in eine
+    Menge und
+  - ```hs size :: Set a -> Int``` zum Bestimmen der Kardinalität einer Menge.
+
+  Gegeben ist folgendes Gesetz:
+  #align(center)[
+    ```hs size (insert y (insert x s)) == size s + 2``` #h(1em) für alle
+    Werte ```hs x, y```, alle Mengen ```hs s```.
+  ]
+  Das Gesetz ist falsch. Warum und wie können es korrigieren?
+]
+
+#test[
+  In ADT-Gesetzen sind Variablen allquantifiziert. Wie können wir gewährleisten,
+  dass ein Wert bestimmte Bedingungen erfüllt, bevor wir ein entsprechendes
+  Gesetz für solche Werte definieren?
+]
+
+#test[
+  Warum benötigen wir Konstruktoren als Teil eines ADTs?
+]
+
 
 // Typklassen und Überladung
 
