@@ -2587,11 +2587,11 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
   definieren?
 ]
 
--- ```hs
--- foldDeep :: ([Maybe (Either a r)] -> r) -> Deep a b -> r
--- foldDeep fdeep (Deep x) = fdeep (fmap . fmap . fmap fold)
---   where fold = foldDeep fdeep
--- ```
+// ```hs
+// foldDeep :: ([Maybe (Either a r)] -> r) -> Deep a b -> r
+// foldDeep fdeep (Deep x) = fdeep (fmap . fmap . fmap fold)
+//   where fold = foldDeep fdeep
+// ```
 
 #test[
   Oft kommt es vor, dass Berechnungen zustandabhängig verschiedene Ergebnisse
