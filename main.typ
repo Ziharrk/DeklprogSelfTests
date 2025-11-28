@@ -619,6 +619,69 @@ stellt eine PR auf GitHub].
 // Pattern Matching
 
 #challenge[
+  In Haskell sind Listen als einfach-verkettete Listen implementiert. Das macht
+  sie ungeeignet für Operationen, die wahlfreien Zugriff in konstanter Laufzeit
+  benötigen. Darüber hinaus sind Listen auch nicht mutierbar. Das führt dazu,
+  dass Operationen, die eine Liste verändern, häufig lineare Laufzeit in der
+  Länge der Liste haben.
+
+  Ziel dieser Challenge ist es, eine Datenstruktur zu entwickeln, die eine
+  (amortisiert) konstante ```hs append```-Operation hat. Diese ist bekannt als
+  ```hs Queue```. Sie soll durch ```hs data Queue a = Q [a] [a]``` dargestellt
+  werden. Die Idee ist eine Liste vorzuhalten, die eine (amortisiert) konstante
+  ```hs dequeue```-Operationen erlaubt, und eine andere, die eine konstante
+  ```hs enqueue```-Operationen erlaubt.
+
+  Implementiere die Funktionen
+  - ```hs empty :: Queue a```, die eine leere Queue erzeugt,
+  - ```hs front :: Queue a -> a```, die das erste Element in einer queue
+    zurückgibt,
+  - ```hs isEmpty :: Queue a -> Bool```, die bestimmt, ob eine queue leer ist,
+  - ```hs enqueue :: a -> Queue a -> Queue a```, die ein Element an das Ende
+    einer queue anhängt,
+  - ```hs dequeue :: Queue a -> Queue a```, die das erste Element in einer
+    queue entfernt.
+
+  Die Implementierung soll dabei folgende Invariante erfüllen: Eine queue ist
+  genau dann leer, wenn die ```hs dequeue```-Liste leer ist. Diese Invariante
+  kannst du z.B. mit einer Hilfsfunktion erzwingen -- oder du
+  #footnote[
+    Für Interessierte: Wenn sogar ```hs length xs >= length ys``` für eine
+    queue ```hs Q xs ys``` gewährleistet wird, ist die queue nochmal schneller.
+    Dafür muss man die Längen der Listen immer vorhalten. Mehr darüber findest
+    du in
+    #link("https://www.cambridge.org/core/journals/journal-of-functional-programming/article/simple-and-efficient-purely-functional-queues-and-deques/7B3036772616B39E87BF7FBD119015AB")[Simple and efficient purely functional queues and deques]
+    von Chris Okasaki lesen.
+  ]
+]
+
+// ```hs
+// data Queue a = Q [a] [a]
+//
+// empty :: Queue a
+// empty = Q [] []
+//
+// isEmpty :: Queue a -> Bool
+// isEmpty (Q [] _) = True
+// isEmpty _        = False
+//
+// front :: Queue a -> a
+// front (Q (x:_) _) = x
+// front _           = error "empty queue"
+//
+// invariant :: Queue a -> Queue a
+// invariant (Q [] ys) = Q (reverse ys) []
+// invariant q         = q
+//
+// enqueue :: a -> Queue a -> Queue a
+// enqueue x (Q xs ys) = invariant (Q xs (x:ys))
+//
+// dequeue :: Queue a -> Queue a
+// dequeue (Q []     _)  = error "empty queue"
+// dequeue (Q (_:xs) ys) = invariant (Q xs ys)
+// ```
+
+#challenge[
   In den Übungsaufgaben hast du einen Suchbaum ohne Höhenbalancierung
   implementiert. Die Rotationen für einen AVL-Baum lassen sich durch das
   pattern matching in Haskell vergleichsweise elegant implementieren - erinnere
