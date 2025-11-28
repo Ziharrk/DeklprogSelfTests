@@ -2341,7 +2341,7 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
     Implementiere ```hs guard``` nun allgemein.
   - Berechne ```hs 1 `safeDiv` 0 :: m Int``` für ```hs Maybe``` und ```hs []```.
     Bevor das möglich ist, benötigst du entsprechende ```hs MonadZero```-Instanzen.
-] <guard>
+] <monadzero>
 
 // ```hs
 // class Monad m => MonadZero m where
@@ -2356,6 +2356,126 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
 // guard :: MonadZero m => Bool -> m ()
 // guard False = mzero
 // guard True  = return ()
+// ```
+
+#test[
+  Als motivierendes Beispiel für Monaden hast du die Auswertung eines
+  arithmetischen Ausdrucks gegeben als Termstruktur kennengelernt. Dort haben
+  wir die ```hs Maybe```-Monade verwendet, um fehlschlagende Berechnung
+  aufzufangen. Der Typ für die arithmetischen Ausdrücke ist gegeben durch:
+  ```hs
+  data Exp a = Num a
+             | Exp a :+: Exp a
+             | Exp a :-: Exp a
+             | Exp a :*: Exp a
+             | Exp a :/: Exp a
+  ```
+  - Implementiere ```hs eval :: Integral a => Exp a -> a```
+    (```hs Integral``` ist quasi ```hs Num``` mit Division) mit dem
+    ```hs Maybe```-Applicative. Warum ist die Division, ohne eine
+    weitere Hilfsfunktion nicht möglich? Was müsste diese Hilfsfunktion tun,
+    damit die Regel für die Division funktioniert?
+    #footnote[
+      Der applikativen Funktor wird dadurch nicht ausdrucksstärker! Das, was
+      der applikative Funktor nicht leisten kann, wird in die Hilfsfunktion
+      ausgelagert.
+    ]
+  - Implementiere ```hs eval :: Integral a => Exp a -> a``` mit der
+    ```hs Maybe```-Monade. Benötigst du hier die Hilfsfunktion aus der
+    vorherigen Teilaufgabe? Warum ja oder nein?
+  - Wie kannst du mit @monadzero ```hs eval``` zu einer Funktion
+    ```hs eval :: (Integral a, MonadZero m) => Exp a -> m a```
+    verallgemeinern?
+  - ```hs MonadZero``` erlaubt es uns, einen Fehlschlag allgemein auszudrücken.
+    Allerdings können wir anhand des Fehlschlags alleine nicht feststellen,
+    warum es zum Fehlschag kam. Verallgemeinere die Typkonstruktorklasse
+    ```hs MonadZero``` zu einer Typkonstruktorklasse ```hs MonadFail```,
+    die es erlaubt, eine Beschreibung des Fehlschags anzugeben. Sie soll
+    also eine Funktion ```hs fail :: String -> m a``` definieren. Verallgemeinere
+    ```hs eval``` erneut mit der neuen Typkonstruktorklasse. Gebe zusätzlich
+    eine Instanz für den Typ ```hs Either String``` an -- alternativ,
+    implementiere eine ```hs Functor```-, ```hs Applicative```-, ```hs Monad```-
+    und ```hs MonadFail```-Instanz für den Typen
+    ```hs data Result a = Failure String | Success a```.
+]
+
+// ```hs
+// import Prelude hiding (MonadFail(..))
+//
+//
+// data Exp a = Num a
+//            | Exp a :+: Exp a
+//            | Exp a :-: Exp a
+//            | Exp a :*: Exp a
+//            | Exp a :/: Exp a
+//   deriving Show
+//
+//
+// -- mit Maybe-Applicative und Hilfsfunktion
+// eval :: Integral a => Exp a -> Maybe a
+// eval (Num x)   = Just x
+// eval (a :+: b) = (+) <$> eval a <*> eval b
+// eval (a :-: b) = (*) <$> eval a <*> eval b
+// eval (a :*: b) = (-) <$> eval a <*> eval b
+// eval (a :/: b) = div <$> eval a <*> fail (eval b)
+//   where fail (Just 0) = Nothing
+//         fail m        = m
+//
+//
+// -- Hilfsfunktion für das Anwenden der Operatoren auf monadische Werte
+// liftM2 :: Monad m => (a -> b -> c) -> m a -> m b -> m c
+// liftM2 f ma mb = ma >>= \a -> mb >>= \b -> return (f a b)
+//
+// -- mit Maybe-Monade
+// eval :: Integral a => Exp a -> Maybe a
+// eval (Num x)   = Just x
+// eval (a :+: b) = liftM2 (+) (eval a) (eval b)
+// eval (a :-: b) = liftM2 (-) (eval a) (eval b)
+// eval (a :*: b) = liftM2 (*) (eval a) (eval b)
+// eval (a :/: b) =
+//   do
+//     y <- eval b
+//     if y == 0
+//       then Nothing  -- mit MonadZero hier mzero hinschreiben
+//       else do
+//              x <- eval a
+//              Just (x `div` y)
+//
+//
+// -- mit MonadZero und guard
+// eval :: (Integral a, MonadZero m) => Exp a -> m a
+// eval (Num x)   = return x
+// eval (a :+: b) = liftM2 (+) (eval a) (eval b)
+// eval (a :-: b) = liftM2 (-) (eval a) (eval b)
+// eval (a :*: b) = liftM2 (*) (eval a) (eval b)
+// eval (a :/: b) =
+//   do
+//     y <- eval b
+//     guard (y /= 0)
+//     x <- eval a
+//     return (x `div` y)
+//
+//
+// class Monad m => MonadFail m where
+//   fail :: String -> m a
+//
+// instance MonadFail (Either String) where
+//   fail = Left
+//
+// -- mit MonadFail
+// eval :: (Integral a, MonadFail m) => Exp a -> m a
+// eval (Num x)   = return x
+// eval (a :+: b) = liftM2 (+) (eval a) (eval b)
+// eval (a :-: b) = liftM2 (-) (eval a) (eval b)
+// eval (a :*: b) = liftM2 (*) (eval a) (eval b)
+// eval (a :/: b) =
+//   do
+//     y <- eval b
+//     if y == 0
+//       then fail "division by zero"
+//       else do
+//              x <- eval a
+//              return (x `div` y)
 // ```
 
 #test[
@@ -2376,7 +2496,7 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
       ```
     ]
     Anhand des Ergebnisses kannst du dir die Semantik von ```hs guard```
-    herleiten (oder schaust dir vorher @guard an).
+    herleiten (oder schaust dir vorher @monadzero an).
   - Schreibe den folgenden Ausdruck
     ```hs
     [f | n <- [0..], let f = fib n, f `mod` 2 == 0]
