@@ -2433,21 +2433,20 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
              | Exp a :*: Exp a
              | Exp a :/: Exp a
   ```
-  - Implementiere ```hs eval :: Integral a => Exp a -> a```
-    (```hs Integral``` ist quasi ```hs Num``` mit Division) mit dem
-    ```hs Maybe```-Applicative. Warum ist die Division, ohne eine
-    weitere Hilfsfunktion nicht möglich? Was müsste diese Hilfsfunktion tun,
-    damit die Regel für die Division funktioniert?
+  - Implementiere ```hs eval :: Exp Int -> Maybe Int``` mit dem
+    ```hs Maybe```-Applicative. Warum ist die Division, ohne eine weitere
+    Hilfsfunktion nicht möglich? Was müsste diese Hilfsfunktion tun, damit die
+    Regel für die Division funktioniert?
     #footnote[
       Der applikativen Funktor wird dadurch nicht ausdrucksstärker! Das, was
       der applikative Funktor nicht leisten kann, wird in die Hilfsfunktion
       ausgelagert.
     ]
-  - Implementiere ```hs eval :: Integral a => Exp a -> a``` mit der
+  - Implementiere ```hs eval :: Exp Int -> Maybe Int``` mit der
     ```hs Maybe```-Monade. Benötigst du hier die Hilfsfunktion aus der
     vorherigen Teilaufgabe? Warum ja oder nein?
   - Wie kannst du mit @monadzero ```hs eval``` zu einer Funktion
-    ```hs eval :: (Integral a, MonadZero m) => Exp a -> m a```
+    ```hs eval :: MonadZero m => Exp Int -> m Int```
     verallgemeinern?
   - ```hs MonadZero``` erlaubt es uns, einen Fehlschlag allgemein auszudrücken.
     Allerdings können wir anhand des Fehlschlags alleine nicht feststellen,
