@@ -1657,6 +1657,68 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
   ]
 ]
 
+#challenge[
+  Gegeben sei der Datentyp
+  #align(center)[```hs data Tree a = Empty | Node (Tree a) a (Tree a)```.]
+
+  - Implementiere eine Funktion ```hs preorder :: Tree a -> [a]```, die
+    Knotenwerte in pre-order zurückgibt. Das heißt, zuerst wird ein Knoten
+    betrachtet und anschließend dessen linker und danach dessen rechter Teilbaum.
+  - Implementiere einen unendlichen Baum ```hs tree :: Tree Int```, die Menge
+    ${ f(i, j) | i, j in NN, i <= j }$ mit $f(i, j) = i + j + 2 i j$ darstellt.
+    Die Wurzel soll den Wert $f(1,1)$ haben. Für einen beliebigen Knoten
+    mit Beschriftung $f(i,j)$  soll die Wurzel des linken Teilbaums mit
+    $f(i+1,j)$ beschriftet sein und die Wurzel des rechten Teilbaums mit
+    $f(i,j+1)$. Falls $i > j$ erreicht wird, soll in den Baum ein
+    ```hs Empty```-Knoten gesetzt werden.
+  - Wende ```hs preorder``` auf ```hs tree``` an. Welches Problem haben wir
+    hinsichtlich der Werte, die wir den jeweiligen Teilbäumen von ```hs tree```
+    sehen und der Ergbenisliste von ```hs preorder```? Wie hängt deine
+    Beobachtung mit ```hs [f i j | i <- [1..], j <- [i..]]``` zusammen?
+  - Implementiere eine zweite Variante von ```hs preorder```, die statt
+    ```hs (++)``` die Funktion ```hs merge``` verwendet.
+  - Implementiere als Nächtes die Mengendifferenz als Funktion
+    ```hs diff :: Ord a => [a] -> [a] -> [a]```. Du darfst dabei annehmen, dass
+    die Eingabelisten bereits sortiert sind.
+  - Was berechnet ```hs 2 : map (\x -> 2 * x + 1) ([1..] `diff` preorder tree)```?
+    #footnote[
+      Das Verfahren ist als #link("https://en.wikipedia.org/wiki/Sieve_of_Sundaram")[Sieb von Sundaram]
+      bekannt. Die Konstruktion der oben angegebenen Menge mithilfe von
+      unendlichen Bäumen ist nicht Teil des Verfahrens -- sondern Willkür des
+      Verfassers.
+    ]
+]
+
+// ```hs
+// data Tree a = Node (Tree a) a (Tree a) | Empty
+//
+// tree :: Tree Int
+// tree = go 1 1
+//   where go i j = Node (if i < j then go (i + 1) j else Empty)
+//                       (i + j + 2 * i * j)
+//                       (go i (j + 1))
+//
+// merge :: Ord a => [a] -> [a] -> [a]
+// merge xs     []                 = xs
+// merge []     ys                 = []
+// merge (x:xs) (y:ys) | x <= y    = x : merge xs (y:ys)
+//                     | otherwise = y : merge (x:xs) (y:ys)
+//
+// preorder :: Tree a -> [a]
+// preorder Empty        = []
+// preorder (Node l x r) = x : merge (preorder l) (preorder r)
+//
+// diff :: Ord a => [a] -> [a] -> [a]
+// diff []     _                  = []
+// diff xs     []                 = xs
+// diff (x:xs) (y:ys) | x == y    = diff xs (y:ys)
+//                    | x > y     = diff (x:xs) ys
+//                    | otherwise = x : diff xs (y:ys)
+//
+// primes :: [Int]
+// primes = 2 : map (\x -> 2 * x + 1) ([1..] `diff` preorder tree)
+// ```
+
 #test[
   Gegeben sei der Datentyp
   #align(center)[```hs data Doubly a = Null | Node (Doubly a) a (Doubly a)```.]
