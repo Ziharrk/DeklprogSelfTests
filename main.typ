@@ -1677,7 +1677,7 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
     Beobachtung mit ```hs [f i j | i <- [1..], j <- [i..]]``` zusammen?
   - Implementiere eine zweite Variante von ```hs preorder```, die statt
     ```hs (++)``` die Funktion ```hs merge``` verwendet.
-  - Implementiere als Nächtes die Mengendifferenz als Funktion
+  - Implementiere als Nächstes die Mengendifferenz als Funktion
     ```hs diff :: Ord a => [a] -> [a] -> [a]```. Du darfst dabei annehmen, dass
     die Eingabelisten bereits sortiert sind.
   - Was berechnet ```hs 2 : map (\x -> 2 * x + 1) ([1..] `diff` preorder tree)```?
