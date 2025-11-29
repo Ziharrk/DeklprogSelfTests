@@ -115,6 +115,10 @@ Größere Aufgaben haben wir als Challenges markiert. Diese Aufgaben benötigen
 Lösen der Aufgabe wichtig sind. Wenn die zusätzlichen Konzepte, dir zu sehr
 Schwierigkeiten bereiten, überspringe die entsprechende Frage oder Aufgabe.
 
+Die Nomenklatur des Aufgaben ist aktuell möglicherweise noch etwas willkürlich,
+da es Tests gibt, die wie Challenges wirken -- und möglicherweise sogar
+andersherum.
+
 Wenn du Anmerkungen oder weitere Ideen für Inhalte für dieses Dokument hast,
 dann schreibe uns gerne über z.B. mattermost an -- oder
 #link("https://github.com/Ziharrk/DeklprogSelfTests/")[erstellt ein issue oder
