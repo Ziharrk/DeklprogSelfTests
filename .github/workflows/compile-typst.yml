@@ -24,7 +24,7 @@ jobs:
 
       - name: Compile Typst
         run: |
-          typst compile main.typ
+          make
 
       - name: Commit PDF to repository
         run: |

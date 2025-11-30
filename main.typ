@@ -16,6 +16,8 @@
   )
 )
 
+#show raw: set text(font: "CaskaydiaCove NF")
+
 #set text(lang: "de")
 #show link: underline
 #show heading.where(level: 1): set block(below: 1.25em)
@@ -2291,6 +2293,15 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
   Wenn du die Instanzen definierst, solltest du feststellen, dass du im
   Wesentlichen nur den enthaltenden Wert aus der ```hs Identity``` holst,
   verarbeitest und anschließend wieder hereinpackst.
+]
+
+#test[
+  Warum gilt
+  #align(center)[```hs (1 +) <$> Just 1 == Just (1 +) <*> Just 1 == pure (1 +) <*> Just 1```?]
+  Wie ergibt sich aus deinen Beobachtungen eine Definition für ```hs fmap```?
+  Wie können wir die Berechnung für beliebige applikative Funktoren
+  verallgemeinern? Wie wird dann festgelegt, was während der Berechnung
+  tatsächlich passiert?
 ]
 
 #test[
