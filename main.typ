@@ -17,6 +17,7 @@
 )
 
 #show raw: set text(font: "CaskaydiaCove NF")
+#set raw(syntaxes: "syntaxes/prolog.sublime-syntax")
 
 #set text(lang: "de")
 #show link: underline
@@ -3211,6 +3212,80 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
 //       data[index] = value
 //     return Array(self.size, data)
 // ```
+
+#pagebreak(weak: true)
+
+
+= Logische Programmierung
+
+#test[
+  Was ist Berechnungsprinzip von Prolog?
+]
+
+#test[
+  Formuliere folgende Aussage als Prolog-Programm:
+  Seien $A$ und $B$. Dann gilt $C$, wenn $A$ und $B$ gelten.
+]
+
+#test[
+  Wie können wir Funktionen in Prolog umsetzen? Erkläre es mithilfe eines
+  Beispiels (wie z.B. ```hs (&&) :: Bool -> Bool -> Bool```).
+]
+
+#test[
+  Wie hängen die Syntax von Prolog und die der Aussagenlogik zusammen? Welche
+  Symbole entsprechen sich?
+]
+
+#test[
+  In Prolog können wir ebenso Termstrukturen erzeugen. Der Haskell-Typ
+  ```hs data Maybe a = Nothing | Just a``` kann z.B. wie folgt in Prolog
+  umgesetzt werden.
+  ```SWI-Prolog
+  maybe(nothing).
+  maybe(just(_)).
+  ```
+  Übersetze mit der gleichen Idee den Datentyp
+  ```hs data Tree a = Empty | Node (Tree a) a (Tree a)```.
+]
+
+#test[
+  Ordne die Begriffe Atom, Fakt, Regel und Variable dem folgenden
+  Prolog-Programm zu?
+  ```SWI-Prolog
+  semitone(c, cis). semitone(cis, d). semitone(d, dis). semitone(dis, e).
+  semitone(e, f). semitone(f, fis). semitone(fis, g). semitone(g, gis).
+  semitone(gis, a). semitone(a, ais). semitone(ais, b). semitone(b, c).
+
+  minor_third(P1, Mi3) :-
+    semitone(P1, Mi2), semitone(Mi2, Ma2), semitone(Ma2, Mi3).
+
+  major_third(P1, Ma3) :- minor_third(P1, Mi3), semitone(Mi3, Ma3).
+
+  major_chord(P1, Ma3, P5) :- major_third(P1, Ma3), minor_third(Ma3, P5).
+  ```
+] <major_chord>
+
+#test[
+  In @major_chord sind die Halbtonschritte als Fakten definiert. Um diese
+  etwas kompakter zu schreiben, können wir ```SWI-Prolog append/3``` verwenden.
+]
+
+// ```SWI-Prolog
+// semitone(X, Y) :-
+//   append(_, [X, Y|_], [c, cis, d, dis, e, f, fis, g, gis, a, ais, b, c]).
+// ```
+
+
+#test[
+  Mithilfe von ```SWI-Prolog append/3``` lassen sehr viele andere Prädikate
+  auf Listen definieren. Überlege dir, wie du folgende Prädikate unter dessen
+  Nutzung implementieren kannst. Die Prädikate sollen sich wie deren
+  entsprechenden Haskell-Funktionen verhalten.
+  - ```SWI-Prolog head/2``` und ```SWI-Prolog tail/2```,
+  - ```SWI-Prolog last/2```,
+  - ```SWI-Prolog elem/2``` (Warum ist ```SWI-Prolog elem/2``` hier zweistellig?)
+]
 
 #pagebreak(weak: true)
 
