@@ -7,12 +7,10 @@ SYNTAXES_DIR = syntaxes
 
 all: main.pdf
 
-main.pdf: main.typ $(FONTS_DIR)/.fonts-extracted
+main.pdf: main.typ $(FONTS_DIR)/.fonts-extracted syntaxes/prolog.sublime-syntax
 	typst compile --font-path $(FONTS_DIR) main.typ
 
-$(SYNTAXES_DIR)/.syntaxes-build: prolog.sublime-syntax
-
-prolog.sublime-syntax:
+syntaxes/prolog.sublime-syntax:
 	mkdir -p syntaxes
 	git clone https://github.com/BenjaminSchaaf/swi-prolog-sublime-syntax.git syntaxes/swi-prolog-sublime-syntax
 	make -C syntaxes/swi-prolog-sublime-syntax 

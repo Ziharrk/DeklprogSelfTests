@@ -3276,16 +3276,52 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
 //   append(_, [X, Y|_], [c, cis, d, dis, e, f, fis, g, gis, a, ais, b, c]).
 // ```
 
-
 #test[
   Mithilfe von ```SWI-Prolog append/3``` lassen sehr viele andere Prädikate
   auf Listen definieren. Überlege dir, wie du folgende Prädikate unter dessen
   Nutzung implementieren kannst. Die Prädikate sollen sich wie deren
-  entsprechenden Haskell-Funktionen verhalten.
+  entsprechenden Haskell-Funktionen verhalten, wenn dir der Name des Prädikats
+  bekannt vorkommt.
   - ```SWI-Prolog head/2``` und ```SWI-Prolog tail/2```,
   - ```SWI-Prolog last/2```,
-  - ```SWI-Prolog elem/2``` (Warum ist ```SWI-Prolog elem/2``` hier zweistellig?)
+  - ```SWI-Prolog member/2``` (entspricht ```hs elem``` in Haskell)
+  - ```SWI-Prolog dups/2``` soll alle Elemente in einer Liste finden, die
+    genau zweimal vorkommen. Du darfst ```SWI-Prolog not_member/2``` als
+    Hilfsfunktion verwenden.
+
+  Warum ist ```SWI-Prolog member/2``` hier zweistellig?
 ]
+
+// ```SWI-Prolog
+// head(X, Xs) :- append([X], _, Xs).
+// tail(Xs, Ys) :- append([_], Ys, Xs).
+// last(Xs, X) :- append(_, [X], Xs).
+// member(X, Xs) :- append(_, [X|_], Xs).
+// dups(X, Xs) :-
+//   append(Ys1, [X|Ys2], Xs),
+//   not_member(X, Ys1),
+//   append(Ys3, [X|Ys4], Ys2).
+//   not_member(X, Ys3),
+//   not_member(X, Ys4).
+// ```
+
+#test[
+  Ein Graph sei dargestellt als eine Liste von Kanten. Die Kanten seien
+  wiederum als Tupel dargestellt.
+
+  Implementiere ein Prädikat ```SWI-Prolog reachable/3```, das bestimmt,
+  ob ein Knoten von einem anderen Knoten aus erreichbar ist.
+
+]
+
+// ```SWI-Prolog
+// delete_node(_, [], []).
+// delete_node(X, [(X,_)|G], G') :- delete_node(X, G, G').
+// delete_node(X, [(_,X)|G], G') :- delete_node(X, G, G').
+// delete_node(X, [E|G], [E|G']) :- delete_node(X, G, G').
+//
+// reachable(X, Y, G) :- member((X, Z), G), delete_node(X, G, G'), reachable(Z, Y, G').
+// ```
 
 #pagebreak(weak: true)
 
