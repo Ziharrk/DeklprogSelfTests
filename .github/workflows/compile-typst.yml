@@ -22,7 +22,7 @@ jobs:
         run: |
           sudo snap install typst
           sudo snap install rustup --classic
-          cargo install sbnf
+          cargo install sbnfc
 
       - name: Compile Typst
         run: |
