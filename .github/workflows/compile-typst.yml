@@ -20,7 +20,8 @@ jobs:
 
       - name: Install Typst and Rust
         run: |
-          sudo snap install typst rustup
+          sudo snap install typst
+          sudo snap install rustup --classic
           cargo install sbnf
 
       - name: Compile Typst
