@@ -3360,8 +3360,9 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
 ]
 
 #test[
-  Welches Konzept, das Haskell verwendet, steckt hinter der Anfrage
-  ```SWI-Prolog ?- just((X, Y)) == just((1, 2))```?
+  Welche Konzepte, die Haskell verwendet, stecken hinter den Anfragen
+  - ```SWI-Prolog ?- just((X, Y)) = just((1, 2))``` und
+  - ```SWI-Prolog ?- to(X, to(X, list(X))) = to(int, to(int, list(int)))```?
 ]
 
 #pagebreak(weak: true)
