@@ -3269,12 +3269,24 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
 #test[
   In @major_chord sind die Halbtonschritte als Fakten definiert. Um diese
   etwas kompakter zu schreiben, können wir ```SWI-Prolog append/3``` verwenden.
+  Implementiere ```SWI-Prolog semitone/2``` mithilfe von ```SWI-Prolog append/3```.
 ]
 
 // ```SWI-Prolog
 // semitone(X, Y) :-
 //   append(_, [X, Y|_], [c, cis, d, dis, e, f, fis, g, gis, a, ais, b, c]).
 // ```
+
+#test[
+  Implementiere das Prädikat ```SWI-Prolog zip/3```, dass zwei Liste bekommt
+  und eine Liste von Paaren zuliefert -- so wie du es aus Haskell kennst.
+  Es soll
+  #align(center)[```SWI-Prolog zip([1, 2], [3, 4, 5], [(1, 3), (2, 4)]).```]
+  gelten.
+  Wie gewinnst du aus deiner Implementierung das Prädikat ```SWI-Prolog unzip/3```,
+  also die Umkehrfunktion ```SWI-Prolog zip/3```, wenn diese auf Listen gleicher
+  Länge eingeschränkt ist.
+]
 
 #test[
   Mithilfe von ```SWI-Prolog append/3``` lassen sehr viele andere Prädikate
@@ -3306,22 +3318,51 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
 // ```
 
 #test[
+  Warum ist ```SWI-Prolog not_member(X, Xs) :- append(_, [Y|_], Xs), X \= Y.```
+  keine korrekte Implementierung des Prädikates, das testet, ob ein Element
+  nicht einer Liste enthalten ist?
+]
+
+#test[
   Ein Graph sei dargestellt als eine Liste von Kanten. Die Kanten seien
   wiederum als Tupel dargestellt.
 
   Implementiere ein Prädikat ```SWI-Prolog reachable/3```, das bestimmt,
-  ob ein Knoten von einem anderen Knoten aus erreichbar ist.
+  ob ein Knoten von einem anderen Knoten aus erreichbar ist. Du benötigst
+  voraussichtlich ein weiteres vierstelliges Hilfsprädikat.
 
+  Dein Programm soll sich wie folgt verhalten:
+  ```SWI-Prolog
+  ?- reachable(1, 3, [(1, 2), (2, 3), (3, 1)]).
+  true ;
+  false.
+
+  ?- reachable(1, 3, [(1, 2), (3, 2)]).
+  false.
+  ```
 ]
 
 // ```SWI-Prolog
-// delete_node(_, [], []).
-// delete_node(X, [(X,_)|G], G') :- delete_node(X, G, G').
-// delete_node(X, [(_,X)|G], G') :- delete_node(X, G, G').
-// delete_node(X, [E|G], [E|G']) :- delete_node(X, G, G').
+// not_member(_, []).
+// not_member(X, [Y|Xs]) :- X \= Y, not_member(X, Xs).
 //
-// reachable(X, Y, G) :- member((X, Z), G), delete_node(X, G, G'), reachable(Z, Y, G').
+// reachable(X, Y, G) :- reachable(X, Y, G, []).
+// reachable(X, X, _, _).
+// reachable(X, Y, G, V) :-
+//   not_member(X, V),
+//   member((X, Z), G),
+//   reachable(Z, Y, G, [X|V]).
 // ```
+
+#test[
+  Wie unterscheiden sich die Gleichheit ```SWI-Prolog ==/2``` in Prolog
+  und die Gleichheit in Haskell?
+]
+
+#test[
+  Welches Konzept, das Haskell verwendet, steckt hinter der Anfrage
+  ```SWI-Prolog ?- just((X, Y)) == just((1, 2))```?
+]
 
 #pagebreak(weak: true)
 
