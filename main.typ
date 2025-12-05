@@ -2727,6 +2727,37 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
 ]
 
 #test[
+  Gegeben sei folgendes Haskell-Programm.
+  ```hs
+  main :: IO ()
+  main = do
+    putStr "Hello"
+    return ()
+    putStrLn ", world!"
+    return ()
+  ```
+  Was ist die Ausgabe des Programm und warum?
+]
+
+#test[
+  Gegeben sei folgendes fehlerhafte Haskell-Programm.
+  ```hs
+  main :: IO ()
+  main = do
+    q <- read <$> getLine
+    if q == 0
+      then main
+      else
+        p <- read <$> getLine
+        print (p `div` q)
+  ```
+  Warum ist das Programm fehlerhaft? Um den Fehler zu Identifizieren, klammere
+  alle validen Haskell-Teilausdrücke. (Du kannst davon ausgehen, dass alle
+  Eingaben valide sind und deshalb keine weitere Fehlerbehandlung der Eingaben
+  stattfinden muss.)
+]
+
+#test[
   Gegeben sei der Datentyp ```hs Tree a = Leaf a | Tree a :+: Tree a```.
   - Implementiere eine Funktion ```hs splits :: [a] -> [([a], [a])]```, die
     alle nicht-leeren Aufteilungen der Eingabeliste berechnet.
