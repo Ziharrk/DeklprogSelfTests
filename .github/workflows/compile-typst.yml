@@ -18,9 +18,10 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Install Typst
+      - name: Install Typst and Rust
         run: |
-          sudo snap install typst
+          sudo snap install typst rustup
+          cargo install sbnf
 
       - name: Compile Typst
         run: |
