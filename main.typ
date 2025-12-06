@@ -2364,6 +2364,43 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
 ]
 
 #test[
+  Die ```hs Reader```-Monade ermöglicht es, eine gemeinsame Umgebung mit vielen
+  Berechnungen zu teilen.
+  ```hs
+  newtype Reader r a = Reader { runReader :: r -> a }
+
+  instance Monad (Reader r) where
+    return y = Reader (\_ -> y)
+
+    r >>= k = Reader (\x -> let y = runReader r x
+                                z = runReader (k y) x
+                             in z)
+  ```
+  Woran kannst du erkennen, dass die Berechnung ```hs r``` vor dessen
+  Weiterführung mit ```hs k``` und dem Ergebnis ```hs r``` stattfindet?
+] <reader_monad>
+
+#test[
+  Das Pendant zur ```hs Reader```-Monade aus @reader_monad ist die
+  ```hs Writer```-Monade. Eine Spezialisierung der Monade soll hier die
+  ```hs ListWriter```-Monade sein. Diese Monade kann genutzt werden, um
+  Zwischenergebnisse oder Logging-Informationen einer Berechnung zu speichern.
+  #align(center)[
+    ```hs
+    newtype ListWriter w a = ListWriter { runListWriter :: (a, [w]) }
+    ```
+  ]
+  Implementiere diese Monade. Mache dir insbesondere Gedanken darüber, wie du
+  Berechnungen dieses Typens sequenzierst und wie du die Zwischenergebnisse
+  von zwei Berechnungen kombinierst.
+
+  #hint[
+    Die Implementierung dieser Monade ist sehr ähnlich zu der Implementierung
+    der ```hs Reader```-Monade, wie sie in @reader_monad angegeben ist.
+  ]
+]
+
+#test[
   Argumentiere anhand der Gesetze, die für eine ```hs Functor```-Instanzen
   gelten sollen, dass die folgenden ```hs Functor```-Instanzen keine gültigen
   Instanzen sind. Gebe auch Beispiele an, die zeigen, dass die Gesetze nicht
