@@ -1,3 +1,4 @@
+#import "@preview/diagraph:0.3.6"
 #import "@preview/cetz:0.4.2"
 #import "@preview/ctheorems:1.1.3": *
 #import "@preview/finite:0.5.0"
@@ -3371,6 +3372,46 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
   ?- reachable(1, 3, [(1, 2), (3, 2)]).
   false.
   ```
+
+  Hier sind die Eingabe-Graphen nochmal visualisiert.
+  #grid(
+    columns: (1fr, 1fr),
+    gutter: 1em,
+    align(center + horizon)[
+      #diagraph.raw-render(
+        ```dot
+        digraph {
+          node[shape=circle];
+
+          1 -> 2;
+          2 -> 3;
+          3 -> 1;
+        }
+        ```,
+        engine: "circo"
+      )
+    ],
+    align(center + horizon)[
+      #diagraph.raw-render(
+        ```dot
+        digraph {
+          node[shape=circle];
+
+          1 -> 2;
+          3 -> 2;
+        }
+        ```
+      )
+    ],
+    text(0.8em)[
+      Eingabe-Graph der ersten Anfrage mit unendlich vielen gerichteten Pfaden
+      von 1 bis 3
+    ],
+    text(0.8em)[
+      Eingabe-Graph der zweiten Anfrage mit keinem gerichteten Pfad von 1
+      nach 3
+    ]
+  )
 ]
 
 // ```SWI-Prolog
