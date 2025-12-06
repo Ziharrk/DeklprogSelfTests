@@ -2372,9 +2372,9 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
   instance Monad (Reader r) where
     return y = Reader (\_ -> y)
 
-    r >>= k = Reader (\x -> let y = runReader r x
-                                z = runReader (k y) x
-                             in z)
+    r >>= k = Reader (\s -> let x = runReader r s
+                                y = runReader (k y) s
+                             in y)
   ```
   Woran kannst du erkennen, dass die Berechnung ```hs r``` vor dessen
   Weiterführung mit ```hs k``` und dem Ergebnis ```hs r``` stattfindet?
