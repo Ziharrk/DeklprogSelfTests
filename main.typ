@@ -3331,7 +3331,8 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
 
   major_third(P1, Ma3) :- minor_third(P1, Mi3), semitone(Mi3, Ma3).
 
-  major_chord(P1, Ma3, P5) :- major_third(P1, Ma3), minor_third(Ma3, P5).
+  chord(minor(P1, Mi3, P5)) :- minor_third(P1, Mi3), major_third(Mi3, P5).
+  chord(major(P1, Ma3, P5)) :- major_third(P1, Ma3), minor_third(Ma3, P5).
   ```
 ] <major_chord>
 
@@ -3490,17 +3491,18 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
   Akkorde C-Dur, F-Dur und G-Dur.
 ]
 
-// ```SWI-Prolog
-// all_major(R, Cs) :- major_scale([R|S]), all_major(Cs, [R|S], R).
-//
-// in_scale(P1, Ma3, P5, R) :-
-//   major_scale([R|S]), member(P1, [R|S]), member(Ma3, [R|S]), member(P5, [R|S]).
-//
-// all_major([], [], _).
-// all_major([(P1, Ma3, P5)|Cs], [P1|S], R) :-
-//   major_chord(P1, Ma3, P5), in_scale(P1, Ma3, P5, R), !, all_major(Cs, S, R).
-// all_major(Cs, [_|S], R) :- all_major(Cs, S, R).
-// ```
+```SWI-Prolog
+all_major(R, Cs) :- major_scale([R|S]), all_major(R, Cs, [R|S]).
+
+in_scale(R, major(P1, Ma3, P5)) :-
+  major_scale([R|S]),
+  member(P1, [R|S]), member(Ma3, [R|S]), member(P5, [R|S]).
+
+all_major(_, [], []).
+all_major(R, [C|Cs], [P1|S]) :-
+  C = major(P1, _, _), chord(C), in_scale(R, C), !, all_major(Cs, S, R).
+all_major(R, Cs, [_|S]) :- all_major(R, Cs, S).
+```
 
 #pagebreak(weak: true)
 
