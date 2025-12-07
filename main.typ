@@ -3346,6 +3346,19 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
 //   append(_, [X, Y|_], [c, cis, d, dis, e, f, fis, g, gis, a, ais, b, c]).
 // ```
 
+// #test[
+//   Eine Dur-Tonleiter hat folgendes Muster relativ zum vorherigen Ton in
+//   Halbtonschritten:
+//   #align(center)[+2, +2, +1, +2, +2, +2, +1]
+//   Zum Beispiel erhalten wir mit dem Grundton C, so die C-Dur Tonleiter
+//   #align(center)[C - D - E - F - G - A - B - C.]
+//
+//   Schreibe ein Prädikat, dass dir alle diatonischen Dur-Akkorde (wie
+//   in @major_chord definiert) einer Dur-Tonleiter findet. Diatonisch bedeutet,
+//   dass der Akkord nur aus Tönen der gegeben Tonleiter bestehen darf.
+//   Für die C-Dur Tonleiter sind die gesuchten Akkorde C-Dur, F-Dur und G-Dur.
+// ]
+
 #test[
   Implementiere das Prädikat ```SWI-Prolog zip/3```, dass zwei Liste bekommt
   und eine Liste von Paaren zuliefert -- so wie du es aus Haskell kennst.
