@@ -3346,19 +3346,6 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
 //   append(_, [X, Y|_], [c, cis, d, dis, e, f, fis, g, gis, a, ais, b, c]).
 // ```
 
-// #test[
-//   Eine Dur-Tonleiter hat folgendes Muster relativ zum vorherigen Ton in
-//   Halbtonschritten:
-//   #align(center)[+2, +2, +1, +2, +2, +2, +1]
-//   Zum Beispiel erhalten wir mit dem Grundton C, so die C-Dur Tonleiter
-//   #align(center)[C - D - E - F - G - A - B - C.]
-//
-//   Schreibe ein Prädikat, dass dir alle diatonischen Dur-Akkorde (wie
-//   in @major_chord definiert) einer Dur-Tonleiter findet. Diatonisch bedeutet,
-//   dass der Akkord nur aus Tönen der gegeben Tonleiter bestehen darf.
-//   Für die C-Dur Tonleiter sind die gesuchten Akkorde C-Dur, F-Dur und G-Dur.
-// ]
-
 #test[
   Implementiere das Prädikat ```SWI-Prolog zip/3```, dass zwei Liste bekommt
   und eine Liste von Paaren zuliefert -- so wie du es aus Haskell kennst.
@@ -3486,6 +3473,34 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
   - ```SWI-Prolog ?- just((X, Y)) = just((1, 2))``` und
   - ```SWI-Prolog ?- to(X, to(X, list(X))) = to(int, to(int, list(int)))```?
 ]
+
+#test[
+  Eine Dur-Tonleiter hat folgendes Muster relativ zum vorherigen Ton in
+  Halbtonschritten:
+  #align(center)[+2, +2, +1, +2, +2, +2, +1]
+  Zum Beispiel erhalten wir mit dem Grundton C, so die C-Dur Tonleiter
+  #align(center)[C - D - E - F - G - A - B - C.]
+  D ist zwei Halbtöne von C entfernt, E ist zwei Halbtöne von D entfernt,
+  F ist einen Halbton von E entfernt und so weiter.
+
+  Schreibe ein Prädikat ```SWI-Prolog all_major/2```, dass alle diatonischen
+  Dur-Akkorde (wie in @major_chord definiert) einer Dur-Tonleiter mit gegebenen
+  Grundton berechnet. Diatonisch bedeutet, dass der Akkord nur aus Tönen der
+  gegebenen Tonleiter bestehen darf. Für die C-Dur Tonleiter sind die gesuchten
+  Akkorde C-Dur, F-Dur und G-Dur.
+]
+
+// ```SWI-Prolog
+// all_major(R, Cs) :- major_scale([R|S]), all_major(Cs, [R|S], R).
+//
+// in_scale(P1, Ma3, P5, R) :-
+//   major_scale([R|S]), member(P1, [R|S]), member(Ma3, [R|S]), member(P5, [R|S]).
+//
+// all_major([], [], _).
+// all_major([(P1, Ma3, P5)|Cs], [P1|S], R) :-
+//   major_chord(P1, Ma3, P5), in_scale(P1, Ma3, P5, R), !, all_major(Cs, S, R).
+// all_major(Cs, [_|S], R) :- all_major(Cs, S, R).
+// ```
 
 #pagebreak(weak: true)
 
