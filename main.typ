@@ -2620,7 +2620,7 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
     implementiere eine ```hs Functor```-, ```hs Applicative```-, ```hs Monad```-
     und ```hs MonadFail```-Instanz für den Typen
     ```hs data Result a = Failure String | Success a```.
-]
+] <eval_exp>
 
 // ```hs
 // import Prelude hiding (MonadFail(..))
@@ -2725,6 +2725,24 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
     [f | n <- [0..], let f = fib n, f `mod` 2 == 0]
     ```
     mithilfe der Listenmonade.
+]
+
+#test[
+  Die ```hs do```-Notation erlaubt es uns, statements der Form ```hs p <- e```
+  zu schreiben, wobei ```hs p``` ein beliebiges Muster sein kann. Zum Beispiel
+  ist folgender Ausdruck valide und berechnenbar.
+  ```hs
+  do
+    Just x <- [Just 1, Nothing, Just 2]
+    return x
+  ```
+  Der Wert dieses Ausdrucks is ```hs [1, 2]```.
+  - In welches Problem läufst du, wenn du diesen Ausdruck mithilfe von
+    ```hs (>>=)``` und ```hs (>>)``` ausdrücken möchtest?
+  - Wie kannst du das Problem beheben in diesem konkreten Fall beheben?
+  - Fällt dir möglicherweise ein allgemeine Übersetzungsvorschrift für
+    statements dieser Form unter der Verwendung von ```hs MonadFail``` aus
+    @eval_exp ein?
 ]
 
 #test[
@@ -3297,8 +3315,16 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
 ]
 
 #test[
-  Wie können wir Funktionen in Prolog umsetzen? Erkläre es mithilfe eines
-  Beispiels (wie z.B. ```hs (&&) :: Bool -> Bool -> Bool```).
+  Wie können wir Funktionen, wie wir sie aus Haskell kennen, in Prolog umsetzen?
+  Erkläre es mithilfe eines Beispiels (wie z.B.
+  ```hs (++) :: [a] -> [a] -> [a]```).
+]
+
+#test[
+  $n$-stellige Funktionen können wir in Prolog als $(n+1)$-stellige Relation
+  umsetzen. Dabei nimmt die letzte Position der Relation die Rolle des
+  Ergebnisses ein. Gehen wir mit Funktionen ```hs a1 -> ... an -> Bool```
+  besonders um?
 ]
 
 #test[
@@ -3308,14 +3334,22 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
 
 #test[
   In Prolog können wir ebenso Termstrukturen erzeugen. Der Haskell-Typ
-  ```hs data Maybe a = Nothing | Just a``` kann z.B. wie folgt in Prolog
-  umgesetzt werden.
+  #align(center)[```hs data Maybe a = Nothing | Just a```]
+  kann z.B. wie folgt in Prolog umgesetzt werden.
   ```SWI-Prolog
   maybe(nothing).
   maybe(just(_)).
   ```
   Übersetze mit der gleichen Idee den Datentyp
-  ```hs data Tree a = Empty | Node (Tree a) a (Tree a)```.
+  #align(center)[```hs data Tree a = Empty | Node (Tree a) a (Tree a)```.]
+]
+
+#test[
+  Wie viele Ergebnisse liefern die folgenden Anfragen?
+  - ```SWI-Prolog ?- append(_, [X|_], [1, 2, 3, 4]).```
+  - ```SWI-Prolog ?- append(_, [_,X|_], [1, 2, 3, 4]).```
+  - ```SWI-Prolog ?- member(X, [1, 2, 3]), member(Y, [2, 3, 4]), X \= Y.```
+  - ```SWI-Prolog ?- append(_, [X|Ys], [1, 2, 3, 4]), append(_, [Y|_], Ys).```
 ]
 
 #test[
@@ -3491,18 +3525,18 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
   Akkorde C-Dur, F-Dur und G-Dur.
 ]
 
-```SWI-Prolog
-all_major(R, Cs) :- major_scale([R|S]), all_major(R, Cs, [R|S]).
-
-in_scale(R, major(P1, Ma3, P5)) :-
-  major_scale([R|S]),
-  member(P1, [R|S]), member(Ma3, [R|S]), member(P5, [R|S]).
-
-all_major(_, [], []).
-all_major(R, [C|Cs], [P1|S]) :-
-  C = major(P1, _, _), chord(C), in_scale(R, C), !, all_major(Cs, S, R).
-all_major(R, Cs, [_|S]) :- all_major(R, Cs, S).
-```
+// ```SWI-Prolog
+// all_major(R, Cs) :- major_scale([R|S]), all_major(R, Cs, [R|S]).
+//
+// in_scale(R, major(P1, Ma3, P5)) :-
+//   major_scale([R|S]),
+//   member(P1, [R|S]), member(Ma3, [R|S]), member(P5, [R|S]).
+//
+// all_major(_, [], []).
+// all_major(R, [C|Cs], [P1|S]) :-
+//   C = major(P1, _, _), chord(C), in_scale(R, C), !, all_major(Cs, S, R).
+// all_major(R, Cs, [_|S]) :- all_major(R, Cs, S).
+// ```
 
 #pagebreak(weak: true)
 
