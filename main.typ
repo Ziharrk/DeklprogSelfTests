@@ -2298,6 +2298,16 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
 ]
 
 #test[
+  Um zu verifizieren, dass die ```hs Functor```-Gesetze für z.B. den Typ
+  ```hs Maybe a``` gelten, müssen wir
+  - das Identitätsgesetz ```hs fmap id = id``` und
+  - das Kompositionsgesetz ```hs fmap f . fmap g = fmap (f . g)```
+  zeigen. Wie gehen wir konkret für den gegebenen Typ vor? Wie zeigen wir
+  die Gleichheit von Funktionen? Wenn die Gesetze nun für den Listendatentypen
+  ```hs [a]``` zeigen wollen, was ändert sich an deinem Vorgehen?
+]
+
+#test[
   Warum gilt
   #align(center)[```hs (1 +) <$> Just 1 == Just (1 +) <*> Just 1 == pure (1 +) <*> Just 1```?]
   Wie ergibt sich aus deinen Beobachtungen eine Definition für ```hs fmap```?
@@ -2329,6 +2339,24 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
   nie gelten kann. Kann ```hs fmap```, die Struktur in Abhängigkeit
   des Wertes vom Typ ```hs a``` verändern?
 ]
+
+#test[
+  Gegeben sei diese fehlerhafe Definition einer sicheren Division:
+  ```hs
+  safeDiv :: Int -> Int -> Maybe Int
+  safeDiv x y = pure (div x) <*> pure y
+  ```
+  Wie können wir diese Implementierung reparieren, ohne ```hs (>>=)``` zu
+  verwenden und die rechte Seite soweit wie möglich zu erhalten?
+  Wie siehst du an diesem Beispiel, dass Monaden ausdrucksstärker als
+  applikative Funktoren sind?
+]
+
+// ```hs
+// safeDiv :: Int -> Int -> Maybe Int
+// safeDiv x y = pure (div x) <*> if y == 0 then Nothing else pure y
+// -- oder: safeDiv x y = pure (div x) <*> (guard (y /= 0) *> pure y)
+// ```
 
 #test[
   Monaden bieten uns die Möglichkeit, Berechnungen als Folge von kleineren
@@ -2581,6 +2609,21 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
 // guard False = mzero
 // guard True  = return ()
 // ```
+
+#test[
+  In @monadzero haben wir eine Typkonstruktorklasse definiert, die es uns
+  erlaubt hat einen Fehlschlag bzw. die Abwesenheit eines Ergebnisses
+  auszudrücken. Diese können wir auch eine Abstraktionsebene früher einführen.
+  Definiere eine weitere Typkonstruktorklasse ```hs AlternativeZero``` auf
+  Ebene der applikativen Funktoren mit einer Funktion ```hs empty :: f a```.
+
+  Folgende Ausdrücken sollen die gegebenen Werte haben:
+  - ```hs guard (y /= 0) *> pure y = pure y``` für ```hs y /= 0``` und
+  - ```hs guard (y /= 0) *> pure y = empty``` für ```hs y == 0```.
+
+  ```hs (*>) :: Applicative f => f a -> f b -> f b``` soll hier ein Kombinator
+  sein, der sich wie ```hs (>>)``` verhält.
+]
 
 #test[
   Als motivierendes Beispiel für Monaden hast du die Auswertung eines
