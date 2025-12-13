@@ -3507,13 +3507,18 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
   - Zuletzt benötigen wir noch ```SWI-Prolog primes/2```, dass alle Primzahlen
     bis zu einer angegeben Zahl berechnen soll. Implementiere dieses mithilfe
     der bereits vorbereiteten Prädikate.
+  - Mit @to_nat und einem weiteren Prädikat ```SWI-Prolog map_to_nat/2``` kannst
+    du die Liste der Primzahlen in eine lesbare Form bringen -- du kannst auch
+    ein allgemeines ```SWI-Prolog  map/3``` mithilfe des Prädikats höherer
+    Ordnung ```SWI-Prolog call``` implementieren.
+
 ]
 
 #test[
   Implementiere ein Prädikat ```SWI-Prolog to_nat/2```, das eine Peano-Zahl in
   eine natürliche Zahl konvertiert. Nutze dafür ```SWI-Prolog is/2```. Wieso
   terminiert die Anfrage ```SWI-Prolog ?- to_nat(P, 3).``` nicht?
-]
+] <to_nat>
 
 #test[
   Ein Graph sei dargestellt als eine Liste von Kanten. Die Kanten seien
