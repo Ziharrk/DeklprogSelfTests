@@ -3471,6 +3471,51 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
 ]
 
 #test[
+  In diesem Selbsttest wollen wir die Peano-Arithmetik wiederholen.
+  Implementiere folgende Prädikate:
+  - ```SWI-Prolog peano/1``` soll beweisbar sein, wenn der übergebene Term
+    eine Peano-Zahl ist, also z.B. die Form ```SWI-Prolog o, s(o), s(s(o)), ...```
+    hat.
+  - ```SWI-Prolog add/3``` soll die Addition auf Peano-Zahlen implementieren.
+  - Die Multiplikation kann wie folgt definiert werden:
+    ```SWI-Prolog
+    mult(o, _, o).
+    mult(s(X), Y, Z) :- add(U, Y, Z), mult(X, Y, U).
+    ```
+    Eine alternative Implementierung könnte so aussehen:
+    ```SWI-Prolog
+    mult(o, _, o).
+    mult(s(X), Y, Z) :- mult(X, Y, U), add(U, Y, Z).
+    ```
+    Welcher der beiden Implementierungen ist besser? Betrachte während deiner
+    Überlegungen auch folgende Anfrage ```SWI-Prolog ?- mult(s(s(o)), Y, s(s(s(s(o))))).```
+    -- also sinngemäß die Anfrage $2 dot y = 4$.
+  - Implementiere weiter die Prädikate ```SWI-Prolog lt/2, eq/2``` für
+    Peano-Zahlen, also die $<$-Relation und Gleichheit auf Peano-Zahlen.
+]
+
+#test[
+  Das Sieb des Eratosthenes ist ein Algorithmus zur Bestimmung von Primzahlen.
+  Dieses wollen wir nun in Prolog implementieren -- mit Peano-Zahlen natürlich.
+  - Implementiere zuerst ein Prädikat ```SWI-Prolog range/3```, das eine Liste
+    berechnet, die alle Ganzzahlen in einem vorgegebenen Intervall enthält.
+    Zum Beispiel soll ```SWI-Prolog ?- range(s(o), s(s(s(o))), [s(o), s(s(o))]).```
+    beweisbar sein.
+  - Als Nächstes implementiere ein Prädikat ```SWI-Prolog filter_by_prime/3```,
+    das alle Elemente einer Liste entfernt, die durch eine gegebene Primzahl
+    teilbar sind.
+  - Zuletzt benötigen wir noch ```SWI-Prolog primes/2```, dass alle Primzahlen
+    bis zu einer angegeben Zahl berechnen soll. Implementiere dieses mithilfe
+    der bereits vorbereiteten Prädikate.
+]
+
+#test[
+  Implementiere ein Prädikat ```SWI-Prolog to_nat/2```, das eine Peano-Zahl in
+  eine natürliche Zahl konvertiert. Nutze dafür ```SWI-Prolog is/2```. Wieso
+  terminiert die Anfrage ```SWI-Prolog ?- to_nat(P, 3).``` nicht?
+]
+
+#test[
   Ein Graph sei dargestellt als eine Liste von Kanten. Die Kanten seien
   wiederum als Tupel dargestellt.
 
