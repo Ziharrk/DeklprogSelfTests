@@ -3699,7 +3699,7 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
     ?- sat(and(var(x), neg(var(x))), A).
     false.
     ```
-]
+] <sat_solver>
 
 // ```SWI-Prolog
 // bool(true).
@@ -3735,6 +3735,27 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
 // assignment([V|Vs], [(V, B)|VBs]) :- bool(B), assignment(Vs, VBs).
 //
 // sat(F, A) :- get_vars(F, Vs), assignment(Vs, A), eval(F, A, true).
+// ```
+
+#test[
+  In diesem Test ergänzen wir den SAT-Löser aus @sat_solver um die Implikation
+  und Äquivalenz. Anstatt das ```SWI-Prolog eval```-Prädikat entsprechend zu
+  erweitern, wollen wir diese Terme in andere Terme übersetzen, die wir bereits
+  auswerten können. Das können wir mit folgenden Regeln erreichen:
+  $ (A => B) quad <=> quad (not A or B) quad quad "und" quad quad (A <=> B) quad <=> quad (A => B and B => A) $
+  Implementiere dafür ein Prädikat ```SWI-Prolog desugar/2```. Als
+  Konstruktoren kannst du z.B. ```SWI-Prolog impl/2``` und ```SWI-Prolog iff/2```
+  verwenden.
+]
+
+// ```SWI-Prolog
+// desugar(B, B) :- bool(B).
+// desugar(var(X), var(X)).
+// desugar(neg(A), neg(B)) :- desugar(A, B).
+// desugar(and(A, B), and(B1, B2)) :- desugar(A, B1), desugar(B, B2).
+// desugar(or(A, B), or(B1, B2)) :- desugar(A, B1), desugar(B, B2).
+// desugar(impl(A, B), or(neg(C1), C2)) :- desugar(A, C1), desugar(B, C2).
+// desugar(iff(A, B), C) :- desugar(and(impl(A, B), impl(B, A)), C).
 // ```
 
 
