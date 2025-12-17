@@ -3759,6 +3759,238 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
 // ```
 
 
+// Rechnen in der Logikprogrammierung
+
+#test[
+  Was besagt die Abtrennungsregel (modus ponens)?
+]
+
+#test[
+  Was ist das (einfache) Resolutionsprinzip?
+]
+
+#test[
+  Wann ist eine Anfrage mithilfe des Resolutionsprinzips beweisbar?
+]
+
+#test[
+  Mithilfe welcher Methode stellen wir fest, ob ein Literal zu einer linken
+  Regelseite passt?
+]
+
+#test[
+  Wie sind Terme definiert?
+]
+
+#test[
+  Welche der folgenden Terme sind syntaktisch korrekt?
+  Seien $x, y, z$ Variablen. Alle anderen Buchstaben mögen Konstanten oder
+  Funktoren sein.
+  - $x$
+  - $a$
+  - $x x$
+  - $f(x,a)$
+  - $f(f(x))$
+  - $g(f(x)(y))$
+]
+
+#test[
+  Mithilfe welcher Methode ersetzen wir Variablen in Termen?
+]
+
+#test[
+  Wie ist die Substitution auf Termen definiert? Was wird insbesondere durch
+  eine Substitution verändert und was nicht?
+]
+
+#test[
+  Falls du @sat_solver gemeistert hast -- an welcher Stelle deines Programms
+  führst du eine Substitution durch?
+]
+
+#test[
+  Sei $sigma = { x |-> 1, y |-> 2 }$ eine Substitution. Welche Anwendungen
+  oder Aussagen sind korrekt?
+  - $sigma("add"(x, y)) = "add"(1, 2)$
+  - $sigma("eq"(x, x)) = "eq"(1, x)$
+  - $sigma(f(g(x, y), z))$ ist nicht definiert.
+]
+
+#test[
+  Welche der folgenden Substitutionen sind wohldefiniert?
+  - $sigma = { x |-> 1 }$
+  - $sigma = { x |-> x }$
+  - $sigma = { f(x) |-> f(y) }$
+  - $sigma = { x |-> y, y |-> x }$
+]
+
+#test[
+  Wende die Substitution $sigma = { x |-> 1, y |-> f(x) }$ auf den Term
+  $g(x, h(y))$ an, ohne einen Zwischenschritt auszulassen.
+]
+
+#test[
+  Was ist ein Unifikator? Was ist ein allgemeinster Unifikator?
+]
+
+#test[
+  Was sind die Ergebnisse der folgenden Kompositionen von Substitutionen?
+  - ${ Y |-> X } compose { Z |-> 1 }$
+  - ${ Y |-> X } compose { Z |-> Y }$
+  - ${ Z |-> Y } compose { Y |-> X }$
+]
+
+#test[
+  Warum gilt ${ Y |-> X } compose { Z |-> Y } = { Z |-> Y } compose { Y |-> X }$
+  nicht?
+]
+
+#test[
+  Warum ist ${ Y |-> X } compose { Y |-> 2 } = { Y |-> 2 }$?
+]
+
+#test[
+  Warum ist die Komposition von Substitutionen im Allgemeinen nicht die
+  Vereinigung der jeweiligen Mengendarstellungen?
+]
+
+#test[
+  Wann existiert ein allgemeinster Unifikator?
+]
+
+#test[
+  Was ist die Unstimmigkeitsmenge zweier Terme, was gibt sie an und wie ist sie
+  definiert?
+]
+
+#test[
+  Seien $x, y$ Variablen.
+  Welche Unstimmigkeitsmengen sind korrekt berechnet?
+  - $"ds"(f(x), f(1)) = {x, 1}$
+  - $"ds"(1, 2) = {1, 2}$
+  - $"ds"(g(1, 2), h(1, 2)) = emptyset$
+  - $"ds"(x, y) = emptyset$
+  - $"ds"(f(x, y), f(1, 2)) = {y, 2}$
+]
+
+#test[
+  Unter welchen Umständen terminiert der Unifikationsalgorithmus?
+]
+
+#test[
+  Aus welcher Eigenschaft des Unifikationsalgorithmus folgt, dass ein
+  berechneter Unifikator ein allgemeinster Unifikator ist?
+]
+
+#test[
+  Wenn $"ds"(sigma(t_1), sigma(t_2)) = emptyset$ gilt, was können wir über
+  $sigma$ folgern?
+]
+
+#test[
+  Welche Arten von Fehlschlägen können während des Unifikationsalgorithmus
+  auftreten? Unter welchen Umständen treten diese auf?
+]
+
+#test[
+  In welches Problem laufen wir, wenn wir mit einer Substitution, die sich
+  aus $"ds"(t_1, t_2) = {x, f(x)}$ ($x$ sei Variable) ergibt, naiv weiter
+  rechnen würden?
+]
+
+#test[
+  Was bedeutet es, wenn der Vorkommenstest (occurs check) positiv ist?
+]
+
+#test[
+  Gebe ein Beispiel für eine Eingabe an, für das der Unifikationsalgorithmus
+  exponentielle Laufzeit bzgl. der Größe der Eingabeterme hat.
+
+  Die Größe eines Terms $abs(dot)$ wir z.B. wie folgt berechnen:
+  - $abs(x) = 1$, falls $x$ Variable ist,
+  - $abs(a) = 1$, falls $a$ Konstante ist und
+  - $abs(f(t_1, ..., t_n)) = 1 + sum_(i=1)^n abs(t_i)$ für Terme
+    $t_1, ..., t_n$ und $n$-stelligen Funktor $f$.
+]
+
+#test[
+  Wieso kommt der Fall der exponentiellen Laufzeit in der Größe der Eingabeterme
+  überhaupt zustande?
+]
+
+#test[
+  Aus welchen Komponenten setzt sich das allgemeine Resolutionsprinzip zusammen?
+  Wie wird es auch genannt?
+]
+
+#test[
+  Was legt die Selektionsfunktion der SLD-Resolution fest? Welche verwendet Prolog?
+]
+
+#test[
+  Gegeben sei die Anfrage $"?-" A_1, ..., A_m$. Du stellst fest, dass $A_1$
+  mit der linken Seite der Regel $L ":-" L_1, ..., L_n$ unifizierbar ist. Welche
+  Anfrage ist in einem SLD-Resolutionsschritt daraus ableitbar.
+]
+
+#test[
+  Wieso benennen wir Variablen einer Regel um, bevor wir eine Unifikation als
+  Teil eines SLD-Resolutionsschritt durchführen?
+]
+
+#test[
+  Wodurch ergibt sich die Struktur eines SLD-Baums?
+]
+
+#test[
+  Welche Auswertungsstrategie findet immer eine Lösung, falls eine existiert?
+]
+
+#test[
+  Warum wird die Tiefensuche als Auswertungsstrategie der Breitensuche bevorzugt?
+]
+
+#test[
+  Wie ergibt sich die Reihenfolge der Kindknoten eines Knoten in einem SLD-Baum?
+]
+
+#test[
+  Welche Rolle spielt Backtracking in Prolog?
+]
+
+#test[
+  Wie werden Variablen in Prolog gebunden?
+]
+
+#test[
+  Wieso wird empfohlen, dass Klauseln für Spezialfälle vor allgemeineren
+  Klauseln stehen sollten?
+]
+
+
+// Negation
+
+#test[
+  Was verbirgt sich hinter dem Begriff "Negation als Fehlschlag"?
+]
+
+#test[
+  Wann ist ```SWI-Prolog \+ p``` beweisbar?
+]
+
+#test[
+  Wieso stimmt die Negation als Fehlschlag nicht mit der prädikatenlogischen
+  Negation überein?
+]
+
+#test[
+  Warum sollte ```SWI-Prolog p``` keine freien Variablen enthalten, wenn wir
+  ```SWI-Prolog \+ p``` beweisen wollen? Wieso ergibt sich daraus die
+  Empfehlung, dass Negationen soweit wie möglich rechts in einer Regel stehen
+  sollten?
+]
+
+
 #pagebreak(weak: true)
 
 
