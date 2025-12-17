@@ -3631,6 +3631,86 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
 // all_major(R, Cs, [_|S]) :- all_major(R, Cs, S).
 // ```
 
+
+// TODO Peano-Zahlen Wiederholung
+
+#test[
+  Entwickle ein Prädikat ```SWI-Prolog nth/3```, dass das $n$-te Element
+  einer Liste zurückgibt. Zum Beispiel soll folgende Anfrage beweisbar sein.
+  ```SWI-Prolog
+  ?- nth([3, 1, 4, 1, 5], s(s(o)), X).
+  X = 4.
+  ```
+]
+
+#challenge[
+  Das Erfüllbarkeitsproblem der Aussagenlogik fragt, ob es für eine gegebene
+  aussagenlogische Formel eine Belegung der Variablen mit wahr oder falsch
+  gibt, sodass die Formel insgesamt wahr ist.
+
+  Zur Erinnerung, die Syntax aussagenlogischer Formeln ist wie folgt
+  beschrieben:
+  - $top$ (true), $bot$ (false) und Variablen sind aussagenlogische Formeln.
+  - Seien $F, G$ aussagenlogische Formeln, dann sind
+    - $not F$ (Negation),
+    - $F and G$ (Konjunktion) und
+    - $F or G$ (Disjunktion)
+    aussagenlogische Formeln.
+  Die Semantik der atomaren Formeln und der Junktoren wird durch die
+  entsprechenden booleschen Funktionen und eine Belegung der Variablen
+  definiert.
+
+  - Implementiere ein Prädikat ```SWI-Prolog get_vars/2```, das alle
+    (freien) Variablen einer gegebenen Formel zurückgibt.
+  - Implementiere ein Prädikat ```SWI-Prolog eval/1```, das beweisbar ist,
+    wenn die gegebene Formel erfüllbar ist.
+  - Implementiere ein Prädikat ```SWI-Prolog all_bools/1```, das alle
+    Domänen der Variablen festlegt.
+  - Implementiere ein Prädikat ```SWI-Prolog sat/1```, das alle belegten
+    Formeln berechnet.
+
+  Die Anfragen sollen wie folgt bewiesen werden.
+  ```SWI-Prolog
+  ?- sat(or(X, neg(X))).
+  X = true ;
+  false.
+
+  ?- sat(and(X, or(neg(Y), neg(Z)))).
+  X = Y, Y = true,
+  Z = false ;
+  X = Z, Z = true,
+  Y = false ;
+  X = true,
+  Y = Z, Z = false ;
+  false.
+
+  ?- sat(and(X, neg(X))).
+  false.
+  ```
+]
+
+// ```SWI-Prolog
+// bool(true).
+// bool(false).
+//
+// eval(true).
+// eval(neg(X)) :- \+ eval(X).
+// eval(and(X, Y)) :- eval(X), eval(Y).
+// eval(or(X, Y)) :- eval(X), \+ eval(Y).
+// eval(or(X, Y)) :- \+ eval(X), eval(Y).
+// eval(or(X, Y)) :- eval(X), eval(Y).
+//
+// get_vars(X, [X]) :- var(X), !.
+// get_vars(neg(X), Vs) :- get_vars(X, Vs).
+// get_vars(and(X, Y), Vs) :- get_vars(X, Vs1), get_vars(Y, Vs2), append(Vs1, Vs2, Vs).
+// get_vars(or(X, Y), Vs) :- get_vars(X, Vs1), get_vars(Y, Vs2), append(Vs1, Vs2, Vs).
+//
+// all_bools(Vs) :- maplist(bool, Vs).
+//
+// sat(F) :- get_vars(F, Vs), all_bools(Vs), eval(F).
+// ```
+
+
 #pagebreak(weak: true)
 
 
