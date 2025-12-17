@@ -3660,54 +3660,81 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
   entsprechenden booleschen Funktionen und eine Belegung der Variablen
   definiert.
 
+  - Implementiere zuerst ```SWI-Prolog bool/1```, das den Wertebereich
+    festlegen soll, und die booleschen Funktionen ```SWI-Prolog and/3, or/3, neg/2```.
   - Implementiere ein Prädikat ```SWI-Prolog get_vars/2```, das alle
-    (freien) Variablen einer gegebenen Formel zurückgibt.
-  - Implementiere ein Prädikat ```SWI-Prolog eval/1```, das beweisbar ist,
-    wenn die gegebene Formel erfüllbar ist.
-  - Implementiere ein Prädikat ```SWI-Prolog all_bools/1```, das alle
-    Domänen der Variablen festlegt.
-  - Implementiere ein Prädikat ```SWI-Prolog sat/1```, das alle belegten
-    Formeln berechnet.
+    Bezeichner von (freien) Variablen einer gegebenen Formel zurückgibt. Eine
+    Variable soll in einer Formel als Term ```SWI-Prolog var(X)```
+    gekennzeichnet werden. ```SWI-Prolog X``` ist dann der Bezeichner der
+    Variable. Stelle dabei sicher, dass die Liste der Bezeichner keine
+    Duplikate enthält -- dafür kannst du z.B. ```SWI-Prolog list_to_set/2```
+    verwenden.
+  - Implementiere als Nächstes ein Prädikat ```SWI-Prolog assignment/2```,
+    das alle Belegungen generiert. Eine Zuweisung soll als Liste von Tupeln
+    dargestellt werden (vgl. Beispielanfragen).
+  - Implementiere ein Prädikat ```SWI-Prolog eval/3```, das beweisbar ist,
+    wenn die gegebene Formel erfüllbar unter der gegegeben Belegung ist.
+    Hier sind ein paar Beispielanfragen:
+    ```SWI-Prolog
+    ?- eval(and(true, var(x)), [(x, true)], false).
+    false.
 
-  Die Anfragen sollen wie folgt bewiesen werden.
-  ```SWI-Prolog
-  ?- sat(or(X, neg(X))).
-  X = true ;
-  false.
+    ?- eval(and(true, var(x)), [(x, B)], false).
+    B = false.
+    ```
+  - Implementiere ein Prädikat ```SWI-Prolog sat/2```, das alle belegten
+    Formeln berechnet. Hier sind ein paar weitere Beispielanfragen:
+    ```SWI-Prolog
+    ?- sat(or(var(x), neg(var(x))), A).
+    A = [(x, true)] ;
+    A = [(x, false)] ;
+    false.
 
-  ?- sat(and(X, or(neg(Y), neg(Z)))).
-  X = Y, Y = true,
-  Z = false ;
-  X = Z, Z = true,
-  Y = false ;
-  X = true,
-  Y = Z, Z = false ;
-  false.
+    ?- sat(and(var(x), or(neg(var(y)), neg(var(z)))), A).
+    A = [(x, true), (y, true), (z, false)] ;
+    A = [(x, true), (y, false), (z, true)] ;
+    A = [(x, true), (y, false), (z, false)] ;
+    false.
 
-  ?- sat(and(X, neg(X))).
-  false.
-  ```
+    ?- sat(and(var(x), neg(var(x))), A).
+    false.
+    ```
 ]
 
 // ```SWI-Prolog
 // bool(true).
 // bool(false).
 //
-// eval(true).
-// eval(neg(X)) :- \+ eval(X).
-// eval(and(X, Y)) :- eval(X), eval(Y).
-// eval(or(X, Y)) :- eval(X), \+ eval(Y).
-// eval(or(X, Y)) :- \+ eval(X), eval(Y).
-// eval(or(X, Y)) :- eval(X), eval(Y).
+// and(true, true, true).
+// and(true, false, false).
+// and(false, true, false).
+// and(false, false, false).
 //
-// get_vars(X, [X]) :- var(X), !.
-// get_vars(neg(X), Vs) :- get_vars(X, Vs).
-// get_vars(and(X, Y), Vs) :- get_vars(X, Vs1), get_vars(Y, Vs2), append(Vs1, Vs2, Vs).
-// get_vars(or(X, Y), Vs) :- get_vars(X, Vs1), get_vars(Y, Vs2), append(Vs1, Vs2, Vs).
+// or(true, true, true).
+// or(true, false, true).
+// or(false, true, true).
+// or(false, false, false).
 //
-// all_bools(Vs) :- maplist(bool, Vs).
+// neg(true, false).
+// neg(false, true).
 //
-// sat(F) :- get_vars(F, Vs), all_bools(Vs), eval(F).
+// eval(B, _, B) :- bool(B).
+// eval(var(X), A, B) :- member((X, B), A).
+// eval(neg(X), A, B) :- eval(X, A, B1), neg(B1, B).
+// eval(and(X, Y), A, B) :- eval(X, A, B1), eval(Y, A, B2), and(B1, B2, B).
+// eval(or(X, Y), A, B) :- eval(X, A, B1), eval(Y, A, B2), or(B1, B2, B).
+//
+// get_vars_dups(var(X), [X]).
+// get_vars_dups(neg(X), Vs) :- get_vars(X, Vs).
+// get_vars_dups(and(X, Y), Vs) :- get_vars(X, Vs1), get_vars(Y, Vs2), append(Vs1, Vs2, Vs).
+// get_vars_dups(or(X, Y), Vs) :- get_vars(X, Vs1), get_vars(Y, Vs2), append(Vs1, Vs2, Vs).
+//
+// get_vars(F, Vs) :- get_vars_dups(F, Ws), list_to_set(Ws, Vs).
+//
+// assignment([], []).
+// assignment([V|Vs], [(V, B)|VBs]) :- bool(B), assignment(Vs, VBs).
+//
+// sat(F, A) :- get_vars(F, Vs), assignment(Vs, A), eval(F, A, true).
 // ```
 
 
