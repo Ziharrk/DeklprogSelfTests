@@ -3669,7 +3669,7 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
     Variable. Stelle dabei sicher, dass die Liste der Bezeichner keine
     Duplikate enthält -- dafür kannst du z.B. ```SWI-Prolog list_to_set/2```
     verwenden.
-  - Implementiere als Nächstes ein Prädikat ```SWI-Prolog assignment/2```,
+  - Implementiere als Nächstes ein Prädikat ```SWI-Prolog asgnmt/2```,
     das alle Belegungen generiert. Eine Zuweisung soll als Liste von Tupeln
     dargestellt werden (vgl. Beispielanfragen).
   - Implementiere ein Prädikat ```SWI-Prolog eval/3```, das beweisbar ist,
@@ -3731,10 +3731,10 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
 //
 // get_vars(F, Vs) :- get_vars_dups(F, Ws), list_to_set(Ws, Vs).
 //
-// assignment([], []).
-// assignment([V|Vs], [(V, B)|VBs]) :- bool(B), assignment(Vs, VBs).
+// asgnmt([], []).
+// asgnmt([V|Vs], [(V, B)|VBs]) :- bool(B), asgnmt(Vs, VBs).
 //
-// sat(F, A) :- get_vars(F, Vs), assignment(Vs, A), eval(F, A, true).
+// sat(F, A) :- get_vars(F, Vs), asgnmt(Vs, A), eval(F, A, true).
 // ```
 
 #test[
