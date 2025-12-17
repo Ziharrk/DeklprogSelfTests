@@ -3631,9 +3631,6 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
 // all_major(R, Cs, [_|S]) :- all_major(R, Cs, S).
 // ```
 
-
-// TODO Peano-Zahlen Wiederholung
-
 #test[
   Entwickle ein Prädikat ```SWI-Prolog nth/3```, dass das $n$-te Element
   einer Liste zurückgibt. Zum Beispiel soll folgende Anfrage beweisbar sein.
@@ -3757,6 +3754,35 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
 // desugar(impl(A, B), or(neg(C1), C2)) :- desugar(A, C1), desugar(B, C2).
 // desugar(iff(A, B), C) :- desugar(and(impl(A, B), impl(B, A)), C).
 // ```
+
+#challenge[
+  Oft lassen sich in Prolog Algorithmen für Entscheidungsprobleme, die in NP
+  liegen, gut implementieren. Als Methode dafür hast du generate-and-test
+  kennengelernt. Wir generieren mögliche (also korrekte oder falsche) Lösungen
+  und entscheiden dann, ob sie korrekt sind.
+
+  Ein Hamiltonkreis ist ein Kreis in einem Graph, der jeden Knoten genau einmal
+  enthält. Das Problem der Bestimmung eines solchen Kreises liegt in NP. Wir
+  wollen diese mithilfe der generate-and-test Methode nun bestimmen. Dabei
+  arbeiten wir uns von einem naiven Generator zu einem, der versucht nach und
+  nach den Suchraum durch vorhandene Informationen zu verkleinern -- das nennt
+  man im Englischen pruning. Bevor wir dies tun, implementieren zuerst einen
+  polynomiellen Verifizierer.
+
+  - Implementiere ein Prädikat ```SWI-Prolog is_hamilton/2```, das bestimmt, ob
+    ein gegebener Pfad einem Hamiltonpfad entspricht -- ein Hamiltonpfad
+    entspricht einem Hamiltonkreis bis auf die letzte kreisschließende Kante.
+  - Implementiere ein Prädikat ```SWI-Prolog path/2``` und verbessere sukzessiv
+    mit den folgenden Ideen:
+    - Ein Pfad kann besteht aus einer beliebigen Folge von Knoten. Das heißt,
+      der Suchraum entspricht zu Beginn $V^abs(V)$ für einen Graphen $(V, E)$.
+    - Jede zwei Knoten auf diesem Pfad müssen paarweise unterschiedlich sein.
+    - Jede zwei aufeinanderfolgenden Knoten entsprechen einer Kante in dem
+      Eingabegraphen -- erst in diesem Schritt haben wir einen wohldefinierten
+      Pfad.
+  - Implementiere zuletzt das Prädikat ```SWI-Prolog hamilton/2```, das
+    Hamiltonpfade bzw. -kreise berechnet.
+]
 
 
 // Rechnen in der Logikprogrammierung
@@ -3990,6 +4016,31 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
   sollten?
 ]
 
+
+// Der "Cut"-Operator
+
+#test[
+  Wofür verwenden wir den Cut-Operator konzeptionell?
+]
+
+#test[
+  Wann ist ```SWI-Prolog p``` in ```SWI-Prolog p :- q, !, r.``` beweisbar?
+  Was ist insbesondere der Fall, wenn ```SWI-Prolog q``` beweisbar ist?
+]
+
+#test[
+  Wir ergibt sich aus der Semantik des Cut-Operators ein
+  Fallunterscheidung-Konstrukt?
+]
+
+#test[
+  Wie können wir mithilfe des Cut-Operators die Negation als Fehlschlag
+  implementieren?
+]
+
+#test[
+  Wie wirkt sich der Cut-Operator auf die Struktur eines SLD-Baums aus?
+]
 
 #pagebreak(weak: true)
 
