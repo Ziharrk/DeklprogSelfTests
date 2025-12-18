@@ -3795,6 +3795,50 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
 
   Es lohnt sich, @combinatorics vor dieser Challenge gemacht zu haben.
 
+  Im folgenden Graph gibt es zwei Hamiltonkreise.
+  #grid(
+    columns: (1fr, 1fr),
+    gutter: 1em,
+    align(center + horizon)[
+      #diagraph.raw-render(
+        ```dot
+        digraph {
+          node[shape=circle];
+          1 -> 2 -> 3 -> 5 -> 4 -> 1 [color=red];
+          3 -> 4 -> 5;
+          5 -> 1;
+        }
+        ```,
+        engine: "circo"
+      )
+    ],
+    align(center + horizon)[
+      #diagraph.raw-render(
+        ```dot
+        digraph {
+          node[shape=circle];
+          1 -> 2 [color=red];
+          2 -> 3 [color=red];
+          3 -> 5;
+          5 -> 4;
+          4 -> 1;
+          3 -> 4 [color=red];
+          4 -> 5 [color=red];
+          5 -> 1 [color=red];
+        }
+        ```,
+        engine: "circo"
+      )
+    ],
+    align(center + horizon, text(0.8em)[
+      Hamiltonkreis 1
+    ]),
+    align(center + horizon, text(0.8em)[
+      Hamiltonkreis 2
+    ])
+  )
+
+
   - Implementiere ein Prädikat ```SWI-Prolog is_hamilton/2```, das bestimmt, ob
     ein gegebener Pfad in einem gegebenen Graphen einem Hamiltonpfad entspricht
     -- ein Hamiltonpfad entspricht einem Hamiltonkreis bis auf die letzte
