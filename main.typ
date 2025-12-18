@@ -3640,6 +3640,14 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
   ```
 ]
 
+
+// Elementare Programmiertechniken
+
+#test[
+  Aus welchen Teilen besteht das generate-and-test Schema?
+]
+
+
 #challenge[
   Das Erfüllbarkeitsproblem der Aussagenlogik fragt, ob es für eine gegebene
   aussagenlogische Formel eine Belegung der Variablen mit wahr oder falsch
