@@ -3349,7 +3349,8 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
 = Logische Programmierung
 
 #test[
-  Was ist Berechnungsprinzip von Prolog?
+  Was ist das Berechnungsprinzip von Prolog bzw. wie leitet Prolog aus
+  gegebenen Informationen ab?
 ]
 
 #test[
@@ -3366,8 +3367,8 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
 #test[
   $n$-stellige Funktionen können wir in Prolog als $(n+1)$-stellige Relation
   umsetzen. Dabei nimmt die letzte Position der Relation die Rolle des
-  Ergebnisses ein. Gehen wir mit Funktionen ```hs a1 -> ... an -> Bool```
-  besonders um?
+  Ergebnisses ein. Gehen wir mit Funktionen vom Typ
+  ```hs a1 -> ... an -> Bool``` besonders um?
 ]
 
 #test[
@@ -3376,7 +3377,7 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
 ]
 
 #test[
-  In Prolog können wir ebenso Termstrukturen erzeugen. Der Haskell-Typ
+  In Prolog können wir Termstrukturen erzeugen. Der Haskell-Typ
   #align(center)[```hs data Maybe a = Nothing | Just a```]
   kann z.B. wie folgt in Prolog umgesetzt werden.
   ```SWI-Prolog
@@ -3426,9 +3427,9 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
 
 #test[
   Implementiere das Prädikat ```SWI-Prolog zip/3```, dass zwei Liste bekommt
-  und eine Liste von Paaren zuliefert -- so wie du es aus Haskell kennst.
+  und eine Liste von Paaren zurückliefert -- so wie du es aus Haskell kennst.
   Es soll
-  #align(center)[```SWI-Prolog zip([1, 2], [3, 4, 5], [(1, 3), (2, 4)]).```]
+  #align(center)[```SWI-Prolog ?- zip([1, 2], [3, 4, 5], [(1, 3), (2, 4)]).```]
   gelten.
   Wie gewinnst du aus deiner Implementierung das Prädikat ```SWI-Prolog unzip/3```,
   also die Umkehrfunktion ```SWI-Prolog zip/3```, wenn diese auf Listen gleicher
@@ -3468,7 +3469,7 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
   Warum ist ```SWI-Prolog not_member(X, Xs) :- append(_, [Y|_], Xs), X \= Y.```
   keine korrekte Implementierung des Prädikates, das testet, ob ein Element
   nicht einer Liste enthalten ist?
-]
+] <not_member>
 
 #test[
   In diesem Selbsttest wollen wir die Peano-Arithmetik wiederholen.
@@ -4044,6 +4045,28 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
   ```SWI-Prolog \+ p``` beweisen wollen? Wieso ergibt sich daraus die
   Empfehlung, dass Negationen soweit wie möglich rechts in einer Regel stehen
   sollten?
+]
+
+#test[
+  Wie sind die Variablen ```SWI-Prolog X, Y``` in der folgenden Regel
+  quantifiziert?
+  ```SWI-Prolog
+  p(X) :- q(X, Y).
+  ```
+]
+
+#test[
+  Nutze $forall x : p <=> not (exists x : not p)$, um ein Prädikat
+  ```SWI-Prolog forall/2``` zu definieren.
+
+  Mithilfe dieses Prädikates soll es möglich sein, folgende Anfrage auszudrücken.
+  ```SWI-Prolog
+  ?- forall(member(X, [1, 2, 3]), X > 0).
+  ```
+  Die Anfrage bedeutet, für alle $x in {1, 2, 3}$ gilt $x > 0$.
+
+  Wie können wir mit ```SWI-Prolog forall``` die Definition von
+  ```SWI-Prolog not_member``` aus @not_member reparieren?
 ]
 
 
