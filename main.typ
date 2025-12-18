@@ -3755,6 +3755,17 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
 // desugar(iff(A, B), C) :- desugar(and(impl(A, B), impl(B, A)), C).
 // ```
 
+#test[
+  Wir machen uns auf in die Kombinatorik und wollen ein paar nützliche Prädikate
+  definieren, die uns helfen Suchräume zu durchlaufen.
+  - Implementiere ein Prädikat ```SWI-Prolog varia_rep/3```, das genau dann
+    beweisbar ist, wenn eine über gegebene Liste eine Variation einer anderen
+    ist und aus $k$ Elementen besteht -- es soll z.B.
+    ```SWI-Prolog ?- varia_rep([0, 1], 4, [1, 0, 0, 1]).``` beweisbar sein.
+  - Implementiere ein Prädikat ```SWI-Prolog perms/2```, dass genau dann
+    beweisbar ist, wenn zwei übergebene Listen Permutationen voneinander sind.
+] <combinatorics>
+
 #challenge[
   Oft lassen sich in Prolog Algorithmen für Entscheidungsprobleme, die in NP
   liegen, gut implementieren. Als Methode dafür hast du generate-and-test
@@ -3769,19 +3780,26 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
   man im Englischen pruning. Bevor wir dies tun, implementieren zuerst einen
   polynomiellen Verifizierer.
 
+  Es lohnt sich, @combinatorics vor dieser Challenge gemacht zu haben.
+
   - Implementiere ein Prädikat ```SWI-Prolog is_hamilton/2```, das bestimmt, ob
-    ein gegebener Pfad einem Hamiltonpfad entspricht -- ein Hamiltonpfad
-    entspricht einem Hamiltonkreis bis auf die letzte kreisschließende Kante.
+    ein gegebener Pfad in einem gegebenen Graphen einem Hamiltonpfad entspricht
+    -- ein Hamiltonpfad entspricht einem Hamiltonkreis bis auf die letzte
+    kreisschließende Kante. Der Graph soll hier als Liste von Tupeln dargestellt
+    werden. Dabei ist ein Tupel $(u, v)$, als eine gerichtete Kante von $u$
+    nach $v$ zu interpretieren.
   - Implementiere ein Prädikat ```SWI-Prolog path/2``` und verbessere sukzessiv
     mit den folgenden Ideen:
-    - Ein Pfad kann besteht aus einer beliebigen Folge von Knoten. Das heißt,
+    - Prüfe jede beliebige Knotenfolge bestehend aus $abs(V)$ Knoten. Das heißt,
       der Suchraum entspricht zu Beginn $V^abs(V)$ für einen Graphen $(V, E)$.
-    - Jede zwei Knoten auf diesem Pfad müssen paarweise unterschiedlich sein.
+    - Jede zwei Knoten dieser Folge müssen paarweise unterschiedlich sein.
     - Jede zwei aufeinanderfolgenden Knoten entsprechen einer Kante in dem
-      Eingabegraphen -- erst in diesem Schritt haben wir einen wohldefinierten
-      Pfad.
+      Eingabegraphen. Die Knotenfolge ist also ein Pfad.
   - Implementiere zuletzt das Prädikat ```SWI-Prolog hamilton/2```, das
     Hamiltonpfade bzw. -kreise berechnet.
+
+  Beobachte experimentell, wie sich die Laufzeit durch die einzelnen
+  Pruning-Schritte verändert.
 ]
 
 
