@@ -3647,6 +3647,10 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
   Aus welchen Teilen besteht das generate-and-test Schema?
 ]
 
+#test[
+  Wie hängen musterorientierte Prädikate und induktiv definierte Funktionen
+  miteinander zusammen?
+]
 
 #challenge[
   Das Erfüllbarkeitsproblem der Aussagenlogik fragt, ob es für eine gegebene
