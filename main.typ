@@ -3448,6 +3448,10 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
   - ```SWI-Prolog dups/2``` soll alle Elemente in einer Liste finden, die
     genau zweimal vorkommen. Du darfst ```SWI-Prolog not_member/2``` als
     Hilfsfunktion verwenden.
+  - ```SWI-Prolog sublist/2``` soll erfüllbar sein, wenn eine Liste in einer
+    anderen ohne Lücken enthalten ist.
+  - ```SWI-Prolog subsequence/2``` soll erfüllbar sein, wenn eine Liste in einer
+    anderen mit möglichen Lücken enthalten ist.
 
   Warum ist ```SWI-Prolog member/2``` hier zweistellig?
 ]
@@ -3464,6 +3468,20 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
 //   not_member(X, Ys3),
 //   not_member(X, Ys4).
 // ```
+
+#test[
+  Das Prädikat ```SWI-Prolog sublist/2``` soll genau dann erfüllbar sein, wenn
+  eine gegebene Liste in einer anderen gegebenen Liste enthalten ist. Eine
+  mögliche Implementierung sieht wie folgt aus:
+  ```SWI-Prolog
+  is_prefix([], _).
+  is_prefix([X|Xs], [X|Ys]) :- is_prefix(Xs, Ys).
+
+  sublist(Xs, Ys) :- is_prefix(Xs, Ys).
+  sublist(Xs, [_|Ys]) :- sublist(Xs, Ys).
+  ```
+  Was sind die Ergebnisse der Anfrage ```SWI-Prolog ?- sublist(Xs, [1, 2]).```?
+]
 
 #test[
   Warum ist ```SWI-Prolog not_member(X, Xs) :- append(_, [Y|_], Xs), X \= Y.```
