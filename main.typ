@@ -3780,20 +3780,16 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
 ] <combinatorics>
 
 #challenge[
-  Oft lassen sich in Prolog Algorithmen für Entscheidungsprobleme, die in NP
-  liegen, gut implementieren. Als Methode dafür hast du generate-and-test
-  kennengelernt. Wir generieren mögliche (also korrekte oder falsche) Lösungen
+  Oft eignet sich in Prolog gut, um Algorithmen für Entscheidungsprobleme, die
+  in NP liegen, zu implementieren. Als Methode dafür hast du generate-and-test
+  kennengelernt -- wir generieren mögliche (also korrekte oder falsche) Lösungen
   und entscheiden dann, ob sie korrekt sind.
 
   Ein Hamiltonkreis ist ein Kreis in einem Graph, der jeden Knoten genau einmal
-  enthält. Das Problem der Bestimmung eines solchen Kreises liegt in NP. Wir
-  wollen diese mithilfe der generate-and-test Methode nun bestimmen. Dabei
-  arbeiten wir uns von einem naiven Generator zu einem, der versucht nach und
-  nach den Suchraum durch vorhandene Informationen zu verkleinern -- das nennt
-  man im Englischen pruning. Bevor wir dies tun, implementieren zuerst einen
-  polynomiellen Verifizierer.
-
-  Es lohnt sich, @combinatorics vor dieser Challenge gemacht zu haben.
+  enthält. Wir wollen diese als Listen darstellen. Durch Rotation dieser Liste
+  erhalten wir äquivalente Hamiltonkreise. Diese wollen wir ignorieren und
+  wählen stattdessen einen kanonischen Repräsentanten, indem wir uns auf die
+  Liste beschränken, die mit dem kleinsten Knoten beginnt.
 
   Im folgenden Graph gibt es zwei Hamiltonkreise.
   #grid(
@@ -3831,20 +3827,30 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
       )
     ],
     align(center + horizon, text(0.8em)[
-      Hamiltonkreis 1
+      Hamiltonkreis 1: $(1, 2, 3, 5, 4)$
     ]),
     align(center + horizon, text(0.8em)[
-      Hamiltonkreis 2
+      Hamiltonkreis 2: $(1, 2, 3, 4, 5)$
     ])
   )
 
+  Um Hamiltonkreise zu bestimmen, arbeiten wir uns von einem naiven
+  Pfad-Generator zu einem, der versucht nach und nach den Suchraum durch
+  vorhandene Informationen zu verkleinern (auch pruning genannt). Danach
+  verifizieren wir, ob ein gegebener Pfad ein Hamiltonkreis ist. Graphen
+  kannst du z.B. als Liste von Kanten darstellen.
+  #align(center)[
+    ```SWI-Prolog
+    graph([(1, 2), (2, 3), (3, 4), (3, 5), (4, 5), (4, 1), (5, 1), (5, 4)]).
+    ```
+  ]
 
-  - Implementiere ein Prädikat ```SWI-Prolog is_hamilton/2```, das bestimmt, ob
-    ein gegebener Pfad in einem gegebenen Graphen einem Hamiltonpfad entspricht
-    -- ein Hamiltonpfad entspricht einem Hamiltonkreis bis auf die letzte
-    kreisschließende Kante. Der Graph soll hier als Liste von Tupeln dargestellt
-    werden. Dabei ist ein Tupel $(u, v)$, als eine gerichtete Kante von $u$
-    nach $v$ zu interpretieren.
+  Es lohnt sich, @combinatorics vor dieser Challenge gemacht zu haben, wenn du
+  mit den naiveren Pfad-Generatoren starten möchtest.
+
+  - Implementiere zuerst einen (polynomiellen) Verifizierer, also ein Prädikat
+    ```SWI-Prolog is_hamilton/2```, das bestimmt, ob ein gegebener Pfad in einem
+    gegebenen Graphen einem Hamiltonkreis entspricht.
   - Implementiere ein Prädikat ```SWI-Prolog path/2``` und verbessere sukzessiv
     mit den folgenden Ideen:
     - Prüfe jede beliebige Knotenfolge bestehend aus $abs(V)$ Knoten. Das heißt,
@@ -3858,6 +3864,34 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
   Beobachte experimentell, wie sich die Laufzeit durch die einzelnen
   Pruning-Schritte verändert.
 ]
+
+// ```SWI-Prolog
+// graph([(1, 2), (2, 3), (3, 4), (3, 5), (4, 5), (4, 1), (5, 1), (5, 4)]).
+//
+// edge(V, W, G) :- member((V, W), G).
+//
+// nodes(G, Vs) :- setof(X, A^B^(edge(A, B, G), (X = A; X = B)), Vs).
+//
+// path(G, P) :-
+//   nodes(G, Vs), min_list(Vs, V), length(Vs, N),
+//   path_from(G, V, N, [V], P).
+//
+// path_from(_, _, 1, A, P) :- reverse(A, P).
+// path_from(G, V, N, A, P) :-
+//   N > 1,
+//   edge(V, W, G),
+//   \+ member(W, A),
+//   M is N - 1,
+//   path_from(G, W, M, [W|A], P).
+//
+// is_hamiltonian(G, P) :-
+//   forall(append(_, [V, W|_], P), edge(V, W, G)),
+//   nodes(G, Vs), sort(Vs, Ws), sort(P, Ws).
+//
+// hamiltonian(G, P) :-
+//   path(G, P),
+//   is_hamiltonian(G, P).
+// ```
 
 
 // Rechnen in der Logikprogrammierung
@@ -4066,6 +4100,19 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
 #test[
   Wieso wird empfohlen, dass Klauseln für Spezialfälle vor allgemeineren
   Klauseln stehen sollten?
+]
+
+#test[
+  Gegeben sei das Prolog-Programm.
+  ```SWI-Prolog
+  fruit(apple).
+  fruit(banana).
+  fruit(cranberry).
+
+  salad(F1, F2, F3) :- fruit(F1), fruit(F2), fruit(F3).
+  ```
+  Was sind die ersten vier Lösungen, die Prolog berechnet? Warum verändern sich
+  die Belegungen für ```SWI-Prolog F2``` und ```SWI-Prolog F3``` zuerst?
 ]
 
 
