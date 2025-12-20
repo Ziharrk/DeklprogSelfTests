@@ -3992,6 +3992,9 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
 
 // Rechnen in der Logikprogrammierung
 
+Im Folgenden stehen Großbuchstaben für Variablen und Kleinbuchstaben für
+atomare Ausdrücke -- wenn nicht anders in Test oder Challenge eingeführt.
+
 #test[
   Was besagt die Abtrennungsregel (modus ponens)?
 ]
@@ -4015,14 +4018,12 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
 
 #test[
   Welche der folgenden Terme sind syntaktisch korrekt?
-  Seien $x, y, z$ Variablen. Alle anderen Buchstaben mögen Konstanten oder
-  Funktoren sein.
-  - $x$
+  - $X$
   - $a$
-  - $x x$
-  - $f(x,a)$
-  - $f(f(x))$
-  - $g(f(x)(y))$
+  - $X X$
+  - $f(X,a)$
+  - $f(f(X))$
+  - $g(f(X)(Y))$
 ]
 
 #test[
@@ -4040,24 +4041,24 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
 ]
 
 #test[
-  Sei $sigma = { x |-> 1, y |-> 2 }$ eine Substitution. Welche Anwendungen
+  Sei $sigma = { X |-> 1, Y |-> 2 }$ eine Substitution. Welche Anwendungen
   oder Aussagen sind korrekt?
-  - $sigma("add"(x, y)) = "add"(1, 2)$
-  - $sigma("eq"(x, x)) = "eq"(1, x)$
-  - $sigma(f(g(x, y), z))$ ist nicht definiert.
+  - $sigma("add"(X, Y)) = "add"(1, 2)$
+  - $sigma("eq"(X, X)) = "eq"(1, X)$
+  - $sigma(f(g(X, Y), Z))$ ist nicht definiert.
 ]
 
 #test[
   Welche der folgenden Substitutionen sind wohldefiniert?
-  - $sigma = { x |-> 1 }$
-  - $sigma = { x |-> x }$
-  - $sigma = { f(x) |-> f(y) }$
-  - $sigma = { x |-> y, y |-> x }$
+  - $sigma = { X |-> 1 }$
+  - $sigma = { X |-> X }$
+  - $sigma = { f(X) |-> f(Y) }$
+  - $sigma = { X |-> Y, Y |-> X }$
 ]
 
 #test[
-  Wende die Substitution $sigma = { x |-> 1, y |-> f(x) }$ auf den Term
-  $g(x, h(y))$ an, ohne einen Zwischenschritt auszulassen.
+  Wende die Substitution $sigma = { X |-> 1, Y |-> f(X) }$ auf den Term
+  $g(X, h(Y))$ an, ohne einen Zwischenschritt auszulassen.
 ]
 
 #test[
@@ -4095,13 +4096,72 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
 ]
 
 #test[
-  Seien $x, y$ Variablen.
   Welche Unstimmigkeitsmengen sind korrekt berechnet?
-  - $"ds"(f(x), f(1)) = {x, 1}$
+  - $"ds"(f(X), f(1)) = {X, 1}$
   - $"ds"(1, 2) = {1, 2}$
   - $"ds"(g(1, 2), h(1, 2)) = emptyset$
-  - $"ds"(x, y) = emptyset$
-  - $"ds"(f(x, y), f(1, 2)) = {y, 2}$
+  - $"ds"(X, Y) = emptyset$
+  - $"ds"(f(X, Y), f(1, 2)) = {Y, 2}$
+]
+
+#test[
+  Finde Unifikatoren für die folgende Terme:
+  - $(X + 1) dot Y + Z$ und $((3 + Z) + 1) dot Z + 3$, und
+  - #grid(
+      columns: (1fr, auto, 1fr),
+      align: center + horizon,
+      [
+        #diagraph.raw-render(
+          ```dot
+          digraph {
+            ranksep=0.25;
+            nodesep=0.15;
+            node [shape=plaintext];
+            edge [arrowsize=0.6];
+            1 -> 2;
+            1 -> 3;
+            3 -> 4;
+            3 -> 5;
+            5 -> 6;
+            5 -> 7;
+          }
+          ```,
+          labels: (
+            "1": ```hs (:)```,
+            "2": ```hs Nothing```,
+            "3": ```hs (:)```,
+            "4": ```hs Nothing```,
+            "5": ```hs Just . (,)```,
+            "6": ```hs 6```,
+            "7": ```hs 7```,
+          )
+        )
+      ],
+      [und],
+      [
+        #diagraph.raw-render(
+          ```dot
+          digraph {
+            ranksep=0.25;
+            nodesep=0.15;
+            node [shape=plaintext];
+            edge [arrowsize=0.6];
+            1 -> 2;
+            1 -> 3;
+            3 -> 4;
+            3 -> 5;
+          }
+          ```,
+          labels: (
+            "1": ```hs (:)```,
+            "2": $X$,
+            "3": ```hs (:)```,
+            "4": ```hs Nothing```,
+            "5": $Y$
+          )
+        )
+      ]
+    )
 ]
 
 #test[
@@ -4114,8 +4174,8 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
 ]
 
 #test[
-  Wenn $"ds"(sigma(t_1), sigma(t_2)) = emptyset$ gilt, was können wir über
-  $sigma$ folgern?
+  Seien $t_1, t_2$ Terme. Wenn $"ds"(sigma(t_1), sigma(t_2)) = emptyset$ gilt,
+  was können wir über $sigma$ folgern?
 ]
 
 #test[
@@ -4125,8 +4185,8 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
 
 #test[
   In welches Problem laufen wir, wenn wir mit einer Substitution, die sich
-  aus $"ds"(t_1, t_2) = {x, f(x)}$ ($x$ sei Variable) ergibt, naiv weiter
-  rechnen würden?
+  aus $"ds"(t_1, t_2) = {X, f(X)}$ ergibt, naiv weiter rechnen würden, wobei
+  $t_1$ und $t_2$ Terme sind?
 ]
 
 #test[
@@ -4138,7 +4198,7 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
   exponentielle Laufzeit bzgl. der Größe der Eingabeterme hat.
 
   Die Größe eines Terms $abs(dot)$ wir z.B. wie folgt berechnen:
-  - $abs(x) = 1$, falls $x$ Variable ist,
+  - $abs(X) = 1$, falls $X$ Variable ist,
   - $abs(a) = 1$, falls $a$ Konstante ist und
   - $abs(f(t_1, ..., t_n)) = 1 + sum_(i=1)^n abs(t_i)$ für Terme
     $t_1, ..., t_n$ und $n$-stelligen Funktor $f$.
