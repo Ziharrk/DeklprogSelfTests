@@ -3426,6 +3426,84 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
 // ```
 
 #test[
+  Warum ergibt es Sinn, beim Prolog-Programmieren in Relationen statt
+  Funktionen zu denken? Betrachte z.B. das Prädikat ```SWI-Prolog append/3```
+  gemeinsam mit den Anfragen
+  - ```SWI-Prolog ?- append(Xs, Ys, [1, 2, 3]).```,
+  - ```SWI-Prolog ?- append(Xs, [2, 3], Zs).```,
+  - ```SWI-Prolog ?- append([1, 2], Xs, Zs).``` und
+  - ```SWI-Prolog ?- append([1, 2], Ys, [1, 2, 3]).```.
+]
+
+#test[
+  Wenn wir Haskell um die Möglichkeit erweitern könnten, mehrere Regeln
+  auszuprobieren und mehrere Lösungen zu kombinieren, hätten wir trotz der
+  Abwesenheit logischer Variablen bereits viele Möglichkeiten der Modellierung,
+  wie wir sie in Prolog haben. Es stellt sich heraus, dass die Listenmonade
+  den Nichtdeterminismus schon sehr gut abbilden kann, und erlaubt damit einen
+  weiteren abstrakten Blick auf die Listenmonade - anstatt z.B. der Blick der
+  imperativen Programmierung als Verschachtelung von Schleifen.
+
+  Als kleines Beispiel wollen wir einen fairen Münzenwurf modellieren. Wir
+  kodieren die Ereignisse binär, wobei 0 für Kopf und 1 für Zahl stehen soll.
+  Weiter ist auch ein Beispiel angegeben für zwei unabhängige Münzenwürfe.
+  #grid(
+    columns: (1fr, 1fr),
+    [
+      In Prolog:
+      ```SWI-Prolog
+      coin(0).
+      coin(1).
+
+      coin2(X, Y) :-
+        coin(X),
+        coin(Y).
+      ```
+    ],
+    [
+      In Haskell:
+      ```SWI-Prolog
+      coin :: [Int]
+      coin = [0] ++ [1]
+
+      coin2 :: [(Int, Int)]
+      coin2 = do
+        x <- coin
+        y <- coin
+        return (x, y)
+      ```
+    ]
+  )
+
+  Bewaffnet mit diesen Ideen, modelliere einen fairen 6-seitigen Würfel.
+  Berechne alle Möglichkeiten, wie man drei Würfel werfen kann, um die
+  Augenzahl 11 zu erhalten.
+]
+
+// ```hs
+// dice :: [Int]
+// dice = [1..6]
+//
+// eleven :: [(Int, Int, Int)]
+// eleven = do
+//   x <- dice
+//   y <- dice
+//   z <- dice
+//   guard (x + y + z == 11)
+//   return (x, y, z)
+//
+// -- or
+// eleven :: [(Int, Int, Int)]
+// eleven = do
+//   x <- dice
+//   y <- dice
+//   z <- dice
+//   if x + y + z == 1
+//     then return (x, y, z)
+//     else []
+// ```
+
+#test[
   Implementiere das Prädikat ```SWI-Prolog zip/3```, dass zwei Liste bekommt
   und eine Liste von Paaren zurückliefert -- so wie du es aus Haskell kennst.
   Es soll
