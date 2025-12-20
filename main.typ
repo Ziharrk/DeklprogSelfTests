@@ -79,23 +79,6 @@
   numbering: "1"
 )
 
-#let stopHere = block(
-  fill: red.lighten(90%),
-  inset: 1em,
-  above: 2em,
-  below: 2em,
-  align(center)[
-    #text(weight: "bold", fill: red)[
-      Welcome weary traveler, you've come far. Why don't you stop here and get
-      some rest before you continue your journey.
-    ]
-
-    #text(0.8em, fill: red)[
-      (Mit den Inhalten der Vorlesung kannst du die Tests und Challenges aktuell
-      bis hier hin lösen.)
-    ]
-  ]
-)
 
 
 #text(0.8em)[
@@ -127,7 +110,6 @@ Wenn du Anmerkungen oder weitere Ideen für Inhalte für dieses Dokument hast,
 dann schreibe uns gerne über z.B. mattermost an -- oder
 #link("https://github.com/Ziharrk/DeklprogSelfTests/")[erstellt ein issue oder
 stellt eine PR auf GitHub].
-
 
 
 = Funktionale Programmierung
