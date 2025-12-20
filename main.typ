@@ -4133,6 +4133,27 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
   die Belegungen für ```SWI-Prolog F2``` und ```SWI-Prolog F3``` zuerst?
 ]
 
+#test[
+  Gegeben sei das Prolog-Programm:
+  ```SWI-Prolog
+  nth(0, [X|_], X).
+  nth(N, [_|Xs], X) :- N > 0, M is N - 1, nth(M, Xs, X).
+  ```
+
+  Wir beginnen, eine Lösungen zu berechnen, wie Prolog sie berechnen würde, für
+  die Anfrage ```SWI-Prolog ?- nth(1, [3, 1, 4, 1]).```.
+  ```SWI-Prolog
+  ?- nth(1, [3, 1, 4, 1]).
+  |- (2. Regel)
+  ?- 1 > 0, M is 1 - 1, nth(M, [1, 4, 1], X).
+  |- (2. Regel)
+  ?- 1 > 0, M is 1 - 1, M > 0, M is M - 1, nth(M, [4, 1], X).
+  |-
+  ...
+  ```
+  Was ist hier schief gelaufen?
+]
+
 
 // Negation
 
@@ -4203,6 +4224,97 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
 #test[
   Wie wirkt sich der Cut-Operator auf die Struktur eines SLD-Baums aus?
 ]
+
+
+// Logik-Puzzle
+
+Hier sind ein paar Logik-Puzzle, die zu deiner Belustigung dienen. Der
+Lerneffekt ist voraussichtlich sehr gering.
+
+#challenge[
+  Das #link("https://en.wikipedia.org/wiki/Zebra_Puzzle")[Zebra-Rätsel] ist ein
+  Logikpuzzle.
+
+  So wird es auf Wikipedia wiedergegeben:
+  #quote(block: true)[
+    + Es gibt fünf Häuser.
+    + Der Engländer wohnt im roten Haus.
+    + Der Spanier hat einen Hund.
+    + Kaffee wird im grünen Haus getrunken.
+    + Der Ukrainer trinkt Tee.
+    + Das grüne Haus ist direkt rechts vom weißen Haus.
+    + Der Raucher von Old-Gold-Zigaretten hält Schnecken als Haustiere.
+    + Die Zigaretten der Marke Kools werden im gelben Haus geraucht.
+    + Milch wird im mittleren Haus getrunken.
+    + Der Norweger wohnt im ersten Haus.
+    + Der Mann, der Chesterfield raucht, wohnt neben dem Mann mit dem Fuchs.
+    + Die Marke Kools wird geraucht im Haus neben dem Haus mit dem Pferd.
+    + Der Lucky-Strike-Raucher trinkt am liebsten Orangensaft.
+    + Der Japaner raucht Zigaretten der Marke Parliaments.
+    + Der Norweger wohnt neben dem blauen Haus.
+    Wer trinkt Wasser? Wem gehört das Zebra?
+  ]
+  Löse dieses Puzzle mithilfe von Prolog und übersetze dabei so wenig logische
+  Schlüsse, die du selbst in deinem Kopf machst, in deinem Programm.
+]
+
+#challenge[
+  Ein Logikpuzzle, das einst viral ging, ist bekannt als "Cheryl's Geburtstag".
+  Es ist das erste Puzzle aus dem paper
+  #link("https://arxiv.org/abs/1708.02654")[Cheryl's Birthday].
+  Löse dieses Puzzle mithilfe von Prolog und übersetze dabei so wenig logische
+  Schlüsse, die du selbst in deinem Kopf machst, in deinem Programm.
+]
+
+// ```SWI-Prolog
+// date(may, 15).
+// date(may, 16).
+// date(may, 19).
+// date(june, 17).
+// date(june, 18).
+// date(july, 14).
+// date(july, 16).
+// date(august, 14).
+// date(august, 15).
+// date(august, 17).
+//
+//
+// months_for_day(Day, Months) :- setof(M, date(M, Day), Months).
+// days_for_month(Month, Days) :- setof(D, date(Month, D), Days).
+// ambiguous(Xs) :- Xs \= [_].
+//
+//
+// albert_statement1(Month) :-
+//   days_for_month(Month, Days),
+//   forall(
+//     member(Day, Days),
+//     (months_for_day(Day, Months), ambiguous(Months))
+//   ).
+//
+// bernard_statement(Day) :-
+//   months_for_day(Day, Months),
+//   ambiguous(Months),
+//   findall(
+//     Month,
+//     (albert_statement1(Month), date(Month, Day)),
+//     [_]
+//   ).
+//
+// albert_statement2(Month) :-
+//   findall(
+//     Day,
+//     (bernard_statement(Day), date(Month, Day)),
+//     [_]
+//   ).
+//
+//
+// solution(Month, Day) :-
+//   date(Month, Day),
+//   albert_statement1(Month),
+//   bernard_statement(Day),
+//   albert_statement2(Month).
+// ```
+
 
 #pagebreak(weak: true)
 
