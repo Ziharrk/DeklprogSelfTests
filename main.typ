@@ -4474,6 +4474,12 @@ Weitere Links:
 
 = Appendix
 
+Bisher findest du hier im Anhang des Dokuments Bemerkungen zu verschiedenen
+Tests oder Challenges. Du kannst alles ignorieren, was hier steht.
+Die Bemerkungen sind aus Neugier entstanden und sollen letztendlich in dir
+höchstens ein "Interessant! #emoji.face.think" auslösen. Danach darfst du direkt
+wieder vergessen, was hier steht.
+
 #remark[
   In @reverse_mode_ad wurden Funktionen ```hs d1```, ```hs d2``` und ```hs d3```
   definiert. Diese ver- und entschachteln ```hs D```-Werte unterschiedlich tief.
