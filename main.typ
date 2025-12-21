@@ -79,23 +79,6 @@
   numbering: "1"
 )
 
-#let stopHere = block(
-  fill: red.lighten(90%),
-  inset: 1em,
-  above: 2em,
-  below: 2em,
-  align(center)[
-    #text(weight: "bold", fill: red)[
-      Welcome weary traveler, you've come far. Why don't you stop here and get
-      some rest before you continue your journey.
-    ]
-
-    #text(0.8em, fill: red)[
-      (Mit den Inhalten der Vorlesung kannst du die Tests und Challenges aktuell
-      bis hier hin lösen.)
-    ]
-  ]
-)
 
 
 #text(0.8em)[
@@ -127,7 +110,6 @@ Wenn du Anmerkungen oder weitere Ideen für Inhalte für dieses Dokument hast,
 dann schreibe uns gerne über z.B. mattermost an -- oder
 #link("https://github.com/Ziharrk/DeklprogSelfTests/")[erstellt ein issue oder
 stellt eine PR auf GitHub].
-
 
 
 = Funktionale Programmierung
@@ -3349,7 +3331,8 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
 = Logische Programmierung
 
 #test[
-  Was ist Berechnungsprinzip von Prolog?
+  Was ist das Berechnungsprinzip von Prolog bzw. wie leitet Prolog aus
+  gegebenen Informationen ab?
 ]
 
 #test[
@@ -3366,8 +3349,8 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
 #test[
   $n$-stellige Funktionen können wir in Prolog als $(n+1)$-stellige Relation
   umsetzen. Dabei nimmt die letzte Position der Relation die Rolle des
-  Ergebnisses ein. Gehen wir mit Funktionen ```hs a1 -> ... an -> Bool```
-  besonders um?
+  Ergebnisses ein. Gehen wir mit Funktionen vom Typ
+  ```hs a1 -> ... an -> Bool``` besonders um?
 ]
 
 #test[
@@ -3376,7 +3359,7 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
 ]
 
 #test[
-  In Prolog können wir ebenso Termstrukturen erzeugen. Der Haskell-Typ
+  In Prolog können wir Termstrukturen erzeugen. Der Haskell-Typ
   #align(center)[```hs data Maybe a = Nothing | Just a```]
   kann z.B. wie folgt in Prolog umgesetzt werden.
   ```SWI-Prolog
@@ -3425,10 +3408,88 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
 // ```
 
 #test[
+  Warum ergibt es Sinn, beim Prolog-Programmieren in Relationen statt
+  Funktionen zu denken? Betrachte z.B. das Prädikat ```SWI-Prolog append/3```
+  gemeinsam mit den Anfragen
+  - ```SWI-Prolog ?- append(Xs, Ys, [1, 2, 3]).```,
+  - ```SWI-Prolog ?- append(Xs, [2, 3], Zs).```,
+  - ```SWI-Prolog ?- append([1, 2], Xs, Zs).``` und
+  - ```SWI-Prolog ?- append([1, 2], Ys, [1, 2, 3]).```.
+]
+
+#test[
+  Wenn wir Haskell um die Möglichkeit erweitern könnten, mehrere Regeln
+  auszuprobieren und mehrere Lösungen zu kombinieren, hätten wir trotz der
+  Abwesenheit logischer Variablen bereits viele Möglichkeiten der Modellierung,
+  wie wir sie in Prolog haben. Es stellt sich heraus, dass die Listenmonade
+  den Nichtdeterminismus schon sehr gut abbilden kann, und erlaubt damit einen
+  weiteren abstrakten Blick auf die Listenmonade - anstatt z.B. der Blick der
+  imperativen Programmierung als Verschachtelung von Schleifen.
+
+  Als kleines Beispiel wollen wir einen fairen Münzenwurf modellieren. Wir
+  kodieren die Ereignisse binär, wobei 0 für Kopf und 1 für Zahl stehen soll.
+  Weiter ist auch ein Beispiel angegeben für zwei unabhängige Münzenwürfe.
+  #grid(
+    columns: (1fr, 1fr),
+    [
+      In Prolog:
+      ```SWI-Prolog
+      coin(0).
+      coin(1).
+
+      coin2(X, Y) :-
+        coin(X),
+        coin(Y).
+      ```
+    ],
+    [
+      In Haskell:
+      ```SWI-Prolog
+      coin :: [Int]
+      coin = [0] ++ [1]
+
+      coin2 :: [(Int, Int)]
+      coin2 = do
+        x <- coin
+        y <- coin
+        return (x, y)
+      ```
+    ]
+  )
+
+  Bewaffnet mit diesen Ideen, modelliere einen fairen 6-seitigen Würfel.
+  Berechne alle Möglichkeiten, wie man drei Würfel werfen kann, um die
+  Augenzahl 11 zu erhalten.
+]
+
+// ```hs
+// dice :: [Int]
+// dice = [1..6]
+//
+// eleven :: [(Int, Int, Int)]
+// eleven = do
+//   x <- dice
+//   y <- dice
+//   z <- dice
+//   guard (x + y + z == 11)
+//   return (x, y, z)
+//
+// -- or
+// eleven :: [(Int, Int, Int)]
+// eleven = do
+//   x <- dice
+//   y <- dice
+//   z <- dice
+//   if x + y + z == 1
+//     then return (x, y, z)
+//     else []
+// ```
+
+#test[
   Implementiere das Prädikat ```SWI-Prolog zip/3```, dass zwei Liste bekommt
-  und eine Liste von Paaren zuliefert -- so wie du es aus Haskell kennst.
+  und eine Liste von Paaren zurückliefert -- so wie du es aus Haskell kennst.
   Es soll
-  #align(center)[```SWI-Prolog zip([1, 2], [3, 4, 5], [(1, 3), (2, 4)]).```]
+  #align(center)[```SWI-Prolog ?- zip([1, 2], [3, 4, 5], [(1, 3), (2, 4)]).```]
   gelten.
   Wie gewinnst du aus deiner Implementierung das Prädikat ```SWI-Prolog unzip/3```,
   also die Umkehrfunktion ```SWI-Prolog zip/3```, wenn diese auf Listen gleicher
@@ -3447,6 +3508,10 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
   - ```SWI-Prolog dups/2``` soll alle Elemente in einer Liste finden, die
     genau zweimal vorkommen. Du darfst ```SWI-Prolog not_member/2``` als
     Hilfsfunktion verwenden.
+  - ```SWI-Prolog sublist/2``` soll erfüllbar sein, wenn eine Liste in einer
+    anderen ohne Lücken enthalten ist.
+  - ```SWI-Prolog subsequence/2``` soll erfüllbar sein, wenn eine Liste in einer
+    anderen mit möglichen Lücken enthalten ist.
 
   Warum ist ```SWI-Prolog member/2``` hier zweistellig?
 ]
@@ -3465,10 +3530,74 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
 // ```
 
 #test[
+  Das Prädikat ```SWI-Prolog sublist/2``` soll genau dann erfüllbar sein, wenn
+  eine gegebene Liste in einer anderen gegebenen Liste enthalten ist. Eine
+  mögliche Implementierung sieht wie folgt aus:
+  ```SWI-Prolog
+  is_prefix([], _).
+  is_prefix([X|Xs], [X|Ys]) :- is_prefix(Xs, Ys).
+
+  sublist(Xs, Ys) :- is_prefix(Xs, Ys).
+  sublist(Xs, [_|Ys]) :- sublist(Xs, Ys).
+  ```
+  Was sind die Ergebnisse der Anfrage ```SWI-Prolog ?- sublist(Xs, [1, 2]).```?
+]
+
+#test[
   Warum ist ```SWI-Prolog not_member(X, Xs) :- append(_, [Y|_], Xs), X \= Y.```
   keine korrekte Implementierung des Prädikates, das testet, ob ein Element
   nicht einer Liste enthalten ist?
+] <not_member>
+
+#test[
+  In diesem Selbsttest wollen wir die Peano-Arithmetik wiederholen.
+  Implementiere folgende Prädikate:
+  - ```SWI-Prolog peano/1``` soll beweisbar sein, wenn der übergebene Term
+    eine Peano-Zahl ist, also z.B. die Form ```SWI-Prolog o, s(o), s(s(o)), ...```
+    hat.
+  - ```SWI-Prolog add/3``` soll die Addition auf Peano-Zahlen implementieren.
+  - Die Multiplikation kann wie folgt definiert werden:
+    ```SWI-Prolog
+    mult(o, _, o).
+    mult(s(X), Y, Z) :- add(U, Y, Z), mult(X, Y, U).
+    ```
+    Eine alternative Implementierung könnte so aussehen:
+    ```SWI-Prolog
+    mult(o, _, o).
+    mult(s(X), Y, Z) :- mult(X, Y, U), add(U, Y, Z).
+    ```
+    Welcher der beiden Implementierungen ist besser? Betrachte während deiner
+    Überlegungen auch folgende Anfrage ```SWI-Prolog ?- mult(s(s(o)), Y, s(s(s(s(o))))).```
+    -- also sinngemäß die Anfrage $2 dot y = 4$.
+  - Implementiere weiter die Prädikate ```SWI-Prolog lt/2, eq/2``` für
+    Peano-Zahlen, also die $<$-Relation und Gleichheit auf Peano-Zahlen.
 ]
+
+#test[
+  Das Sieb des Eratosthenes ist ein Algorithmus zur Bestimmung von Primzahlen.
+  Dieses wollen wir nun in Prolog implementieren -- mit Peano-Zahlen natürlich.
+  - Implementiere zuerst ein Prädikat ```SWI-Prolog range/3```, das eine Liste
+    berechnet, die alle Ganzzahlen in einem vorgegebenen Intervall enthält.
+    Zum Beispiel soll ```SWI-Prolog ?- range(s(o), s(s(s(o))), [s(o), s(s(o))]).```
+    beweisbar sein.
+  - Als Nächstes implementiere ein Prädikat ```SWI-Prolog filter_by_prime/3```,
+    das alle Elemente einer Liste entfernt, die durch eine gegebene Primzahl
+    teilbar sind.
+  - Zuletzt benötigen wir noch ```SWI-Prolog primes/2```, dass alle Primzahlen
+    bis zu einer angegeben Zahl berechnen soll. Implementiere dieses mithilfe
+    der bereits vorbereiteten Prädikate.
+  - Mit @to_nat und einem weiteren Prädikat ```SWI-Prolog map_to_nat/2``` kannst
+    du die Liste der Primzahlen in eine lesbare Form bringen -- du kannst auch
+    ein allgemeines ```SWI-Prolog  map/3``` mithilfe des Prädikats höherer
+    Ordnung ```SWI-Prolog call``` implementieren.
+
+]
+
+#test[
+  Implementiere ein Prädikat ```SWI-Prolog to_nat/2```, das eine Peano-Zahl in
+  eine natürliche Zahl konvertiert. Nutze dafür ```SWI-Prolog is/2```. Wieso
+  terminiert die Anfrage ```SWI-Prolog ?- to_nat(P, 3).``` nicht?
+] <to_nat>
 
 #test[
   Ein Graph sei dargestellt als eine Liste von Kanten. Die Kanten seien
@@ -3581,6 +3710,740 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
 // all_major(R, Cs, [_|S]) :- all_major(R, Cs, S).
 // ```
 
+#test[
+  Entwickle ein Prädikat ```SWI-Prolog nth/3```, dass das $n$-te Element
+  einer Liste zurückgibt. Zum Beispiel soll folgende Anfrage beweisbar sein.
+  ```SWI-Prolog
+  ?- nth([3, 1, 4, 1, 5], s(s(o)), X).
+  X = 4.
+  ```
+]
+
+
+// Elementare Programmiertechniken
+
+#test[
+  Aus welchen Teilen besteht das generate-and-test Schema?
+]
+
+#test[
+  Wie hängen musterorientierte Prädikate und induktiv definierte Funktionen
+  miteinander zusammen?
+]
+
+#challenge[
+  Das Erfüllbarkeitsproblem der Aussagenlogik fragt, ob es für eine gegebene
+  aussagenlogische Formel eine Belegung der Variablen mit wahr oder falsch
+  gibt, sodass die Formel insgesamt wahr ist.
+
+  Zur Erinnerung, die Syntax aussagenlogischer Formeln ist wie folgt
+  beschrieben:
+  - $top$ (true), $bot$ (false) und Variablen sind aussagenlogische Formeln.
+  - Seien $F, G$ aussagenlogische Formeln, dann sind
+    - $not F$ (Negation),
+    - $F and G$ (Konjunktion) und
+    - $F or G$ (Disjunktion)
+    aussagenlogische Formeln.
+  Die Semantik der atomaren Formeln und der Junktoren wird durch die
+  entsprechenden booleschen Funktionen und eine Belegung der Variablen
+  definiert.
+
+  - Implementiere zuerst ```SWI-Prolog bool/1```, das den Wertebereich
+    festlegen soll, und die booleschen Funktionen ```SWI-Prolog and/3, or/3, neg/2```.
+  - Implementiere ein Prädikat ```SWI-Prolog get_vars/2```, das alle
+    Bezeichner von (freien) Variablen einer gegebenen Formel zurückgibt. Eine
+    Variable soll in einer Formel als Term ```SWI-Prolog var(X)```
+    gekennzeichnet werden. ```SWI-Prolog X``` ist dann der Bezeichner der
+    Variable. Stelle dabei sicher, dass die Liste der Bezeichner keine
+    Duplikate enthält -- dafür kannst du z.B. ```SWI-Prolog list_to_set/2```
+    verwenden.
+  - Implementiere als Nächstes ein Prädikat ```SWI-Prolog asgnmt/2```,
+    das alle Belegungen generiert. Eine Zuweisung soll als Liste von Tupeln
+    dargestellt werden (vgl. Beispielanfragen).
+  - Implementiere ein Prädikat ```SWI-Prolog eval/3```, das beweisbar ist,
+    wenn die gegebene Formel erfüllbar unter der gegegeben Belegung ist.
+    Hier sind ein paar Beispielanfragen:
+    ```SWI-Prolog
+    ?- eval(and(true, var(x)), [(x, true)], false).
+    false.
+
+    ?- eval(and(true, var(x)), [(x, B)], false).
+    B = false.
+    ```
+  - Implementiere ein Prädikat ```SWI-Prolog sat/2```, das alle belegten
+    Formeln berechnet. Hier sind ein paar weitere Beispielanfragen:
+    ```SWI-Prolog
+    ?- sat(or(var(x), neg(var(x))), A).
+    A = [(x, true)] ;
+    A = [(x, false)] ;
+    false.
+
+    ?- sat(and(var(x), or(neg(var(y)), neg(var(z)))), A).
+    A = [(x, true), (y, true), (z, false)] ;
+    A = [(x, true), (y, false), (z, true)] ;
+    A = [(x, true), (y, false), (z, false)] ;
+    false.
+
+    ?- sat(and(var(x), neg(var(x))), A).
+    false.
+    ```
+] <sat_solver>
+
+// ```SWI-Prolog
+// bool(true).
+// bool(false).
+//
+// and(true, true, true).
+// and(true, false, false).
+// and(false, true, false).
+// and(false, false, false).
+//
+// or(true, true, true).
+// or(true, false, true).
+// or(false, true, true).
+// or(false, false, false).
+//
+// neg(true, false).
+// neg(false, true).
+//
+// eval(B, _, B) :- bool(B).
+// eval(var(X), A, B) :- member((X, B), A).
+// eval(neg(X), A, B) :- eval(X, A, B1), neg(B1, B).
+// eval(and(X, Y), A, B) :- eval(X, A, B1), eval(Y, A, B2), and(B1, B2, B).
+// eval(or(X, Y), A, B) :- eval(X, A, B1), eval(Y, A, B2), or(B1, B2, B).
+//
+// get_vars_dups(var(X), [X]).
+// get_vars_dups(neg(X), Vs) :- get_vars(X, Vs).
+// get_vars_dups(and(X, Y), Vs) :- get_vars(X, Vs1), get_vars(Y, Vs2), append(Vs1, Vs2, Vs).
+// get_vars_dups(or(X, Y), Vs) :- get_vars(X, Vs1), get_vars(Y, Vs2), append(Vs1, Vs2, Vs).
+//
+// get_vars(F, Vs) :- get_vars_dups(F, Ws), list_to_set(Ws, Vs).
+//
+// asgnmt([], []).
+// asgnmt([V|Vs], [(V, B)|VBs]) :- bool(B), asgnmt(Vs, VBs).
+//
+// sat(F, A) :- get_vars(F, Vs), asgnmt(Vs, A), eval(F, A, true).
+// ```
+
+#test[
+  In diesem Test ergänzen wir den SAT-Löser aus @sat_solver um die Implikation
+  und Äquivalenz. Anstatt das ```SWI-Prolog eval```-Prädikat entsprechend zu
+  erweitern, wollen wir diese Terme in andere Terme übersetzen, die wir bereits
+  auswerten können. Das können wir mit folgenden Regeln erreichen:
+  $ (A => B) quad <=> quad (not A or B) quad quad "und" quad quad (A <=> B) quad <=> quad (A => B and B => A) $
+  Implementiere dafür ein Prädikat ```SWI-Prolog desugar/2```. Als
+  Konstruktoren kannst du z.B. ```SWI-Prolog impl/2``` und ```SWI-Prolog iff/2```
+  verwenden.
+]
+
+// ```SWI-Prolog
+// desugar(B, B) :- bool(B).
+// desugar(var(X), var(X)).
+// desugar(neg(A), neg(B)) :- desugar(A, B).
+// desugar(and(A, B), and(B1, B2)) :- desugar(A, B1), desugar(B, B2).
+// desugar(or(A, B), or(B1, B2)) :- desugar(A, B1), desugar(B, B2).
+// desugar(impl(A, B), or(neg(C1), C2)) :- desugar(A, C1), desugar(B, C2).
+// desugar(iff(A, B), C) :- desugar(and(impl(A, B), impl(B, A)), C).
+// ```
+
+#test[
+  Wir machen uns auf in die Kombinatorik und wollen ein paar nützliche Prädikate
+  definieren, die uns helfen Suchräume zu durchlaufen.
+  - Implementiere ein Prädikat ```SWI-Prolog varia_rep/3```, das genau dann
+    beweisbar ist, wenn eine über gegebene Liste eine Variation einer anderen
+    ist und aus $k$ Elementen besteht -- es soll z.B.
+    ```SWI-Prolog ?- varia_rep([0, 1], 4, [1, 0, 0, 1]).``` beweisbar sein.
+  - Implementiere ein Prädikat ```SWI-Prolog perms/2```, dass genau dann
+    beweisbar ist, wenn zwei übergebene Listen Permutationen voneinander sind.
+] <combinatorics>
+
+#challenge[
+  Oft eignet sich in Prolog gut, um Algorithmen für Entscheidungsprobleme, die
+  in NP liegen, zu implementieren. Als Methode dafür hast du generate-and-test
+  kennengelernt -- wir generieren mögliche (also korrekte oder falsche) Lösungen
+  und entscheiden dann, ob sie korrekt sind.
+
+  Ein Hamiltonkreis ist ein Kreis in einem Graph, der jeden Knoten genau einmal
+  enthält. Wir wollen diese als Listen darstellen. Durch Rotation dieser Liste
+  erhalten wir äquivalente Hamiltonkreise. Diese wollen wir ignorieren und
+  wählen stattdessen einen kanonischen Repräsentanten, indem wir uns auf die
+  Liste beschränken, die mit dem kleinsten Knoten beginnt.
+
+  Im folgenden Graph gibt es zwei Hamiltonkreise.
+  #grid(
+    columns: (1fr, 1fr),
+    gutter: 1em,
+    align(center + horizon)[
+      #diagraph.raw-render(
+        ```dot
+        digraph {
+          node[shape=circle];
+          1 -> 2 -> 3 -> 5 -> 4 -> 1 [color=red];
+          3 -> 4 -> 5;
+          5 -> 1;
+        }
+        ```,
+        engine: "circo"
+      )
+    ],
+    align(center + horizon)[
+      #diagraph.raw-render(
+        ```dot
+        digraph {
+          node[shape=circle];
+          1 -> 2 [color=red];
+          2 -> 3 [color=red];
+          3 -> 5;
+          5 -> 4;
+          4 -> 1;
+          3 -> 4 [color=red];
+          4 -> 5 [color=red];
+          5 -> 1 [color=red];
+        }
+        ```,
+        engine: "circo"
+      )
+    ],
+    align(center + horizon, text(0.8em)[
+      Hamiltonkreis 1: $(1, 2, 3, 5, 4)$
+    ]),
+    align(center + horizon, text(0.8em)[
+      Hamiltonkreis 2: $(1, 2, 3, 4, 5)$
+    ])
+  )
+
+  Um Hamiltonkreise zu bestimmen, arbeiten wir uns von einem naiven
+  Pfad-Generator zu einem, der versucht nach und nach den Suchraum durch
+  vorhandene Informationen zu verkleinern (auch pruning genannt). Danach
+  verifizieren wir, ob ein gegebener Pfad ein Hamiltonkreis ist. Graphen
+  kannst du z.B. als Liste von Kanten darstellen.
+  #align(center)[
+    ```SWI-Prolog
+    graph([(1, 2), (2, 3), (3, 4), (3, 5), (4, 5), (4, 1), (5, 1), (5, 4)]).
+    ```
+  ]
+
+  Es lohnt sich, @combinatorics vor dieser Challenge gemacht zu haben, wenn du
+  mit den naiveren Pfad-Generatoren starten möchtest.
+
+  - Implementiere zuerst einen (polynomiellen) Verifizierer, also ein Prädikat
+    ```SWI-Prolog is_hamilton/2```, das bestimmt, ob ein gegebener Pfad in einem
+    gegebenen Graphen einem Hamiltonkreis entspricht.
+  - Implementiere ein Prädikat ```SWI-Prolog path/2``` und verbessere sukzessiv
+    mit den folgenden Ideen:
+    - Prüfe jede beliebige Knotenfolge bestehend aus $abs(V)$ Knoten. Das heißt,
+      der Suchraum entspricht zu Beginn $V^abs(V)$ für einen Graphen $(V, E)$.
+    - Jede zwei Knoten dieser Folge müssen paarweise unterschiedlich sein.
+    - Jede zwei aufeinanderfolgenden Knoten entsprechen einer Kante in dem
+      Eingabegraphen. Die Knotenfolge ist also ein Pfad.
+  - Implementiere zuletzt das Prädikat ```SWI-Prolog hamilton/2```, das
+    Hamiltonpfade bzw. -kreise berechnet.
+
+  Beobachte experimentell, wie sich die Laufzeit durch die einzelnen
+  Pruning-Schritte verändert.
+]
+
+// ```SWI-Prolog
+// graph([(1, 2), (2, 3), (3, 4), (3, 5), (4, 5), (4, 1), (5, 1), (5, 4)]).
+//
+// edge(V, W, G) :- member((V, W), G).
+//
+// nodes(G, Vs) :- setof(X, A^B^(edge(A, B, G), (X = A; X = B)), Vs).
+//
+// path(G, P) :-
+//   nodes(G, Vs), min_list(Vs, V), length(Vs, N),
+//   path_from(G, V, N, [V], P).
+//
+// path_from(_, _, 1, A, P) :- reverse(A, P).
+// path_from(G, V, N, A, P) :-
+//   N > 1,
+//   edge(V, W, G),
+//   \+ member(W, A),
+//   M is N - 1,
+//   path_from(G, W, M, [W|A], P).
+//
+// is_hamiltonian(G, P) :-
+//   forall(append(_, [V, W|_], P), edge(V, W, G)),
+//   nodes(G, Vs), sort(Vs, Ws), sort(P, Ws).
+//
+// hamiltonian(G, P) :-
+//   path(G, P),
+//   is_hamiltonian(G, P).
+// ```
+
+
+// Rechnen in der Logikprogrammierung
+
+Im Folgenden stehen Großbuchstaben für Variablen und Kleinbuchstaben für
+atomare Ausdrücke -- wenn nicht anders in Test oder Challenge eingeführt.
+
+#test[
+  Was besagt die Abtrennungsregel (modus ponens)?
+]
+
+#test[
+  Was ist das (einfache) Resolutionsprinzip?
+]
+
+#test[
+  Wann ist eine Anfrage mithilfe des Resolutionsprinzips beweisbar?
+]
+
+#test[
+  Mithilfe welcher Methode stellen wir fest, ob ein Literal zu einer linken
+  Regelseite passt?
+]
+
+#test[
+  Wie sind Terme definiert?
+]
+
+#test[
+  Welche der folgenden Terme sind syntaktisch korrekt?
+  - $X$
+  - $a$
+  - $X X$
+  - $f(X,a)$
+  - $f(f(X))$
+  - $g(f(X)(Y))$
+]
+
+#test[
+  Mithilfe welcher Methode ersetzen wir Variablen in Termen?
+]
+
+#test[
+  Wie ist die Substitution auf Termen definiert? Was wird insbesondere durch
+  eine Substitution verändert und was nicht?
+]
+
+#test[
+  Falls du @sat_solver gemeistert hast -- an welcher Stelle deines Programms
+  führst du eine Substitution durch?
+]
+
+#test[
+  Sei $sigma = { X |-> 1, Y |-> 2 }$ eine Substitution. Welche Anwendungen
+  oder Aussagen sind korrekt?
+  - $sigma("add"(X, Y)) = "add"(1, 2)$
+  - $sigma("eq"(X, X)) = "eq"(1, X)$
+  - $sigma(f(g(X, Y), Z))$ ist nicht definiert.
+]
+
+#test[
+  Welche der folgenden Substitutionen sind wohldefiniert?
+  - $sigma = { X |-> 1 }$
+  - $sigma = { X |-> X }$
+  - $sigma = { f(X) |-> f(Y) }$
+  - $sigma = { X |-> Y, Y |-> X }$
+]
+
+#test[
+  Wende die Substitution $sigma = { X |-> 1, Y |-> f(X) }$ auf den Term
+  $g(X, h(Y))$ an, ohne einen Zwischenschritt auszulassen.
+]
+
+#test[
+  Was ist ein Unifikator? Was ist ein allgemeinster Unifikator?
+]
+
+#test[
+  Was sind die Ergebnisse der folgenden Kompositionen von Substitutionen?
+  - ${ Y |-> X } compose { Z |-> 1 }$
+  - ${ Y |-> X } compose { Z |-> Y }$
+  - ${ Z |-> Y } compose { Y |-> X }$
+]
+
+#test[
+  Beim Durchführen des Unifikationsalgorithmus treten in zwei verschiedenen
+  Iterationen $i, j$ mit $i < j$ die Substitutionen
+  $ sigma_i = { X |-> f(Y) } "und" sigma_j = { X |-> a } $
+  auf. Ist ein solcher Verlauf korrekt? Begründe deine Antwort.
+  Dabei kann angenommen werden, dass $X$ nicht in $Y$ vorkommt.
+]
+
+#test[
+  Warum gilt ${ Y |-> X } compose { Z |-> Y } = { Z |-> Y } compose { Y |-> X }$
+  nicht?
+]
+
+#test[
+  Warum ist ${ Y |-> X } compose { Y |-> 2 } = { Y |-> 2 }$?
+]
+
+#test[
+  Warum ist die Komposition von Substitutionen im Allgemeinen nicht die
+  Vereinigung der jeweiligen Mengendarstellungen?
+]
+
+#test[
+  Wann existiert ein allgemeinster Unifikator?
+]
+
+#test[
+  Was ist die Unstimmigkeitsmenge zweier Terme, was gibt sie an und wie ist sie
+  definiert?
+]
+
+#test[
+  Welche Unstimmigkeitsmengen sind korrekt berechnet?
+  - $"ds"(f(X), f(1)) = {X, 1}$
+  - $"ds"(1, 2) = {1, 2}$
+  - $"ds"(g(1, 2), h(1, 2)) = emptyset$
+  - $"ds"(X, Y) = emptyset$
+  - $"ds"(f(X, Y), f(1, 2)) = {Y, 2}$
+]
+
+#test[
+  Finde Unifikatoren für die folgende Terme:
+  - $(X + 1) dot Y + Z$ und $((3 + Z) + 1) dot Z + 3$, und
+  - #grid(
+      columns: (1fr, auto, 1fr),
+      align: center + horizon,
+      [
+        #diagraph.raw-render(
+          ```dot
+          digraph {
+            ranksep=0.25;
+            nodesep=0.15;
+            node [shape=plaintext];
+            edge [arrowsize=0.6];
+            1 -> 2;
+            1 -> 3;
+            3 -> 4;
+            3 -> 5;
+            5 -> 6;
+            5 -> 7;
+          }
+          ```,
+          labels: (
+            "1": ```hs (:)```,
+            "2": ```hs Nothing```,
+            "3": ```hs (:)```,
+            "4": ```hs Nothing```,
+            "5": ```hs Just . (,)```,
+            "6": ```hs 6```,
+            "7": ```hs 7```,
+          )
+        )
+      ],
+      [und],
+      [
+        #diagraph.raw-render(
+          ```dot
+          digraph {
+            ranksep=0.25;
+            nodesep=0.15;
+            node [shape=plaintext];
+            edge [arrowsize=0.6];
+            1 -> 2;
+            1 -> 3;
+            3 -> 4;
+            3 -> 5;
+          }
+          ```,
+          labels: (
+            "1": ```hs (:)```,
+            "2": $X$,
+            "3": ```hs (:)```,
+            "4": ```hs Nothing```,
+            "5": $Y$
+          )
+        )
+      ]
+    )
+]
+
+#test[
+  Unter welchen Umständen terminiert der Unifikationsalgorithmus?
+]
+
+#test[
+  Aus welcher Eigenschaft des Unifikationsalgorithmus folgt, dass ein
+  berechneter Unifikator ein allgemeinster Unifikator ist?
+]
+
+#test[
+  Seien $t_1, t_2$ Terme. Wenn $"ds"(sigma(t_1), sigma(t_2)) = emptyset$ gilt,
+  was können wir über $sigma$ folgern?
+]
+
+#test[
+  Welche Arten von Fehlschlägen können während des Unifikationsalgorithmus
+  auftreten? Unter welchen Umständen treten diese auf?
+]
+
+#test[
+  In welches Problem laufen wir, wenn wir mit einer Substitution, die sich
+  aus $"ds"(t_1, t_2) = {X, f(X)}$ ergibt, naiv weiter rechnen würden, wobei
+  $t_1$ und $t_2$ Terme sind?
+]
+
+#test[
+  Was bedeutet es, wenn der Vorkommenstest (occurs check) positiv ist?
+]
+
+#test[
+  Gebe ein Beispiel für eine Eingabe an, für das der Unifikationsalgorithmus
+  exponentielle Laufzeit bzgl. der Größe der Eingabeterme hat.
+
+  Die Größe eines Terms $abs(dot)$ wir z.B. wie folgt berechnen:
+  - $abs(X) = 1$, falls $X$ Variable ist,
+  - $abs(a) = 1$, falls $a$ Konstante ist und
+  - $abs(f(t_1, ..., t_n)) = 1 + sum_(i=1)^n abs(t_i)$ für Terme
+    $t_1, ..., t_n$ und $n$-stelligen Funktor $f$.
+]
+
+#test[
+  Wieso kommt der Fall der exponentiellen Laufzeit in der Größe der Eingabeterme
+  überhaupt zustande?
+]
+
+#test[
+  Aus welchen Komponenten setzt sich das allgemeine Resolutionsprinzip zusammen?
+  Wie wird es auch genannt?
+]
+
+#test[
+  Was legt die Selektionsfunktion der SLD-Resolution fest? Welche verwendet Prolog?
+]
+
+#test[
+  Gegeben sei die Anfrage $"?-" A_1, ..., A_m$. Du stellst fest, dass $A_1$
+  mit der linken Seite der Regel $L ":-" L_1, ..., L_n$ unifizierbar ist. Welche
+  Anfrage ist in einem SLD-Resolutionsschritt daraus ableitbar.
+]
+
+#test[
+  Wieso benennen wir Variablen einer Regel um, bevor wir eine Unifikation als
+  Teil eines SLD-Resolutionsschritt durchführen?
+]
+
+#test[
+  Wodurch ergibt sich die Struktur eines SLD-Baums?
+]
+
+#test[
+  Welche Auswertungsstrategie findet immer eine Lösung, falls eine existiert?
+]
+
+#test[
+  Warum wird die Tiefensuche als Auswertungsstrategie der Breitensuche bevorzugt?
+]
+
+#test[
+  Wie ergibt sich die Reihenfolge der Kindknoten eines Knoten in einem SLD-Baum?
+]
+
+#test[
+  Welche Rolle spielt Backtracking in Prolog?
+]
+
+#test[
+  Wie werden Variablen in Prolog gebunden?
+]
+
+#test[
+  Wieso wird empfohlen, dass Klauseln für Spezialfälle vor allgemeineren
+  Klauseln stehen sollten?
+]
+
+#test[
+  Gegeben sei das Prolog-Programm.
+  ```SWI-Prolog
+  fruit(apple).
+  fruit(banana).
+  fruit(cranberry).
+
+  salad(F1, F2, F3) :- fruit(F1), fruit(F2), fruit(F3).
+  ```
+  Was sind die ersten vier Lösungen, die Prolog berechnet? Warum verändern sich
+  die Belegungen für ```SWI-Prolog F2``` und ```SWI-Prolog F3``` zuerst?
+]
+
+#test[
+  Gegeben sei das Prolog-Programm:
+  ```SWI-Prolog
+  nth(0, [X|_], X).
+  nth(N, [_|Xs], X) :- N > 0, M is N - 1, nth(M, Xs, X).
+  ```
+
+  Wir beginnen, eine Lösungen zu berechnen, wie Prolog sie berechnen würde, für
+  die Anfrage ```SWI-Prolog ?- nth(1, [3, 1, 4, 1]).```.
+  ```SWI-Prolog
+  ?- nth(1, [3, 1, 4, 1]).
+  |- (2. Regel)
+  ?- 1 > 0, M is 1 - 1, nth(M, [1, 4, 1], X).
+  |- (2. Regel)
+  ?- 1 > 0, M is 1 - 1, M > 0, M is M - 1, nth(M, [4, 1], X).
+  |-
+  ...
+  ```
+  Was ist hier schief gelaufen?
+]
+
+
+// Negation
+
+#test[
+  Was verbirgt sich hinter dem Begriff "Negation als Fehlschlag"?
+]
+
+#test[
+  Wann ist ```SWI-Prolog \+ p``` beweisbar?
+]
+
+#test[
+  Wieso stimmt die Negation als Fehlschlag nicht mit der prädikatenlogischen
+  Negation überein?
+]
+
+#test[
+  Warum sollte ```SWI-Prolog p``` keine freien Variablen enthalten, wenn wir
+  ```SWI-Prolog \+ p``` beweisen wollen? Wieso ergibt sich daraus die
+  Empfehlung, dass Negationen soweit wie möglich rechts in einer Regel stehen
+  sollten?
+]
+
+#test[
+  Wie sind die Variablen ```SWI-Prolog X, Y``` in der folgenden Regel
+  quantifiziert?
+  ```SWI-Prolog
+  p(X) :- q(X, Y).
+  ```
+]
+
+#test[
+  Nutze $forall x : p <=> not (exists x : not p)$, um ein Prädikat
+  ```SWI-Prolog forall/2``` zu definieren.
+
+  Mithilfe dieses Prädikates soll es möglich sein, folgende Anfrage auszudrücken.
+  ```SWI-Prolog
+  ?- forall(member(X, [1, 2, 3]), X > 0).
+  ```
+  Die Anfrage bedeutet, für alle $x in {1, 2, 3}$ gilt $x > 0$.
+
+  Wie können wir mit ```SWI-Prolog forall``` die Definition von
+  ```SWI-Prolog not_member``` aus @not_member reparieren?
+]
+
+
+// Der "Cut"-Operator
+
+#test[
+  Wofür verwenden wir den Cut-Operator konzeptionell?
+]
+
+#test[
+  Wann ist ```SWI-Prolog p``` in ```SWI-Prolog p :- q, !, r.``` beweisbar?
+  Was ist insbesondere der Fall, wenn ```SWI-Prolog q``` beweisbar ist?
+]
+
+#test[
+  Wir ergibt sich aus der Semantik des Cut-Operators ein
+  Fallunterscheidung-Konstrukt?
+]
+
+#test[
+  Wie können wir mithilfe des Cut-Operators die Negation als Fehlschlag
+  implementieren?
+]
+
+#test[
+  Wie wirkt sich der Cut-Operator auf die Struktur eines SLD-Baums aus?
+]
+
+
+// Logik-Puzzle
+
+Hier sind ein paar Logik-Puzzle, die zu deiner Belustigung dienen. Der
+Lerneffekt ist voraussichtlich sehr gering.
+
+#challenge[
+  Das #link("https://en.wikipedia.org/wiki/Zebra_Puzzle")[Zebra-Rätsel] ist ein
+  Logikpuzzle.
+
+  So wird es auf Wikipedia wiedergegeben:
+  #quote(block: true)[
+    + Es gibt fünf Häuser.
+    + Der Engländer wohnt im roten Haus.
+    + Der Spanier hat einen Hund.
+    + Kaffee wird im grünen Haus getrunken.
+    + Der Ukrainer trinkt Tee.
+    + Das grüne Haus ist direkt rechts vom weißen Haus.
+    + Der Raucher von Old-Gold-Zigaretten hält Schnecken als Haustiere.
+    + Die Zigaretten der Marke Kools werden im gelben Haus geraucht.
+    + Milch wird im mittleren Haus getrunken.
+    + Der Norweger wohnt im ersten Haus.
+    + Der Mann, der Chesterfield raucht, wohnt neben dem Mann mit dem Fuchs.
+    + Die Marke Kools wird geraucht im Haus neben dem Haus mit dem Pferd.
+    + Der Lucky-Strike-Raucher trinkt am liebsten Orangensaft.
+    + Der Japaner raucht Zigaretten der Marke Parliaments.
+    + Der Norweger wohnt neben dem blauen Haus.
+    Wer trinkt Wasser? Wem gehört das Zebra?
+  ]
+  Löse dieses Puzzle mithilfe von Prolog und übersetze dabei so wenig logische
+  Schlüsse, die du selbst in deinem Kopf machst, in deinem Programm.
+]
+
+#challenge[
+  Ein Logikpuzzle, das einst viral ging, ist bekannt als "Cheryl's Geburtstag".
+  Es ist das erste Puzzle aus dem paper
+  #link("https://arxiv.org/abs/1708.02654")[Cheryl's Birthday].
+  Löse dieses Puzzle mithilfe von Prolog und übersetze dabei so wenig logische
+  Schlüsse, die du selbst in deinem Kopf machst, in deinem Programm.
+]
+
+// ```SWI-Prolog
+// date(may, 15).
+// date(may, 16).
+// date(may, 19).
+// date(june, 17).
+// date(june, 18).
+// date(july, 14).
+// date(july, 16).
+// date(august, 14).
+// date(august, 15).
+// date(august, 17).
+//
+//
+// months_for_day(Day, Months) :- setof(M, date(M, Day), Months).
+// days_for_month(Month, Days) :- setof(D, date(Month, D), Days).
+// ambiguous(Xs) :- Xs \= [_].
+//
+//
+// albert_statement1(Month) :-
+//   days_for_month(Month, Days),
+//   forall(
+//     member(Day, Days),
+//     (months_for_day(Day, Months), ambiguous(Months))
+//   ).
+//
+// bernard_statement(Day) :-
+//   months_for_day(Day, Months),
+//   ambiguous(Months),
+//   findall(
+//     Month,
+//     (albert_statement1(Month), date(Month, Day)),
+//     [_]
+//   ).
+//
+// albert_statement2(Month) :-
+//   findall(
+//     Day,
+//     (bernard_statement(Day), date(Month, Day)),
+//     [_]
+//   ).
+//
+//
+// solution(Month, Day) :-
+//   date(Month, Day),
+//   albert_statement1(Month),
+//   bernard_statement(Day),
+//   albert_statement2(Month).
+// ```
+
+
 #pagebreak(weak: true)
 
 
@@ -3610,6 +4473,12 @@ Weitere Links:
 
 
 = Appendix
+
+Bisher findest du hier im Anhang des Dokuments Bemerkungen zu verschiedenen
+Tests oder Challenges. Du kannst alles ignorieren, was hier steht.
+Die Bemerkungen sind aus Neugier entstanden und sollen letztendlich in dir
+höchstens ein "Interessant! #emoji.face.think" auslösen. Danach darfst du direkt
+wieder vergessen, was hier steht.
 
 #remark[
   In @reverse_mode_ad wurden Funktionen ```hs d1```, ```hs d2``` und ```hs d3```
