@@ -1,0 +1,15 @@
+cabal-version: 3.4
+name:          blackjack
+version:       0.1.0.0
+
+executable blackjack
+  ghc-options:      -O2
+  main-is:          Main.hs
+  other-modules:
+    BlackJack
+  build-depends:
+    base,
+    random
+  hs-source-dirs:   src
+  default-language: GHC2021
+
