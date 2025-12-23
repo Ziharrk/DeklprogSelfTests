@@ -3326,30 +3326,6 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
 //     return Array(self.size, data)
 // ```
 
-#challenge[
-  Im Verlauf des Moduls haben wir ein Blackjack-Spiel gebaut. In dieser
-  Challenge soll es darum gehen, eine Strategie zu entwickeln, dieses
-  Spiel möglichst optimal zu spielen.
-
-  Zum Spiel:
-  - Du startest mit einem Guthaben von 100 Geld.
-  - Jedes Spiel startet mit einer Wettphase, in der du mindestens 1 Geld setzen
-    musst bis maximal dein ganzes Guthaben setzen kannst.
-  - Danach beginnt die Phase, in der du Karten ziehst. Du startest mit 2 Karten
-    und kannst eine Karte des Dealers sehen. Anhand deiner deiner Karten kannst
-    du entscheiden, ob du eine weitere Karte ziehst oder nicht, sollte der Wert
-    deiner Karten nicht bereits 21 Punkte überschreiten.
-  - Es werden 100 Simulationen gestartet. Du kannst jede Simulation erst nach
-    20 Runden abbrechen.
-
-  Versuche ein möglichst hohes durchschnittliches Guthaben zu erreichen. Du
-  kannst deine Strategie mit ```hs benchmark :: Strategy - IO Double```
-  evaluieren.
-
-  Das Projekt kannst du dir #link(git("blackjack"))[aus dem GitHub Repository]
-  herunterladen.
-]
-
 #pagebreak(weak: true)
 
 
