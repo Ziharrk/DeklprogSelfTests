@@ -157,7 +157,7 @@ stellt eine PR auf GitHub].
 #test[
   Auf was müssen wir achten, wenn wir eine rekursive Funktion definieren?
   Die Antwort ist abhängig von dem, was die Funktion berechnen soll. Denke über
-  die verschiedenen Möglichkeiten nach.
+  die verschiedenen Möglichkeiten nach und gebe Beispiele an.
 ]
 
 #test[
@@ -172,8 +172,8 @@ stellt eine PR auf GitHub].
   odd n = even (n - 1)
   ```
 
-  - Berechne das Ergebnis von `odd (1 + 1)` händisch.
-  - Wie sieht der Auswertungsgraph für den Ausdruck `odd (1 + 1)` aus?
+  - Berechne das Ergebnis von ```hs odd (1 + 1)``` händisch.
+  - Wie sieht der Auswertungsgraph für den Ausdruck ```hs odd (1 + 1)``` aus?
     - Welcher Pfad entspricht deiner händischen Auswertung?
     - Welcher Pfad entspricht der Auswertung wie sie in Haskell stattfindet?
     - Welcher Pfad entspricht der Auswertung wie sie in Python sinngemäß stattfindet?
@@ -188,8 +188,8 @@ stellt eine PR auf GitHub].
 #test[
   Das Potenzieren einer Zahl $x$ (oder eines Elements einer Halbgruppe) mit
   einem natürlich-zahligen Exponent $n$ ist in $cal(O)(log n)$ Laufzeit möglich
-  #footnote[#link("https://de.wikipedia.org/wiki/Bin%C3%A4re_Exponentiation")[Binäre Exponentiation]].
-  Dafür betrachten wir
+  #footnote[#link("https://de.wikipedia.org/wiki/Bin%C3%A4re_Exponentiation")[Binäre Exponentiation]], sofern wir die Laufzeit für die Verknüpfung vernachlässigen
+  können. Dafür betrachten wir
   $
   x^n = cases((x^(n/2))^2 & "falls" n "gerade", x dot x(x^((n-1)/2))^2 & "sonst")
   $
@@ -206,8 +206,8 @@ stellt eine PR auf GitHub].
       z = x + y
    in y
   ```
-  Welche Belegungen der Variablen werden tatsächlich berechnet, wenn wir `y`
-  ausrechnen?
+  Welche Belegungen der Variablen werden tatsächlich berechnet, wenn wir
+  ```hs y``` ausrechnen?
 ]
 
 #test[
@@ -223,8 +223,8 @@ stellt eine PR auf GitHub].
 ]
 
 #test[
-  Was ist charakterisierend für Aufzählungstypen, einen Verbundstypen und
-  einem rekursiven Datentypen? Gebe Beispiele für jeden dieser Typarten an.
+  Was ist charakterisierend für Aufzählungstypen, Verbundstypen und rekursive
+  Datentypen? Gebe Beispiele für jeden dieser Typarten an.
 ]
 
 #test[
@@ -238,7 +238,7 @@ stellt eine PR auf GitHub].
   die Länge einer solchen Liste berechnet werden. Du möchtest nun auch
   die Längen von Listen berechnen, die Buchstaben, Booleans oder Gleitkommazahlen
   enthalten. Was stört dich am bisherigen Vorgehen? Kennst du ein Konzept
-  mit dessen Hilfe du besser an dein Ziel kommst?
+  mit dessen Hilfe du mit weniger Arbeit an dein Ziel kommst?
 ]
 
 #test[
@@ -248,7 +248,7 @@ stellt eine PR auf GitHub].
 
 #test[
   Du hast einen Datentypen definiert und möchtest dir Werte des Typen nun
-  z.B. im GHCi anzeigen lassen. Was kannst du tun, um an dieses Ziel zu kommen?
+  z.B. im GHCi anzeigen lassen. Was kannst du tun, um dieses Ziel zu erreichen?
 ]
 
 #test[
@@ -261,7 +261,7 @@ stellt eine PR auf GitHub].
 ]
 
 #test[
-  In Programmiersprachen wie Java greifen wir Daten komplexer Datentypen zu,
+  In Programmiersprachen wie Java greifen wir auf Daten komplexer Datentypen zu,
   indem wir auf Attribute von Objekten zugreifen oder getter-Methoden verwenden.
   Wie greifen wir auf Daten in Haskell zu?
 ]
@@ -269,7 +269,7 @@ stellt eine PR auf GitHub].
 // Polymorphismus
 
 #test[
-  Wie sieht eine Datentypdefinition im Allgemeinen aus?
+  Wie sieht eine Datentypdefinition in Haskell im Allgemeinen aus?
 ]
 
 #test[
@@ -288,12 +288,13 @@ stellt eine PR auf GitHub].
 ]
 
 #test[
-  Welchen kind hat ```hs Either a```?
+  Welchen kinds haben jeweils ```hs Either``` und ```hs Either a```?
 ]
 
 #test[
-  Beim Programmieren vernachlässigen redundante Syntax.
-  Gibt es einen Unterschied zwischen ```hs f 1 2``` und ```hs f(1, 2)```
+  Beim Programmieren in Haskell vernachlässigen redundante Syntax.
+  Gibt es in Haskell einen Unterschied zwischen ```hs f 1 2``` und
+  ```hs f(1, 2)```.
 ]
 
 #test[
@@ -306,9 +307,9 @@ stellt eine PR auf GitHub].
 ]
 
 #test[
-  Visualisiere `[1, 2, 3]` als Baum, wie du es in der Vorlesung kennengelernt
-  hast. Zur Erinnerung: die inneren Knoten sind Funktionen und die Blätter
-  Werte, die nicht weiter ausgerechnet werden können.
+  Visualisiere ```hs [1, 2, 3]``` als Termbaum, wie du es in der Vorlesung
+  kennengelernt hast. Zur Erinnerung: die inneren Knoten sind Funktionen und
+  die Blätter Werte, die nicht weiter ausgerechnet werden können.
 ]
 
 #test[
@@ -341,7 +342,7 @@ stellt eine PR auf GitHub].
     $
   - Alternativ kann der ggT auch berechnet werden, indem wir das Produkt des
     Schnittes der Primfaktorzerlegung der beiden Zahlen betrachten, also
-    $ product ("PF"(x) inter "PF"(y)) $
+    $ product ("PF"(x) inter "PF"(y)), $
     wobei $"PF"$ die Menge der Primfaktoren der gegebenen Zahl (mit
     entsprechenden Mehrfachvorkommen) beschreiben soll. Implementiere diesen
     Ansatz.
@@ -415,11 +416,12 @@ stellt eine PR auf GitHub].
   ```
   - Implementiere eine Funktion ```hs ($$) :: Fun -> Double -> Double```, die
     eine gegebene Funktion in einem gegebenen Punkt auswertet.
-  - Implementiere eine Funktion ```hs derive :: Fun -> Fun```, die eine gegebene
-    Funktion ableitet.
+  - Implementiere eine Funktion ```hs derive :: Fun -> Fun```, die eine
+    gegebene Funktion ableitet.
     #footnote[
       #link("https://de.wikipedia.org/wiki/Differentialrechnung#Zusammenfassung")[Zusammenfassung der Ableitungsregeln]
     ]
+    Die Funktionen müssen nach dem Ableiten nicht vereinfacht werden.
 ] <symbolic_diff>
 
 // ```hs
@@ -511,6 +513,11 @@ stellt eine PR auf GitHub].
   Multiplikation, Divison. Implementiere weiter eine Funktion, die die
   rationale Zahl als reelle Zahl mit einer festen Anzahl von Nachkommastellen
   darstellt.
+
+  #text(0.8em)[
+    Später kannst du auch hier die jeweiligen Typklassen verwenden, um die
+    arithmetischen Operationen zu überladen.
+  ]
 ]
 
 // ```hs
@@ -526,8 +533,10 @@ stellt eine PR auf GitHub].
 // ```
 
 #test[
-  Wie können wir es hinkriegen, dass die invalide Liste ```hs [32, True, "Hello, world!"]```
-  ein valider Haskell-Wert wird? Mithilfe welches Hilfstypen kriegen das hin?
+  Wie können wir es hinkriegen, dass die invalide Liste
+  ```hs [32, True, "Hello, world!"]``` ein valider Haskell-Wert wird? Mithilfe
+  welches Hilfstypen kriegen das hin? (Die Liste müssen wir dafür unter
+  Umständen umschreiben.)
 ]
 
 #test[
@@ -544,15 +553,13 @@ stellt eine PR auf GitHub].
 #test[
   Hier ist eine fehlerhafte Implementierung eines Datentyps für einen
   knotenbeschrifteten Binärbäumen.
-  ```hs
-  data Tree a = Empty | Node Tree a Tree
-  ```
+  #align(center)[```hs data Tree a = Empty | Node Tree a Tree ```]
   Was ist der Fehler?
 ]
 
 #test[
-  In imperativen Programmierung iterieren wir über Listen oft in folgender
-  Form (in Java).
+  In imperativen Programmiersprachen (hier Java) iterieren wir über Listen oft
+  in folgender Form.
   ```java
   List<Integer> a = new ArrayList<>();
   a.add(3); a.add(1); a.add(4); a.add(1); a.add(5);
@@ -572,15 +579,17 @@ stellt eine PR auf GitHub].
   - Wie unterscheiden sich die Laufzeiten?
   - Optimiere die Funktion `double`, sodass sie lineare Laufzeit in der Länge
     der Liste hat.
+  Dein Ergebnis sollte Haskell-idiomatisch sein.
 ]
 
 #test[
   Die ```hs (!!)```-Funktion ist unsicher in dem Sinne, dass sie für invalide
-  Listenzugriffe einen Fehler wirft. Die Funktion
+  Listenzugriffe einen Fehler wirft -- also z.B. für ```hs xs !! (-1)``` oder
+  ```hs xs !! k``` mit ```hs k > length xs```. Die Funktion
   ```hs (!?) :: [a] -> Int -> Maybe a``` ist eine sichere Variante von
   ```hs (!!)```. Sie macht den Fehlerfall explizit durch die Wahl des
-  Ergebnistypen. Was tut diese Funktion voraussichtlich? Implementiere diese
-  Funktion.
+  Ergebnistypen. Wie fängt der Ergebnistyp diesen Fehlerfall auf? Implementiere
+  diese Funktion.
   #footnote[Diese Funktion ist auch bereits vorimplementiert: #link("https://hackage.haskell.org/package/base-4.21.0.0/docs/Data-List.html#v:-33--63-")[```hs (!?)``` in ```hs Data.List```].]
 ]
 
@@ -596,7 +605,7 @@ stellt eine PR auf GitHub].
   ```
   Die Funktion ist zwar korrekt aber nicht Haskell-idiomatisch, d.h., eine
   Person, die Erfahren im Programmieren von Haskell ist, würde dies nicht so
-  schreiben. Was müssten wir an der Funktion ändern, damit sie idiomatisch ist.
+  schreiben. Was müssten wir an der Funktion ändern, damit sie idiomatisch wäre.
 ]
 
 #test[
@@ -619,9 +628,11 @@ stellt eine PR auf GitHub].
   Ziel dieser Challenge ist es, eine Datenstruktur zu entwickeln, die eine
   (amortisiert) konstante ```hs append```-Operation hat. Diese ist bekannt als
   ```hs Queue```. Sie soll durch ```hs data Queue a = Q [a] [a]``` dargestellt
-  werden. Die Idee ist eine Liste vorzuhalten, die eine (amortisiert) konstante
-  ```hs dequeue```-Operationen erlaubt, und eine andere, die eine konstante
-  ```hs enqueue```-Operationen erlaubt.
+  werden. Die Idee ist es, eine Liste vorzuhalten, die eine (amortisiert)
+  konstante ```hs dequeue```-Operationen erlaubt, und eine andere, die eine
+  konstante ```hs enqueue```-Operationen erlaubt. Das heißt, die fast alle
+  dieser Operationen benötigen konstante Laufzeit und konstant wenige können
+  lineare Laufzeit haben.
 
   Implementiere die Funktionen
   - ```hs empty :: Queue a```, die eine leere Queue erzeugt,
@@ -635,14 +646,18 @@ stellt eine PR auf GitHub].
 
   Die Implementierung soll dabei folgende Invariante erfüllen: Eine queue ist
   genau dann leer, wenn die ```hs dequeue```-Liste leer ist. Diese Invariante
-  kannst du z.B. mit einer Hilfsfunktion erzwingen -- oder du
+  kannst du z.B. mit einer Hilfsfunktion erzwingen -- oder du passt bei der
+  Implementierung deiner Funktionen auf.
   #footnote[
     Für Interessierte: Wenn sogar ```hs length xs >= length ys``` für eine
     queue ```hs Q xs ys``` gewährleistet wird, ist die queue nochmal schneller.
     Dafür muss man die Längen der Listen immer vorhalten. Mehr darüber findest
     du in
     #link("https://www.cambridge.org/core/journals/journal-of-functional-programming/article/simple-and-efficient-purely-functional-queues-and-deques/7B3036772616B39E87BF7FBD119015AB")[Simple and efficient purely functional queues and deques]
-    von Chris Okasaki lesen.
+    von Chris Okasaki lesen. Falls dich funktionale Datenstrukturen allgemein
+    interessieren, sei dir
+    #link("https://www.cs.cmu.edu/~rwh/students/okasaki.pdf")[seine
+    Doktorarbeit] empfohlen.
   ]
 ]
 
@@ -723,7 +738,7 @@ stellt eine PR auf GitHub].
 #test[
   Formuliere QuickCheck-Eigenschaften, die die Funktionen
   - ```hs isElem :: Int -> SearchTree Int -> Bool```,
-  - ```hs toList :: SearchTree Int -> Int```,
+  - ```hs toList :: SearchTree Int -> [Int]```,
   - ```hs insert :: Int -> SearchTree Int -> SearchTree Int``` und
   - ```hs delete :: Int -> SearchTree Int -> SearchTree Int```
   erfüllen sollen. ```hs isElem``` überprüft, ob eine Ganzzahl in gegebenen
@@ -781,6 +796,11 @@ stellt eine PR auf GitHub].
 //   ]
 // ]
 
+#test[
+  Welchen Nachteil hat die Prüfung von Vorbedingungen mit ```hs (==>)```? Wie
+  können wir diese beheben?
+]
+
 
 // Funktionen höherer Ordnung
 
@@ -831,8 +851,8 @@ stellt eine PR auf GitHub].
 #test[
   Die Funktionen ```hs map :: (a -> b) -> [a] -> [b]``` und
   ```hs filter :: (a -> Bool) -> [a] -> [a]``` lassen sich alle mithilfe
-  ```hs foldr :: (a -> r -> r) -> r -> [a] -> r``` ausdrücken. Wie erreichen wir
-  dies?
+  ```hs foldr :: (a -> r -> r) -> r -> [a] -> r``` ausdrücken. Wie lauten
+  diese Definitionen?
 ]
 
 #test[
@@ -961,25 +981,49 @@ stellt eine PR auf GitHub].
   das Entfalten stoppt, indem ein ```hs Nothing``` zurückgegeben wird. Bäume
   sind durch den Datentyp ```hs data Tree a = Empty | Node (Tree a) a (Tree a)```
   definiert.
+
+  Nutze die definierte Funktion, um einen Binärbaum zu erzeugen, welche die
+  Zerlegungen eines diskreten Intervals darstellen soll. Entnehme die Art der
+  Zerlegung dem Diagramm.
+  #align(center)[
+    #diagraph.raw-render(
+      ```dot
+      digraph {
+        // node [shape=plaintext];
+        edge [arrowsize=0.6];
+        1 -> 2;
+        1 -> 3;
+      }
+      ```,
+      labels: (
+        "1": $[l, r)$,
+        "2": $[l, floor((l+r)/2))$,
+        "3": $[floor((l+r)/2), r)$,
+      )
+    )
+  ]
 ]
 
 #challenge[
-  Gegeben sei die Funktion Faltungsfunktion
+  Gegeben sei die Faltungsfunktion
   ```hs foldTree :: (r -> a -> r -> r) -> r -> Tree a -> r```
   für einen knotenbeschrifteten Binärbaum gegeben durch
   ```hs data Tree a = Empty | Node (Tree a) a (Tree a)```.
 
-  Wie auch für Listen lassen sich eine Reihe von bekannten Funktionen
-  auf Bäume übertragen.
+  Eine Reihe von Funktionen, die du bereits für Listen kennengelernt
+  hast, lassen sich auch auf Bäume übertragen.
   #footnote[
     Diese Funktionen lassen sich auf alle faltbaren Datentypen verallgemeinern.
-    Für Interessierte: Dies wird mithilfe der #link("https://hackage.haskell.org/package/base-4.21.0.0/docs/Data-Foldable.html")[Typklasse ```hs Foldable```]
+    Für Interessierte: Dies wird mithilfe der
+    #link("https://hackage.haskell.org/package/base-4.21.0.0/docs/Data-Foldable.html")[Typklasse ```hs Foldable```]
     festgehalten -- diese Typklasse behandeln wir aber in der Vorlesung
     voraussichtlich nicht.
   ]
   Implementiere die Funktionen
-  - ```hs any :: (a -> Bool) -> Tree a -> Bool``` und ```hs and :: (a -> Bool) -> Tree a -> Bool```,
-  - ```hs elem :: Int -> Tree Int -> Bool``` und ```hs notElem :: Int -> Tree Int -> Bool```,
+  - ```hs any :: (a -> Bool) -> Tree a -> Bool``` und
+    ```hs and :: (a -> Bool) -> Tree a -> Bool```,
+  - ```hs elem :: Int -> Tree Int -> Bool``` und
+    ```hs notElem :: Int -> Tree Int -> Bool```,
   - ```hs toList :: Tree a -> Bool```,
   - ```hs null :: Tree a -> Bool``` (überprüft, ob der Baum leer ist),
   - ```hs length :: Tree a -> Int```,
@@ -1183,7 +1227,8 @@ stellt eine PR auf GitHub].
   ```
   In diesem Programm werden viele Konzepte verwendet, die du im Haskell-Kontext
   kennengelernt hast -- aber wahrscheinlich bisher nicht in Python gesehen hast.
-  In diesem Test geht es darum, die diese Konzepte zu identifizieren.
+  In diesem Test geht es darum, diese Konzepte im Python-Programm zu
+  identifizieren.
 
   Wo findest du
   - Funktionen höherer Ordnung,
@@ -1574,8 +1619,9 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
   assoziative, binäre Verknüpfung $ast.op : H times H -> H$ ist. Ein Monoid
   erweitert die Halbgruppe um ein neutrales Element bzgl. $ast.op$.
 
-  Definiere Typklassen ```hs Semigroup``` und ```hs Monoid```, diese Strukturen
-  implementieren. Gebe auch beispielhaft ein paar Instanzen für diese an.
+  Definiere Typklassen ```hs Semigroup``` und ```hs Monoid```, die diese
+  Strukturen implementieren. Gebe auch beispielhaft ein paar Instanzen für
+  diese an.
 ]
 
 #test[
@@ -1654,8 +1700,9 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
 
   - Implementiere eine Funktion ```hs preorder :: Tree a -> [a]```, die
     Knotenwerte in pre-order zurückgibt. Das heißt, zuerst wird ein Knoten
-    betrachtet und anschließend dessen linker und danach dessen rechter Teilbaum.
-  - Implementiere einen unendlichen Baum ```hs tree :: Tree Int```, die Menge
+    betrachtet und anschließend dessen linker und danach dessen rechter
+    Teilbaum.
+  - Implementiere einen unendlichen Baum ```hs tree :: Tree Int```, der die Menge
     ${ f(i, j) | i, j in NN, i <= j }$ mit $f(i, j) = i + j + 2 i j$ darstellt.
     Die Wurzel soll den Wert $f(1,1)$ haben. Für einen beliebigen Knoten
     mit Beschriftung $f(i,j)$  soll die Wurzel des linken Teilbaums mit
@@ -1912,8 +1959,8 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
 
 #challenge[
   Fixpunktverfahren sind iterative Methoden, bei denen eine Funktion wiederholt
-  auf einen Wert angewendet wird, bis sich ein stabiler Punkt ergibt, der sich
-  durch weitere Anwendungen nicht mehr verändert.
+  auf einen Wert angewendet wird, bis sich ein stabiler Punkt (ein sogenannter
+  Fixpunkt) ergibt, der sich durch weitere Anwendungen nicht mehr verändert.
 
   Dieses Berechnungsmuster wird durch die Funktion
   ```hs iterate :: (a -> a) -> a -> [a]``` in der Prelude festgehalten.
@@ -2043,7 +2090,8 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
 
 #challenge[
   Bevor du dich dieser Challenge stellst, bietet es sich an, sich @editdist
-  anzunehmen.
+  anzunehmen, da in dieser der technische Teil der Lösungsidee vorgestellt
+  wird.
 
   Gegeben sei ein Gitter $G in ZZ^(m times n)$. Ein Pfad durch das
   Gitter startet oben links und endet unten rechts. In jedem Schritt
