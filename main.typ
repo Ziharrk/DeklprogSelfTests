@@ -1643,7 +1643,7 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
 
 #test[
   Gebe ein Beispiel an, das zeigt, dass die faule Auswertung
-  berechnungsstärker ist?
+  berechnungsstärker ist.
 ]
 
 #test[
@@ -4085,6 +4085,11 @@ atomare Ausdrücke -- wenn nicht anders in Test oder Challenge eingeführt.
   - $sigma = { X |-> X }$
   - $sigma = { f(X) |-> f(Y) }$
   - $sigma = { X |-> Y, Y |-> X }$
+  - $sigma = { [X|Y] |-> [1|[]] }$
+]
+
+#test[
+  Sind $[X]$ und $[1, 2]$ unifizierbar?
 ]
 
 #test[
@@ -4329,6 +4334,27 @@ atomare Ausdrücke -- wenn nicht anders in Test oder Challenge eingeführt.
   ...
   ```
   Was ist hier schief gelaufen?
+]
+
+#test[
+  Begründe warum die folgende Aussage korrekt oder falsch ist:
+  Beim Berechnen der Unstimmigkeitsmenge kann folgendes Ergebnis herauskommen:
+  $ { g(X, Y), g(Y, X) }. $
+]
+
+#test[
+  Gegeben sei folgendes Prolog-Programm.
+  ```SWI-Prolog
+  append([],    L, L     ).
+  append([E|R], L, [E|RL]) :- append(R, L, RL).
+  ```
+  Es wird die Anfrage ```SWI-Prolog ?- append(X, Y, [1, 2]).``` gestellt. Beim
+  Anwenden der zweiten Regel wurde die Substitution
+  $ sigma_1 = { X |-> [E_1, R_1], Y |-> L_1, E_1 |-> 1, R L_1 |-> [2] } $
+  berechnet. Ist diese Substitution ein Unifikator für
+  ```SWI-Prolog append(X, Y, [1, 2])``` und
+  ```SWI-Prolog append([E1|R1], L1, [E1|RL1])```, der aus dem
+  Unifikationsalgorithmus entstanden ist?
 ]
 
 
