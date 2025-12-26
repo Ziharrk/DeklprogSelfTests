@@ -2036,7 +2036,7 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
 // ```
 
 #challenge[
-  Die Editierdistanz zwischen zwei Wörtern $u in Sigma^m, v in Sigma^n$ können
+  Eine Editierdistanz zwischen zwei Wörtern $u in Sigma^m, v in Sigma^n$ können
   wir mithilfe der folgenden Rekurrenz bestimmen:
   $
   "ed"(i, j) = cases(
@@ -2050,12 +2050,12 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
   für alle $0 <= i <= m, 0 <= j <= n$.
   Um $"ed"(m,n)$ effizient auszurechen, nutzt man dynamische Programmierung.
   Das heißt, wir merken uns die Zwischenergebnisse und nutzen diese, wenn wir
-  sie erneut brauchen, anstatt sie neu zu berechnen. Dieses Konzept ist auch
-  als memoization bekannt.
+  sie erneut brauchen, anstatt sie neu zu berechnen und ohne die Optimalität
+  des Ergebnisses zu gefährden.
 
-  In Haskell können wir memoization mithilfe von Lazy Evaluation umsetzen.
-  Hier ist ein unvollständiges Haskell-Programm, dass die Editierdistanz
-  berechnen soll.
+  In Haskell können wir memoization mithilfe von Lazy Evaluation umsetzen. Hier
+  ist ein unvollständiges Haskell-Programm, dass die Editierdistanz berechnen
+  soll.
   ```hs
   editdist :: Eq a => [a] -> [a] -> Int
   editdist u v = table !! m !! n
@@ -2063,12 +2063,15 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
       (m, n) = (length u, length v)
       table = [[ed i j | j <- [0..n]] | i <- [0..m]]
   ```
+  Die Berechnungen sind in ```hs table``` gespeichert.
+
   - Definiere die Funktion ```hs ed :: Int -> Int -> Int``` lokal in
     ```hs editdist```. ```hs ed``` soll hier die zwischengespeicherten
-    Ergebnisse aus ```hs table``` verwenden.
+    Ergebnisse aus ```hs table``` verwenden und dadurch die Berechnungen
+    anstoßen.
   - Überlege dir wie hier laziness und memoization zusammenspielen.
-  - Welche worst-case Laufzeit hat dein Problem, wenn du annimst, dass die
-    Laufzeit ```hs (!!)``` konstant ist?
+  - Welche worst-case Laufzeit hat deine Lösung, wenn du annimmst, dass die
+    Laufzeit von ```hs (!!)``` konstant ist?
 ] <editdist>
 
 // ```hs
@@ -2186,8 +2189,10 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
   Gegeben sei der Datentyp
   #align(center)[```hs data Direction = North | East | South | West```.]
 
-  - Implementiere eine ```hs Enum```-Instanz für ```hs Direction```.
-  - Implementiere eine ```hs Bounded```-Instanz für ```hs Direction```.
+  - Implementiere eine ```hs Enum```-Instanz für ```hs Direction```, die sich
+    wie vom GHC abgeleitete Instanz verhält.
+  - Implementiere eine ```hs Bounded```-Instanz für ```hs Direction```, die sich
+    wie vom GHC abgeleitete Instanz verhält.
   - Implementiere die Funktionen ```hs turnLeft :: Direction -> Direction```
     und ```hs turnRight :: Direction -> Direction```, die die Himmelsrichtungen
     entsprechend ihrer Bezeichnung durchgehen.
@@ -2309,7 +2314,6 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
 #test[
   Die ```hs Applicative```-Typkonstruktorklasse erlaubt es uns, ```hs fmap```
   auf Funktionen mit mehreren Argumenten zu verallgemeinern. Dadurch können wir
-  etwa
   #align(center)[
     ```hs (+) <$> Just 1 <*> Just 2``` #h(1em) oder #h(1em) ```hs Just (+) <*> Just 1 <*> Just 2```
   ]
@@ -2499,7 +2503,7 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
     pure :: a -> ZipList a
     pure x = ZipList [x]
     ```
-    keine gültige Definition ist? Welche Gesetze wären verletzt, würdest
+    keine gültige Definition ist? Welche Gesetze wären verletzt, würde man
     ```hs pure``` so definieren?
   - Implementiere eine ```hs Applicative```-Instanz für ```hs ZipList```.
   - Zeige, dass sowohl die ```hs Functor```- als auch die
@@ -2624,6 +2628,16 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
     Implementiere ```hs guard``` nun allgemein.
   - Berechne ```hs 1 `safeDiv` 0 :: m Int``` für ```hs Maybe``` und ```hs []```.
     Bevor das möglich ist, benötigst du entsprechende ```hs MonadZero```-Instanzen.
+
+  #text(0.8em)[
+    Die Typklasse ```hs MonadZero``` wird so genannt, weil sie eine "monadische
+    Null" definiert. Bzgl. der Operation ```hs (>>=)``` verhält sich ```hs mzero```
+    absorbierend. Für Instanzen dieser Typklasse sollen diese Gesetze gelten.
+    ```hs
+    mzero >>= f     = mzero
+    m     >>= mzero = mzero
+    ```
+  ]
 ] <monadzero>
 
 // ```hs
@@ -2643,7 +2657,7 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
 
 #test[
   In @monadzero haben wir eine Typkonstruktorklasse definiert, die es uns
-  erlaubt hat einen Fehlschlag bzw. die Abwesenheit eines Ergebnisses
+  erlaubt hat, einen Fehlschlag bzw. die Abwesenheit eines Ergebnisses
   auszudrücken. Diese können wir auch eine Abstraktionsebene früher einführen.
   Definiere eine weitere Typkonstruktorklasse ```hs AlternativeZero``` auf
   Ebene der applikativen Funktoren mit einer Funktion ```hs empty :: f a```.
@@ -2652,13 +2666,13 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
   - ```hs guard (y /= 0) *> pure y = pure y``` für ```hs y /= 0``` und
   - ```hs guard (y /= 0) *> pure y = empty``` für ```hs y == 0```.
 
-  ```hs (*>) :: Applicative f => f a -> f b -> f b``` soll hier ein Kombinator
-  sein, der sich wie ```hs (>>)``` verhält.
+  ```hs (*>) :: Applicative f => f a -> f b -> f b``` ist ein Kombinator, der
+  sich wie ```hs (>>)``` für applikative Funktoren verhält.
 ]
 
 #test[
   Als motivierendes Beispiel für Monaden hast du die Auswertung eines
-  arithmetischen Ausdrucks gegeben als Termstruktur kennengelernt. Dort haben
+  arithmetischen Ausdrucks, gegeben als Termstruktur, kennengelernt. Dort haben
   wir die ```hs Maybe```-Monade verwendet, um fehlschlagende Berechnung
   aufzufangen. Der Typ für die arithmetischen Ausdrücke ist gegeben durch:
   ```hs
@@ -2881,7 +2895,7 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
         p <- read <$> getLine
         print (p `div` q)
   ```
-  Warum ist das Programm fehlerhaft? Um den Fehler zu Identifizieren, klammere
+  Warum ist das Programm fehlerhaft? Um den Fehler zu identifizieren, klammere
   alle validen Haskell-Teilausdrücke. (Du kannst davon ausgehen, dass alle
   Eingaben valide sind und deshalb keine weitere Fehlerbehandlung der Eingaben
   stattfinden muss.)
@@ -3194,7 +3208,7 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
 #test[
   Es kommt häufiger vor, dass zufällig generierte Werte bestimmte Eigenschaften
   erfüllen sollen. QuickCheck bietet auf Generatoren-Ebene z.B. die Funktion
-  ```hs suchThat :: Gen a -> (a -> Bool) -> Gen a``` an. Diese nimmt einen
+  ```hs suchThat :: Gen a -> (a -> Bool) -> Gen a``` dafür an. Diese nimmt einen
   Generator und generiert solange neue Werte, bis eine gewünschte Eigenschaft
   erfüllt ist. Diese Eigenschaft wird durch ein Prädikat formuliert.
 
