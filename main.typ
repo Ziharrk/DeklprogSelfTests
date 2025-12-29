@@ -590,7 +590,10 @@ stellt eine PR auf GitHub].
   ```hs (!!)```. Sie macht den Fehlerfall explizit durch die Wahl des
   Ergebnistypen. Wie fängt der Ergebnistyp diesen Fehlerfall auf? Implementiere
   diese Funktion.
-  #footnote[Diese Funktion ist auch bereits vorimplementiert: #link("https://hackage.haskell.org/package/base-4.21.0.0/docs/Data-List.html#v:-33--63-")[```hs (!?)``` in ```hs Data.List```].]
+  #footnote[
+    Diese Funktion ist auch bereits vorimplementiert:
+    #link("https://hackage.haskell.org/package/base-4.21.0.0/docs/Data-List.html#v:-33--63-")[```hs (!?)``` in ```hs Data.List```].
+  ]
 ]
 
 #test[
@@ -644,16 +647,16 @@ stellt eine PR auf GitHub].
   sie ungeeignet für Operationen, die wahlfreien Zugriff in konstanter Laufzeit
   benötigen. Darüber hinaus sind Listen auch nicht mutierbar. Das führt dazu,
   dass Operationen, die eine Liste verändern, häufig lineare Laufzeit in der
-  Länge der Liste haben.
+  Länge der Liste haben -- mit Ausnahme der ```hs (:)```-Operation.
 
   Ziel dieser Challenge ist es, eine Datenstruktur zu entwickeln, die eine
   (amortisiert) konstante ```hs append```-Operation hat. Diese ist bekannt als
   ```hs Queue```. Sie soll durch ```hs data Queue a = Q [a] [a]``` dargestellt
-  werden. Die Idee ist es, eine Liste vorzuhalten, die eine (amortisiert)
-  konstante ```hs dequeue```-Operationen erlaubt, und eine andere, die eine
-  konstante ```hs enqueue```-Operationen erlaubt. Das heißt, die fast alle
-  dieser Operationen benötigen konstante Laufzeit und konstant wenige können
-  lineare Laufzeit haben.
+  werden. Die Idee ist es, eine (linke) Liste vorzuhalten, die eine
+  (amortisiert) konstante ```hs dequeue```-Operationen erlaubt, und eine andere
+  (rechte), die eine konstante ```hs enqueue```-Operationen erlaubt. Das heißt,
+  die fast alle dieser Operationen benötigen konstante Laufzeit und konstant
+  wenige können lineare Laufzeit haben.
 
   Implementiere die Funktionen
   - ```hs empty :: Queue a```, die eine leere Queue erzeugt,
@@ -679,6 +682,20 @@ stellt eine PR auf GitHub].
     interessieren, sei dir
     #link("https://www.cs.cmu.edu/~rwh/students/okasaki.pdf")[seine
     Doktorarbeit] empfohlen.
+  ]
+  Falls es dir für den Anfang einfacher fällt, ignoriere die Invariante erstmal.
+
+  #hint[
+    Nach $n$ ```hs enqueue```- Operationen in eine leere queue sieht diese wie
+    folgt aus
+    #align(center)[
+      ```hs Q [] [xn, ..., x1]```.
+    ]
+    Wenn als Nächstes ```hs dequeue```-Operationen naiv ausgeführt werden,
+    müssten wir die ```hs enqueue```-Liste jedes Mal vollständig durchlaufen.
+    Wenn wir die ```hs dequeue```-Liste entsprechend verändern, können wir
+    mindestens die nächsten $n$ ```hs dequeue```-Operationen effizient
+    durchführen.
   ]
 ]
 
@@ -2241,9 +2258,9 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
   #align(center)[```hs data Direction = North | East | South | West```.]
 
   - Implementiere eine ```hs Enum```-Instanz für ```hs Direction```, die sich
-    wie vom GHC abgeleitete Instanz verhält.
+    wie die vom GHC abgeleitete Instanz verhält.
   - Implementiere eine ```hs Bounded```-Instanz für ```hs Direction```, die sich
-    wie vom GHC abgeleitete Instanz verhält.
+    wie die vom GHC abgeleitete Instanz verhält.
   - Implementiere die Funktionen ```hs turnLeft :: Direction -> Direction```
     und ```hs turnRight :: Direction -> Direction```, die die Himmelsrichtungen
     entsprechend ihrer Bezeichnung durchgehen.
