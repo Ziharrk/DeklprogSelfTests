@@ -594,6 +594,27 @@ stellt eine PR auf GitHub].
 ]
 
 #test[
+  Gegeben sei der Datentyp für knotenbeschriftete Binärbäume
+  #align(center)[```hs data Tree a = Empty | Node (Tree a) a (Tree a)```.]
+
+  Mithilfe einer Pfadbeschreibung können wir durch so einen Baum navigieren.
+  Diese Beschreibung soll durch eine Liste von Werten vom Typ
+  ```hs data D = L | R``` dargestellt sein.
+  #footnote[
+    Da Datenkonstruktoren in Haskell nicht überladen werden können, können hier
+    leider nicht ```hs Left``` und ```hs Right``` verwendet werden, solange
+    die Datenkonstruktoren des ```hs Either```-Typs im scope sind.
+  ]
+  Implementiere eine Funktion ```hs (!?) :: Tree a -> [D] -> Maybe a```, die
+  die Beschriftung des Knotens zurückgibt, der durch die gegebene
+  Pfadbeschreibung gefunden wird. Hier sind kleine Beispiele:
+  - ```hs Node Empty 3 Empty !? []  = Just 3```
+  - ```hs Node Empty 3 Empty !? [L] = Nothing```
+  - ```hs Node Empty 3 Empty !? [R] = Nothing```
+  - ```hs Node (Node Empty 1 (Node Empty 2 Empty)) 3 Empty !? [L, R] = 2```
+]
+
+#test[
   ```hs (++) :: [a] -> [a] -> [a]``` wird verwendet, um zwei Listen
   aneinanderzuhängen. Wenn wir eine Funktion induktiv über den Listentypen
   definieren wie z.B. ```hs square :: [Int] -> [Int]```, die jeden Listeneintrag
@@ -1076,12 +1097,12 @@ stellt eine PR auf GitHub].
 
 #test[
   Versuche in den folgenden Ausdrücken, Teilausdrücke schrittweise durch
-  bekannte Funktionen zu ersetzen und gegebenenfalls zu vereinfachen.
+  bekannte Funktionen zu ersetzen oder gegebenenfalls zu vereinfachen.
   - ```hs foldr (\x ys -> f x : ys) [] (foldr (\x ys -> g x : ys) [] xs)```,
   - ```hs map (\_ -> y) xs```,
   - ```hs foldr (\x ys -> if x `mod` 2 == 1 then x - 1 : ys else ys) [] xs```,
   - ```hs foldl (\ys x -> x : ys) [] xs``` und
-  - ```hs flip (curry fst) x```.
+  - ```hs flip (curry snd) x```.
     #footnote[
       #link("https://www.youtube.com/watch?v=_oNgyUAEv0Q")["Your scientists were
       so preoccupied with whether or not they could, that they didn't stop to
@@ -1091,6 +1112,36 @@ stellt eine PR auf GitHub].
       solche Ausdrücke auszudenken.
     ]
 ]
+
+// ```
+//   foldr (\x ys -> f x : ys) [] (foldr (\x ys -> g x : ys) [] xs)    (Definition map über foldr)
+// = foldr (\x ys -> f x : ys) [] (map g xs)                           (Definition map über foldr)
+// = map f (map g xs)                                                  (Komposition von map)
+// = map (f . g) xs
+//
+//   map (\_ -> y) xs                                                  (Definition const)
+// = map (const y) xs
+//
+//   foldr (\x ys -> if x `mod` 2 == 1 then x - 1 : ys else ys) [] xs
+// = foldr (\x ys -> x - 1 : ys) [] (filter odd xs)                    (Definition map über foldr)
+// = map (\x -> x - 1) (filter odd xs)                                 (Definition pred)
+// = map pred (filter odd xs)
+//
+//   foldl (\ys x -> x : ys) [] xs                                     (Kopfnormalform xs)
+// = foldl (\ys x -> x : ys) [] (x1 : ... : xn : [])                   (Definition foldl)
+// = foldl (\ys x -> x : ys) (x1 : []) (x2 : ... : xn : [])            (Definition foldl)
+// = ...
+// = foldl (\ys x -> x : ys) (xn : ... : x1 : []) []                   (Definition foldl)
+// = xn : ... : x2 : x1 : []                                           (Definition reverse)
+// = reverse xs
+//
+//   flip (curry snd) x                                                (Definition snd)
+// = flip (curry (\(a, b) -> b)) x                                     (Definition curry)
+// = flip (\a b -> b) x                                                (Definition flip)
+// = (\b a -> b) x                                                     (Lambda-Applikation)
+// = \a -> x
+// ```
+
 
 #challenge[
   Sei $m, n in NN$. Gegeben seien
@@ -1713,7 +1764,7 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
     hinsichtlich der Werte, die wir den jeweiligen Teilbäumen von ```hs tree```
     sehen und der Ergbenisliste von ```hs preorder```? Wie hängt deine
     Beobachtung mit ```hs [f i j | i <- [1..], j <- [i..]]``` zusammen?
-  - Implementiere eine zweite Variante von ```hs preorder```, die statt
+  - Implementiere eine Abwandlung von ```hs preorder```, die statt
     ```hs (++)``` die Funktion ```hs merge``` verwendet.
   - Implementiere als Nächstes die Mengendifferenz als Funktion
     ```hs diff :: Ord a => [a] -> [a] -> [a]```. Du darfst dabei annehmen, dass
