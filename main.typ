@@ -1420,6 +1420,18 @@ stellt eine PR auf GitHub].
   Warum benötigen wir Konstruktoren als Teil eines ADTs?
 ]
 
+#test[
+  Im Kontext der objektorientierten Programmierung hast du wahrscheinlich das
+  Konzept des Datenkapselung kennengelernt. Dabei geht es um das Verbergen von
+  Daten, sodass Zugriffe von außen nicht möglich sind. In der objektorientierten
+  Programmierung wird dies z.B. durch explizite Angabe von Zugriffsarten
+  für Attribute oder Methoden erreicht.
+
+  In Haskell haben wir so etwas ```java private``` und ```java public``` nicht.
+  Wie können wir aber trotzdem verhindern, dass bestimmte Operationen auf
+  Werten eines Datenttypen nicht möglich sind?
+]
+
 
 // Typklassen und Überladung
 
