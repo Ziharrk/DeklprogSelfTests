@@ -4523,6 +4523,50 @@ atomare Ausdrücke -- wenn nicht anders in Test oder Challenge eingeführt.
   Wie wirkt sich der Cut-Operator auf die Struktur eines SLD-Baums aus?
 ]
 
+#test[
+  Wie können wir mithilfe des Cut-Operators im folgenden Prädikat Berechnungen
+  sparen?
+  ```SWI-Prolog
+  max(X, Y, X) :- X >= Y.
+  max(X, Y, Y) :- X < Y.
+  ```
+]
+
+
+// Arithmetik
+
+#test[
+  Wofür wird das Prädikat ```SWI-Prolog is/2``` verwendet?
+]
+
+#test[
+  Welche Anfragen sind valide?
+  - ```SWI-Prolog X is 42 - 3```
+  - ```SWI-Prolog X is Y + 1```
+  - ```SWI-Prolog Y = 1, X is Y + 1```
+  - ```SWI-Prolog 32 + 10 is X```
+  - ```SWI-Prolog 42 is 40 + Y```
+]
+
+#test[
+  Warum können wir ```SWI-Prolog =/2``` nicht für Arithmetik verwenden bzw.
+  wieso gilt ```SWI-Prolog 42 is 40 + 2``` nicht?
+]
+
+#test[
+  Welche weiteren Prädikate kennst du neben ```SWI-Prolog is/2``` die auch
+  Terme ausrechnen?
+]
+
+#test[
+  Ist ```SWI-Prolog X =:= 4 + 7.``` eine valide Anfrage in Prolog?
+]
+
+
+// TODO findall, bagof
+// TODO higher order
+// TODO difference lists
+
 
 // Logik-Puzzle
 
