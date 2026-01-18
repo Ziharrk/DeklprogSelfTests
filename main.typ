@@ -3469,6 +3469,67 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
 //     return Array(self.size, data)
 // ```
 
+#challenge[
+  Du hörst parallel zu diesem Modul "Berechnung und Logik" und möchtest
+  die Automaten-Konstruktionen für reguläre Sprachen in Haskell implementieren?
+  Dann schaue nicht weiter. Du hast die korrekte Challenge gefunden. Dieser Weg
+  ist lang und das erste Mal etwas steinig, also schnappe dir genügend
+  Proviant und bringe genügend Zeit mit.
+
+  In dieser Challenge wollen wir folgende Konstruktionen implementieren.
+  $
+  "Regulärer Ausdruck"
+  stretch(->)^"Thompson-\nKonstruktion"
+  epsilon"-NFA"
+  stretch(->)^(epsilon"-Hüllen")
+  "NFA"
+  stretch(->)^"Potenzmengen-\nkonstruktion"
+  "DFA"
+  $
+
+  - Definiere einen Datentypen ```hs RE```, um regulärere Ausdrücke
+    darzustellen. Der reguläre Ausdruck $(mono(a b))^*|mono(c)$ könnte z.B.
+    so dargestellt werden
+    #align(center)[```hs Kleene (Literal 'a' :*: Literal 'b') :|: Literal 'c'```.]
+    Die leere Sprache und die Sprache, die nur das leere Wort enthält, sind über
+    das Beispiel nicht abdeckt.
+  - Bevor wir mit den Konstruktionen beginnen, müssen wir uns überlegen, wie wir
+    die Automaten darstellen wollen. Überlege dir Typen für
+    nichtdeterministische endliche Automaten mit und ohne $epsilon$-Transitionen
+    und deterministische endliche Automaten. Einen Zustand kannst du z.B. als
+    Ganzzahl darstellen.
+  - Implementiere die Thompson-Konstruktion als Funktion ```hs RE -> EpsNFA```.
+    Hier ist eine wesentliche Schwierigkeit, neue Zustände zu erzeugen, da die
+    Bezeichnungen verschiedener Teilautomaten miteinander kollidieren können.
+    Das Problem lässt sich z.B. mithilfe eines Zählers lösen, der durch die
+    Konstruktion durchgeführt wird. Eine entsprechende Hilfsfunktion könnte
+    folgenden Typ haben: ```hs RE -> Int -> (EpsNFA, Int)```. Wenn du dich an
+    die ```hs State```-Monade wagen möchtest, könnte dies an dieser Stelle auch
+    nützlich sein, um den Zähler mitzuführen -- im Wesentlichen versteckst du
+    damit das explizite Mitführen des Zählers.
+  - Implementiere eine Funktion ```hs epsilonClosure :: EpsNFA -> [Int] -> [Int]```,
+    die die $epsilon$-Hülle einer Menge von Zuständen berechnet.
+  - Implementiere eine Funktion ```hs removeEpsilon :: EpsNFA -> NFA```, die
+    alle $epsilon$-Transitionen des übergebenen nichtdeterministischen endlichen
+    Automaten entfernt. Hier brauchst du dir keine Gedanken über neue Bezeichner
+    für Zustände machen, da du die Zustände des alten Automaten wiederverwenden
+    kannst.
+  - Implementiere die Potenzmengenkonstruktion. Dafür bietet es sich an den NEA
+    mit einer Tiefensuche zu durchlaufen, anstatt tabellarisch jede Teilmenge
+    der Zustandsmenge entsprechend zu verbinden. So werden dann nur Zustände
+    durchlaufen, die für den DEA wichtig sind.
+    Hier ist eine wesentliche Schwierigkeit, die neuen Zustände zu benennen.
+    Es bietet sich an, ein Wörterbuch der Form ```hs [([Int], Int)]``` zu
+    verwalten, in dem die neuen Bezeichner nachgeschaut werden können.
+  - Zuletzt, um zu überprüfen, ob der DEA die korrekte Sprache erkennt,
+    implementiere eine Funktion ```hs member :: String -> DFA -> Bool```, die
+    überprüft, ob ein Wort vom übergebenen Automaten erkannt wird.
+
+  Wenn du bis hierhin gekommen bist, könntest du weiter den DEA mithilfe von
+  Hopcrofts Algorithmus minimieren.
+]
+
+
 #pagebreak(weak: true)
 
 
