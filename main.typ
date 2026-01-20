@@ -118,7 +118,8 @@ stellt eine PR auf GitHub].
 // Ausdrücke und Funktionen
 
 #test[
-  Was bedeutet es, wenn eine Funktion keine Seiteneffekte hat?
+  Was bedeutet es, wenn eine Funktion keine Seiteneffekte hat? Warum ist die
+  Abwesenheit von Seiteneffekten wünschenwert, sofern es möglich ist?
 ]
 
 #test[
@@ -128,6 +129,10 @@ stellt eine PR auf GitHub].
 #test[
   Wenn du eine Schleife in Haskell umsetzen möchtest, auf welches Konzept musst
   du dann zurückgreifen?
+]
+
+#test[
+  Welche Vorteile und Nachteile haben streng getypte Programmiersprachen?
 ]
 
 #test[
