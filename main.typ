@@ -152,7 +152,7 @@ stellt eine PR auf GitHub].
   ```
   In Haskell sind Variablen keine Namen für Speicherzellen. Wie können wir
   dieses Programm in Haskell umsetzen? Wo wandert das `k` hin?
-]
+] <clz_popcnt>
 
 #test[
   Auf was müssen wir achten, wenn wir eine rekursive Funktion definieren?
@@ -905,6 +905,39 @@ stellt eine PR auf GitHub].
   Hier bezeichene eine Farbe als blau, wenn ihr Farbwert zwischen $200°$ und
   $250°$ (inklusiv) liegt. Nutze für die Definition der Funktion sowohl
   ```hs map``` als auch ```hs filter```.
+]
+
+#test[
+  Mit Funktionen höherer Ordnung können wir Kontrollstrukturen aus der
+  imperativen Programmierung definieren. Hier ist eine mögliche Definition einer
+  bedingten Wiederholung.
+  ```hs
+  while :: (a -> Bool) -> (a -> a) -> a -> a
+  while p f x | p x       = while p f (f x)
+              | otherwise = x
+  ```
+
+  In @clz_popcnt haben wir zwei Funktionen gesehen, die diese Kontrollstruktur
+  verwenden. In Haskell können wir ```py clz``` mithilfe von ```hs while``` wie
+  folgt definieren.
+  ```hs
+  clz :: Int -> Int
+  clz n = snd (while cond step (n, 0))
+    where
+      cond (n, k) = n > 0
+      step (n, k) = (n `div` 2, k + 1)
+  ```
+  Oder alternativ so
+  ```hs
+  clz :: Int -> Int
+  clz = go 0
+    where
+      go k n | n > 0     = go (k + 1) (n `div` 2)
+             | otherwise = 64 - k
+  ```
+  Beide Funktionsdefinitionen sind semantisch äquivalent. Argumentiere unter
+  verschiedenen Aspekten, warum die eine Implementierung besser als die andere
+  sein könnte -- z.B. in Hinsicht auf Lesbarkeit, Idiomatik und Wartbarkeit.
 ]
 
 #test[
