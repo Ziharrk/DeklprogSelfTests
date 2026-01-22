@@ -4551,6 +4551,16 @@ atomare Ausdrücke -- wenn nicht anders in Test oder Challenge eingeführt.
   Unifikationsalgorithmus entstanden ist?
 ]
 
+#test[
+  Gegeben sei folgendes Prolog-Programm.
+  ```SWI-Prolog
+  f(X, 2).
+  ```
+  Welcher Schritt der SLD-Resolution ist hier essentiell, um eine korrekte
+  Lösung zu erhalten. Betrachte dafür die folgende Anfrage
+  ```SWI-Prolog f(1, X).```
+]
+
 
 // Negation
 
