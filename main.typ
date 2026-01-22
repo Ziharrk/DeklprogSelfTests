@@ -4671,8 +4671,56 @@ atomare Ausdrücke -- wenn nicht anders in Test oder Challenge eingeführt.
   Ist ```SWI-Prolog X =:= 4 + 7.``` eine valide Anfrage in Prolog?
 ]
 
+#test[
+  Implementiere ein Prädikat ```SWI-Prolog all_trees/2```, das jeden möglichen
+  blätterbeschriften Binärbaum erzeugt, deren Blätter von links nach rechts die
+  Eingabeliste lesen.
+  ```SWI-Prolog
+  ?- all_trees([1, 2, 3], Ts).
+  Ts = [
+    branch(leaf(1), branch(leaf(2), leaf(3))),
+    branch(branch(leaf(1), leaf(2)), leaf(3))
+  ].
+  ```
+  - Implementiere zuerst eine Variante, in der du auf keine besonderen
+    Hilfsprädikate zurückgreifst.
+  - Gegeben sei folgende fehlerhafe Implementierng des Prädikats.
+    ```SWI-Prolog
+    all_trees([], []).
+    all_trees([X], [leaf(X)]) :- !.
+    all_trees(Xs, Ts) :-
+      member(branch(Lt, Rt), Ts),
+      append([L|Ls], [R|Rs], Xs),
+      all_trees([L|Ls], Lts),
+      member(Lt, Lts),
+      all_trees([R|Rs], Rts),
+      member(Rt, Rts).
+    ```
+    Auf dem ersten Blick scheint eine elegante Idee hinter dieser Definition zu
+    stecken. Wieso funktioniert diese Idee allerdings nicht?
+  - Korrigiere die fehlerhafte Definition unter Verwendung von
+    ```SWI-Prolog findall/2``` und erhalte dabei grundsätzliche Idee.
+  - Staune darüber, wie vergleichweise müheselig das Implementieren der ersten
+    Variante ohne Hilfsprädikate war, und sei dankbar für
+    ```SWI-Prolog findall/3```.
+]
 
-// TODO findall, bagof
+// ```SWI-Prolog
+// all_trees([], []).
+// all_trees([X], [leaf(X)]) :- !.
+// all_trees(Xs, Ts) :-
+//   findall(
+//     branch(Lt, Rt),
+//     (
+//       append([L|Ls], [R|Rs], Xs),
+//       all_trees([L|Ls], Lts), member(Lt, Lts),
+//       all_trees([R|Rs], Rts), member(Rt, Rts)
+//     ),
+//     Ts
+//   ).
+// ```
+
+// TODO more findall, bagof
 // TODO higher order
 // TODO difference lists
 
