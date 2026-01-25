@@ -4662,6 +4662,17 @@ Wie können wir daran denken?
   linke Menge ist kein korrekter Zwischenschritt. Deshalb schreibe die linke
   Menge besser als Komposition.
 
+#test[
+  Die Komposition von Substitutionen ist definiert durch
+  $
+  phi compose psi
+    = {v |-> phi(t) | v |-> t in psi, phi(t) != v}
+    union {v |-> t | v |-> t in phi, v in.not D(psi) }.
+  $
+  Wieso spielen $phi(t) != v$ und $v in.not D(psi)$ keine Rolle, wenn wir den
+  akribisch Unifikationsalgorithmus anwenden?
+]
+
 
 // Negation
 
