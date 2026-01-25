@@ -4610,8 +4610,8 @@ atomare Ausdrücke -- wenn nicht anders in Test oder Challenge eingeführt.
 Zu den am häufigsten gemachten Fehlern beim Angeben eines SLD-Baums ist die
 fehlerhafte Anwendung des Unifikationsalgorithmus.  Beim intuitiven Anwenden des
 Algorithmus suchen wir oftmals nur die Stellen in den Ausgangstermen, an denen
-Variablen auf Terme stoßen und vergessen, bereits gebundene Variablen zu
-ersetzen. Als Unifikator für z.B. ```SWI-Prolog f(1, Y)``` und
+Variablen auf Terme stoßen und vergessen, zuvor freie und bereits gebundene
+Variablen zu ersetzen. Als Unifikator für z.B. ```SWI-Prolog f(1, Y)``` und
 ```SWI-Prolog f(X, [X|R])``` wird oft $ sigma = { X |-> 1, Y |-> [X|R] } $
 angegeben. Das ist falsch, da
 $ sigma(f(1, Y)) = f(1, [X|R]) != f(1, [1|R]) = sigma(f(X, [X|R])) $
@@ -4633,34 +4633,33 @@ $sigma_1(t_2) = f(1,[1|R])$ vorkommt.
     [$2$], [${X |-> 1, Y |-> [1|R]}$], [$f(1,[1|R])$], [$f(1, [1|R])$], [$emptyset$],
   )
 ]
+Wenn wir die Anwendung der Substitution $sigma_1$ auf den Teilterm $[X|R]$ von
+$t_2$ verspäten, sehen wir, wo der obige Fehler liegt.
+$
+sigma_2 compose sigma_1 &= { Y |-> sigma_1([X|R]) } compose { X |-> 1 } \
+  &= { Y |-> [1|R], X |-> 1 }.
+$
 
-Wie können wir daran denken?
-- Wenn eine Variable $X$ in der $k$. Iteration gebunden wird, dann kann $X$
-  weder in $sigma_k (t_1)$ noch in $sigma_k (t_2)$ vorkommen. Für dieses
-  Beispiel bedeutet das, wenn wir kurz davor sind $Y |-> [X|R]$ hinschreiben,
-  sollten wir uns vergewissern, ob bereits gebundene Variablen auf der rechten
-  Seite vorkommen und entsprechend ersetzen.
-- Alternativ können wir die Komposition, die sich aus dem
-  Unifikationsalgorithmus ergibt, ohne Applikation der Substitutionen
-  als Zwischenschritt aufschreiben, und erhalten:
-  $ sigma_2 compose sigma_1 = { Y |-> [X|R] } compose { X |-> 1 } $
-  Danach werten wir die Komposition von rechts nach links aus unter der
-  Berücksichtigung der Definition der Komposition
-  $
-  phi compose psi
-    = {v |-> phi(t) | v |-> t in psi, phi(t) != v}
-    union {v |-> t | v |-> t in phi, v in.not D(psi) }.
-  $
-  Wir erhalten also
-  $
-  sigma_2 compose sigma_1 &= { Y |-> [X|R] } compose { X |-> 1 } \
-    &= { Y |-> sigma_1([X|R]) } union { X |-> 1 } \
-    &= { Y |-> [1|R], X |-> 1 }.
-  $
-  // Fehler aus Hausaufgaben
-  Wichtig ist, dass ${ Y |-> [X|R], X |-> 1} != { Y |-> [1|R], X |-> 1 }$! Die
-  linke Menge ist kein korrekter Zwischenschritt. Deshalb schreibe die linke
-  Menge besser als Komposition.
+Wie können wir daran denken? Wenn eine Variable $X$ in der $k$. Iteration
+gebunden wird, dann kann $X$ weder in $sigma_k (t_1)$ noch in $sigma_k (t_2)$
+vorkommen. Für dieses Beispiel bedeutet das, wenn wir kurz davor sind,
+$Y |-> [X|R]$ hinzuschreiben, sollten wir uns vergewissern, ob bereits gebundene
+Variablen auf der rechten Seite vorkommen und entsprechend ersetzen. In einem anderen Fall können wir Variablen haben, die bereits an Terme
+gebunden sind aber noch freie Vorkommen von Variablen haben --
+betrachte z.B. $f(X, 1)$ und $f([Y|R], Y)$ mit
+${Y |-> 1} compose {X |-> [Y|R]}$. Hier müssen andersherum schauen,
+ob die neue Belegung alte Belegungen verändert. Das geht aus der linken Menge
+der Definition der Komposition hervor.
+$
+phi compose psi
+  = {v |-> phi(t) | v |-> t in psi, phi(t) != v}
+  union {v |-> t | v |-> t in phi, v in.not D(psi) }.
+$
+
+// Fehler aus Hausaufgaben
+Zu beachten ist, dass
+$ {Y |-> [X|R]} compose {X |-> 1} = {Y |-> [X|R], X |-> 1} != { Y |-> [1|R], X |-> 1 }. $
+Die linken Substitutionen ist keine korrekten Zwischenschritte.
 
 #test[
   Die Komposition von Substitutionen ist definiert durch
