@@ -4590,7 +4590,7 @@ atomare Ausdrücke -- wenn nicht anders in Test oder Challenge eingeführt.
   ```
   Es wird die Anfrage ```SWI-Prolog ?- append(X, Y, [1, 2]).``` gestellt. Beim
   Anwenden der zweiten Regel wurde die Substitution
-  $ sigma_1 = { X |-> [E_1, R_1], Y |-> L_1, E_1 |-> 1, R L_1 |-> [2] } $
+  $ sigma_1 = { X |-> [E_1|R_1], Y |-> L_1, E_1 |-> 1, R L_1 |-> [2] } $
   berechnet. Ist diese Substitution ein Unifikator für
   ```SWI-Prolog append(X, Y, [1, 2])``` und
   ```SWI-Prolog append([E1|R1], L1, [E1|RL1])```, der aus dem
@@ -4606,6 +4606,61 @@ atomare Ausdrücke -- wenn nicht anders in Test oder Challenge eingeführt.
   Lösung zu erhalten. Betrachte dafür die folgende Anfrage
   ```SWI-Prolog f(1, X).```
 ]
+
+Zu den am häufigsten gemachten Fehlern beim Angeben eines SLD-Baums ist die
+fehlerhafte Anwendung des Unifikationsalgorithmus.  Beim intuitiven Anwenden des
+Algorithmus suchen wir oftmals nur die Stellen in den Ausgangstermen, an denen
+Variablen auf Terme stoßen und vergessen, bereits gebundene Variablen zu
+ersetzen. Als Unifikator für z.B. ```SWI-Prolog f(1, Y)``` und
+```SWI-Prolog f(X, [X|R])``` wird oft $ sigma = { X |-> 1, Y |-> [X|R] } $
+angegeben. Das ist falsch, da
+$ sigma(f(1, Y)) = f(1, [X|R]) != f(1, [1|R]) = sigma(f(X, [X|R])) $
+Auf der linken Seite könnten wir den Unifikator zwar erneut anwenden, um den
+korrekten Term zu erhalten, damit halten wir uns allerdings nicht an die
+Definition der Unifizierbarkeit.
+
+Wenn wir den Unifikationsalgorithmus auf die beiden Terme formal anwenden, sehen
+wir in der ersten Iterationen, dass der Teilterm $[X|R]$ nicht mehr in
+$sigma_1(t_2) = f(1,[1|R])$ vorkommt.
+#align(center)[
+  #grid(
+    columns: (auto, auto, auto, auto, auto),
+    inset: 8pt,
+    stroke: 0.5pt,
+    [$k$], [$sigma_k$], [$sigma_k (t_1)$], [$sigma_k (t_2)$], [$"ds"(sigma_k (t_1), sigma_k (t_2))$],
+    [$0$], [$emptyset$], [$f(1,Y)$], [$f(X, [X|R])$], [${X,1}$],
+    [$1$], [${X |-> 1}$], [$f(1,Y)$], [$f(1, [1|R])$], [${Y,[1|R]}$],
+    [$2$], [${X |-> 1, Y |-> [1|R]}$], [$f(1,[1|R])$], [$f(1, [1|R])$], [$emptyset$],
+  )
+]
+
+Wie können wir daran denken?
+- Wenn eine Variable $X$ in der $k$. Iteration gebunden wird, dann kann $X$
+  weder in $sigma_k (t_1)$ noch in $sigma_k (t_2)$ vorkommen. Für dieses
+  Beispiel bedeutet das, wenn wir kurz davor sind $Y |-> [X|R]$ hinschreiben,
+  sollten wir uns vergewissern, ob bereits gebundene Variablen auf der rechten
+  Seite vorkommen und entsprechend ersetzen.
+- Alternativ können wir die Komposition, die sich aus dem
+  Unifikationsalgorithmus ergibt, ohne Applikation der Substitutionen
+  als Zwischenschritt aufschreiben, und erhalten:
+  $ sigma_2 compose sigma_1 = { Y |-> [X|R] } compose { X |-> 1 } $
+  Danach werten wir die Komposition von rechts nach links aus unter der
+  Berücksichtigung der Definition der Komposition
+  $
+  phi compose psi
+    = {v |-> phi(t) | v |-> t in psi, phi(t) != v}
+    union {v |-> t | v |-> t in phi, v in.not D(psi) }.
+  $
+  Wir erhalten also
+  $
+  sigma_2 compose sigma_1 &= { Y |-> [X|R] } compose { X |-> 1 } \
+    &= { Y |-> sigma_1([X|R]) } union { X |-> 1 } \
+    &= { Y |-> [1|R], X |-> 1 }.
+  $
+  // Fehler aus Hausaufgaben
+  Wichtig ist, dass ${ Y |-> [X|R], X |-> 1} != { Y |-> [1|R], X |-> 1 }$! Die
+  linke Menge ist kein korrekter Zwischenschritt. Deshalb schreibe die linke
+  Menge besser als Komposition.
 
 
 // Negation
