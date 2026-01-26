@@ -4633,12 +4633,10 @@ $sigma_1(t_2) = f(1,[1|R])$ vorkommt.
     [$2$], [${X |-> 1, Y |-> [1|R]}$], [$f(1,[1|R])$], [$f(1, [1|R])$], [$emptyset$],
   )
 ]
-Wenn wir die Anwendung der Substitution $sigma_1$ auf den Teilterm $[X|R]$ von
-$t_2$ verspäten, sehen wir, wo der obige Fehler liegt.
-$
-sigma_2 compose sigma_1 &= { Y |-> sigma_1([X|R]) } compose { X |-> 1 } \
-  &= { Y |-> [1|R], X |-> 1 }.
-$
+Der Fehler kommt zustande, da wir beim Berechnen der zweiten Unstimmigkeitsmenge
+immer noch die Ausgangstermen, $t_1$ und $t_2$, anstatt der neuen Terme,
+$sigma_1 (t_1)$ und $sigma_1 (t_2)$, nutzen, in denen $X$ bereits substituiert
+ist.
 
 Wie können wir daran denken? Wenn eine Variable $X$ in der $k$. Iteration
 gebunden wird, dann kann $X$ weder in $sigma_k (t_1)$ noch in $sigma_k (t_2)$
@@ -4656,12 +4654,29 @@ phi compose psi
   = {v |-> phi(t) | v |-> t in psi, phi(t) != v}
   union {v |-> t | v |-> t in phi, v in.not D(psi) }.
 $
-Insgesamt ergibt sich daraus, dass ein Unifikator $sigma$, der aus dem
-Unifikationsalgorithmus gewonnen wurde (!),
-$ forall v |-> t in sigma : "Vars"(t) inter D(sigma) = emptyset "oder alternativ" sigma compose sigma = sigma $
-erfüllt. Es dürfen also auf den rechten Seiten keine Variablen vorkommen können,
-die durch den Unifikator selber gebunden werden. Solange diese Eigenschaft nicht
-erfüllt ist, müssen wir solche Vorkommen durch die Belegungen ersetzen.
+
+Ein Unifikator $sigma$ erfüllt die Eigenschaft
+$ forall v |-> t in sigma : "Vars"(t) inter D(sigma) = emptyset "oder alternativ" sigma compose sigma = sigma. $ Es dürfen also auf den rechten Seiten keine Variablen vorkommen
+können, die durch den Unifikator selber gebunden werden. Solange diese
+Eigenschaft nicht erfüllt ist, müssen wir solche Vorkommen durch die Belegungen
+ersetzen. Der Fall "${Z |-> Y} compose {Y |-> X} = {Z |-> Y, Y |-> X}$" kann im
+Unifikationsalgorithmus nicht eintreten.
+
+Praktisch ergibt daraus, wenn zwei Terme unifizierbar sind, dann können wir
+eine Substitution (keinen Unifikator) gemäß des Unifikationsalgorithmus auf den
+Ausgangstermen definieren, in dem wir alle Unstimmigkeitsstellen in den Termen
+betrachten.
+$ phi = phi_2 compose phi_1 = { Y |-> [X|R] } compose { X |-> 1 } $
+Danach berechnen wir die Komposition von $phi$ mit sich selbst bis wir einen
+Fixpunkt erreicht haben (maximal so häufig, wie wir Belegungen haben), und
+erhalten dadurch den allgemeisten Unifikator:
+$
+sigma &= phi compose phi \
+  &= { Y |-> phi([X|R]), X |-> phi(1) } \
+  &= { Y |-> [1|R], X |-> 1 }.
+$
+Das entspricht den Anwendungen der Substitution $sigma_k$, bevor wir die
+Unstimmigkeitsmenge im Unifikationsalgorithmus berechnen.
 
 
 #test[
