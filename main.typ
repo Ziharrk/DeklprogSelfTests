@@ -4644,10 +4644,11 @@ Wie können wir daran denken? Wenn eine Variable $X$ in der $k$. Iteration
 gebunden wird, dann kann $X$ weder in $sigma_k (t_1)$ noch in $sigma_k (t_2)$
 vorkommen. Für dieses Beispiel bedeutet das, wenn wir kurz davor sind,
 $Y |-> [X|R]$ hinzuschreiben, sollten wir uns vergewissern, ob bereits gebundene
-Variablen auf der rechten Seite vorkommen und entsprechend ersetzen. In einem anderen Fall können wir Variablen haben, die bereits an Terme
-gebunden sind aber noch freie Vorkommen von Variablen haben --
+Variablen auf der rechten Seite vorkommen (hier $X$) und entsprechend ersetzen
+(mit $1$). In einem anderen Fall können wir Variablen haben, die bereits an
+Terme gebunden sind aber noch freie Vorkommen von Variablen haben --
 betrachte z.B. $f(X, 1)$ und $f([Y|R], Y)$ mit
-${Y |-> 1} compose {X |-> [Y|R]}$. Hier müssen andersherum schauen,
+${Y |-> 1} compose {X |-> [Y|R]}$. Hier müssen wir andersherum schauen,
 ob die neue Belegung alte Belegungen verändert. Das geht aus der linken Menge
 der Definition der Komposition hervor.
 $
@@ -4655,11 +4656,13 @@ phi compose psi
   = {v |-> phi(t) | v |-> t in psi, phi(t) != v}
   union {v |-> t | v |-> t in phi, v in.not D(psi) }.
 $
+Insgesamt ergibt sich daraus, dass ein Unifikator $sigma$, der aus dem
+Unifikationsalgorithmus gewonnen wurde (!),
+$ forall v |-> t in sigma : "Vars"(t) inter D(sigma) = emptyset "oder alternativ" sigma compose sigma = sigma $
+erfüllt. Es dürfen also auf den rechten Seiten keine Variablen vorkommen können,
+die durch den Unifikator selber gebunden werden. Solange diese Eigenschaft nicht
+erfüllt ist, müssen wir solche Vorkommen durch die Belegungen ersetzen.
 
-// Fehler aus Hausaufgaben
-Zu beachten ist, dass
-$ {Y |-> [X|R]} compose {X |-> 1} = {Y |-> [X|R], X |-> 1} != { Y |-> [1|R], X |-> 1 }. $
-Die linken Substitutionen ist keine korrekten Zwischenschritte.
 
 #test[
   Die Komposition von Substitutionen ist definiert durch
