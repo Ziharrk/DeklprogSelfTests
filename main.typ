@@ -4389,8 +4389,10 @@ atomare Ausdrücke -- wenn nicht anders in Test oder Challenge eingeführt.
 ]
 
 #test[
-  Finde Unifikatoren für die folgende Terme:
-  - $(X + 1) dot Y + Z$ und $((3 + Z) + 1) dot Z + 3$, und
+  Finde die allgemeinsten Unifikatoren für die folgende Terme:
+  - $(X + 1) dot Y + Z$ und $((3 + Z) + 1) dot Z + 3$,
+  - $f(X, 1)$ und $f([Y|R], Y)$,
+  - $f([X|R], X, R)$ und $f([1, 2, 3], _, [Z|S])$, und
   - #grid(
       columns: (1fr, auto, 1fr),
       align: center + horizon,
@@ -4446,7 +4448,7 @@ atomare Ausdrücke -- wenn nicht anders in Test oder Challenge eingeführt.
         )
       ]
     )
-]
+] <det_mgus>
 
 #test[
   Unter welchen Umständen terminiert der Unifikationsalgorithmus?
@@ -4659,25 +4661,55 @@ Ein Unifikator $sigma$ erfüllt die Eigenschaft
 $ forall v |-> t in sigma : "Vars"(t) inter D(sigma) = emptyset "oder alternativ" sigma compose sigma = sigma. $ Es dürfen also auf den rechten Seiten keine Variablen vorkommen
 können, die durch den Unifikator selber gebunden werden. Solange diese
 Eigenschaft nicht erfüllt ist, müssen wir solche Vorkommen durch die Belegungen
-ersetzen. Der Fall "${Z |-> Y} compose {Y |-> X} = {Z |-> Y, Y |-> X}$" kann im
-Unifikationsalgorithmus nicht eintreten.
+ersetzen. In @det_mgus findest du Beispiele zum Üben.
 
-Praktisch ergibt daraus, wenn zwei Terme unifizierbar sind, dann können wir
-eine Substitution (keinen Unifikator) gemäß des Unifikationsalgorithmus auf den
-Ausgangstermen definieren, in dem wir alle Unstimmigkeitsstellen in den Termen
-betrachten.
-$ phi = phi_2 compose phi_1 = { Y |-> [X|R] } compose { X |-> 1 } $
-Danach berechnen wir die Komposition von $phi$ mit sich selbst bis wir einen
-Fixpunkt erreicht haben (maximal so häufig, wie wir Belegungen haben), und
-erhalten dadurch den allgemeisten Unifikator:
-$
-sigma &= phi compose phi \
-  &= { Y |-> phi([X|R]), X |-> phi(1) } \
-  &= { Y |-> [1|R], X |-> 1 }.
-$
-Das entspricht den Anwendungen der Substitution $sigma_k$, bevor wir die
-Unstimmigkeitsmenge im Unifikationsalgorithmus berechnen.
+// TODO fix
+//
+// Der Fall "${Z |-> Y} compose {Y |-> X} = {Z |-> Y, Y |-> X}$" kann im
+// Unifikationsalgorithmus nicht eintreten.
+//
+// Praktisch ergibt daraus, wenn zwei Terme unifizierbar sind, dann können wir
+// eine Substitution (keinen Unifikator) gemäß des Unifikationsalgorithmus auf den
+// Ausgangstermen definieren, in dem wir alle Unstimmigkeitsstellen in den Termen
+// betrachten.
+// $ phi = phi_2 compose phi_1 = { Y |-> [X|R] } compose { X |-> 1 } $
+// Danach berechnen wir die Komposition von $phi$ mit sich selbst bis wir einen
+// Fixpunkt erreicht haben (maximal so häufig, wie wir Belegungen haben), und
+// erhalten dadurch den allgemeisten Unifikator:
+// $
+// sigma &= phi compose phi \
+//   &= { Y |-> phi([X|R]), X |-> phi(1) } \
+//   &= { Y |-> [1|R], X |-> 1 }.
+// $
+// Das entspricht den Anwendungen der Substitution $sigma_k$, bevor wir die
+// Unstimmigkeitsmenge im Unifikationsalgorithmus berechnen.
 
+Hier sind andere Fehler, die seltener geschehen, über die man sich trotzdem
+Gedanken machen kann.
+- Basierend auf dem obigen Beispiel wird als Zwischenschritt manchmal
+  $ { Y |-> [X|R], X |-> 1 } = { Y |-> [1|R], X |-> 1 } $
+  aufgeschrieben. Das ist falsch, denn hier besteht keine Gleichheit. Die linke
+  Substitution bildet $Y$ auf $[X|R]$ ab, während die rechte $Y$ auf $[1|R]$
+  abbildet. Die Terme $[X|R]$ und $[1|R]$ sind nicht gleich -- selbst wenn in
+  den beiden Substitutionen $X$ auf $1$ abgebildet wird.
+- In den Unifikatoren müssen alle Belegungen stehen, die benötigt werden, um
+  die linke Seite einer Regel mit dem derzeitig selektierten Literal zu
+  unifizieren. Das ist unabhängig davon, ob diese Belegungen am Ende zur
+  Berechnung einer Lösung benötigt werden. Es geht um die korrekte Anwendungen
+  eines Algorithmus und nicht darum, dass ihr logisch schließen könnt, dass
+  manche Belegungen irrelevant sind.
+
+#test[
+  Welche der folgenden Listen entsprechen syntaktisch korrekten Listen in
+  Prolog. Darüber hinaus, welche der Listen entsprechen der Liste $(1, 2, 3)$.
+  - ```SWI-Prolog [1, 2, 3]```
+  - ```SWI-Prolog [1, [2, 3]]```
+  - ```SWI-Prolog [1|[2, 3]]```
+  - ```SWI-Prolog [1, 2|[3]]```
+  - ```SWI-Prolog [1, 2|3]```
+  - ```SWI-Prolog [1|2|3]```
+  - ```SWI-Prolog [1|[2|[3|[]]]]```
+]
 
 #test[
   Die Komposition von Substitutionen ist definiert durch
@@ -4688,6 +4720,11 @@ Unstimmigkeitsmenge im Unifikationsalgorithmus berechnen.
   $
   Wieso spielen $phi(t) != v$ und $v in.not D(psi)$ keine Rolle, wenn wir den
   akribisch Unifikationsalgorithmus anwenden?
+]
+
+#test[
+  Wieso tritt das Szenario, in dem wir z.B. $f(X, 1)$ und $f(1, X)$ unifizieren
+  müssten, beim Angeben eines SLD-Baums nicht auf?
 ]
 
 
