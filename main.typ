@@ -107,6 +107,11 @@ Die Nomenklatur des Aufgaben ist aktuell möglicherweise noch etwas willkürlich
 da es Tests gibt, die wie Challenges wirken -- und möglicherweise sogar
 andersherum.
 
+Für die Selbsttests wird es absehbar keine Lösungen geben. Stattdessen möchten
+wir dich ermutigen deine Lösungen mit anderen Mitstudierenden oder
+Mitarbeitenden zu diskutieren, solltest du offene Fragen haben -- oder du
+promptes das LLM deiner Wahl.
+
 Wenn du Anmerkungen oder weitere Ideen für Inhalte für dieses Dokument hast,
 dann schreibe uns gerne über z.B. mattermost an -- oder
 #link("https://github.com/Ziharrk/DeklprogSelfTests/")[erstellt ein issue oder
