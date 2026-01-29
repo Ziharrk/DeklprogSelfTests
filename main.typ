@@ -4345,12 +4345,17 @@ verallgemeinern kannst.
 
 #check[
   Ich bin in der Lage, ...
-  - Prädikate zu definieren,
-  - Daten als Terme zu strukturieren,
-  - Listen zu nutzen,
-  - ```SWI-Prolog append/3``` zu definieren und damit andere Prädikate wie z.B.
-    ```SWI-Prolog member/2``` zu definieren,
-  - Peano-Arithmetik zu definieren und zu nutzen.
+  - das Berechnungs- und Ableitungsprinzip von Prolog informell zu erklären und
+    anzuwenden, insbesondere Backtracking und Nichtdeterminismus,
+  - Programme relational zu modellieren, d.h., Fakten, Regeln und Termstrukturen
+    zu entwerfen und Prolog bewusst nicht funktional sondern relational
+    einzusetzen,
+  - Zusammenhänge zwischen Prolog und Haskell herzustellen, etwa Funktionen
+    gegenüber Relationen, ```hs Bool```-Funktionen, Listenverarbeitung,
+    Nichtdeterminismus (Listenmonade) und Gleichheit,
+  - zentrale Prolog-Prädikate zu analysieren und nutzen, insbesondere
+    ```SWI-Prolog append/3```, ```SWI-Prolog member/2```, Rekursion sowie deren
+    Verhalten bei verschiedenen Anfrageformen,
 ]
 
 
@@ -5087,9 +5092,14 @@ Gedanken machen kann.
 
 #check[
   Ich bin in der Lage, ...
-  - formale Grundlagen der SLD-Resolution zu erklären,
-  - den Unifikationsalgorithmus anzuwenden,
-  - SLD-Bäume (mit cuts) anzugeben.
+  - Aussagen mithilfe von Modus Ponens und dem Resolutionsprinzip logisch
+    abzuleiten,
+  - Terme zu erkennen, Substitutionen korrekt anzuwenden und allgemeinste
+    Unifikatoren zu bestimmen,
+  - SLD-Resolution anzuwenden, Variablen korrekt zu binden und Backtracking
+    nachzuvollziehen, und
+  - Nichtdeterminismus in Prolog zu verstehen und mehrere Lösungen systematisch
+    zu berechnen (SLD-Bäume mit cuts).
 ]
 
 
@@ -5250,10 +5260,15 @@ Gedanken machen kann.
 
 #check[
   Ich bin in der Lage, ...
-  - den Unterschied zwischen ```SWI-Prolog is/2``` und ```SWI-Prolog ==/2```
-    bzgl. der Arithmetik erklären,
-  - zu klären, welche Auswirkung es hat, dass ```SWI-Prolog is/2``` im zweiten
-    Argument nur vollständig instanziierte Terme genutzt werden können.
+  - das Prädikat ```SWI-Prolog is/2``` zu verwenden, um arithmetische Ausdrücke
+    auszuwerten,
+  - gültige von ungültigen arithmetischen Anfragen zu unterscheiden,
+  - zu erklären, warum ```SWI-Prolog =/2``` für Arithmetik ungeeignet ist und
+    wann ```SWI-Prolog is/2``` verwendet werden muss,
+  - alternative arithmetische Prädikate in Prolog einzusetzen
+    (Peano-Arithmetik),
+  - die Vor- und Nachteile der eingebauten Prolog-Arithmetik gegenüber
+    Peano-Arithmetik zu erläutern.
 ]
 
 
@@ -5334,7 +5349,8 @@ Gedanken machen kann.
 
 #check[
   Ich bin in der Lage, ...
-  - Nichtdeterminismus zu kapseln.
+  - ```SWI-Prolog findall/3``` oder ähnliche Mechanismen einzusetzen, um
+    systematisch alle möglichen Ergebnisse zu kapseln.
 ]
 
 // Difference lists wurden für die Klausur ausgeschlossen.
