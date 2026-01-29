@@ -2581,6 +2581,12 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
 ]
 
 #test[
+  Mit ```hs getLine :: IO String``` können Zeilen aus der Standardeingabe
+  gelesen werden. Oft wollen wir den Wert haben, der durch die eingebene
+  Zeichenkette repräsentiert wird. Wie können wir diesen Wert erhalten?
+]
+
+#test[
   Implementiere ein Programm, das Zahlen aus einer Datei aufsummiert, bzw.
   implementiere eine Funktion ```hs sumFile :: FilePath -> IO Int```.
   In jeder Zeile einer Datei steht eine nicht-negative Zahl.
