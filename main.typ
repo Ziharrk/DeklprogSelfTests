@@ -257,7 +257,7 @@ stellt eine PR auf GitHub].
     bekannt. ```hs (^)``` ist so in Haskell implementiert (siehe
     #link("https://hackage-content.haskell.org/package/ghc-internal/docs/src/GHC.Internal.Real.html#powImpl")[```hs powImpl```]).
   ]
-]
+] <binexp>
 
 #test[
   Gegeben ist folgender Ausdruck.
@@ -1634,6 +1634,7 @@ stellt eine PR auf GitHub].
     gefragt ist.
 ]
 
+
 == Typklassen und Überladung
 
 #refs[
@@ -1653,7 +1654,7 @@ stellt eine PR auf GitHub].
 
 #test[
   In einem vorherigen Test wurdest du bereits gefragt, wieso ```hs show```
-  nicht als Funktion mit dem Typ ```hs a -> String``` implementiert sein.
+  nicht als Funktion mit dem Typ ```hs a -> String``` implementiert sein kann.
   Wieso wird die Funktion durch den Typ ```hs Show a => a -> String``` gerettet?
 ]
 
@@ -1681,22 +1682,23 @@ stellt eine PR auf GitHub].
   für den Datentypen ```hs data Mat22 a = Mat22 a a a a```, der
   $(2 times 2)$-Matrizen repräsentieren soll -- ```hs abs, signum, fromInteger```
   kannst du z.B. komponentenweise implementieren.
-  #footnote[
+
+  #extra[
     Oft sind an Funktionen von Typklassen Bedingungen bzw. Gesetze, die erfüllt
-    werden sollen, gekoppelt. Das für ```hs abs``` und ```hs signum``` wird
-    durch den Vorschlag nicht erfüllt.
+    werden sollen, gekoppelt. Diese werden durch den Implementierungsvorschlag
+    von ```hs abs``` und ```hs signum``` nicht erfüllt.
   ]
-]
+] <matmath>
 
 #test[
   Mit $ mat(f_(n+1), f_n; f_n, f_(n-1))^n = mat(1, 1; 1, 0)^n $ und der
-  binären Exponentiation und ```hs Mat22 Integer``` aus einem vorherigen Tests
-  kannst du die $n$-te Fibonacci-Zahl in logarithmischer Laufzeit in $n$
-  berechnen. Implementiere das Verfahren.
+  binären Exponentiation (@binexp) und ```hs Mat22 Integer``` (@matmath) aus
+  vorherigen Tests kannst du die $n$-te Fibonacci-Zahl in logarithmischer
+  Laufzeit in $n$ berechnen. Implementiere das Verfahren.
 
   #text(0.8em)[
     Da du eine ```hs Num```-Instanz auf ```hs Mat22``` definiert hast, kannst
-    du den ```hs (^)```-Operator zum binären Exponentiation nutzen.
+    du den ```hs (^)```-Operator zur binären Exponentiation nutzen.
   ]
 ]
 
@@ -1707,7 +1709,8 @@ stellt eine PR auf GitHub].
   einfache, elementare Funktionen zurück.
 
   Wir verwenden folgenden Datentyp: ```hs data D a = D a a```.
-  Ein Wert vom Typ ```hs D a``` enthält einen Funktionswert und seine Ableitung.
+  Ein Wert vom Typ ```hs D a``` enthält einen Funktionswert und die Ableitung
+  an einer gegebenen Stelle.
 
   Der Kern der Idee ist, Funktionen so zu überladen, dass sie auf
   ```hs D a```-Werte angewendet werden können. Angenommen, es sei eine Funktion
@@ -1720,32 +1723,31 @@ stellt eine PR auf GitHub].
   Der Wert ```hs gx``` ist das Ergebnis einer inneren Funktion ```hs g```,
   und ```hs dgdx``` entspricht deren Ableitung ```hs g'``` an der Stelle ```hs x```
   (bzw. $(d g)/(d x) (x)$). Die Kettenregel führt dann zu
-  ```hs (f . g)' z = g' z * f' x```. Nach dem Muster kannst du nun
-  Standardfunktionen überladen. Für die arithmetischen Operatoren benötigst du
-  an der Stelle deren Ableitungsregeln (Summenregel, Leibnizregel, usw.)
+  #align(center)[```hs (f . g)' x = g' x * f' (g x) = dgdx * f' gx```.]
+  Nach dem Muster kannst du nun Standardfunktionen überladen. Für die
+  arithmetischen Operatoren benötigst du an der Stelle deren Ableitungsregeln
+  (Summenregel, Leibnizregel, usw.)
 
   Implementiere die Typklasseninstanzen ```hs Num```, ```hs Fractional```
   und ```hs Floating```.
-  #footnote[
-    #link("https://de.wikipedia.org/wiki/Differentialrechnung#Zusammenfassung")[Zusammenfassung der Ableitungsregeln]
-  ]
 
-  Mit den folgenden Funktionen kannst du dann die erste, zweite oder dritte
-  Ableitung bilden.
-  #footnote[
-    Für Interessierte: In @reverse_mode_ad_remark kannst du eine allgemeinere
-    Funktion zum Berechnen der Ableitung sehen.
-  ]
+  Mit den folgenden Funktionen kannst du z.B. die erste oder zweite Ableitung
+  bilden.
+
   ```hs
   d1 :: Num a => (D a -> D b) -> a -> b
   d1 f x = let (D _ d) = f (D x 1) in d
 
   d2 :: Num a => (D (D a) -> D (D b)) -> a -> b
   d2 f x = let (D (D _ _) (D _ d)) = f (D (D x 1) 1) in d
-
-  d3 :: Num a => (D (D (D a)) -> D (D (D b))) -> a -> b
-  d3 f x = let (D _ (D _ (D _ d))) = f (D (D (D x 1) 1) 1) in d
   ```
+
+  #extra[
+    Hier ist eine #link("https://de.wikipedia.org/wiki/Differentialrechnung#Zusammenfassung")[Zusammenfassung der Ableitungsregeln].
+
+    In @reverse_mode_ad_remark kannst du eine allgemeinere Funktion zum
+    Berechnen der Ableitung sehen.
+  ]
 
   #hint[
     Wenn du Anlaufschwierigkeiten hast, helfen dir möglicherweise diese ersten
@@ -1797,10 +1799,11 @@ stellt eine PR auf GitHub].
 // ```
 
 An vielen Stellen in den bisherigen Selbsttests haben wir oft einen konkreten
-Typ (z.B. ```hs Int```) genutzt, für den es bestimmte Typklasseninstanzen
-gibt. Das ist meistens der Fall gewesen, wenn wir Gleichheit auf Werten oder
-eine Vergleichsoperation auf Werten brauchten. Schau dir die bisherigen
-Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
+Typ (z.B. ```hs Int```) genutzt, für den es bereits vorimplementierte
+Typklasseninstanzen gibt. Das ist meistens der Fall gewesen, wenn wir Gleichheit
+auf Werten oder eine Vergleichsoperation auf Werten brauchten. Schau dir die
+bisherigen Selbsttests gerne erneut an und überlege dir, wo du Typen
+verallgemeinern kannst.
 
 #test[
   Welche Funktionen musst du implementieren, damit eine ```hs Eq```-Instanz
@@ -1875,36 +1878,41 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
   - Was ermöglicht es, eine Standarddefinition für ```hs compare``` angeben zu
     können?
   - Deine Standarddefinition von ```hs compare``` ist voraussichtlich
-    ineffizient.#footnote[Die Vordefinierte ist es auch, also keine Sorge.]
-    Woran liegt das? Mit Hinsicht auf Effizienz -- welche der beiden Funktionen
-    würdest du implementieren, wenn du nur eine implementieren dürftest?
-    #footnote[
-      Auch wenn Standarddefinitionen für den Anfang hilfreich sind, um
-      mit minimalem Aufwand alle Funktionen einer Typklasse zu verwenden, findet
-      man häufig konkrete Implementierungen für mehr als nur die Funktionen, für
-      die es notwendig ist.
-    ]
+    ineffizient - die Vordefinierte ist es auch. Woran liegt das? Mit Hinsicht
+    auf Effizienz -- welche der beiden Funktionen würdest du implementieren,
+    wenn du nur eine implementieren dürftest?
+
+  #extra[
+    Auch wenn Standarddefinitionen für den Anfang hilfreich sind, um
+    mit minimalem Aufwand alle Funktionen einer Typklasse verwenden zu können,
+    findet man häufig konkrete Implementierungen für mehr als nur die
+    Funktionen, für die es notwendig ist.
+  ]
 ]
 
 #test[
   In nicht streng getypten Programmiersprachen haben wir oft mit impliziter
-  Typkonversion zu tun. #footnote[Diese wollen wir nun für einen Moment nach Haskell
-  zurückholen, um sie dann ganz schnell wieder zu vergessen.] Implementiere eine
-  Funktion ```hs ifThenElse```, die als Bedingung Werte beliebiger Typen
-  entgegennehmen kann. Ziel ist es, dass der folgende Ausdruck ausgewertet
-  werden kann.
+  Typkonversion zu tun.  Implementiere eine Funktion ```hs ifThenElse```, die
+  als Bedingung Werte beliebiger Typen entgegennehmen kann. Ziel ist es, dass
+  der folgende Ausdruck ausgewertet werden kann.
   ```hs
   let a = ifThenElse 0 3 4
       b = ifThenElse [5] 6 7
       c = ifThenElse Nothing 8 9
    in a + b + c  -- 19
   ```
+  #extra[
+    Theoretisch könnten wir über eine Spracherweiterung des GHC sogar die
+    #link("https://ghc.gitlab.haskell.org/ghc/doc/users_guide/exts/rebindable_syntax.html")[Standardimplementierung von bedingten Ausdrücken ersetzen].
+    Das wollen wir aber ganz schnell wieder vergessen, genauso den Inhalt dieses
+    Tests, nachdem wir ihn bearbeiten haben.
+  ]
 ]
 
 #test[
-  Eine Halbgruppe ist eine Struktur $(H, ast.op)$, wobei $ast.op$ eine
-  assoziative, binäre Verknüpfung $ast.op : H times H -> H$ ist. Ein Monoid
-  erweitert die Halbgruppe um ein neutrales Element bzgl. $ast.op$.
+  Eine Halbgruppe ist eine Struktur $(H, ast.op)$, wobei $H$ eine Menge ist und
+  $ast.op$ eine assoziative, binäre Verknüpfung $ast.op : H times H -> H$ ist.
+  Ein Monoid erweitert die Halbgruppe um ein neutrales Element bzgl. $ast.op$.
 
   Definiere Typklassen ```hs Semigroup``` und ```hs Monoid```, die diese
   Strukturen implementieren. Gebe auch beispielhaft ein paar Instanzen für
@@ -1915,6 +1923,11 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
   Wo findest du das Konzept der Typklassen in Programmiersprachen wie z.B.
   Python oder Java wieder? Gibt es z.B. ein Pendant zur ```hs Show```-Typklasse
   in diesen Programmiersprachen?
+]
+
+#test[
+  Mit welcher Typklasse bzw. mit welcher Funktion können wir durch Strings
+  repräsentierte Werte parsen?
 ]
 
 #check[
