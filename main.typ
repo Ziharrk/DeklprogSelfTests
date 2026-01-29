@@ -283,7 +283,7 @@ stellt eine PR auf GitHub].
 == Datentypen
 
 #refs[
-  - Skript: Funktionale Programmierung, Polymorphismus
+  - Skript: Funktionale Programmierung, Datentypen
   - #link("https://learnyouahaskell.github.io/introduction.html")[Introduction -- Learn You a Haskell for Great Good!]
   - #link("https://learnyouahaskell.github.io/starting-out.html")[Starting Out -- Learn You a Haskell for Great Good!] ("An intro to lists")
   - #link("https://learnyouahaskell.github.io/making-our-own-types-and-typeclasses.html")[Making Our Own Types and Typeclasses -- Learn You a Haskell for Great Good!] ("Algebraic data types intro")
@@ -349,6 +349,9 @@ stellt eine PR auf GitHub].
 
 #refs[
   - Skript: Funktionale Programmierung, Polymorphismus
+  - #link("https://learnyouahaskell.github.io/making-our-own-types-and-typeclasses.html")[Making Our Own Types and Typeclasses -- Learn You a Haskell for Great Good!] ("Type parameters", "Recursive data structures")
+
+  - #link("https://learnyouahaskell.github.io/recursion.html")[Recursion -- Learn You a Haskell for Great Good!] ("Type parameters", "Recursive data structures")
 ]
 
 #test[
@@ -722,11 +725,19 @@ stellt eine PR auf GitHub].
   sein?
 ]
 
+#check[
+  Ich bin in der Lage, ...
+  - (parametrischen) Polymorphismus zu erklären,
+  - polymorphe Datentypen zu definieren, und
+  - polymorphe Funktionen zu definieren.
+]
+
 
 == Pattern Matching
 
 #refs[
   - Skript: Funktionale Programmierung, Pattern Matching
+  - #link("https://learnyouahaskell.github.io/syntax-in-functions.html")[Syntax in Functions - Learn You a Haskell for Great Good!] ("Pattern matching", "Guards, guards!", "Case expressions")
 ]
 
 #challenge[
@@ -857,6 +868,10 @@ stellt eine PR auf GitHub].
 //     rotateL _                          = error "should not happen"
 // ```
 
+#check[
+  Ich bin in der Lage, ...
+  - Pattern Matching zu nutzen.
+]
 
 == Automatisches Testen
 
@@ -930,11 +945,19 @@ stellt eine PR auf GitHub].
   können wir diese beheben?
 ]
 
+#check[
+  Ich bin in der Lage, ...
+  - Eigenschaften mit QuickCheck zu spezifizieren
+  - ... mit Kombinatoren wie z.B. ```hs ==>```, und
+  - Vor- und Nachteile des eigenschaftsbasierten Testens zu diskutieren.
+]
+
 
 == Funktionen höherer Ordnung
 
 #refs[
   - Skript: Funktionale Programmierung, Funktionen höherer Ordnung
+  - #link("https://learnyouahaskell.github.io/higher-order-functions.html")[Higher Order Functions -- Learn You a Haskell for Great Good!]
 ]
 
 #test[
@@ -1465,6 +1488,18 @@ stellt eine PR auf GitHub].
   Haskell passieren?
 ]
 
+#check[
+  Ich bin in der Lage, ...
+  - Funktionen höherer Ordnung zu erkennen, zu definieren und zu nutzen,
+  - wichtige Funktionen höherer Ordnung zu definieren wie
+    - ```hs map```, ```hs filter```, ```hs foldr``` und ```hs foldl```
+    - ```hs (.)```, ```hs ($)```, ```hs flip```, ```hs curry``` und ```hs uncurry```
+  - das Zusammenspiel aus Currying und partieller Applikation zu erklären,
+  - natürliche Faltungsfunktionen für gegebene Datentypen zu definieren,
+  - Funktionen höherer Ordnung in Python zu nutzen und damit verbundene
+    Fallstricke zu erklären.
+]
+
 
 == Abstrakte Datentypen
 
@@ -1565,11 +1600,22 @@ stellt eine PR auf GitHub].
   constructors in diesem Zusammenhang?
 ]
 
+#check[
+  Ich bin in der Lage, ...
+  - zu erklären, was ein abstrakter Datentyp ist und was er besteht,
+  - zu erklären, was der theoretische und praktische Nutzen von abstrakten
+    Datentypen ist,
+  - abstrakte Datentypen anzugeben,
+  - keine Implementierung für einen ADT anzugeben, wenn nicht explizit danach
+    gefragt ist.
+]
 
 == Typklassen und Überladung
 
 #refs[
   - Skript: Funktionale Programmierung, Typklassen und Überladung
+  - #link("https://learnyouahaskell.github.io/types-and-typeclasses.html")[Types and Typeclasses -- Learn You a Haskell for Great Good!]
+  - #link("https://learnyouahaskell.github.io/making-our-own-types-and-typeclasses.html")[Making Our Own Types and Typeclasses -- Learn You a Haskell for Great Good!] ("Typeclasses 102", "A yes-no typeclass")
 ]
 
 #test[
@@ -1845,6 +1891,14 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
   Wo findest du das Konzept der Typklassen in Programmiersprachen wie z.B.
   Python oder Java wieder? Gibt es z.B. ein Pendant zur ```hs Show```-Typklasse
   in diesen Programmiersprachen?
+]
+
+#check[
+  Ich bin in der Lage, ...
+  - Typklasseninstanzen, ```hs Show```, ```hs Eq``` und ```hs Ord```, für
+    Datentypen anzugeben,
+  - ad-hoc Polymorphismus zu erklären und er sich von parametrischen
+    Polymorphismus unterscheidet.
 ]
 
 
@@ -2403,11 +2457,19 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
 //     go i j = g !! i !! j + min (dp !! (i - 1) !! j) (dp !! i !! (j - 1))
 // ```
 
+#check[
+  Ich bin in der Lage, ...
+  - lazy evaluation in Haskel zu erklären,
+  - Funktionen auf unendliche Datenstrukturen zu definieren, und
+  - unendliche Datenstrukturen mithilfe von Funktionen zu erzeugen.
+]
+
 
 == Sequenzen
 
 #refs[
   - Skript: Funktionale Programmierung, Sequenzen
+  - #link("https://learnyouahaskell.github.io/starting-out.html")[Starting Out -- Learn You a Haskell for Great Good!] ("Texas ranges")
 ]
 
 #test[
@@ -2433,11 +2495,17 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
   des Typen beginnen.
 ]
 
+#check[
+  Ich bin in der Lage, ...
+  - ...
+]
+
 
 == List Comprehensions
 
 #refs[
   - Skript: Funktionale Programmierung, List Comprehensions
+  - #link("https://learnyouahaskell.github.io/starting-out.html")[Starting Out -- Learn You a Haskell for Great Good!] ("I'm a list comprehension")
 ]
 
 #test[
@@ -2453,11 +2521,17 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
   ```hs concatMap``` mithilfe von list comprehensions.
 ]
 
+#check[
+  Ich bin in der Lage, ...
+  - ...
+]
+
 
 == Ein- und Ausgabe
 
 #refs[
   - Skript: Funktionale Programmierung, Ein- und Ausgabe
+  - #link("https://learnyouahaskell.github.io/input-and-output.html")[Input and Output -- Learn You a Haskell for Great Good!]
 ]
 
 #test[
@@ -2505,11 +2579,22 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
   vorzeitig das Spiel beendet und das Orakel gewinnen lässt.
 ]
 
+#check[
+  Ich bin in der Lage, ...
+  - ...
+]
+
 
 == Funktoren, Applicatives, Monaden
 
 #refs[
   - Skript: Funktionale Programmierung, Funktoren und Monaden
+  - #link("https://learnyouahaskell.github.io/functors-applicative-functors-and-monoids.html")[Functors, Applicative Functors and Monoids -- Learn You a Haskell for Great Good!] (ohne "Monoids")
+    #footnote[
+      Wenn du Zeit übrig hast und es dich interessiert: Die Monoiden-Sektion ist
+      interessent.
+    ]
+  - #link("https://learnyouahaskell.github.io/a-fistful-of-monads.html")[A Fistful of Monads -- Learn You a Haskell for Great Good!]
 ]
 
 #test[
@@ -3442,11 +3527,17 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
 //                              in (or rs, us')
 // ```
 
+#check[
+  Ich bin in der Lage, ...
+  - ...
+]
+
 
 == Automatisches Testdatengenerierung
 
 #refs[
   - Skript: Funktionale Programmierung, Automatisches Testdatengenerierung
+  - #link("https://dl.acm.org/doi/10.1145/351240.351266")[QuickCheck: a lightweight tool for random testing of Haskell programs]
 ]
 
 #test[
@@ -3692,6 +3783,11 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
 
   Wenn du bis hierhin gekommen bist, könntest du weiter den DEA mithilfe von
   Hopcrofts Algorithmus minimieren.
+]
+
+#check[
+  Ich bin in der Lage, ...
+  - ...
 ]
 
 
@@ -4142,6 +4238,11 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
 // isort(Lt, [X|Xs], Ys, Zs) :- insert(Lt, X, Ys, Us), isort(Lt, Xs, Us, Zs).
 // ```
 
+#check[
+  Ich bin in der Lage, ...
+  - ...
+]
+
 
 == Elementare Programmiertechniken
 
@@ -4397,6 +4498,11 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
 //   path(G, P),
 //   is_hamiltonian(G, P).
 // ```
+
+#check[
+  Ich bin in der Lage, ...
+  - ...
+]
 
 
 == Rechnen in der Logikprogrammierung
@@ -4869,6 +4975,11 @@ Gedanken machen kann.
   müssten, beim Angeben eines SLD-Baums nicht auf?
 ]
 
+#check[
+  Ich bin in der Lage, ...
+  - ...
+]
+
 
 == Negation
 
@@ -4957,6 +5068,11 @@ Gedanken machen kann.
   ```
 ]
 
+#check[
+  Ich bin in der Lage, ...
+  - ...
+]
+
 
 == Arithmetik
 
@@ -4990,6 +5106,11 @@ Gedanken machen kann.
 
 #test[
   Ist ```SWI-Prolog X =:= 4 + 7.``` eine valide Anfrage in Prolog?
+]
+
+#check[
+  Ich bin in der Lage, ...
+  - ...
 ]
 
 
@@ -5060,6 +5181,11 @@ Gedanken machen kann.
 // TODO more findall, bagof
 // TODO higher order
 // TODO difference lists
+
+#check[
+  Ich bin in der Lage, ...
+  - ...
+]
 
 
 == Logik-Puzzles
@@ -5176,6 +5302,11 @@ Weitere Links:
 - #link("https://www.adit.io/posts/2013-04-17-functors,_applicatives,_and_monads_in_pictures.html")[Functors, Applicatives, And Monads In Pictures]
 - #link("https://hackage.haskell.org/package/CheatSheet-1.7/src/CheatSheet.pdf")[Haskell Cheatsheet]
 - #link("https://alhassy.com/PrologCheatSheet/CheatSheet.pdf")[Prolog Cheatsheet]
+
+Awesome-Listen sind eine Kuration von "awesome" Inhalten zu einem bestimmten
+Thema. Möglicherweise findest du hier etwas, was dich anspricht.
+- #link("https://github.com/krispo/awesome-haskell")[Awesome Haskell]
+- #link("https://github.com/klaudiosinani/awesome-prolog")[Awesome Prolog]
 
 #pagebreak(weak: true)
 
