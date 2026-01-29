@@ -139,7 +139,8 @@ dich gerne, damit wir dir helfen können.
 
 Die Inhalte dieses Dokuments sind nicht vollständig. Es kann sein, dass
 Modulinhalte nicht durch Selbsttests, Referenzen oder Selbstevaluationen abdeckt
-werden.
+werden -- insbesondere fehlen derzeitig noch viele Lernziele in den
+Selbstevaluationen.
 
 Wenn du Anmerkungen oder weitere Ideen für Inhalte für dieses Dokument hast,
 dann schreibe uns gerne über z.B. mattermost an -- oder
@@ -1954,8 +1955,8 @@ verallgemeinern kannst.
 ]
 
 #test[
-  Gebe ein Beispiel an, das zeigt, dass die faule Auswertung
-  berechnungsstärker ist.
+  Gebe ein Beispiel an, das zeigt, dass die faule Auswertung berechnungsstärker
+  ist.
 ]
 
 #test[
@@ -1963,8 +1964,8 @@ verallgemeinern kannst.
 ]
 
 #test[
-  Wie werden mehrfache Berechnungen in einer nicht-strikten
-  Auswertungsstrategie vermieden?
+  Wie werden mehrfache Berechnungen in einer nicht-strikten Auswertungsstrategie
+  vermieden?
 ]
 
 #test[
@@ -1999,8 +2000,9 @@ verallgemeinern kannst.
   Python möglich. Wie können wir in Haskell, trotz der Abwesenheit von
   Mutierbarkeit, zyklische Datenstrukturen umsetzen? Versuche, dein Programm
   ähnlich zum Python-Programm aussehen zu lassen.
-  #footnote[
-    Für Interessierte: Die Technik ist als
+
+  #extra[
+    Die Technik ist als
     #link("https://wiki.haskell.org/index.php?title=Tying_the_Knot")[Tying the Knot]
     bekannt.
   ]
@@ -2015,9 +2017,9 @@ verallgemeinern kannst.
     betrachtet und anschließend dessen linker und danach dessen rechter
     Teilbaum.
   - Implementiere einen unendlichen Baum ```hs tree :: Tree Int```, der die Menge
-    ${ f(i, j) | i, j in NN, i <= j }$ mit $f(i, j) = i + j + 2 i j$ darstellt.
-    Die Wurzel soll den Wert $f(1,1)$ haben. Für einen beliebigen Knoten
-    mit Beschriftung $f(i,j)$  soll die Wurzel des linken Teilbaums mit
+    $ { f(i, j) | i, j in NN, i <= j } "mit" f(i, j) = i + j + 2 i j $
+    darstellt. Die Wurzel soll den Wert $f(1,1)$ haben. Für einen beliebigen
+    Knoten mit Beschriftung $f(i,j)$  soll die Wurzel des linken Teilbaums mit
     $f(i+1,j)$ beschriftet sein und die Wurzel des rechten Teilbaums mit
     $f(i,j+1)$. Falls $i > j$ erreicht wird, soll in den Baum ein
     ```hs Empty```-Knoten gesetzt werden.
@@ -2031,12 +2033,12 @@ verallgemeinern kannst.
     ```hs diff :: Ord a => [a] -> [a] -> [a]```. Du darfst dabei annehmen, dass
     die Eingabelisten bereits sortiert sind.
   - Was berechnet ```hs 2 : map (\x -> 2 * x + 1) ([1..] `diff` preorder tree)```?
-    #footnote[
-      Das Verfahren ist als #link("https://en.wikipedia.org/wiki/Sieve_of_Sundaram")[Sieb von Sundaram]
-      bekannt. Die Konstruktion der oben angegebenen Menge mithilfe von
-      unendlichen Bäumen ist nicht Teil des Verfahrens -- sondern Willkür des
-      Verfassers.
-    ]
+
+  #extra[
+    Das Verfahren ist als #link("https://en.wikipedia.org/wiki/Sieve_of_Sundaram")[Sieb von Sundaram]
+    bekannt. Die Konstruktion der oben angegebenen Menge mithilfe von
+    unendlichen Bäumen ist nicht Teil des Verfahrens.
+  ]
 ]
 
 // ```hs
@@ -2095,7 +2097,7 @@ verallgemeinern kannst.
 
 #challenge[
   Wir können endliche Automaten als unendliche Bäume darstellen.
-  Betrachte z.B. den endlichen Automaten für die reguläre Sprache $a^* b^*$.
+  Betrachte z.B. den endlichen Automaten für die reguläre Sprache $mono(a)^* mono(b)^*$.
   #align(center)[
     #finite.automaton(
       (
@@ -2868,11 +2870,6 @@ verallgemeinern kannst.
   Gegeben sei der Datentyp
   #align(center)[
     ```hs newtype ZipList a = ZipList { getZipList :: [a] }```.
-    #footnote[
-      Das Umwickeln eines Typen mit ```hs newtype```, für den wir bereits
-      Typklasseninstanzen haben, ist ein gängiger Trick, um alternative Instanzen
-      für diese Typklassen bereitzustellen.
-    ]
   ]
   Das Ziel ist es, ```hs ZipList``` als $n$-stellige Generalisierung von
   ```hs zipWith``` zu verwenden:
@@ -2890,6 +2887,12 @@ verallgemeinern kannst.
   - Implementiere eine ```hs Applicative```-Instanz für ```hs ZipList```.
   - Zeige, dass sowohl die ```hs Functor```- als auch die
     ```hs Applicative```-Instanz die üblichen geforderten Gesetze erfüllen.
+
+  #extra[
+    Das Umwickeln eines Typen mit ```hs newtype```, für den wir bereits
+    Typklasseninstanzen haben, ist ein gängiger Trick, um alternative Instanzen
+    für diese Typklassen bereitzustellen.
+  ]
 
   #hint[
     Das Identitätsgesetz wäre verletzt, wenn man ```hs pure``` wie gegeben
@@ -2988,11 +2991,6 @@ verallgemeinern kannst.
 #test[
   ```hs guard :: MonadZero m => Bool -> m ()``` kann genutzt werden, um eine
   Berechnung bedingt fehlschlagen zu lassen.
-  #footnote[
-    Für Interessierte: ```hs guard``` ist auf Basis von ```hs Alternative``` bzw.
-    ```hs MonadPlus``` implementiert. ```hs MonadZero``` ist nicht Teil der
-    Standardbibliothek, aber es ist definiert als Teil von ```hs MonadPlus```.
-  ]
   Zum Beispiel können wir mithilfe von ```hs guard``` eine sichere Division
   definieren.
   ```hs
@@ -3011,7 +3009,7 @@ verallgemeinern kannst.
   - Berechne ```hs 1 `safeDiv` 0 :: m Int``` für ```hs Maybe``` und ```hs []```.
     Bevor das möglich ist, benötigst du entsprechende ```hs MonadZero```-Instanzen.
 
-  #text(0.8em)[
+  #extra[
     Die Typklasse ```hs MonadZero``` wird so genannt, weil sie eine "monadische
     Null" definiert. Bzgl. der Operation ```hs (>>=)``` verhält sich ```hs mzero```
     absorbierend. Für Instanzen dieser Typklasse sollen diese Gesetze gelten.
@@ -3019,6 +3017,10 @@ verallgemeinern kannst.
     mzero >>= f     = mzero
     m     >>= mzero = mzero
     ```
+
+    ```hs guard``` ist auf Basis von ```hs Alternative``` bzw.
+    ```hs MonadPlus``` implementiert. ```hs MonadZero``` ist nicht Teil der
+    Standardbibliothek, aber es ist definiert als Teil von ```hs MonadPlus```.
   ]
 ] <monadzero>
 
@@ -3068,11 +3070,6 @@ verallgemeinern kannst.
     ```hs Maybe```-Applicative. Warum ist die Division, ohne eine weitere
     Hilfsfunktion nicht möglich? Was müsste diese Hilfsfunktion tun, damit die
     Regel für die Division funktioniert?
-    #footnote[
-      Der applikativen Funktor wird dadurch nicht ausdrucksstärker! Das, was
-      der applikative Funktor nicht leisten kann, wird in die Hilfsfunktion
-      ausgelagert.
-    ]
   - Implementiere ```hs eval :: Exp Int -> Maybe Int``` mit der
     ```hs Maybe```-Monade. Benötigst du hier die Hilfsfunktion aus der
     vorherigen Teilaufgabe? Warum ja oder nein?
@@ -3090,6 +3087,13 @@ verallgemeinern kannst.
     implementiere eine ```hs Functor```-, ```hs Applicative```-, ```hs Monad```-
     und ```hs MonadFail```-Instanz für den Typen
     ```hs data Result a = Failure String | Success a```.
+
+  #extra[
+    Der applikativen Funktor wird durch die Verwendung von Hilfsfunktion nicht
+    ausdrucksstärker! Das, was der applikative Funktor nicht leisten kann, wird
+    in die Hilfsfunktion ausgelagert. Teile der Hilfsfunktion werden durch die
+    Monade übernommen.
+  ]
 ] <eval_exp>
 
 // ```hs
@@ -3349,15 +3353,6 @@ verallgemeinern kannst.
   Es wird dabei ein erster Zustand übergegeben, der die erste Berechnung
   anstößt. Das Ergebnis soll der letzte Zustand mit allen Ergebnissen der
   Berechnungen sein.
-  #footnote[
-    Für Interessierte: Diese Implementierung von ```hs sequence``` ist ein
-    Spezialfall für die
-    #link("https://learnyouahaskell.github.io/for-a-few-monads-more.html#state")[```hs State```-Monade].
-    Mit der Intuition, dass wir hier Berechnungen sequenzieren, sollte es nicht
-    überraschend sein, dass ```hs s -> (a, s)``` eine Monade ist. Alternativ
-    kannst du die ```hs State```-Monade implementieren und das vorimplementierte
-    (oder von dir implementierte) ```hs sequence``` verwenden.
-  ]
 
   Betrachte folgendes Beispiel:
   ```hs
@@ -3437,6 +3432,15 @@ verallgemeinern kannst.
   ]
   Es soll also
   ```hs sequence [f1, f2, ..., fn] s0 = ([y1, y2, ..., yn], sn)``` gelten.
+
+  #extra[
+    Diese Implementierung von ```hs sequence``` ist ein Spezialfall für die
+    #link("https://learnyouahaskell.github.io/for-a-few-monads-more.html#state")[```hs State```-Monade].
+    Mit der Intuition, dass wir hier Berechnungen sequenzieren, sollte es nicht
+    überraschend sein, dass ```hs s -> (a, s)``` eine Monade ist. Alternativ
+    kannst du die ```hs State```-Monade implementieren und das vorimplementierte
+    (oder von dir implementierte) Funktion ```hs sequence``` verwenden.
+  ]
 ] <sequence_state>
 
 #challenge[
@@ -3643,11 +3647,6 @@ verallgemeinern kannst.
   ```
   Um dieses Verhalten zu unterbinden, können wir die Eigenschaft leicht
   abändern.
-  #footnote[
-    QuickCheck hat viele solche
-    #link("https://hackage-content.haskell.org/package/QuickCheck/docs/Test-QuickCheck.html")[type-level modifiers],
-    die das Generatoren-Verhalten verändern.
-  ]
   ```hs
   prop_prop :: Positive Int -> Property
   prop_prop (Positive k) = k > 0 ==> True
@@ -3655,6 +3654,12 @@ verallgemeinern kannst.
   Jetzt werden keine Tests verworfen.
 
   Überlege dir, wie die Lösung des Problems funktioniert und implementiere sie.
+
+  #extra[
+    QuickCheck hat viele solche
+    #link("https://hackage-content.haskell.org/package/QuickCheck/docs/Test-QuickCheck.html")[type-level modifiers],
+    die das Generator-Verhalten verändern.
+  ]
 ]
 
 // ```hs
