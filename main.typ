@@ -2,6 +2,7 @@
 #import "@preview/cetz:0.4.2"
 #import "@preview/ctheorems:1.1.3": *
 #import "@preview/finite:0.5.0"
+#import "@preview/heroic:0.1.0": *
 
 #set document(
   title: "Verständnisfragen zum Modul Deklarative Programmierung",
@@ -74,6 +75,26 @@
   }
 }
 
+#let mybox(color, icon, label, content) = {
+  box(
+    width: 100%,
+    fill: color.lighten(97%),
+    stroke: (left: 2pt + color),
+    inset: (top: 0.75em, bottom: 0.75em, left: 1em),
+  )[
+    #text(fill: color)[
+      #hi(icon, height: 1.2em, solid: false)
+      #h(0.2em)
+      #text(weight: "bold", label)
+    ]
+    #v(-0.5em)
+    #content
+  ]
+}
+
+#let check = mybox.with(purple, "check-badge", "Selbstevaluation")
+#let refs = mybox.with(rgb("#dc267f"), "book-open", "Referenzen")
+
 #set page(
   paper: "a4",
   numbering: "1"
@@ -85,7 +106,7 @@
 #text(0.8em)[
   Dieses Dokument ist vom #datetime.today().display("[day].[month].[year]"). Die
   aktuelle Version des Dokuments kannst du im moodle oder
-  #link("https://github.com/Ziharrk/DeklprogSelfTests/raw/refs/heads/main/main.pdf")[direkt von GitHub herunterladen].
+  #link("https://github.com/Ziharrk/DeklprogSelfTests/raw/refs/heads/main/main.pdf")[direkt von GitHub herunterladen]. Dieses Dokument wird ständig aktualisiert.
 ]
 
 #context {
@@ -102,7 +123,6 @@ Größere Aufgaben haben wir als Challenges markiert. Diese Aufgaben benötigen
 öfter mehrere Konzepte und führen zusätzlich Konzepte ein, die nur für das
 Lösen der Aufgabe wichtig sind. Wenn die zusätzlichen Konzepte, dir zu sehr
 Schwierigkeiten bereiten, überspringe die entsprechende Frage oder Aufgabe.
-
 Die Nomenklatur des Aufgaben ist aktuell möglicherweise noch etwas willkürlich,
 da es Tests gibt, die wie Challenges wirken -- und möglicherweise sogar
 andersherum.
@@ -110,17 +130,37 @@ andersherum.
 Für die Selbsttests wird es absehbar keine Lösungen geben. Stattdessen möchten
 wir dich ermutigen deine Lösungen mit anderen Mitstudierenden oder
 Mitarbeitenden zu diskutieren, solltest du offene Fragen haben -- oder du
-promptes das LLM deiner Wahl.
+promptes das LLM deiner Wahl. An jeden Abschnitt ist eine Checkliste zur
+Selbstevaluation angehängt. Wenn du auf einer geeigneten Bewertungsskala (z.B.
+Schulnoten) für dich feststellst, dass du weiterhin Schwierigkeiten hast, melde
+dich gerne, damit wir dir helfen können.
+
+Die Inhalte dieses Dokuments sind nicht vollständig. Es kann sein, dass
+Modulinhalte nicht durch Selbsttests, Referenzen oder Selbstevaluationen abdeckt
+werden.
 
 Wenn du Anmerkungen oder weitere Ideen für Inhalte für dieses Dokument hast,
 dann schreibe uns gerne über z.B. mattermost an -- oder
 #link("https://github.com/Ziharrk/DeklprogSelfTests/")[erstellt ein issue oder
 stellt eine PR auf GitHub].
 
+#outline()
 
 = Funktionale Programmierung
 
-// Ausdrücke und Funktionen
+== Ausdrücke und einfache Funktionen
+
+#refs[
+  - Skript: Funktionale Programmierung, Ausdrücke und Funktionen
+  - #link("https://learnyouahaskell.github.io/introduction.html")[Introduction -- Learn You a Haskell for Great Good!]
+  - #link("https://learnyouahaskell.github.io/starting-out.html")[Starting Out -- Learn You a Haskell for Great Good!] ("Ready, set, go!" und "Baby's first functions")
+  - #link("https://learnyouahaskell.github.io/syntax-in-functions.html")[Syntax in Functions -- Learn You a Haskell for Great Good!] ("Where!?" und "Let it be")
+  - #link("https://en.wikipedia.org/wiki/Pure_function")[Pure function -- Wikipedia]
+]
+
+#test[
+  Beziehe Stellung zu der Aussage "Alles ist ein Ausdruck" in Haskell?
+]
 
 #test[
   Was bedeutet es, wenn eine Funktion keine Seiteneffekte hat? Warum ist die
@@ -134,6 +174,10 @@ stellt eine PR auf GitHub].
 #test[
   Wenn du eine Schleife in Haskell umsetzen möchtest, auf welches Konzept musst
   du dann zurückgreifen?
+]
+
+#test[
+  Wie können wir Ausdrücke bedingt auswerten?
 ]
 
 #test[
@@ -225,8 +269,25 @@ stellt eine PR auf GitHub].
   #align(center)[```hs if 0 then 3.141 else 3141```]
 ]
 
+#check[
+  Ich bin in der Lage, ...
+  - einfache Funktionen selbstständig zu definieren,
+  - typkorrekte Ausdrücke definieren und händisch auswerten, und
+  - erste grundlegende Konzepte der funktionalen Programmierung zu erklären wie
+    - pure functions,
+    - Rekursion und
+    - streng getypte Programmiersprachen.
+]
 
-// Datentypen
+
+== Datentypen
+
+#refs[
+  - Skript: Funktionale Programmierung, Polymorphismus
+  - #link("https://learnyouahaskell.github.io/introduction.html")[Introduction -- Learn You a Haskell for Great Good!]
+  - #link("https://learnyouahaskell.github.io/starting-out.html")[Starting Out -- Learn You a Haskell for Great Good!] ("An intro to lists")
+  - #link("https://learnyouahaskell.github.io/making-our-own-types-and-typeclasses.html")[Making Our Own Types and Typeclasses -- Learn You a Haskell for Great Good!] ("Algebraic data types intro")
+]
 
 #test[
   Wie werden algebraische Datentypen in Haskell definiert?
@@ -276,7 +337,19 @@ stellt eine PR auf GitHub].
   Wie greifen wir auf Daten in Haskell zu?
 ]
 
-// Polymorphismus
+#check[
+  Ich bin in der Lage, ...
+  - (monomorphe) algebraische Datentypen zu definieren,
+  - Funktionen induktiv über den Datentypen zu definieren und
+  - Listen zu verwenden und kenne wichtige Funktionen auf Listen.
+]
+
+
+== Polymorphismus
+
+#refs[
+  - Skript: Funktionale Programmierung, Polymorphismus
+]
 
 #test[
   Wie sieht eine Datentypdefinition in Haskell im Allgemeinen aus?
@@ -650,7 +723,11 @@ stellt eine PR auf GitHub].
 ]
 
 
-// Pattern Matching
+== Pattern Matching
+
+#refs[
+  - Skript: Funktionale Programmierung, Pattern Matching
+]
 
 #challenge[
   In Haskell sind Listen als einfach-verkettete Listen implementiert. Das macht
@@ -781,7 +858,11 @@ stellt eine PR auf GitHub].
 // ```
 
 
-// Automatisches Testen
+== Automatisches Testen
+
+#refs[
+  - Skript: Funktionale Programmierung, Automatisches Testen
+]
 
 #test[
   Formuliere QuickCheck-Eigenschaften, die die Funktionen
@@ -850,7 +931,11 @@ stellt eine PR auf GitHub].
 ]
 
 
-// Funktionen höherer Ordnung
+== Funktionen höherer Ordnung
+
+#refs[
+  - Skript: Funktionale Programmierung, Funktionen höherer Ordnung
+]
 
 #test[
   Was sind Funktionen höherer Ordnung?
@@ -1381,7 +1466,11 @@ stellt eine PR auf GitHub].
 ]
 
 
-// Abstrakte Datentypen
+== Abstrakte Datentypen
+
+#refs[
+  - Skript: Funktionale Programmierung, Abstrakte Datentypen
+]
 
 #test[
   Was ist ein abstrakter Datentyp? Was sind die Bestandteile eines abstrakten
@@ -1477,7 +1566,11 @@ stellt eine PR auf GitHub].
 ]
 
 
-// Typklassen und Überladung
+== Typklassen und Überladung
+
+#refs[
+  - Skript: Funktionale Programmierung, Typklassen und Überladung
+]
 
 #test[
   Was sind Typklassen?
@@ -1755,7 +1848,11 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
 ]
 
 
-// Lazy Evaluation
+== Lazy Evaluation
+
+#refs[
+  - Skript: Funktionale Programmierung, Lazy Evaluation
+]
 
 #test[
   Was ist Lazy Evaluation?
@@ -2307,7 +2404,11 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
 // ```
 
 
-// Sequenzen
+== Sequenzen
+
+#refs[
+  - Skript: Funktionale Programmierung, Sequenzen
+]
 
 #test[
   Gegeben sei der Datentyp
@@ -2333,7 +2434,11 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
 ]
 
 
-// List Comprehensions
+== List Comprehensions
+
+#refs[
+  - Skript: Funktionale Programmierung, List Comprehensions
+]
 
 #test[
   An welches mathematische Konzept sind list comprehensions angelehnt?
@@ -2349,7 +2454,11 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
 ]
 
 
-// Ein- und Ausgabe
+== Ein- und Ausgabe
+
+#refs[
+  - Skript: Funktionale Programmierung, Ein- und Ausgabe
+]
 
 #test[
   Was ist referenzielle Transparenz?
@@ -2397,7 +2506,11 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
 ]
 
 
-// Funktoren, Applicatives, Monaden
+== Funktoren, Applicatives, Monaden
+
+#refs[
+  - Skript: Funktionale Programmierung, Funktoren und Monaden
+]
 
 #test[
   Wie lauten die ```hs Functor```-Gesetze?
@@ -3329,6 +3442,13 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
 //                              in (or rs, us')
 // ```
 
+
+== Automatisches Testdatengenerierung
+
+#refs[
+  - Skript: Funktionale Programmierung, Automatisches Testdatengenerierung
+]
+
 #test[
   Es kommt häufiger vor, dass zufällig generierte Werte bestimmte Eigenschaften
   erfüllen sollen. QuickCheck bietet auf Generatoren-Ebene z.B. die Funktion
@@ -3463,6 +3583,8 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
 // quickCheck p = unProperty (property p)
 // ```
 
+#line()
+
 #test[
   Implementiere Arrays als nicht-mutierende Datenstruktur in Python. Die
   Klasse soll so funktionieren, dass der folgende Beispielcode lauffähig ist
@@ -3577,6 +3699,13 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
 
 
 = Logische Programmierung
+
+== Prolog, Prolog!
+
+#refs[
+  - Skript: Einführung in die Logikprogrammierung, Motivation
+  - Skript: Einführung in die Logikprogrammierung, Syntax von Prolog
+]
 
 #test[
   Was ist das Berechnungsprinzip von Prolog bzw. wie leitet Prolog aus
@@ -4014,7 +4143,11 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
 // ```
 
 
-// Elementare Programmiertechniken
+== Elementare Programmiertechniken
+
+#refs[
+  - Skript: Logische Programmierung, Elementare Programmiertechniken
+]
 
 #test[
   Aus welchen Teilen besteht das generate-and-test Schema?
@@ -4266,7 +4399,11 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
 // ```
 
 
-// Rechnen in der Logikprogrammierung
+== Rechnen in der Logikprogrammierung
+
+#refs[
+  - Skript: Logische Programmierung, Rechnen in der Logikprogrammierung
+]
 
 Im Folgenden stehen Großbuchstaben für Variablen und Kleinbuchstaben für
 atomare Ausdrücke -- wenn nicht anders in Test oder Challenge eingeführt.
@@ -4733,7 +4870,11 @@ Gedanken machen kann.
 ]
 
 
-// Negation
+== Negation
+
+#refs[
+  - Skript: Einführung in die Logikprogrammierung, Negation
+]
 
 #test[
   Was verbirgt sich hinter dem Begriff "Negation als Fehlschlag"?
@@ -4778,7 +4919,11 @@ Gedanken machen kann.
 ]
 
 
-// Der "Cut"-Operator
+== Der "Cut"-Operator
+
+#refs[
+  - Skript: Einführung in die Logikprogrammierung, Der "Cut"-Operator
+]
 
 #test[
   Wofür verwenden wir den Cut-Operator konzeptionell?
@@ -4813,7 +4958,12 @@ Gedanken machen kann.
 ]
 
 
-// Arithmetik
+== Arithmetik
+
+#refs[
+  - Skript: Einführung in die Logikprogrammierung, Programmieren mit Constraints,
+    Arithmetik in Prolog
+]
 
 #test[
   Wofür wird das Prädikat ```SWI-Prolog is/2``` verwendet?
@@ -4896,9 +5046,9 @@ Gedanken machen kann.
 // TODO difference lists
 
 
-// Logik-Puzzle
+== Logik-Puzzles
 
-Hier sind ein paar Logik-Puzzle, die zu deiner Belustigung dienen. Der
+Hier sind ein paar Logik-Puzzles, die zu deiner Belustigung dienen. Der
 Lerneffekt ist voraussichtlich sehr gering.
 
 #challenge[
