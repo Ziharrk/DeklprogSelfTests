@@ -149,6 +149,7 @@ stellt eine PR auf GitHub].
 
 #outline()
 
+
 = Funktionale Programmierung
 
 == Ausdrücke und einfache Funktionen
@@ -2561,6 +2562,17 @@ verallgemeinern kannst.
   ```hs concatMap``` mithilfe von list comprehensions.
 ]
 
+#test[
+  Übersetze die gegebenen Funktion in eine äquivalente Funktion, die keine list
+  comprehensions verwendet.
+  - ```hs f xs = [x * 2 | x <- xs, x > 0]```
+  - ```hs f xs ys = [x + y | x <- xs, y <- ys]```
+  - ```hs f xs ys = [(x, y) | x <- xs, y <- ys, x < y]```
+  - ```hs f xss = [x | xs <- xss, length xs > 2, x <- xs, even x]```
+  - ```hs f xs = [(x, y) | x <- xs, y <- [1..x], even (x + y)]```
+  - ```hs f xs = [(x, y) | x <- xs, let y = x * x, y `mod` 3 == 0]```
+]
+
 #check[
   Ich bin in der Lage, ...
   - list comprehensions anzugeben, insbesondere für Ganzzahlen.
@@ -2599,6 +2611,8 @@ verallgemeinern kannst.
   Mit ```hs getLine :: IO String``` können Zeilen aus der Standardeingabe
   gelesen werden. Oft wollen wir den Wert haben, der durch die eingebene
   Zeichenkette repräsentiert wird. Wie können wir diesen Wert erhalten?
+
+  Implementiere eine Funktion ```hs readInt :: IO Int```, die genau dies tut.
 ]
 
 #test[
@@ -5193,6 +5207,27 @@ Gedanken machen kann.
   Ist ```SWI-Prolog X =:= 4 + 7.``` eine valide Anfrage in Prolog?
 ]
 
+#test[
+  Benenne Vor- und Nachteile der Prolog-Arithmetik gegenüber Arithmetik mit
+  Peano-Zahlen.
+
+  Betrachte dafür insbesondere ```SWI-Prolog ?- 4 is X + 2.``` und
+  ```SWI-Prolog ?- add(X, s(s(o)), s(s(s(s(o))))).```.
+]
+
+#test[
+  Implementiere ein Prädikat ```SWI-Prolog count_nodes/2```, dass die Anzahl
+  von internen Knoten in einem Binärbaum zählt. Hier ist eine Beispielanwendung
+  des Prädikats.
+  ```SWI-Prolog
+  ?- count_nodes(branch(empty, branch(empty, empty)), N).
+  N = 2.
+  ```
+  Warum die Anfrage ```SWI-Prolog ?- count_nodes(T, 2).``` problematisch? Wie
+  kannst du ```SWI-Prolog count_nodes``` anpassen, sodass das erwartete Ergebnis
+  herauskommt?
+] <count_nodes>
+
 #check[
   Ich bin in der Lage, ...
   - den Unterschied zwischen ```SWI-Prolog is/2``` und ```SWI-Prolog ==/2```
@@ -5266,14 +5301,23 @@ Gedanken machen kann.
 //   ).
 // ```
 
-// TODO more findall, bagof
-// TODO higher order
-// TODO difference lists
+#test[
+  Implementiere ein Prädikat ```SWI-Prolog all_btrees/2```, dass alle Binärbäume
+  mit einer festen internen Knotenanzahl berechnet.
+
+  #extra[
+    Es bietet sich an, @count_nodes vorher bearbeitet zu haben.
+  ]
+]
+
+// TODO more findall, bagof, setof
 
 #check[
   Ich bin in der Lage, ...
   - Nichtdeterminismus zu kapseln.
 ]
+
+// Difference lists wurden für die Klausur ausgeschlossen.
 
 
 == Logik-Puzzles
