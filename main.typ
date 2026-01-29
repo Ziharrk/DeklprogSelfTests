@@ -1005,7 +1005,7 @@ stellt eine PR auf GitHub].
 // TODO möglicherweise gibt es coolere Funktionen, die auch noch ohne folds
 //      auskommen - für folds wollte ich einen Test extra haben
 #test[
-  Zu welchen partiell applizierten Funktionen verhalten sich folgenden
+  Zu welchen partiell applizierten Funktionen verhalten sich folgende
   Funktionen identisch?
   - ```hs succ :: Int -> Int``` (die Inkrementfunktion)
   - ```hs pred :: Int -> Int``` (die Dekrementfunktion)
@@ -1224,13 +1224,7 @@ stellt eine PR auf GitHub].
 
   Eine Reihe von Funktionen, die du bereits für Listen kennengelernt
   hast, lassen sich auch auf Bäume übertragen.
-  #footnote[
-    Diese Funktionen lassen sich auf alle faltbaren Datentypen verallgemeinern.
-    Für Interessierte: Dies wird mithilfe der
-    #link("https://hackage.haskell.org/package/base-4.21.0.0/docs/Data-Foldable.html")[Typklasse ```hs Foldable```]
-    festgehalten -- diese Typklasse behandeln wir aber in der Vorlesung
-    voraussichtlich nicht.
-  ]
+
   Implementiere die Funktionen
   - ```hs any :: (a -> Bool) -> Tree a -> Bool``` und
     ```hs and :: (a -> Bool) -> Tree a -> Bool```,
@@ -1241,6 +1235,13 @@ stellt eine PR auf GitHub].
   - ```hs length :: Tree a -> Int```,
   - ```hs maximum :: Tree Int -> Int``` und ```hs minimum :: Tree Int -> Int```, und
   - ```hs sum :: Tree Int -> Int``` und ```hs product :: Tree Int -> Int```.
+
+  #extra[
+    Diese Funktionen lassen sich auf alle faltbaren Datentypen verallgemeinern.
+    Dies wird mithilfe der
+    #link("https://hackage.haskell.org/package/base-4.21.0.0/docs/Data-Foldable.html")[Typklasse ```hs Foldable```]
+    festgehalten.
+  ]
 ]
 
 #test[
@@ -1294,14 +1295,15 @@ stellt eine PR auf GitHub].
   - ```hs foldr (\x ys -> if x `mod` 2 == 1 then x - 1 : ys else ys) [] xs```,
   - ```hs foldl (\ys x -> x : ys) [] xs``` und
   - ```hs flip (curry snd) x```.
-    #footnote[
-      #link("https://www.youtube.com/watch?v=_oNgyUAEv0Q")["Your scientists were
-      so preoccupied with whether or not they could, that they didn't stop to
-      think if they should."] Jenseits solcher kleinen Verständnisfragen gilt
-      weiterhin, dass wir verständlichen Code schreiben wollen. Solche Ausdrücke
-      sind häufig schwieriger zu verstehen -- auch wenn es unterhaltsam ist, sich
-      solche Ausdrücke auszudenken.
-    ]
+
+  #extra[
+    #link("https://www.youtube.com/watch?v=_oNgyUAEv0Q")["Your scientists were
+    so preoccupied with whether or not they could, that they didn't stop to
+    think if they should."] Jenseits solcher kleinen Verständnisfragen gilt
+    weiterhin, dass wir verständlichen Code schreiben wollen. Solche Ausdrücke
+    wie ```hs flip (curry snd) x``` sind häufig schwieriger zu verstehen -- auch
+    wenn es unterhaltsam ist, sich solche Ausdrücke auszudenken.
+  ]
 ]
 
 // ```
@@ -1476,16 +1478,15 @@ stellt eine PR auf GitHub].
   - Funktionen höherer Ordnung,
   - pattern matching,
   - algebraische Datentypen (Typkonstruktoren, Datenkonstruktoren),
-  - parametrischen Polymorphismus
-    #footnote[
-      Typannotationen in Python sind nicht sonderlich elegant. Deshalb sind
-      nur die angegeben, um den parametrischen Polymorphismus zu identifizieren
-      und data classes anständig zu nutzen.
-    ],
+  - parametrischen Polymorphismus,
   - ad-hoc Polymorphismus (Typklassen bzw. Überladung) und
   - lokale Definitionen.
 
-  #text(0.8em)[
+  #extra[
+    Typannotationen in Python sind nicht sonderlich elegant. Deshalb sind
+    nur die angegeben, um den parametrischen Polymorphismus zu identifizieren
+    und data classes anständig zu nutzen.
+
     Data classes und match statements brauchst du dir jenseits dieses Tests
     nicht anschauen (wenn es dich nicht weiter interessiert). Es soll in dem
     Test nur darum gehen, die Haskell-Konzepte zu erkennen. In
