@@ -583,12 +583,11 @@ stellt eine PR auf GitHub].
 //   where
 //     runs :: [Int] -> [[Int]]
 //     runs []     = [[]]
-//     runs (x:[]) = [[x]]
-//     runs (x:xs) =
-//       let (r:rs) = runs xs
-//        in case r of
-//             (y:_) | x < y -> (x:r) : rs
-//             _             -> [x] : (r:rs)
+//     runs [x]    = [[x]]
+//     runs (x:xs)
+//       | x < head r = (x:r) : rs
+//       | otherwise  = [x] : (r:rs)
+//       where (r:rs) = runs xs
 //
 //     merge2 :: [Int] -> [Int] -> [Int]
 //     merge2 xs     []                 = xs
