@@ -2503,7 +2503,7 @@ verallgemeinern kannst.
 
 #check[
   Ich bin in der Lage, ...
-  - lazy evaluation in Haskel zu erklären,
+  - lazy evaluation in Haskell zu erklären,
   - Funktionen auf unendliche Datenstrukturen zu definieren, und
   - unendliche Datenstrukturen mithilfe von Funktionen zu erzeugen.
 ]
