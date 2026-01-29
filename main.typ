@@ -1639,7 +1639,7 @@ stellt eine PR auf GitHub].
 
 #test[
   Eine ```hs Show```-Instanz für den Typ
-  ```data Tree a = Leaf a | Tree a :+: Tree a```
+  ```hs data Tree a = Leaf a | Tree a :+: Tree a```
   könnte wie folgt aussehen:
   ```hs
   instance Show a => Show (Tree a) where
@@ -2497,7 +2497,8 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
 
 #check[
   Ich bin in der Lage, ...
-  - ...
+  - zu erklären, wie die Typklassen ```hs Enum``` und ```hs Bounded``` und
+    list comprehensions zusammenhängen.
 ]
 
 
@@ -2523,7 +2524,7 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
 
 #check[
   Ich bin in der Lage, ...
-  - ...
+  - list comprehensions anzugeben, insbesondere für Ganzzahlen.
 ]
 
 
@@ -2581,7 +2582,8 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
 
 #check[
   Ich bin in der Lage, ...
-  - ...
+  - einfache "Ein- und Ausgabe"-Programme zu implementieren, und
+  - zu erklären, wieso ```hs IO``` in Haskell als "pure" angesehen werden kann.
 ]
 
 
@@ -3529,7 +3531,15 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
 
 #check[
   Ich bin in der Lage, ...
-  - ...
+  - Funktoren zu definieren, die die Funktor-Gesetze erfüllen und das auch
+    beweisen,
+  - applikative Funktoren zu definieren, die die Applicative-Gesetze erfüllen
+    und das auch beweisen,
+  - Monaden zu definieren, die die Monaden-Gesetze erfüllen und das auch
+    beweisen,
+  - Funktoren, Applicatives und Monaden zu nutzen,
+  - ```hs do```-Notation zu nutzen, und
+  - zwischen ```hs (>>=), (>>)``` und ```hs do```-Notation zu übersetzen.
 ]
 
 
@@ -3674,6 +3684,12 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
 // quickCheck p = unProperty (property p)
 // ```
 
+#check[
+  Ich bin in der Lage, ...
+  - einfache ```hs Arbitrary```-Instanzen anzugeben.
+]
+
+
 #line()
 
 #test[
@@ -3783,11 +3799,6 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
 
   Wenn du bis hierhin gekommen bist, könntest du weiter den DEA mithilfe von
   Hopcrofts Algorithmus minimieren.
-]
-
-#check[
-  Ich bin in der Lage, ...
-  - ...
 ]
 
 
@@ -4240,7 +4251,9 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
 
 #check[
   Ich bin in der Lage, ...
-  - ...
+  - Prädikate zu definieren,
+  - Daten als Terme zu strukturieren,
+  - Listen zu nutzen.
 ]
 
 
@@ -4977,7 +4990,9 @@ Gedanken machen kann.
 
 #check[
   Ich bin in der Lage, ...
-  - ...
+  - formale Grundlagen der SLD-Resolution zu erklären,
+  - den Unifikationsalgorithmus anzuwenden,
+  - SLD-Bäume (mit cuts) anzugeben.
 ]
 
 
@@ -5029,6 +5044,12 @@ Gedanken machen kann.
   ```SWI-Prolog not_member``` aus @not_member reparieren?
 ]
 
+#check[
+  Ich bin in der Lage, ...
+  - die Negation zu nutzen,
+  - Fallstricke der Negation zu erklären.
+]
+
 
 == Der "Cut"-Operator
 
@@ -5070,7 +5091,8 @@ Gedanken machen kann.
 
 #check[
   Ich bin in der Lage, ...
-  - ...
+  - den cut-Operator zu nutzen,
+  - die Semantik des cuts in SLD-Bäumen kenntlichen machen.
 ]
 
 
@@ -5110,7 +5132,10 @@ Gedanken machen kann.
 
 #check[
   Ich bin in der Lage, ...
-  - ...
+  - den Unterschied zwischen ```SWI-Prolog is/2``` und ```SWI-Prolog ==/2```
+    bzgl. der Arithmetik erklären,
+  - zu klären, welche Auswirkung es hat, dass ```SWI-Prolog is/2``` im zweiten
+    Argument nur vollständig instanziierte Terme genutzt werden können.
 ]
 
 
@@ -5184,7 +5209,7 @@ Gedanken machen kann.
 
 #check[
   Ich bin in der Lage, ...
-  - ...
+  - Nichtdeterminismus zu kapseln.
 ]
 
 
