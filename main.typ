@@ -2668,11 +2668,12 @@ verallgemeinern kannst.
 #refs[
   - Skript: Funktionale Programmierung, Funktoren und Monaden
   - #link("https://learnyouahaskell.github.io/functors-applicative-functors-and-monoids.html")[Functors, Applicative Functors and Monoids -- Learn You a Haskell for Great Good!] (ohne "Monoids")
-    #footnote[
-      Wenn du Zeit übrig hast und es dich interessiert: Die Monoiden-Sektion ist
-      interessent.
-    ]
   - #link("https://learnyouahaskell.github.io/a-fistful-of-monads.html")[A Fistful of Monads -- Learn You a Haskell for Great Good!]
+
+  #extra[
+    Wenn du Zeit übrig hast und es dich interessiert: Die Monoiden-Sektion ist
+    interessent.
+  ]
 ]
 
 #test[
