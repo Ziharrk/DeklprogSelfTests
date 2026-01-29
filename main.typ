@@ -4992,6 +4992,22 @@ Gedanken machen kann.
   Ist ```SWI-Prolog X =:= 4 + 7.``` eine valide Anfrage in Prolog?
 ]
 
+
+// == Prädikate höherer Ordnung
+//
+// #refs[
+//   - Skript: Einführung in die Logikprogrammierung, Meta-Programmierung,
+//     Prädikate höherer Ordnung
+// ]
+
+
+== Kapselung des Nichtdeterminismus
+
+#refs[
+  - Skript: Einführung in die Logikprogrammierung, Meta-Programmierung,
+    Kapselung des Nichtdeterminismus
+]
+
 #test[
   Implementiere ein Prädikat ```SWI-Prolog all_trees/2```, das jeden möglichen
   blätterbeschriften Binärbaum erzeugt, deren Blätter von links nach rechts die
