@@ -1514,6 +1514,11 @@ stellt eine PR auf GitHub].
   Haskell passieren?
 ]
 
+#test[
+  Schau dir die Selbsttests dieser Sektion erneut an und versuche, geeignete in
+  Python zu lösen.
+]
+
 #check[
   Ich bin in der Lage, ...
   - Funktionen höherer Ordnung zu erkennen, zu definieren und zu nutzen,
@@ -2559,7 +2564,8 @@ verallgemeinern kannst.
 
 #test[
   Implementiere die Funktionen ```hs map```, ```hs filter``` und
-  ```hs concatMap``` mithilfe von list comprehensions.
+  ```hs concatMap``` mithilfe von list comprehensions (sowohl in Haskell als
+  auch Python).
 ]
 
 #test[
@@ -2575,7 +2581,10 @@ verallgemeinern kannst.
 
 #check[
   Ich bin in der Lage, ...
-  - list comprehensions anzugeben, insbesondere für Ganzzahlen.
+  - List Comprehensions konzeptionell zu verstehen und korrekt zu anwenden,
+    einschließlich ihres mathematischen Hintergrunds, und
+  - Listenverarbeitungen mit List Comprehensions auszudrücken und äquivalent
+    umzuformen, auch bei komplexeren Konstruktionen.
 ]
 
 
@@ -2605,6 +2614,7 @@ verallgemeinern kannst.
   - Welche der beiden Aktionen wird zuerst ausgeführt?
   - Warum erscheint das bei Lazy Evaluation kontraintuitiv?
   - Welche Rolle spielt der Typ ```hs RealWorld -> (RealWorld, a)``` bei der Sequenzierung?
+  - Wieso können ```hs IO```-Berechnung in Haskell als "pure" betrachtet werden?
 ]
 
 #test[
@@ -2641,8 +2651,15 @@ verallgemeinern kannst.
 
 #check[
   Ich bin in der Lage, ...
-  - einfache "Ein- und Ausgabe"-Programme zu implementieren, und
-  - zu erklären, wieso ```hs IO``` in Haskell als "pure" angesehen werden kann.
+  - referenzielle Transparenz und Seiteneffekte konzeptionell zu erklären und
+    die Rolle des Typs ```hs IO a``` für die Modellierung von Effekten in
+    Haskell einzuordnen,
+  - IO-Aktionen korrekt zu kombinieren, zu sequenzieren und auszuwerten, auch
+    im Kontext von Lazy Evaluation und der zugrunde liegenden
+    Weltzustands-Semantik,
+  - einfache bis mittelkomplexe IO-Programme entwerfen und implementieren,
+    die Ein-/Ausgabe, Dateizugriff, Verarbeitung von Eingaben und kontrollierte
+    Interaktion enthalten.
 ]
 
 
@@ -4330,7 +4347,10 @@ verallgemeinern kannst.
   Ich bin in der Lage, ...
   - Prädikate zu definieren,
   - Daten als Terme zu strukturieren,
-  - Listen zu nutzen.
+  - Listen zu nutzen,
+  - ```SWI-Prolog append/3``` zu definieren und damit andere Prädikate wie z.B.
+    ```SWI-Prolog member/2``` zu definieren,
+  - Peano-Arithmetik zu definieren und zu nutzen.
 ]
 
 
@@ -4729,7 +4749,7 @@ atomare Ausdrücke -- wenn nicht anders in Test oder Challenge eingeführt.
 #test[
   Finde die allgemeinsten Unifikatoren für die folgende Terme:
   - $(X + 1) dot Y + Z$ und $((3 + Z) + 1) dot Z + 3$,
-  - $f(X, 1)$ und $f([Y|R], Y)$,
+  - $f(X, Y)$ und $f([Y|R], 1)$,
   - $f([X|R], X, R)$ und $f([1, 2, 3], _, [Z|S])$, und
   - #grid(
       columns: (1fr, auto, 1fr),
