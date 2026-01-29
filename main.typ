@@ -75,6 +75,8 @@
   }
 }
 
+#let extra(content) = block(text(0.8em, content))
+
 #let mybox(color, icon, label, content) = {
   box(
     width: 100%,
@@ -92,7 +94,7 @@
   ]
 }
 
-#let check = mybox.with(purple, "check-badge", "Selbstevaluation")
+#let check = mybox.with(purple, "academic-cap", "Selbstevaluation")
 #let refs = mybox.with(rgb("#dc267f"), "book-open", "Referenzen")
 
 #set page(
@@ -187,7 +189,7 @@ stellt eine PR auf GitHub].
 #test[
   In imperativen Programmiersprachen sind Variablen Namen für Speicherzellen,
   deren Werte zum Beispiel in Schleifen verändert werden können. Als Beispiel
-  betrachte
+  betrachte die Funktionen ```py clz``` und ```py popcnt```.
   ```py
   def clz(n):
     k = 0
@@ -205,7 +207,8 @@ stellt eine PR auf GitHub].
     return k
   ```
   In Haskell sind Variablen keine Namen für Speicherzellen. Wie können wir
-  dieses Programm in Haskell umsetzen? Wo wandert das `k` hin?
+  dieses Programm in Haskell umsetzen? Wo wandert das `k` hin, oder allgemein
+  wo wandert der Zustand hin?
 ] <clz_popcnt>
 
 #test[
@@ -229,8 +232,9 @@ stellt eine PR auf GitHub].
   - Berechne das Ergebnis von ```hs odd (1 + 1)``` händisch.
   - Wie sieht der Auswertungsgraph für den Ausdruck ```hs odd (1 + 1)``` aus?
     - Welcher Pfad entspricht deiner händischen Auswertung?
-    - Welcher Pfad entspricht der Auswertung wie sie in Haskell stattfindet?
-    - Welcher Pfad entspricht der Auswertung wie sie in Python sinngemäß stattfindet?
+    - Welcher Pfad entspricht der Auswertung, wie sie in Haskell stattfindet?
+    - Welcher Pfad entspricht der Auswertung, wie sie in Python sinngemäß
+      stattfindet?
 ]
 
 #test[
@@ -241,13 +245,18 @@ stellt eine PR auf GitHub].
 
 #test[
   Das Potenzieren einer Zahl $x$ (oder eines Elements einer Halbgruppe) mit
-  einem natürlich-zahligen Exponent $n$ ist in $cal(O)(log n)$ Laufzeit möglich
-  #footnote[#link("https://de.wikipedia.org/wiki/Bin%C3%A4re_Exponentiation")[Binäre Exponentiation]], sofern wir die Laufzeit für die Verknüpfung vernachlässigen
-  können. Dafür betrachten wir
+  einem natürlich-zahligen Exponent $n$ ist in $cal(O)(log n)$ Laufzeit möglich,
+  sofern wir die Laufzeit für die Verknüpfung vernachlässigen können. Dafür
+  betrachten wir
   $
-  x^n = cases((x^(n/2))^2 & "falls" n "gerade", x dot x(x^((n-1)/2))^2 & "sonst")
+  x^n = cases((x^(n/2))^2 & "falls" n "gerade,", x dot x(x^((n-1)/2))^2 & "sonst.")
   $
   Implementiere eine Funktion, die diese Variante des Potenzierens umsetzt.
+  #extra[
+    Das Verfahren ist als #link("https://de.wikipedia.org/wiki/Bin%C3%A4re_Exponentiation")[Binäre Exponentiation]
+    bekannt. ```hs (^)``` ist so in Haskell implementiert (siehe
+    #link("https://hackage-content.haskell.org/package/ghc-internal/docs/src/GHC.Internal.Real.html#powImpl")[```hs powImpl```]).
+  ]
 ]
 
 #test[
@@ -298,8 +307,9 @@ stellt eine PR auf GitHub].
   Datentypen? Gebe Beispiele für jeden dieser Typarten an.
 ]
 
+// TODO move to Polymorphismus?
 #test[
-  Geben ist der Typ ```hs IntList``` mit ```hs data IntList = Nil | Cons Int IntList```.
+  Gegeben ist der Typ ```hs IntList``` mit ```hs data IntList = Nil | Cons Int IntList```.
   Weiter kann mithilfe der Funktion
   ```hs
   lengthIntList :: IntList -> Int
@@ -329,12 +339,11 @@ stellt eine PR auf GitHub].
 #test[
   Gebe ein Listendatentypen an, für den es nicht möglich ist, kein Element
   zu enthalten.
-]
 
-#test[
-  In Programmiersprachen wie Java greifen wir auf Daten komplexer Datentypen zu,
-  indem wir auf Attribute von Objekten zugreifen oder getter-Methoden verwenden.
-  Wie greifen wir auf Daten in Haskell zu?
+  #extra[
+    In Haskell heißt dieser Datentyp ```hs NonEmpty``` und ist definiert in
+    #link("https://hackage-content.haskell.org/package/base/docs/Data-List-NonEmpty.html")[```hs Data.List.NonEmpty```].
+  ]
 ]
 
 #check[
@@ -370,11 +379,12 @@ stellt eine PR auf GitHub].
 ]
 
 #test[
-  Welche Typkonstruktoren des kinds ```hs * -> *``` kennst du?
+  Welche Typkonstruktoren des kinds ```hs * -> *``` oder ```hs * -> * -> *```
+  kennst du?
 ]
 
 #test[
-  Welchen kinds haben jeweils ```hs Either``` und ```hs Either a```?
+  Welche kinds haben jeweils ```hs Either``` und ```hs Either a```?
 ]
 
 #test[
@@ -503,11 +513,13 @@ stellt eine PR auf GitHub].
   - Implementiere eine Funktion ```hs ($$) :: Fun -> Double -> Double```, die
     eine gegebene Funktion in einem gegebenen Punkt auswertet.
   - Implementiere eine Funktion ```hs derive :: Fun -> Fun```, die eine
-    gegebene Funktion ableitet.
-    #footnote[
-      #link("https://de.wikipedia.org/wiki/Differentialrechnung#Zusammenfassung")[Zusammenfassung der Ableitungsregeln]
-    ]
-    Die Funktionen müssen nach dem Ableiten nicht vereinfacht werden.
+    gegebene Funktion ableitet. Die Funktionen müssen nach dem Ableiten nicht
+    vereinfacht werden.
+
+  #extra[
+    Hier findest eine
+    #link("https://de.wikipedia.org/wiki/Differentialrechnung#Zusammenfassung")[Zusammenfassung der Ableitungsregeln].
+  ]
 ] <symbolic_diff>
 
 // ```hs
@@ -547,19 +559,19 @@ stellt eine PR auf GitHub].
 #challenge[
   In Einführung in die Algorithmik hast du verschiedene Varianten des
   `mergesort`-Algorithmus kennengelernt. Eine davon hat ausgenutzt, dass in
-  einer Eingabeliste bereits aufsteigend sortierte Teillisten vorkommen können,
-  um den Algorithmus zu beschleunigen.
-  #footnote[
-    Falls du interessiert bist: In der Haskell `base`-library wird `sort` aus
-    `Data.List` sehr ähnlich implementiert:
-    #link("https://hackage.haskell.org/package/ghc-internal-9.1201.0/docs/src/GHC.Internal.Data.OldList.html#sort")[Data.List.sort].
-  ]
-  Implementiere diese Variante in Haskell.
+  einer Eingabeliste bereits nicht-absteigend sortierte Teillisten vorkommen
+  können, um den Algorithmus zu beschleunigen. Implementiere diese Variante in
+  Haskell.
 
-  #text(0.8em)[
-    Für den Anfang kannst du annehmen, dass die Eingabelisten vom Typ
-    ```hs [Int]``` sind. Wenn wir Typklassen behandelt haben, kannst du
-    ```hs Ord a => [a]``` nutzen.
+  Für den Anfang kannst du annehmen, dass die Eingabelisten vom Typ
+  ```hs [Int]``` sind. Wenn wir Typklassen behandelt haben, kannst du
+  ```hs Ord a => [a]``` nutzen -- oder du nutzt letzteres und behandelst es
+  erstmal so, als wäre es ersteres.
+
+  #extra[
+    In der Haskell `base`-library wird `sort` aus `Data.List` vergleichbar
+    implementiert:
+    #link("https://hackage.haskell.org/package/ghc-internal-9.1201.0/docs/src/GHC.Internal.Data.OldList.html#sort")[Data.List.sort].
   ]
 ]
 
@@ -600,10 +612,8 @@ stellt eine PR auf GitHub].
   rationale Zahl als reelle Zahl mit einer festen Anzahl von Nachkommastellen
   darstellt.
 
-  #text(0.8em)[
-    Später kannst du auch hier die jeweiligen Typklassen verwenden, um die
-    arithmetischen Operationen zu überladen.
-  ]
+  Später kannst du auch hier die jeweiligen Typklassen verwenden, um die
+  arithmetischen Operationen zu überladen.
 ]
 
 // ```hs
@@ -655,13 +665,15 @@ stellt eine PR auf GitHub].
     b.add(2 * a.get(i));
   }
   ```
-  Wenn wir diesen Code naiv in Haskell übersetzen, könnten wir z.B.
+  Wenn wir diesen Code naiv in Haskell übersetzen, könnten wir z.B. folgenden
+  Code erhalten.
   ```hs
   double :: [Int] -> Int -> [Int]
   double xs i | i < length xs = 2 * xs !! i : double xs (i + 1)
               | otherwise     = []
   ```
   Das wollen wir niemals so tun.
+  - Was gefällt uns nicht?
   - Wie unterscheiden sich die Laufzeiten?
   - Optimiere die Funktion `double`, sodass sie lineare Laufzeit in der Länge
     der Liste hat.
@@ -676,7 +688,7 @@ stellt eine PR auf GitHub].
   ```hs (!!)```. Sie macht den Fehlerfall explizit durch die Wahl des
   Ergebnistypen. Wie fängt der Ergebnistyp diesen Fehlerfall auf? Implementiere
   diese Funktion.
-  #footnote[
+  #extra[
     Diese Funktion ist auch bereits vorimplementiert:
     #link("https://hackage.haskell.org/package/base-4.21.0.0/docs/Data-List.html#v:-33--63-")[```hs (!?)``` in ```hs Data.List```].
   ]
@@ -686,14 +698,10 @@ stellt eine PR auf GitHub].
   Gegeben sei der Datentyp für knotenbeschriftete Binärbäume
   #align(center)[```hs data Tree a = Empty | Node (Tree a) a (Tree a)```.]
 
-  Mithilfe einer Pfadbeschreibung können wir durch so einen Baum navigieren.
+  Mithilfe einer Pfadbeschreibung können wir uns durch so einen Baum navigieren.
   Diese Beschreibung soll durch eine Liste von Werten vom Typ
   ```hs data D = L | R``` dargestellt sein.
-  #footnote[
-    Da Datenkonstruktoren in Haskell nicht überladen werden können, können hier
-    leider nicht ```hs Left``` und ```hs Right``` verwendet werden, solange
-    die Datenkonstruktoren des ```hs Either```-Typs im scope sind.
-  ]
+
   Implementiere eine Funktion ```hs (!?) :: Tree a -> [D] -> Maybe a```, die
   die Beschriftung des Knotens zurückgibt, der durch die gegebene
   Pfadbeschreibung gefunden wird. Hier sind kleine Beispiele:
@@ -701,6 +709,12 @@ stellt eine PR auf GitHub].
   - ```hs Node Empty 3 Empty !? [L] = Nothing```
   - ```hs Node Empty 3 Empty !? [R] = Nothing```
   - ```hs Node (Node Empty 1 (Node Empty 2 Empty)) 3 Empty !? [L, R] = 2```
+
+  #extra[
+    Da Datenkonstruktoren in Haskell nicht überladen werden können, können hier
+    leider nicht ```hs Left``` und ```hs Right``` verwendet werden, solange
+    die Datenkonstruktoren des ```hs Either```-Typs im scope sind.
+  ]
 ]
 
 #test[
@@ -740,6 +754,12 @@ stellt eine PR auf GitHub].
   - #link("https://learnyouahaskell.github.io/syntax-in-functions.html")[Syntax in Functions - Learn You a Haskell for Great Good!] ("Pattern matching", "Guards, guards!", "Case expressions")
 ]
 
+#test[
+  In Programmiersprachen wie Java greifen wir auf Daten komplexer Datentypen zu,
+  indem wir auf Attribute von Objekten zugreifen oder getter-Methoden verwenden.
+  Wie greifen wir auf Daten in Haskell zu?
+]
+
 #challenge[
   In Haskell sind Listen als einfach-verkettete Listen implementiert. Das macht
   sie ungeeignet für Operationen, die wahlfreien Zugriff in konstanter Laufzeit
@@ -769,19 +789,19 @@ stellt eine PR auf GitHub].
   Die Implementierung soll dabei folgende Invariante erfüllen: Eine queue ist
   genau dann leer, wenn die ```hs dequeue```-Liste leer ist. Diese Invariante
   kannst du z.B. mit einer Hilfsfunktion erzwingen -- oder du passt bei der
-  Implementierung deiner Funktionen auf.
-  #footnote[
-    Für Interessierte: Wenn sogar ```hs length xs >= length ys``` für eine
-    queue ```hs Q xs ys``` gewährleistet wird, ist die queue nochmal schneller.
-    Dafür muss man die Längen der Listen immer vorhalten. Mehr darüber findest
-    du in
+  Implementierung deiner Funktionen auf. Falls es dir für den Anfang einfacher
+  fällt, ignoriere die Invariante erstmal.
+
+  #extra[
+    Wenn sogar ```hs length xs >= length ys``` für eine queue ```hs Q xs ys```
+    gewährleistet wird, ist die queue nochmal schneller. Dafür muss man die
+    Längen der Listen immer vorhalten. Mehr darüber findest du in
     #link("https://www.cambridge.org/core/journals/journal-of-functional-programming/article/simple-and-efficient-purely-functional-queues-and-deques/7B3036772616B39E87BF7FBD119015AB")[Simple and efficient purely functional queues and deques]
     von Chris Okasaki lesen. Falls dich funktionale Datenstrukturen allgemein
     interessieren, sei dir
     #link("https://www.cs.cmu.edu/~rwh/students/okasaki.pdf")[seine
     Doktorarbeit] empfohlen.
   ]
-  Falls es dir für den Anfang einfacher fällt, ignoriere die Invariante erstmal.
 
   #hint[
     Nach $n$ ```hs enqueue```- Operationen in eine leere queue sieht diese wie
@@ -839,7 +859,10 @@ stellt eine PR auf GitHub].
   die einen Teilbaum an der Wurzel rebalanciert, sollte der Teilbaum
   unbalanciert sein. Diese Funktion kannst du dann nutzen, um die gängigen
   Operationen auf Suchbäumen anzupassen.
-  #footnote[#link("https://de.wikipedia.org/wiki/AVL-Baum#Rebalancierung")[Rebalancierung eines AVL-Baum]]
+
+  #extra[
+    #link("https://de.wikipedia.org/wiki/AVL-Baum#Rebalancierung")[Rebalancierung eines AVL-Baum].
+  ]
 ]
 
 // ```hs
@@ -890,8 +913,8 @@ stellt eine PR auf GitHub].
   Liste. ```hs insert``` fügt eine Ganzzahl in einen Suchbaum ein.
   ```hs delete``` löscht eine Ganzzahl aus einen Suchbaum.
 
-  Wie kannst du die Suchbaum-Eigenschaft spezifizieren (dafür brauchst du
-  weitere Funktionen)?
+  Wie kannst du die Suchbaum-Eigenschaft spezifizieren? Zum Spezifizieren der
+  Eigenschaften benötigst du möglicherweise weitere Funktionen.
 ]
 
 #test[
@@ -2597,6 +2620,21 @@ Selbsttests erneut an und überlege dir, wo du Typen verallgemeinern kannst.
       interessent.
     ]
   - #link("https://learnyouahaskell.github.io/a-fistful-of-monads.html")[A Fistful of Monads -- Learn You a Haskell for Great Good!]
+]
+
+#test[
+  Was ist der Unterschied zwischen Typklassen und Typkonstruktorklassen?
+  Gebe Beispiele für beide an.
+]
+
+#test[
+  Gegeben sei folgende Typkonstruktorklasse.
+  ```hs
+  class TCC t where
+    f :: t a b -> b
+  ```
+  Für welche Datentypen können wir Instanzen von ```hs TCC``` angeben?
+  Beantworte die Frage möglichst allgemein.
 ]
 
 #test[
