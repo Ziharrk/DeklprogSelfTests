@@ -1718,7 +1718,8 @@ stellt eine PR auf GitHub].
 ]
 
 #test[
-  Wieso gilt sowohl ```hs 14000605 :: Int``` als auch ```hs 14000605 :: Float```?
+  Wieso gilt sowohl #link("https://www.youtube.com/watch?v=ZCPN9SfdH7c&t=108s")[```hs 14000605 :: Int```]
+  als auch ```hs 14000605 :: Float```?
 ]
 
 #challenge[
