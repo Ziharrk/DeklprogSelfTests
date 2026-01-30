@@ -140,9 +140,9 @@ Schwierigkeiten hast, melde dich gerne, damit wir dir helfen können.
 
 Die Inhalte dieses Dokuments sind nicht vollständig. Es kann sein, dass
 Modulinhalte nicht durch Selbsttests, Referenzen oder Selbstevaluationen abdeckt
-werden -- insbesondere fehlen derzeitig noch viele Lernziele in den
-Selbstevaluationen. Betrachte dieses Dokument immer als "work in progress" und
-ziehe auch immer andere Quellen zum Lernen heran.
+werden und es nie werden -- insbesondere fehlen derzeitig noch viele Lernziele
+in den Selbstevaluationen. Betrachte dieses Dokument immer als "work in
+progress" und ziehe auch immer andere Quellen zum Lernen heran.
 
 Wenn du Anmerkungen oder weitere Ideen oder Quellen für Inhalte für dieses
 Dokument hast, dann schreibe uns gerne über z.B. mattermost an -- oder
