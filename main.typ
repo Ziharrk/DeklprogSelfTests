@@ -1717,6 +1717,10 @@ stellt eine PR auf GitHub].
   ]
 ]
 
+#test[
+  Wieso gilt sowohl ```hs 14000605 :: Int``` als auch ```hs 14000605 :: Float```?
+]
+
 #challenge[
   In dieser Challenge sollst du automatisches Differenzieren im Rückwärtsmodus
   mithilfe von (Operator-)Überladung implementieren. Dieser Ansatz des
