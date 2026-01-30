@@ -489,7 +489,7 @@ stellt eine PR auf GitHub].
   Die Ableitung einer Funktion $f : RR -> RR$ kann mithilfe des
   Differenzenquotienten $(f(x+h)-f(x))/h$ für kleines $h$ approximiert werden.
   Ein andere Methode zur Berechnung der Ableitung ist symbolisches Differenzen
-  und ähnelt dem, wie wir analytisch Ableitungen berechnen.
+  und ähnelt dem, wie wir händisch Ableitungen berechnen.
   Eine Funktion sei dargestellt durch den folgenden Typ:
   ```hs
   data Fun = X            -- x     (Variable x)
