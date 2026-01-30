@@ -3857,6 +3857,19 @@ nähern uns dennoch der tatsächlichen Implementierung von QuickCheck stark an.
     ```hs s``` der übergegebene Größen-Parameter der Generator-Funktion ist.
   - Passe ```hs quickCheck``` so an, dass ein Zufallsgenerator und ein
     Größenwert an die Generator-Funktionen weitergegeben wird.
+
+  #extra[
+    Die Vereinfachungen, die wir gemacht haben:
+    - einfacheren PRNG nutzen (anstatt SplitMix64)
+    - in ```hs Gen``` wird in QuickCheck der PRNG gesplittet, anstatt dass
+      er durchgereicht wird
+    - ```hs chooseInt``` nutzt eigentlich eine Form von rejection sampling
+    - wir haben einen festen seed gewählt (in SplitMix64 wird
+      #link("https://hackage-content.haskell.org/package/splitmix/docs/src/System.Random.SplitMix.Init.html#initialSeed")[initialSeed]
+      basierend auf der aktuellen Uhrzeit gesetzt, damit immer neue zufällige
+      Zahlen generiert werden, wenn das Programm erneut gestartet wird)
+    - und vieles mehr!
+  ]
 ] <quickcheck_prng>
 
 // ```hs
