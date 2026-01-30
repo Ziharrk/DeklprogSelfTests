@@ -282,6 +282,10 @@ stellt eine PR auf GitHub].
   #align(center)[```hs if 0 then 3.141 else 3141```]
 ]
 
+#test[
+  Definiere eine Funktion, die kein Ergebnis liefert.
+]
+
 #check[
   Ich bin in der Lage, ...
   - einfache Funktionen selbstständig zu definieren,
@@ -309,6 +313,10 @@ stellt eine PR auf GitHub].
 #test[
   Was ist charakterisierend für Aufzählungstypen, Verbundstypen und rekursive
   Datentypen? Gebe Beispiele für jeden dieser Typarten an.
+]
+
+#test[
+  Benenne null-, ein- und zweistellige Konstruktoren aus der Haskell Prelude.
 ]
 
 // TODO move to Polymorphismus?
@@ -363,7 +371,6 @@ stellt eine PR auf GitHub].
 #refs[
   - Skript: Funktionale Programmierung, Polymorphismus
   - #link("https://learnyouahaskell.github.io/making-our-own-types-and-typeclasses.html")[Making Our Own Types and Typeclasses -- Learn You a Haskell for Great Good!] ("Type parameters", "Recursive data structures")
-
   - #link("https://learnyouahaskell.github.io/recursion.html")[Recursion -- Learn You a Haskell for Great Good!] ("Type parameters", "Recursive data structures")
 ]
 
@@ -1938,6 +1945,19 @@ verallgemeinern kannst.
   repräsentierte Werte parsen?
 ]
 
+#test[
+  Gebe für die folgenden Funktionsdefinitionen den allgemeisten Typ an.
+  - ```hs
+    f x []     = [x]
+    f x (y:ys)
+      | x < y     = x : y : ys
+      | otherwise = y : f x ys
+    ```
+  - ```hs f mmx = mmx >>= id```
+  - ```hs f = (.) . (.)```
+  - ```hs f = uncurry const```
+]
+
 #check[
   Ich bin in der Lage, ...
   - Typklasseninstanzen, ```hs Show```, ```hs Eq``` und ```hs Ord```, für
@@ -1986,6 +2006,15 @@ verallgemeinern kannst.
   Der Teilausdruck ```hs a = u `div` x``` erscheint auf dem ersten Blick
   problematisch, da ```hs x``` Null sein könnte. Wieso stellt das mit
   Lazy Evaluation kein Problem dar?
+]
+
+#test[
+  Wieso ist ```hs length [loop, loop, loop]``` berechenbar? ```hs loop```
+  ist definiert durch
+  ```hs
+  loop :: a -> a
+  loop = loop
+  ```
 ]
 
 #test[
@@ -5447,12 +5476,41 @@ Gedanken machen kann.
 ]
 
 
-// == Prädikate höherer Ordnung
+== Prädikate höherer Ordnung
+
+#refs[
+  - Skript: Einführung in die Logikprogrammierung, Meta-Programmierung,
+    Prädikate höherer Ordnung
+]
+
+#test[
+  Erkläre, wie das Meta-Prädikat ```SWI-Prolog call``` verwendet wird. Welche
+  Stelligkeit hat ```SWI-Prolog call```?
+]
+
+#test[
+  Implementiere die Prädikate ```SWI-Prolog map/3```, ```SWI-Prolog filter/3```,
+  ```SWI-Prolog foldr/4```, so wie du sie erwarten würdest. Implementiere
+  darüber hinaus das Prädikat ```SWI-Prolog all/2```, dass genau dann erfüllt
+  ist, wenn das ein übergegebenes Prädikat für alle Elemente einer Liste
+  erfüllt ist.
+]
+
+// ```SWI-Prolog
+// map(_, [], []).
+// map(F, [X|Xs], [Y|Ys]) :- call(F, X, Y), map(F, Xs, Ys).
 //
-// #refs[
-//   - Skript: Einführung in die Logikprogrammierung, Meta-Programmierung,
-//     Prädikate höherer Ordnung
-// ]
+// filter(_, [], []).
+// filter(P, [X|Xs], [X|Ys]) :- call(P, X), !, filter(P, Xs, Ys).
+// filter(P, [_|Xs], Ys) :- filter(P, Xs, Ys).
+//
+// foldr(_, E, [], E).
+// foldr(F, E, [X|Xs], R) :- foldr(F, E, Xs, S), call(F, X, S, R).
+// ```
+
+#check[
+  Ich bin in der Lage, ```SWI-Prolog call``` zu nutzen.
+]
 
 
 == Kapselung des Nichtdeterminismus
