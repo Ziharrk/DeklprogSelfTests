@@ -3702,6 +3702,10 @@ verallgemeinern kannst.
 //   -- arbitrary = fmap Positive (fmap abs arbitrary `suchThat` (> 0))
 // ```
 
+Die folgenden zwei Challenges steigen tiefer in die Funktionsweise von
+QuickCheck ein. Dabei werden zwar weiter viele Vereinfachungen gemacht, wir
+nähern uns dennoch der tatsächlichen Implementierung von QuickCheck stark an.
+
 #challenge[
   Eigenschaften lassen sich mit QuickCheck z.B. mithilfe der Funktion
   ```hs quickCheck``` prüfen.
@@ -3750,19 +3754,20 @@ verallgemeinern kannst.
       Implementiere eine Funktion ```hs quickCheck :: Testable a => a -> Bool```,
       die eine Eigenschaft nimmt und prüft.
 
-  #text(0.8em)[
+  #extra[
     In QuickCheck werden Generatoren genutzt, um zufällige Werte zu generieren.
     Diese nutzen alle einen Zufallszahlengenerator, der als Zustand mit
     weiteren Parametern durch alle ```hs arbitrary```-Aufrufe durchgetragen wird.
-    Das haben wir uns durch die Vereinfachungen vernachlässigt.
+    Das behandeln wir in der @quickcheck_prng, damit diese Challenge nicht zu
+    sehr ausartet.
   ]
-]
+] <quickcheck_noprng>
 
 // ```hs
 // class Arbitrary a where
 //   arbitrary :: a
 //
-// instance Arbitrary a where
+// instance Arbitrary Int where
 //   arbitrary = 42
 //
 // instance Testable Bool where
@@ -3774,8 +3779,158 @@ verallgemeinern kannst.
 // instance (Arbitrary a, Testable b) => Testable (a -> b) where
 //   property f = property (f arbitrary)
 //
-// quickCheck :: Testable a => a -> IO Bool
+// quickCheck :: Testable a => a -> Bool
 // quickCheck p = unProperty (property p)
+// ```
+
+#challenge[
+  Bevor du diese Challenge bestreitest, sage @quickcheck_noprng den Kampf an!
+
+  Während QuickCheck #link("https://dl.acm.org/doi/10.1145/2660193.2660195")[SplitMix64]
+  als Pseudozufallszahlengenerator nutzt, nutzen wir ein einfacheres Verfahren,
+  um solche Zahlen zu erzeugen.
+  #link("https://en.wikipedia.org/wiki/Xorshift")[Xorshift] erzeugt
+  Pseudozufallszahlen nach dem folgenden Schema:
+  $
+  x &<- x plus.o (x << 13) \
+  x &<- x plus.o (x >> 7) \
+  x &<- x plus.o (x << 17) \
+  $
+  wobei $x$ eine 64-Bit Ganzzahl ist.
+
+  - Implementiere eine Funktion ```hs xorshift64 :: Word64 -> Word64```, die das
+    obige Verfahren umsetzt. Folgende imports könnten hilfreich sein. Werte vom
+    Typ ```hs Word64``` können direkt mit den Bit-Operationen verwendet werden.
+    Wir nutzen den Typ ```hs Word64```, weil für diesen im Gegensatz zum
+    ```hs Int``` garantiert ist, dass dieser 64-Bit hat. Wir gehen danach aber
+    wieder direkt zum Typ ```hs Int```.
+    ```hs
+    import Data.Bits (shiftL, shiftR, xor)
+    import Data.Word (Word64)
+    ```
+
+  Eine zufällige Ganzzahl kann nun mithilfe der Funktion ```hs nextInt```
+  generiert werden. Ein Zufallszahlengenerator kann mit der Funktion
+  ```hs mkPRNG``` erzeugt werden. Dieser muss mit einer Zahl (seed)
+  initialisiert werden.
+  ```hs
+  data PRNG = PRNG Word64
+    deriving Show
+
+  mkPRNG :: Word64 -> PRNG
+  mkPRNG s = PRNG (xorshift64 s)
+
+  nextInt :: PRNG -> (Int, PRNG)
+  nextInt (PRNG s) = (fromIntegral r, PRNG r)
+    where r = xorshift64 s
+  ```
+
+  Damit der Zufallsgenerator bei der Definition von ```hs arbitrary``` zur
+  Verfügung steht, passen wir die Definition der zugehörigen Typklasse an.
+  Weiter erhält diese auch einen Größen-Parameter, um die generierten
+  Zufallswerte in ihrer Größe zu kontrollieren. Andere Definitionen aus der
+  vorherigen Challenge müssen wir auch anpassen.
+
+  ```hs
+  newtype Property = Property { unProperty :: Gen Bool }
+
+  newtype Gen a = Gen { unGen :: PRNG -> Int -> (a, PRNG) }
+
+  class Arbitrary a where
+    arbitrary :: Gen a
+  ```
+
+  - Passe deine alte Implementierung aus @quickcheck_noprng bzgl. der neuen
+    Typen an.
+  - Definiere ```hs Functor```-, ```hs Applicative```- und ```hs Monad```-Instanzen
+    für den Typkonstruktor ```hs Gen```. (Hier passiert im Wesentlichen etwas
+    Ähnliches wie in @sequence_state.)
+  - Definiere eine Funktion ```hs chooseInt :: (Int, Int) -> Gen Int```, die
+    eine zufällige Ganzzahl im übergebenen Intervall generiert. Um eine
+    zufällige Zahl $x in ZZ$ in ein Intervall $[l, r)$ zu zwingen, können wir
+    z.B. $l + x "mod" (r - l)$ rechnen. Beachte, dass ```hs mod``` auch negativ
+    sein kann.
+  - Definiere eine ```hs Arbitrary```-Instanz für den Typ ```hs Int```. Dabei
+    soll eine generierte Ganzzahl im Intervall ```hs (-s, s)``` liegen, wobei
+    ```hs s``` der übergegebene Größen-Parameter der Generator-Funktion ist.
+  - Passe ```hs quickCheck``` so an, dass ein Zufallsgenerator und ein
+    Größenwert an die Generator-Funktionen weitergegeben wird.
+] <quickcheck_prng>
+
+// ```hs
+// import Data.Word (Word64)
+// import Data.Bits (shiftL, shiftR, xor)
+//
+// data PRNG = PRNG Word64
+//   deriving Show
+//
+// nextInt :: PRNG -> (Int, PRNG)
+// nextInt (PRNG s) = (fromIntegral z, PRNG z)
+//   where z = xorshift64 s
+//
+// xorshift64 :: Word64 -> Word64
+// xorshift64 z0 = z3
+//   where
+//     z1 = z0 `xor` (z0 `shiftL` 13)
+//     z2 = z1 `xor` (z1 `shiftR` 7)
+//     z3 = z2 `xor` (z2 `shiftL` 17)
+//
+// mkPRNG :: Word64 -> PRNG
+// mkPRNG s = PRNG (xorshift64 s)
+//
+// newtype Gen a = Gen { unGen :: PRNG -> Int -> (a, PRNG) }
+//
+// instance Functor Gen where
+//   fmap f m = Gen (\g s -> let (x, s') = unGen m g s in (f x, s'))
+//
+// instance Applicative Gen where
+//   pure x = Gen (\g _ -> (x, g))
+//
+//   mf <*> mx = Gen (\g s -> let (f, g')  = unGen mf g s
+//                                (x, g'') = unGen mx g' s
+//                             in (f x, g''))
+//
+// instance Monad Gen where
+//   mx >>= k = Gen (\g s -> let (x, g') = unGen mx g s
+//                            in unGen (k x) g' s)
+//
+// newtype Property = Property { unProperty :: Gen Bool }
+//
+// class Testable a where
+//   property :: a -> Property
+//
+// class Arbitrary a where
+//   arbitrary :: Gen a
+//
+// chooseInt :: (Int, Int) -> Gen Int
+// chooseInt (lo, hi) = Gen (\g _ -> let (x, g') = nextInt g
+//                                       r       = hi - lo
+//                                    in (lo + (x `mod` r + r) `mod` r, g'))
+//
+// instance Arbitrary Int where
+//   arbitrary = Gen (\g s -> unGen (chooseInt (-s, s)) g s)
+//
+// instance Testable Bool where
+//   property b = Property (return b)
+//
+// instance Testable Property where
+//   property = id
+//
+// instance Testable p => Testable (Gen p) where
+//   property mp = Property $ do
+//     p <- mp
+//     unProperty (property p)
+//
+// instance (Arbitrary a, Testable b) => Testable (a -> b) where
+//   property f = Property $ do
+//     x <- arbitrary
+//     unProperty (property (f x))
+//
+// generate :: Gen a -> a
+// generate m = fst (unGen m (mkPRNG 0x9e3779b97f4a7c15) 30)  -- random seed and size
+//
+// quickCheck :: Testable a => a -> Bool
+// quickCheck p = generate (unProperty (property p))
 // ```
 
 #check[
