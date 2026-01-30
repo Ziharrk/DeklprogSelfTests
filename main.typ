@@ -3960,9 +3960,9 @@ verallgemeinern kannst.
   Ordne die Begriffe Atom, Fakt, Regel und Variable dem folgenden
   Prolog-Programm zu?
   ```SWI-Prolog
-  semitone(c, cis). semitone(cis, d). semitone(d, dis). semitone(dis, e).
-  semitone(e, f). semitone(f, fis). semitone(fis, g). semitone(g, gis).
-  semitone(gis, a). semitone(a, ais). semitone(ais, b). semitone(b, c).
+  semitone(c, cs). semitone(cs, d). semitone(d, ds). semitone(ds, e).
+  semitone(e, f). semitone(f, fs). semitone(fs, g). semitone(g, gs).
+  semitone(gs, a). semitone(a, as). semitone(as, b). semitone(b, c).
 
   minor_third(P1, Mi3) :-
     semitone(P1, Mi2), semitone(Mi2, Ma2), semitone(Ma2, Mi3).
@@ -3982,7 +3982,7 @@ verallgemeinern kannst.
 
 // ```SWI-Prolog
 // semitone(X, Y) :-
-//   append(_, [X, Y|_], [c, cis, d, dis, e, f, fis, g, gis, a, ais, b, c]).
+//   append(_, [X, Y|_], [c, cs, d, ds, e, f, fs, g, gs, a, as, b, c]).
 // ```
 
 #test[
