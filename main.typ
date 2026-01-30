@@ -3910,7 +3910,7 @@ verallgemeinern kannst.
 
 #test[
   Was ist das Berechnungsprinzip von Prolog bzw. wie leitet Prolog aus
-  gegebenen Informationen ab?
+  gegebenen Informationen neue Erkenntnisse ab?
 ]
 
 #test[
