@@ -5258,6 +5258,11 @@ Gedanken machen kann.
   herauskommt?
 ] <count_nodes>
 
+#test[
+  Wann nennen wir einen Term vollständig instanziiert? Für welches Prädikat
+  benötigen wir solche Terme?
+]
+
 #check[
   Ich bin in der Lage, ...
   - das Prädikat ```SWI-Prolog is/2``` zu verwenden, um arithmetische Ausdrücke
