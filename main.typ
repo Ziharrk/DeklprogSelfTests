@@ -4501,10 +4501,10 @@ verallgemeinern kannst.
 ] <combinatorics>
 
 #challenge[
-  Oft eignet sich in Prolog gut, um Algorithmen für Entscheidungsprobleme, die
-  in NP liegen, zu implementieren. Als Methode dafür hast du generate-and-test
-  kennengelernt -- wir generieren mögliche (also korrekte oder falsche) Lösungen
-  und entscheiden dann, ob sie korrekt sind.
+  Oft eignet sich Prolog gut, um Algorithmen für Entscheidungsprobleme, die in
+  NP liegen, zu implementieren. Als Methode dafür hast du generate-and-test
+  kennengelernt -- wir generieren mögliche (also korrekte oder falsche)
+  Lösungen und entscheiden dann, ob sie korrekt sind.
 
   Ein Hamiltonkreis ist ein Kreis in einem Graph, der jeden Knoten genau einmal
   enthält. Wir wollen diese als Listen darstellen. Durch Rotation dieser Liste
