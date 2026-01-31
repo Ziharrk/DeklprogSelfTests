@@ -1723,6 +1723,10 @@ stellt eine PR auf GitHub].
   als auch ```hs 14000605 :: Float```?
 ]
 
+// https://www.haskell.org/onlinereport/haskell2010/haskellch6.html#x13-1360006.4.1
+// fromInteger (42 :: Integer) :: Num a => a
+// fromRational (3.1415 :: Rational) :: Fractional a => a
+
 #challenge[
   In dieser Challenge sollst du automatisches Differenzieren im Rückwärtsmodus
   mithilfe von (Operator-)Überladung implementieren. Dieser Ansatz des
@@ -3898,7 +3902,10 @@ nähern uns dennoch der tatsächlichen Implementierung von QuickCheck stark an.
     - einfacheren PRNG nutzen (anstatt SplitMix64)
     - in ```hs Gen``` wird in QuickCheck der PRNG gesplittet, anstatt dass
       er durchgereicht wird
-    - ```hs chooseInt``` nutzt eigentlich eine Form von rejection sampling
+    - ```hs chooseInt```, so wie vorgeschlagen, erzeugt keine gleichverteilten
+      Zufallswerte in dem Intervall. Für Genaueres:
+      - #link("https://stackoverflow.com/questions/2509679/how-to-generate-a-random-integer-number-from-within-a-range")[How to generate a random integer number from within a range -- StackOverflow]
+      - #link("https://hackage-content.haskell.org/package/splitmix/docs/src/System.Random.SplitMix.html#nextInteger")[```hs nextInteger```] aus ```hs System.Random.SplitMax```
     - wir haben einen festen seed gewählt (in SplitMix64 wird
       #link("https://hackage-content.haskell.org/package/splitmix/docs/src/System.Random.SplitMix.Init.html#initialSeed")[initialSeed]
       basierend auf der aktuellen Uhrzeit gesetzt, damit immer neue zufällige
@@ -5704,6 +5711,8 @@ an. Lösungen sind ebenso auf der Seite verfügbar. Für Haskell gibt es eine
 ähnliche Seite #link("https://wiki.haskell.org/H-99:_Ninety-Nine_Haskell_Problems")[H-99: Ninety-Nine Haskell Problems].
 
 Weitere Links:
+- #link("https://www.haskell.org/onlinereport/haskell2010/")[Haskell 2010 Language Report]:
+  Spezifikation von Haskell
 - #link("https://learnyouahaskell.github.io/")[Learn You A Haskell]
 - #link("https://pbv.github.io/haskelite/site/index.html")[Haskelite]: Ein Schritt-für-Schritt Interpreter für (eine Teilmenge von) Haskell
 - #link("https://www.adit.io/posts/2013-04-17-functors,_applicatives,_and_monads_in_pictures.html")[Functors, Applicatives, And Monads In Pictures]
