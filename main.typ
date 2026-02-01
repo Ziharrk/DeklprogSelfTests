@@ -2609,6 +2609,15 @@ verallgemeinern kannst.
 ]
 
 #test[
+  Ordne jeder der zur Typklasse ```hs Enum``` gehörenenden Funktionen eine
+  äquivalente Listenkonstruktion zu.
+  - ```hs enumFrom :: Enum a => a -> [a]```
+  - ```hs enumFromThen :: Enum a => a -> a -> [a]```
+  - ```hs enumFromTo :: Enum a => a -> a -> [a]```
+  - ```hs enumFrom :: Enum a => a -> a -> a -> [a]```
+]
+
+#test[
   Gegeben sei der Datentyp
   #align(center)[```hs data Direction = North | East | South | West```.]
 
