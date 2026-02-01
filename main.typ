@@ -4172,6 +4172,10 @@ nähern uns dennoch der tatsächlichen Implementierung von QuickCheck stark an.
 ]
 
 #test[
+  Wie unterscheiden sich Variablen in Haskell und Prolog?
+]
+
+#test[
   Was ist das Berechnungsprinzip von Prolog bzw. wie leitet Prolog aus
   gegebenen Informationen neue Erkenntnisse ab?
 ]
@@ -4217,6 +4221,16 @@ nähern uns dennoch der tatsächlichen Implementierung von QuickCheck stark an.
   - ```SWI-Prolog ?- append(_, [_,X|_], [1, 2, 3, 4]).```
   - ```SWI-Prolog ?- member(X, [1, 2, 3]), member(Y, [2, 3, 4]), X \= Y.```
   - ```SWI-Prolog ?- append(_, [X|Ys], [1, 2, 3, 4]), append(_, [Y|_], Ys).```
+]
+
+#test[
+  Wie stehen die Begriffe Fakt, Regel, Klausel, Prädikat und Relation in
+  Beziehung?
+]
+
+#test[
+  Gebe Beispiele für Formeln an, die zeigen, dass Prolog nur eine echte
+  Teilmenge der Prädikatenlogik erster Stufe umsetzt.
 ]
 
 #test[
