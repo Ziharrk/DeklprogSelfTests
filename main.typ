@@ -2989,6 +2989,57 @@ verallgemeinern kannst.
   ```
 ]
 
+#test[
+  Das Verwenden von monadischen Funktionen kommt einem zum Anfang möglicherweise
+  als erbitterter Kampf gegen das Typsystem vor. Diese Situationen ergeben sich
+  bereits aus den scheinbar einfachsten Absichten. Oft fehlt dann die Erfahrung,
+  um die geeignete Funktion auszuwählen bzw. sogar die Kenntnis darüber, dass es
+  Funktionen gibt, die einem helfen könnten. Hier betrachten hier ein paar
+  solcher Szenarios.
+
+  - Angenommen du sollst eine Funktion ```hs putStrs :: [String] -> IO ()```
+    implementieren, die eine Liste von Strings zeilenweise ausgeben soll, dann
+    hast du die Möglichkeit, naiv und zielführend die Funktion per Induktion zu
+    definieren. Als Nächstes könntest du die Beobachtung machen, dass du die
+    gleiche Funktion für jeden String anwenden sollst, was dich an ```hs map```
+    erinnern könnte. Du erhältst den folgeden typinkorrekten Code.
+    ```hs
+    putStrs :: [String] -> IO ()
+    putStrs ss = map putStrLn ss  -- :: [IO ()]
+    ```
+    An der Stelle wirfst du entweder den Ansatz über den Haufen oder überlegst
+    dir, wie eine Funktion mit ```hs [IO ()] -> IO ()``` definiert sein könnte, um
+    den obigen Code zu reparieren. Allgemeiner, implementiere eine Funktion
+    ```hs sequence :: Monad m => [m a] -> m [a]``` bzw. eine Funktion
+    ```hs sequence_ :: Monad m => [m ()] -> m ()```, um die obige
+    Implementierung von ```hs putStrs``` zu reparieren.
+  - Implementiere, basierend auf der vorherigen Teilaufgabe, eine Funktion
+    ```hs mapM :: (a -> m b) -> [a] -> m [b]```. (Ein entsprechendes
+    ```hs mapM_``` kannst du auch implementieren.)
+  - Andere hilfreiche Funktionen sind
+    - ```hs replicateM :: Monad m => Int -> m a -> m [a]```, die eine monadische
+      Aktion beliebig häufig ausführt und dann eine Liste der Ergebnisse ausgibt.
+    - ```hs zipWithM :: Monad m => (a -> b -> m c) -> [a] -> [b] -> m [c]```,
+      die ```hs zipWith``` auf Monaden verallgemeinert,
+    - ```hs join :: Monad m => m (m a) -> m a```, die eine monadische Struktur
+      flacher klopft,
+    - und #link("https://hackage-content.haskell.org/package/base/docs/Control-Monad.html")[viele weitere]!
+    Implementiere die konkret genannten Funktionen.
+  - Implementiere eine Funktion ```hs Int -> String -> IO ()```, die einen
+    String beliebig häufig ausgibt.
+  - Was ist ```hs zipWithM safeDiv [1, 2, 3, 4] [0, 1, 0, 1]```, wobei
+    ```hs safeDiv``` wie folgt definiert sei.
+    ```hs
+    safeDiv :: Integral a => a -> a -> Maybe a
+    safeDiv _ 0 = Nothing
+    safeDiv p q = Just (p `div` q)
+    ```
+  - Was sind
+    - ```hs join [[1, 2, 3], [4, 5], [6]]```,
+    - ```hs join (Just Nothing)``` und
+    - ```hs join (Left (Right True))```?
+]
+
 #challenge[
   Gegeben sei der Datentyp
   #align(center)[
