@@ -5544,7 +5544,8 @@ Gedanken machen kann.
 
 #refs[
   - Skript: Einführung in die Logikprogrammierung, Programmieren mit Constraints,
-    Arithmetik in Prolog
+    Arithmetik in Prolog (Constraint-Programmierung mit CLP-Bibliotheken
+    entfällt)
 ]
 
 #test[
@@ -5562,7 +5563,7 @@ Gedanken machen kann.
 
 #test[
   Warum können wir ```SWI-Prolog =/2``` nicht für Arithmetik verwenden bzw.
-  wieso gilt ```SWI-Prolog 42 is 40 + 2``` nicht?
+  wieso gilt ```SWI-Prolog 42 = 40 + 2``` nicht?
 ]
 
 #test[
@@ -5596,8 +5597,47 @@ Gedanken machen kann.
 ] <count_nodes>
 
 #test[
-  Wann nennen wir einen Term vollständig instanziiert? Für welches Prädikat
-  benötigen wir solche Terme?
+  Wann nennen wir einen Term vollständig instanziiert?
+]
+
+#test[
+  Wann nennen wir ein Prädikat relational bzw. multimodal?
+]
+
+#test[
+  Du hast Prolog lieben gelernt und liest die Dokumentation von SWI-Prolog
+  gerne vor dem Schlafen gehen. Du entdeckst sonderliche Sonderzeichen vor den
+  Variablen eines Prädikats und fragst dich, wofür diese stehen. Das sind
+  sogenannte #link("https://www.swi-prolog.org/pldoc/man?section=argmode")[argument mode indicators]
+  und deuten an, wie Informationen durch ein Prädikat fließen.
+
+  Was bedeuten die Indikatoren des ```SWI-Prolog is/2```-Prädikats (siehe
+  #link("https://www.swi-prolog.org/pldoc/man?predicate=is/2")[```SWI-Prolog is/2```-Dokumentation])?
+]
+
+#test[
+  Gegeben sei das Prädikat
+  ```SWI-Prolog
+  f(X, Y) :- Y is 2 * X + 1.
+  ```
+  das die Funktion $f(x) = 2x + 1$ in Prolog modelliert.
+  - Welche Anfragen der Form ```SWI-Prolog ?- f(X, Y)```, wobei
+    ```SWI-Prolog X``` und ```SWI-Prolog Y``` frei oder gebunden sein können,
+    sind nicht beweisbar und warum?
+  - Verbessere ```SWI-Prolog f/2``` so, dass ```SWI-Prolog f/2``` als $f^(-1)$
+    verwendet werden kann. Als Hilfsprädikate kannst du die Prädikate
+    ```SWI-Prolog var/1``` und ```SWI-Prolog ground/1``` verwenden.
+  - Warum ist ```SWI-Prolog ?- f(X, Y)``` mit freien Variablen
+    ```SWI-Prolog X``` und ```SWI-Prolog Y``` weiterhin problematisch?
+  - Wie könnte das Prädikat
+    ```SWI-Prolog
+    int(0).
+    int(N) :- int(N, 1).
+    int(N, N).
+    int(N, M) :- N is -M.
+    int(N, M) :- K is M + 1, int(N, K).
+    ```
+    das Problem der vorherigen Teilaufgabe lösen?
 ]
 
 #check[
@@ -5610,9 +5650,10 @@ Gedanken machen kann.
   - alternative arithmetische Prädikate in Prolog einzusetzen
     (Peano-Arithmetik),
   - die Vor- und Nachteile der eingebauten Prolog-Arithmetik gegenüber
-    Peano-Arithmetik zu erläutern.
+    Peano-Arithmetik zu erläutern
+  - Prädikate relational zu definieren und Prädikate zu erkennen, die nicht
+    relational sind.
 ]
-
 
 == Prädikate höherer Ordnung
 
