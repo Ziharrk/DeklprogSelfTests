@@ -5613,6 +5613,25 @@ Gedanken machen kann.
 
   Was bedeuten die Indikatoren des ```SWI-Prolog is/2```-Prädikats (siehe
   #link("https://www.swi-prolog.org/pldoc/man?predicate=is/2")[```SWI-Prolog is/2```-Dokumentation])?
+
+  #extra[
+    Uns ist bisher kein nicht vollständig instanziierter Ausdruck eingefallen,
+    den wir unter der Verwendung von ausschließlich vorlesungsbekannten
+    Prädikaten konstruieren können. Um dennoch ein Beispiel gesehen zu haben,
+    warum ```SWI-Prolog Expr``` mit ```hs +``` annotiert ist und nicht mit
+    ```hs ++```, betrachte folgendes Programm:
+    ```SWI-Prolog
+    :- arithmetic_function(mult/2).
+    mult(0, _, 0) :- !.
+    mult(_, 0, 0) :- !.
+    mult(X, Y, Z) :- Z is X * Y.
+
+    ?- X is mult(0, Y).
+    X = 0.
+    ```
+    Die rechte Seite muss so also nur hinreichend instanziiert sein, damit
+    ```SWI-Prolog is/2``` beweisbar ist.
+  ]
 ]
 
 #test[
