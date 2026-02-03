@@ -529,7 +529,7 @@ stellt eine PR auf GitHub].
     vereinfacht werden.
 
   #extra[
-    Hier findest eine
+    Hier findest du eine
     #link("https://de.wikipedia.org/wiki/Differentialrechnung#Zusammenfassung")[Zusammenfassung der Ableitungsregeln].
   ]
 ] <symbolic_diff>
