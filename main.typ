@@ -5647,7 +5647,7 @@ Gedanken machen kann.
     sind nicht beweisbar und warum?
   - Verbessere ```SWI-Prolog f/2``` so, dass ```SWI-Prolog f/2``` als $f^(-1)$
     verwendet werden kann. Als Hilfsprädikate kannst du die Prädikate
-    ```SWI-Prolog var/1``` und ```SWI-Prolog ground/1``` verwenden.
+    ```SWI-Prolog var/1``` und ```SWI-Prolog nonvar/1``` verwenden.
   - Warum ist ```SWI-Prolog ?- f(X, Y)``` mit freien Variablen
     ```SWI-Prolog X``` und ```SWI-Prolog Y``` weiterhin problematisch?
   - Wie könnte das Prädikat
