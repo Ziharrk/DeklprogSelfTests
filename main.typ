@@ -4220,6 +4220,38 @@ nähern uns dennoch der tatsächlichen Implementierung von QuickCheck stark an.
   Hopcrofts Algorithmus minimieren.
 ]
 
+#challenge[
+  In der Evaluation des Moduls im Wintersemester 2025/2026 hat sich eine Person
+  gewünscht, dass das Prolog-Interpreter-Projekt erweitert wird, sodass auch der
+  Parser selber gebaut werden muss. Leider ist in diesem Modul zu wenig Zeit,
+  um dieses Thema hinreichend zu behandeln. Diese Challenge geht über die
+  Inhalte der Vorlesung hinaus und ist nicht klausurrelevant. Sie soll dir
+  das rabbit hole allerdings eröffnen.
+
+  - Der Parser aus dem Projekt basiert auf
+    #link("https://hackage.haskell.org/package/parsec")[parsec], einer
+    Bibliothek aus verschiedenen monadischen Parser-Kombinatoren. Die
+    wesentlichen Ideen, die diese Bibliothek nutzt, findest du in dem
+    paper #link("https://www.cambridge.org/core/journals/journal-of-functional-programming/article/monadic-parsing-in-haskell/E557DFCCE00E0D4B6ED02F3FB0466093")[Monadic parsing in Haskell].
+    Etwas weniger in die Tiefe geht einer der Co-Autoren in dem Video
+    #link("https://www.youtube.com/watch?v=dDtZLm7HIJs")[Functional Parsing].
+  - Mit dieser Bibliothek lassen sich sogenannte
+    #link("https://en.wikipedia.org/wiki/Recursive_descent_parser")[recursive descent parser]
+    spezifizieren. Die Syntax der Kombinatoren ermöglicht es, dass
+    entsprechende Grammatiken fast direkt aus der mathematischen
+    Notation in ein Haskell-Programm überführt werden können.
+  - Zunächst benötigen wir Grammatik für die Syntax von Prolog.
+    Nicht jede Grammatik ist dafür geeignet, insbesondere müssen
+    bei rekursiven Abstiegsparsern darauf achten, dass die
+    Grammatik nicht linksrekursiv ist.
+  - So können wir dann einen abstrakten Syntaxbaum erhalten, so wie du ihn aus
+    dem Projekt kennst.
+
+  Wenn dich wie weit dich das Thema interessiert, behandelt Frank z.B. in
+  seiner Vorlesung "Funktionale Programmierung" monadisches Parsen. Wenn
+  du tiefer einsteigen willst, dann wird auch hin und wieder das Modul
+  "Übersetzerbau" angeboten.
+]
 
 #pagebreak(weak: true)
 
