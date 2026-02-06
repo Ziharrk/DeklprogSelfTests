@@ -4220,37 +4220,42 @@ nähern uns dennoch der tatsächlichen Implementierung von QuickCheck stark an.
   Hopcrofts Algorithmus minimieren.
 ]
 
-#challenge[
+#remark[
   In der Evaluation des Moduls im Wintersemester 2025/2026 hat sich eine Person
   gewünscht, dass das Prolog-Interpreter-Projekt erweitert wird, sodass auch der
   Parser selber gebaut werden muss. Leider ist in diesem Modul zu wenig Zeit,
-  um dieses Thema hinreichend zu behandeln. Diese Challenge geht über die
-  Inhalte der Vorlesung hinaus und ist nicht klausurrelevant. Sie soll dir
-  das rabbit hole allerdings eröffnen.
+  um dieses Thema hinreichend zu behandeln. Das rabbit hole soll dir mit dieser
+  Bemerkung allerdigns eröffnet werden.
 
   - Der Parser aus dem Projekt basiert auf
     #link("https://hackage.haskell.org/package/parsec")[parsec], einer
-    Bibliothek aus verschiedenen monadischen Parser-Kombinatoren. Die
+    Bibliothek bestehend aus verschiedenen monadischen Parser-Kombinatoren. Die
     wesentlichen Ideen, die diese Bibliothek nutzt, findest du in dem
-    paper #link("https://www.cambridge.org/core/journals/journal-of-functional-programming/article/monadic-parsing-in-haskell/E557DFCCE00E0D4B6ED02F3FB0466093")[Monadic parsing in Haskell].
-    Etwas weniger in die Tiefe geht einer der Co-Autoren in dem Video
-    #link("https://www.youtube.com/watch?v=dDtZLm7HIJs")[Functional Parsing].
+    paper #link("https://www.cambridge.org/core/journals/journal-of-functional-programming/article/monadic-parsing-in-haskell/E557DFCCE00E0D4B6ED02F3FB0466093")[Monadic parsing in Haskell]
+    beschrieben. Etwas weniger in die Tiefe geht einer der Co-Autoren in diesem
+    Video #link("https://www.youtube.com/watch?v=dDtZLm7HIJs")[Functional Parsing].
   - Mit dieser Bibliothek lassen sich sogenannte
     #link("https://en.wikipedia.org/wiki/Recursive_descent_parser")[recursive descent parser]
     spezifizieren. Die Syntax der Kombinatoren ermöglicht es, dass
     entsprechende Grammatiken fast direkt aus der mathematischen
     Notation in ein Haskell-Programm überführt werden können.
-  - Zunächst benötigen wir Grammatik für die Syntax von Prolog.
+  - Als Nächstes benötigen wir eine Grammatik für die Syntax von Prolog.
     Nicht jede Grammatik ist dafür geeignet, insbesondere müssen
     bei rekursiven Abstiegsparsern darauf achten, dass die
     Grammatik nicht linksrekursiv ist.
-  - So können wir dann einen abstrakten Syntaxbaum erhalten, so wie du ihn aus
-    dem Projekt kennst.
+  - So können wir dann einen abstrakten Syntaxbaum berechnen, so wie du ihn aus
+    dem Projekt kennst. Der Baum wird durch die vielen gegebenen Typen
+    dargestellt.
 
-  Wenn dich wie weit dich das Thema interessiert, behandelt Frank z.B. in
-  seiner Vorlesung "Funktionale Programmierung" monadisches Parsen. Wenn
-  du tiefer einsteigen willst, dann wird auch hin und wieder das Modul
-  "Übersetzerbau" angeboten.
+  Je nachdem wie dich das Thema interessiert, behandelt Frank z.B. in seiner
+  Vorlesung "Funktionale Programmierung" monadisches Parsen. Wenn du noch tiefer
+  einsteigen willst, dann wird auch hin und wieder das Modul "Übersetzerbau"
+  angeboten. Für einen tieferen Einstieg wird oft folgende Literatur empfohlen.
+  - Compilers: Principles, Techniques, and Tools von Alfred V. Aho,
+    Monica S. Lam, Ravi Sethi, und Jeffrey D. Ullman (auch dragon book genannt),
+    und
+  - Engineering a Compiler von Keith D. Cooper und Linda Torczon (das Modul
+    Übersetzerbau nutzt dieses Buch)
 ]
 
 #pagebreak(weak: true)
@@ -5251,6 +5256,77 @@ atomare Ausdrücke -- wenn nicht anders in Test oder Challenge eingeführt.
 
 #test[
   Wodurch ergibt sich die Struktur eines SLD-Baums?
+]
+
+// TODO fühlt sich wie eine unübersichtliche wall of text an, ein
+//      algorithmischerer, stichpunktartigerer Aufschrieb ist möglicherweise
+//      geeigneter
+#let qq = math.op("?-")
+#let cd = math.op(":-")
+
+Ein SLD-Baum stellt einzelne SLD-Resolutionsschritte graphisch dar -- betrachte
+parallel beim Lesen den unten abgebildeten Ausschnitt eines SLD-Baums. Die
+Wurzel des Baumes ist mit einer gegebenen zu beweisenden Anfrage beschriftet.
+Jeder Resolutionsschritt beginnt bei einem Knoten, der mit einer Anfrage $qq
+L_1, ..., L_n$ ($n >= 1$) beschriftet ist -- wenn $n = 0$ ist, sind wir bereits
+fertig. Basierend auf der Auswertungsstrategie von Prolog wählen wir das erste
+Literal $L_1$ dieser Anfrage aus und versuchen dieses zu beweisen. Dafür
+schauen wir uns gegebene (frisch umbenannte!) Klauseln der Reihe nach an. Wenn
+$X$ die nächste linke Seite einer Klausel $X cd R_1, ..., R_m$ ($m >= 0$) mit
+$L_1$ unifizierbar ist, d.h., es existiert $phi = "Unifikator"(L_1, X)$, dann
+ersetzen wir das Literal $L_1$ mit der rechten Seite $R_1, ..., R_m$ und wenden
+auf die neu gewonnene Anfrage $R_1, ..., R_m, L_2, ..., L_n$ den Unifikator an,
+den wir aus der Unifikation des Literals mit der linken Seite erhalten, also
+$phi (R_1, ..., R_m, L_2, ..., L_n)$. Die umbenannte Klausel geben wir neben
+dem berechneten Unifikator als Teil der Kantenbeschriftung als Hilfestellung
+mit an. Wenn die Anfrage bewiesen ist, also die Anfrage aus keinem Literal mehr
+besteht ($qq .$), dann haben wir einen Beweis für die Anfrage gefunden und
+geben das zugehörige Ergebnis $sigma$ an. Das heißt, wir berechnen die
+Komposition der Unifikatoren von der Lösung bis zur Wurzel und schränken sie
+danach die freien Variable der ursprünglichen Anfrage ein. Wenn $A$ die zu
+beweisende Aussage ist und $phi_1, ..., phi_l$ Unifikatoren sind, die wir über
+die Resolutionsschritte von $A$ nach $qq .$ erhalten haben, dann ist die Lösung
+in dem Fall $sigma = (phi_l compose ... compose phi_1) |_("Vars"(A))$. Im
+anderen Fall führen wir weitere SLD-Resolutionsschritte durch. Wenn die Anfrage
+leer ist oder keine weiteren Klauseln zum betrachteten Literal passen,
+backtracken wir. Das heißt, wir betrachten die zuvor bearbeitete Anfrage erneut
+und versuchen, einen alternativen Beweis zu finden, indem wir alternative
+Resolutionsschritte auf Basis von bisher nicht ausprobierten Klausuren
+durchführen. So können wir z.B. zu der Zwischenanfrage $qq L_1, ..., L_n.$
+zurückkommen und finden neben der Klausel $X cd R_1, ..., R_m$ möglicherweise
+weitere passende Klauseln. Das ist hier angedeutet durch die rechteste Kante.
+Im anderen Fall backtracken wir weiter.
+
+Wenn das aktuelle Literal ein cut ist, dann betrachten wir im nächsten Schritt
+die Anfrage ohne den cut. Wichtig ist, dass das Beweisen des cuts dazu führt,
+dass sowohl für die einführende Regel des cuts als auch für alle Literale die
+danach auf der linken Seite vom cut stehen keine alternativen
+Resolutionsschritte durchgeführt werden, sobald wir einen Beweis für die linke
+Seite gefunden haben.
+
+#align(center)[
+  #cetz.canvas({
+    import cetz.draw: *
+
+    set-style(mark: (end: ">"))
+
+    content((0, 0), [$qq ...$], padding: 0.5em, name: "query0")
+    content((0, -2), [$qq L_1, ..., L_n.$], padding: 0.5em, name: "query1")
+    content((-5, -5), [$qq ...$], padding: 0.5em, name: "query2")
+    content((0, -5), [$qq phi(R_1, ..., R_m, L_2, ..., L_n).$], padding: 0.5em, name: "query3")
+    content((5, -5), [$qq ...$], padding: 0.5em, name: "query4")
+    content((0, -7), [$qq ...$], padding: 0.5em, name: "query6")
+
+    line("query0", "query1", stroke: (dash: "dotted"))
+
+    line("query1", "query3", name: "step")
+    content("step.mid", padding: 0.5em, anchor: "west", [$X cd R_1, ..., R_m$ \ $phi = "Unifikator"(L_1, X)$])
+
+    bezier("query1.west", "query2.north", (-4.5, -2), stroke: (dash: "dotted"))
+    bezier("query1.east", "query4.north", (4.5, -2), stroke: (dash: "dotted"))
+
+    line("query3", "query6", stroke: (dash: "dotted"))
+  })
 ]
 
 #test[
