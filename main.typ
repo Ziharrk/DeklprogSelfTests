@@ -28,7 +28,7 @@
 #show raw: set text(font: "CaskaydiaCove NF")
 #set raw(syntaxes: "syntaxes/prolog.sublime-syntax")
 
-#set text(lang: "de")
+#set text(size: 10.5pt, lang: "de")
 #show link: underline
 #show heading.where(level: 1): set block(below: 1.25em)
 #show math.equation.where(block: false): box
