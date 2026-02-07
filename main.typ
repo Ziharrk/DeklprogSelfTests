@@ -160,8 +160,8 @@ grob in drei Stufen aufgeteilt, die sich wie folgt auszeichnen sollen.
 - #titlefmt(3, false)("Stufe 3") #h(0.3em) Komplexe Aufgaben, die ein vertieftes
   Verständnis voraussetzen. Die Lösung erfordert mehrere Gedankenschritte, das
   Verknüpfen verschiedener Inhalte sowie eigenständigen Lösungsstrategien.
-Aufgaben, von denen wir erwarten, dass sie euch länger als 10min beschäftigen,
-sind mit #hi("clock", solid: false) markiert.
+Tests, von denen wir erwarten, dass sie euch länger als 10min beschäftigen,
+sind mit #hi("clock", solid: false) markiert, Challenges bei 30min.
 
 Für die Selbsttests wird es absehbar keine Lösungen geben. Stattdessen möchten
 wir dich ermutigen deine Lösungen mit anderen Mitstudierenden oder
