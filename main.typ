@@ -5711,7 +5711,7 @@ Gedanken machen kann.
 ]
 
 
-== Arithmetik
+== Prolog-Arithmetik und nicht-relationale Prädikate
 
 #refs[
   - Skript: Einführung in die Logikprogrammierung, Programmieren mit Constraints,
