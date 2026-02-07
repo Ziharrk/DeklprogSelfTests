@@ -203,33 +203,33 @@ stellt eine PR auf GitHub].
   - #link("https://en.wikipedia.org/wiki/Pure_function")[Pure function -- Wikipedia]
 ]
 
-#test[
+#test(dd: 2)[
   Beziehe Stellung zu der Aussage "Alles ist ein Ausdruck" in Haskell?
 ]
 
-#test[
+#test(dd: 1)[
   Was bedeutet es, wenn eine Funktion keine Seiteneffekte hat? Warum ist die
   Abwesenheit von Seiteneffekten wünschenwert, sofern es möglich ist?
 ]
 
-#test[
+#test(dd: 1)[
   Haskell ist eine streng getypte Programmiersprache. Was bedeutet das?
 ]
 
-#test[
+#test(dd: 1)[
   Wenn du eine Schleife in Haskell umsetzen möchtest, auf welches Konzept musst
   du dann zurückgreifen?
 ]
 
-#test[
+#test(dd: 1)[
   Wie können wir Ausdrücke bedingt auswerten?
 ]
 
-#test[
+#test(dd: 1)[
   Welche Vorteile und Nachteile haben streng getypte Programmiersprachen?
 ]
 
-#test[
+#test(dd: 1)[
   In imperativen Programmiersprachen sind Variablen Namen für Speicherzellen,
   deren Werte zum Beispiel in Schleifen verändert werden können. Als Beispiel
   betrachte die Funktionen ```py clz``` und ```py popcnt```.
@@ -254,13 +254,13 @@ stellt eine PR auf GitHub].
   wo wandert der Zustand hin?
 ] <clz_popcnt>
 
-#test[
+#test(dd: 1)[
   Auf was müssen wir achten, wenn wir eine rekursive Funktion definieren?
   Die Antwort ist abhängig von dem, was die Funktion berechnen soll. Denke über
   die verschiedenen Möglichkeiten nach und gebe Beispiele an.
 ]
 
-#test[
+#test(dd: 1)[
   Gegeben sei das folgende Haskell-Programm.
   ```hs
   even :: Int -> Bool
@@ -280,13 +280,13 @@ stellt eine PR auf GitHub].
       stattfindet?
 ]
 
-#test[
+#test(dd: 1)[
   Es wird als sauberer Programmierstil angesehen, Hilfsfunktionen, die nur für
   eine Funktion relevant sind, nicht auf der höchsten Ebene zu definieren.
   Mithilfe welcher Konstrukte kannst du diese lokal definieren?
 ]
 
-#test[
+#test(dd: 1)[
   Das Potenzieren einer Zahl $x$ (oder eines Elements einer Halbgruppe) mit
   einem natürlich-zahligen Exponent $n$ ist in $cal(O)(log n)$ Laufzeit möglich,
   sofern wir die Laufzeit für die Verknüpfung vernachlässigen können. Dafür
@@ -302,7 +302,7 @@ stellt eine PR auf GitHub].
   ]
 ] <binexp>
 
-#test[
+#test(dd: 1)[
   Gegeben ist folgender Ausdruck.
   ```hs
   let v = 3
@@ -316,12 +316,12 @@ stellt eine PR auf GitHub].
   ```hs y``` ausrechnen?
 ]
 
-#test[
+#test(dd: 1)[
   Ist der folgende Ausdruck typkorrekt?
   #align(center)[```hs if 0 then 3.141 else 3141```]
 ]
 
-#test[
+#test(dd: 1)[
   Definiere eine Funktion, die kein Ergebnis liefert.
 ]
 
@@ -345,21 +345,21 @@ stellt eine PR auf GitHub].
   - #link("https://learnyouahaskell.github.io/making-our-own-types-and-typeclasses.html")[Making Our Own Types and Typeclasses -- Learn You a Haskell for Great Good!] ("Algebraic data types intro")
 ]
 
-#test[
+#test(dd: 1)[
   Wie werden algebraische Datentypen in Haskell definiert?
 ]
 
-#test[
+#test(dd: 1)[
   Was ist charakterisierend für Aufzählungstypen, Verbundstypen und rekursive
   Datentypen? Gebe Beispiele für jeden dieser Typarten an.
 ]
 
-#test[
+#test(dd: 1)[
   Benenne null-, ein- und zweistellige Konstruktoren aus der Haskell Prelude.
 ]
 
 // TODO move to Polymorphismus?
-#test[
+#test(dd: 1)[
   Gegeben ist der Typ ```hs IntList``` mit ```hs data IntList = Nil | Cons Int IntList```.
   Weiter kann mithilfe der Funktion
   ```hs
@@ -373,21 +373,21 @@ stellt eine PR auf GitHub].
   mit dessen Hilfe du mit weniger Arbeit an dein Ziel kommst?
 ]
 
-#test[
+#test(dd: 1)[
   Wie ist die Funktion ```hs lengthIntList :: IntList -> Int``` aus dem vorherigen
   Test definiert?
 ]
 
-#test[
+#test(dd: 1)[
   Du hast einen Datentypen definiert und möchtest dir Werte des Typen nun
   z.B. im GHCi anzeigen lassen. Was kannst du tun, um dieses Ziel zu erreichen?
 ]
 
-#test[
+#test(dd: 1)[
   Wie definieren wir Funktionen?
 ]
 
-#test[
+#test(dd: 1)[
   Gebe ein Listendatentypen an, für den es nicht möglich ist, kein Element
   zu enthalten.
 
@@ -413,60 +413,61 @@ stellt eine PR auf GitHub].
   - #link("https://learnyouahaskell.github.io/recursion.html")[Recursion -- Learn You a Haskell for Great Good!] ("Type parameters", "Recursive data structures")
 ]
 
-#test[
+#test(dd: 1)[
   Wie sieht eine Datentypdefinition in Haskell im Allgemeinen aus?
 ]
 
-#test[
+#test(dd: 1)[
   Welchen Typ haben
   - ```hs (:)``` und ```hs []```,
   - ```hs Just``` und ```hs Nothing```,
   - ```hs Left``` und ```hs Right```?
 ]
 
-#test[
+#test(dd: 1)[
   Was ist parametrischer Polymorphismus?
 ]
 
-#test[
+#test(dd: 1)[
   Welche Typkonstruktoren des kinds ```hs * -> *``` oder ```hs * -> * -> *```
   kennst du?
 ]
 
-#test[
+#test(dd: 1)[
   Welche kinds haben jeweils ```hs Either``` und ```hs Either a```?
 ]
 
-#test[
+#test(dd: 1)[
   Beim Programmieren in Haskell vernachlässigen redundante Syntax.
   Gibt es in Haskell einen Unterschied zwischen ```hs f 1 2``` und
   ```hs f(1, 2)```.
 ]
 
-#test[
+#test(dd: 1)[
   Welches Konzept erlaubt es uns, dass wir Funktionen auf Listen nicht für
   jeden konkreten Typen angeben müssen?
 ]
 
-#test[
+#test(dd: 1)[
   Wie gewinnt man aus einem Typkonstruktor einen Typ?
 ]
 
-#test[
+#test(dd: 1)[
   Visualisiere ```hs [1, 2, 3]``` als Termbaum, wie du es in der Vorlesung
-  kennengelernt hast. Zur Erinnerung: die inneren Knoten sind Funktionen und
+  kennengelernt hast. Zur Erinnerung: Die inneren Knoten sind Funktionen und
   die Blätter Werte, die nicht weiter ausgerechnet werden können.
 ]
 
-#test[
+#test(dd: 1)[
   Ist ```hs [32, True, "Hello, world!"]``` ein valider Haskell-Wert? Warum ja oder nein?
 ]
 
-#test[
-  Was ist der Unterschied zwischen einem Typ und einem Typkonstruktor?
+#test(dd: 1)[
+  Was ist der Unterschied zwischen einem Typ, einen Datenkonstrukor und einem
+  Typkonstruktor?
 ]
 
-#test[
+#test(dd: 1)[
   Gegeben ist
   ```hs
   data Pair a b = Pair a b
@@ -477,7 +478,7 @@ stellt eine PR auf GitHub].
   ```
 ]
 
-#challenge[
+#challenge(dd: 1)[
   - Der größte gemeinsamen Teiler (ggT) zweier Ganzzahlen kann mithilfe des
     euklidschen Algorithmus berechnet werden. Implementiere das Verfahren.
     $
@@ -531,7 +532,7 @@ stellt eine PR auf GitHub].
 // gcd a b = product (pf a `intersection` pf b)
 // ```
 
-#challenge[
+#challenge(dd: 1)[
   Die Ableitung einer Funktion $f : RR -> RR$ kann mithilfe des
   Differenzenquotienten $(f(x+h)-f(x))/h$ für kleines $h$ approximiert werden.
   Ein andere Methode zur Berechnung der Ableitung ist symbolisches Differenzen
@@ -606,7 +607,7 @@ stellt eine PR auf GitHub].
 //                     in derive h :*: (E :^: h)
 // ```
 
-#challenge[
+#challenge(dd: 1)[
   In Einführung in die Algorithmik hast du verschiedene Varianten des
   `mergesort`-Algorithmus kennengelernt. Eine davon hat ausgenutzt, dass in
   einer Eingabeliste bereits nicht-absteigend sortierte Teillisten vorkommen
@@ -653,7 +654,7 @@ stellt eine PR auf GitHub].
 //     mergeAll xs = mergeAll (reduce xs)
 // ```
 
-#challenge[
+#challenge(dd: 1)[
   Entwickle einen Datentyp ```hs Ratio```, um rationale Zahlen
   $ p/q in QQ, quad p in ZZ, q in NN, p "und" q "teilerfremd" $
   darzustellen. Implementiere die Operationen: Addition, Subtraktion,
@@ -677,14 +678,14 @@ stellt eine PR auf GitHub].
 //     go k a = show (a `div` q) ++ go (k - 1) (10 * (a `mod` q))
 // ```
 
-#test[
+#test(dd: 2)[
   Wie können wir es hinkriegen, dass die invalide Liste
   ```hs [32, True, "Hello, world!"]``` ein valider Haskell-Wert wird? Mithilfe
   welches Hilfstypen kriegen das hin? (Die Liste müssen wir dafür unter
   Umständen umschreiben.)
 ]
 
-#test[
+#test(dd: none)[
   Du hast bereits viele Funktionen kennengelernt, die in der Haskell
   `base`-library implementiert sind. Anstatt eine konkrete Liste dieser
   Funktionen anzugeben, möchten wir dich motivieren, folgende Dokumentationen
@@ -695,14 +696,14 @@ stellt eine PR auf GitHub].
   nicht ein, nehme dir Zeit und überlege, wie du sie implementieren könntest.
 ]
 
-#test[
+#test(dd: 1)[
   Hier ist eine fehlerhafte Implementierung eines Datentyps für einen
   knotenbeschrifteten Binärbäumen.
   #align(center)[```hs data Tree a = Empty | Node Tree a Tree ```]
   Was ist der Fehler?
 ]
 
-#test[
+#test(dd: 1)[
   In imperativen Programmiersprachen (hier Java) iterieren wir über Listen oft
   in folgender Form.
   ```java
@@ -729,7 +730,7 @@ stellt eine PR auf GitHub].
   Dein Ergebnis sollte Haskell-idiomatisch sein.
 ]
 
-#test[
+#test(dd: 1)[
   Die ```hs (!!)```-Funktion ist unsicher in dem Sinne, dass sie für invalide
   Listenzugriffe einen Fehler wirft -- also z.B. für ```hs xs !! (-1)``` oder
   ```hs xs !! k``` mit ```hs k > length xs```. Die Funktion
@@ -743,7 +744,7 @@ stellt eine PR auf GitHub].
   ]
 ]
 
-#test[
+#test(dd: 2)[
   Gegeben sei der Datentyp für knotenbeschriftete Binärbäume
   #align(center)[```hs data Tree a = Empty | Node (Tree a) a (Tree a)```.]
 
@@ -766,7 +767,7 @@ stellt eine PR auf GitHub].
   ]
 ]
 
-#test[
+#test(dd: 1)[
   ```hs (++) :: [a] -> [a] -> [a]``` wird verwendet, um zwei Listen
   aneinanderzuhängen. Wenn wir eine Funktion induktiv über den Listentypen
   definieren wie z.B. ```hs square :: [Int] -> [Int]```, die jeden Listeneintrag
@@ -781,7 +782,7 @@ stellt eine PR auf GitHub].
   schreiben. Was müssten wir an der Funktion ändern, damit sie idiomatisch wäre.
 ]
 
-#test[
+#test(dd: 2)[
   Die Funktion ```hs show``` kann genutzt werden, um Werte eines beliebigen
   Datentyp in eine String-Repräsentation zu überführen. Warum kann
   ```hs show``` nicht als Funktion vom Typ ```hs a -> String``` implementiert
@@ -803,13 +804,13 @@ stellt eine PR auf GitHub].
   - #link("https://learnyouahaskell.github.io/syntax-in-functions.html")[Syntax in Functions - Learn You a Haskell for Great Good!] ("Pattern matching", "Guards, guards!", "Case expressions")
 ]
 
-#test[
+#test(dd: 1)[
   In Programmiersprachen wie Java greifen wir auf Daten komplexer Datentypen zu,
   indem wir auf Attribute von Objekten zugreifen oder getter-Methoden verwenden.
   Wie greifen wir auf Daten in Haskell zu?
 ]
 
-#challenge[
+#challenge(dd: 2)[
   In Haskell sind Listen als einfach-verkettete Listen implementiert. Das macht
   sie ungeeignet für Operationen, die wahlfreien Zugriff in konstanter Laufzeit
   benötigen. Darüber hinaus sind Listen auch nicht mutierbar. Das führt dazu,
@@ -892,7 +893,7 @@ stellt eine PR auf GitHub].
 // dequeue (Q (_:xs) ys) = invariant (Q xs ys)
 // ```
 
-#challenge[
+#challenge(dd: 1)[
   In den Übungsaufgaben hast du einen Suchbaum ohne Höhenbalancierung
   implementiert. Die Rotationen für einen AVL-Baum lassen sich durch das
   pattern matching in Haskell vergleichsweise elegant implementieren - erinnere
@@ -945,13 +946,14 @@ stellt eine PR auf GitHub].
   - Pattern Matching zu nutzen.
 ]
 
+
 == Automatisches Testen
 
 #refs[
   - Skript: Funktionale Programmierung, Automatisches Testen
 ]
 
-#test[
+#test(dd: 2)[
   Formuliere QuickCheck-Eigenschaften, die die Funktionen
   - ```hs isElem :: Int -> SearchTree Int -> Bool```,
   - ```hs toList :: SearchTree Int -> [Int]```,
@@ -966,24 +968,24 @@ stellt eine PR auf GitHub].
   Eigenschaften benötigst du möglicherweise weitere Funktionen.
 ]
 
-#test[
+#test(dd: 1)[
   QuickCheck-Eigenschaften werden mit zufällig generierten Werten getestet.
   Hin und wieder kommt es vor, dass diese Werte Vorbedingungen erfüllen müssen,
   damit wir Eigenschaften von Funktionen testen können. Wie können wir das
   erreichen?
 ]
 
-#test[
-  Wie können wir eine Funktionen teilweise auf Korrektheit testen -- also
-  wie können wir für eine beliebige Eingabe verifizieren, dass die Ausgabe
-  korrekt ist?
+#test(dd: 1)[
+  Wie können wir für eine beliebige Eingabe verifizieren, dass die Ausgabe
+  korrekt ist? Wieso können wir mithilfe dieses Ansatzes in den meisten Fällen
+  nicht die Korrektheit einer Funktion zeigen?
 ]
 
 // TODO Finde ein besseres Beispiel dafür, dass es keine gute Idee ist, eine
 // Implementierung mit einer Referenz-Implementierung zu vergleichen, wenn diese
 // sich nicht wesentlich unterscheiden (Fehler in beiden Implementierungen).
 //
-// #test[
+// #test(dd: none)[
 //   Gegeben sei folgendes Haskell-Programm.
 //   ```hs
 //   data Rose a = Rose a [Rose a]
@@ -1012,7 +1014,7 @@ stellt eine PR auf GitHub].
 //   ]
 // ]
 
-#test[
+#test(dd: 2)[
   Welchen Nachteil hat die Prüfung von Vorbedingungen mit ```hs (==>)```? Wie
   können wir diese beheben?
 ]
@@ -1032,20 +1034,20 @@ stellt eine PR auf GitHub].
   - #link("https://learnyouahaskell.github.io/higher-order-functions.html")[Higher Order Functions -- Learn You a Haskell for Great Good!]
 ]
 
-#test[
+#test(dd: 1)[
   Was sind Funktionen höherer Ordnung?
 ]
 
-#test[
+#test(dd: 1)[
   Wie definieren wir Lambda-Abstraktionen bzw. anonyme Funktionen?
 ]
 
-#test[
+#test(dd: 1)[
   Warum ist der Typ ```hs (a -> b) -> c``` nicht identisch zum Typ
   ```hs a -> b -> c```? Welcher andere Typ ist identisch zu letzterem?
 ]
 
-#test[
+#test(dd: 1)[
   Mit welchen Konzepten gehen die Linksassoziativität der Funktionsapplikation
   und die Rechtsassoziatvität des Typkonstruktors ```hs (->)``` gut Hand in
   Hand?
@@ -1053,7 +1055,7 @@ stellt eine PR auf GitHub].
 
 // TODO möglicherweise gibt es coolere Funktionen, die auch noch ohne folds
 //      auskommen - für folds wollte ich einen Test extra haben
-#test[
+#test(dd: 2)[
   Zu welchen partiell applizierten Funktionen verhalten sich folgende
   Funktionen identisch?
   - ```hs succ :: Int -> Int``` (die Inkrementfunktion)
@@ -1063,27 +1065,27 @@ stellt eine PR auf GitHub].
   - ```hs product :: [Int] -> Int```
 ]
 
-#test[
+#test(dd: 1)[
   Was ist partielle Applikation?
 ]
 
-#test[
+#test(dd: 1)[
   Was ist Currying?
 ]
 
-#test[
+#test(dd: 1)[
   Welche Funktionen höherer Ordnung hast du kennengelernt im Kontext der
   generischen Programmierung? Was ist das Ziel dieser Funktionen?
 ]
 
-#test[
+#test(dd: 1)[
   Die Funktionen ```hs map :: (a -> b) -> [a] -> [b]``` und
-  ```hs filter :: (a -> Bool) -> [a] -> [a]``` lassen sich alle mithilfe
+  ```hs filter :: (a -> Bool) -> [a] -> [a]``` lassen sich alle mithilfe von
   ```hs foldr :: (a -> r -> r) -> r -> [a] -> r``` ausdrücken. Wie lauten
   diese Definitionen?
 ]
 
-#test[
+#test(dd: 1)[
   Gegeben seien folgende Funktionen:
   - ```hs rgbToHsv :: RGB -> HSV```, die eine Farbe von einer Darstellung
     in einen anderen konvertiert, und
@@ -1097,7 +1099,7 @@ stellt eine PR auf GitHub].
   ```hs map``` als auch ```hs filter```.
 ]
 
-#test[
+#test(dd: 2)[
   Mit Funktionen höherer Ordnung können wir Kontrollstrukturen aus der
   imperativen Programmierung definieren. Hier ist eine mögliche Definition einer
   bedingten Wiederholung.
@@ -1130,29 +1132,28 @@ stellt eine PR auf GitHub].
   sein könnte -- z.B. in Hinsicht auf Lesbarkeit, Idiomatik und Wartbarkeit.
 ]
 
-#test[
+#test(dd: 1)[
   Was sind sections im Kontext von Funktionen höherer Ordnung?
 ]
 
-#test[
+#test(dd: 1)[
   Welche der Faltungsfunktion auf Listen ergibt sich aus dem Verfahren zur
-  Erzeugung von Faltungsfunktionen, das du für beliebige Datentypen
-  kennengelernt hast?
+  Erzeugung von Faltungsfunktionen?
 ]
 
-#test[
+#test(dd: 1)[
   Was ist der Unterschied zwischen ```hs foldl``` und ```hs foldr```?
   Wann liefern ```hs foldl``` und ```hs foldr``` das gleiche Ergebnis?
 ]
 
-#test[
+#test(dd: 1)[
   Wie gewinnen wir aus ```hs foldr``` die Identitätsfunktion auf Listen?
   In den Übungen hast du gelernt, wie man Werte anderer Typen falten kann.
   Wie gewinnt man aus diesen Funktionen die Identitätsfunktionen auf den
   jeweiligen Typen?
 ]
 
-#test[
+#test(dd: 1)[
   Gegeben sind folgende Datentypen
   - ```hs data Tree a = Empty | Leaf a | Branch (Tree a) (Tree a)```,
   - ```hs data Rose a = Node [Rose a]```.
@@ -1161,7 +1162,7 @@ stellt eine PR auf GitHub].
   Wo benötigen wir rekursive Aufrufe der jeweiligen Faltungsfunktionen?
 ]
 
-#test[
+#test(dd: 2)[
   Betrachte die Funktion
   ```hs
   f :: [a] -> b
@@ -1181,7 +1182,7 @@ stellt eine PR auf GitHub].
   mit dem rekursiven Aufruf von ```hs f```?
 ]
 
-#test[
+#test(dd: 1)[
   Wie kannst du mithilfe von Faltung viele Elemente in einen Suchbaum einfügen
   oder lösen? Implementiere
   - ```hs insertMany :: [Int] -> SearchTree Int -> SearchTree Int``` und
@@ -1190,14 +1191,14 @@ stellt eine PR auf GitHub].
   Elemente bereits hast.
 ]
 
-#test[
+#test(dd: 2)[
   Wir können ```hs map :: (a -> b) -> [a] -> [b]``` mithilfe von
   ```hs foldr``` wie folgt implementieren:
   #align(center)[```hs map f xs = foldr (\x ys -> f x : ys) [] xs```]
   Vereinfache den Lambda-Ausdruck mithilfe von Funktionen höherer Ordnung.
 ]
 
-#test[
+#test(dd: 2)[
   Wenn wir die Listenkonstruktoren in ```hs foldr``` einsetzen, erhalten wir die
   Identitätsfunktion auf Listen, also
   #align(center)[```hs foldr (:) [] :: [a] -> [a]```.]
@@ -1208,7 +1209,7 @@ stellt eine PR auf GitHub].
   bekommen wir stattdessen heraus?
 ]
 
-#test[
+#test(dd: 2)[
   Es gibt viele andere hilfreiche Funktionen höherer Ordnung in der Haskell
   Prelude. Eine von diesen ist ```hs zipWith :: (a -> b -> c) -> [a] -> [b] -> [c]```.
   Sie verknüpft jeweils zwei Elemente aus den jeweiligen Listen unter der
@@ -1218,7 +1219,7 @@ stellt eine PR auf GitHub].
   - Implementiere das Prädikat ```hs isSorted``` mithilfe von ```hs zipWith```.
 ]
 
-#test[
+#test(dd: 3)[
   Das Pendant zum Falten #strike[ist das Bügeln] mit ```hs foldr``` ist
   ```hs unfoldr``` (aus ```hs Data.List```). Anstatt eine Liste von Werten zu
   falten, können wir mit ```hs unfoldr``` aus einem Wert eine Liste erzeugen.
@@ -1234,7 +1235,7 @@ stellt eine PR auf GitHub].
   - Implementiere ```hs map``` mithilfe von ```hs unfoldr```.
 ]
 
-#test[
+#test(dd: 3)[
   In diesem Test wollen wir einen beliebigen Wert zu einen Baum entfalten.
   Implementiere eine Funktion ```hs unfoldTree :: (b -> Maybe (b, a, b)) -> b -> Tree a```,
   die eine Funktion nimmt, die ein Wert von Typ ```hs b``` nimmt und in eine
@@ -1265,7 +1266,7 @@ stellt eine PR auf GitHub].
   ]
 ]
 
-#challenge[
+#challenge(dd: 1)[
   Gegeben sei die Faltungsfunktion
   ```hs foldTree :: (r -> a -> r -> r) -> r -> Tree a -> r```
   für einen knotenbeschrifteten Binärbaum gegeben durch
@@ -1293,7 +1294,7 @@ stellt eine PR auf GitHub].
   ]
 ]
 
-#test[
+#test(dd: 2)[
   Gegeben seien die Funktion
   ```hs
   f :: a -> b
@@ -1309,7 +1310,7 @@ stellt eine PR auf GitHub].
   Komposition -- unifiziert?
 ]
 
-#test[
+#test(dd: 2)[
   Gegeben sei der Datentyp ```hs data Tree a = Empty | Node (Tree a) a (Tree a)```
   und die Faltungsfunktion ```hs foldTree :: r -> (r -> a -> r -> r) -> Tree a -> r```.
 
@@ -1331,12 +1332,12 @@ stellt eine PR auf GitHub].
 // = \l y r -> Node l x r
 // ```
 
-#test[
+#test(dd: 1)[
   Welche Funktion verbirgt sich hinter ```hs foldr ((++) . f) []``` und was ist
   ihr Typ?
 ]
 
-#test[
+#test(dd: 2)[
   Versuche in den folgenden Ausdrücken, Teilausdrücke schrittweise durch
   bekannte Funktionen zu ersetzen oder gegebenenfalls zu vereinfachen.
   - ```hs foldr (\x ys -> f x : ys) [] (foldr (\x ys -> g x : ys) [] xs)```,
@@ -1385,7 +1386,7 @@ stellt eine PR auf GitHub].
 // ```
 
 
-#challenge[
+#challenge(dd: 2)[
   Sei $m, n in NN$. Gegeben seien
   - die Identitätsfunktion auf ${0, ..., n - 1}$ mit
     $pi_0 : {0, ..., n - 1} -> {0, ..., n - 1}, x |-> x$ und
@@ -1431,21 +1432,21 @@ stellt eine PR auf GitHub].
 //                 | otherwise = x
 // ```
 
-#test[
+#test(dd: 1)[
   Eta-reduziere die folgende Ausdrücke:
   - ```hs sum xs = foldr (+) 0 xs```,
   - ```hs add a b = a + b``` und
   - ```hs \x ys -> (:) x ys```.
 ]
 
-#test[
+#test(dd: 1)[
   Implementiere die Funktion
   ```hs insert :: Int -> a -> Map Int a -> Map Int a```,
   die ein Schlüssel-Wert-Paar in eine ```hs Map Int a``` einfügt.
   Die ```hs Map``` ist wie folgt repräsentiert ```hs type Map k v = k -> v```.
 ]
 
-#test[
+#test(dd: 3)[
   Wir haben ```hs foldr :: (a -> b -> b) -> b -> [a] -> b``` als natürliche
   Faltungsfunktion kennengelernt, die einen Ausdruck erzeugt, der rechts
   geklammert ist. Zum Beispiel gilt
@@ -1461,7 +1462,7 @@ stellt eine PR auf GitHub].
   gelten.
 ]
 
-#test[
+#test(dd: 2)[
   Gegeben sei folgendes Python-Programm.
   ```py
   from dataclasses import dataclass
@@ -1543,7 +1544,7 @@ stellt eine PR auf GitHub].
   ]
 ] <typeclasses_in_python>
 
-#test[
+#test(dd: 2)[
   In das folgende Python-Programm hat sich ein bug hineingeschlichen.
   ```py
   text = 'Ja, ja, ich back mir \'nen Kakao!'
@@ -1561,7 +1562,7 @@ stellt eine PR auf GitHub].
   Haskell passieren?
 ]
 
-#test[
+#test(dd: none)[
   Schau dir die Selbsttests dieser Sektion erneut an und versuche, geeignete in
   Python zu lösen.
 ]
@@ -1585,34 +1586,34 @@ stellt eine PR auf GitHub].
   - Skript: Funktionale Programmierung, Abstrakte Datentypen
 ]
 
-#test[
+#test(dd: 1)[
   Was ist ein abstrakter Datentyp? Was sind die Bestandteile eines abstrakten
   Datentyps?
 ]
 
-#test[
+#test(dd: 1)[
   Wie definieren wir die Semantik der zu einem abstrakten Datentyp gehörenden
   Operationen? Wie definieren wir sie insbesondere nicht?
 ]
 
-#test[
+#test(dd: 1)[
   Wieso ist das sofortige Nutzen einer Gleichheit auf einem abstrakten Datentypen
   problematisch? Was sollte man stattdessen tun?
 ]
 
-#test[
+#test(dd: 2)[
   Zur Spezifikation der Semantik nutzen wir Gesetze, die bestimmen, wie
   verschiedene Operationen miteinander interagieren. Dafür benötigen wir
   verschiedene Werte oftmals unterschiedlicher Datentypen. Wo kommen diese her
   und wie sind sie quantifiziert?
 ]
 
-#test[
+#test(dd: 1)[
   Welche Eigenschaften sollten die für einen abstrakten Datentypen formulierten
   Gesetze erfüllen, damit sie eine sinnvolle Semantik beschreiben?
 ]
 
-#challenge[
+#challenge(dd: none)[
   Gebe folgende abstrakte Datentypen an: Paar, Menge, stack, queue,
   double-ended queue, knotenbeschrifteter Binärbaum, priority queue.
 
@@ -1620,7 +1621,7 @@ stellt eine PR auf GitHub].
   testen, indem du deine formulierten Gesetze mit QuickCheck implementierst.
 ]
 
-#test[
+#test(dd: 2)[
   Als Teil eines ADTs für Arrays soll eine Operation
   ```hs reverse :: Array a -> Array a``` spezifiziert werden, die ein Array
   umdreht. Ihr Verhalten soll unter anderem durch das folgende Gesetz festgehalten sein:
@@ -1628,7 +1629,7 @@ stellt eine PR auf GitHub].
   Warum ist dieses Gesetz problematisch? Wie können wir das Problem beseitigen?
 ]
 
-#test[
+#test(dd: 2)[
   Als Teil eines ADTs für Array soll eine Operation ```hs at :: Array a -> Int -> a```
   spezifiziert werden, die das Element an einer Position in einem Array zurückgibt.
   Weiter soll ```hs update :: Int -> a -> Array a -> Array a``` einen Wert an
@@ -1641,7 +1642,7 @@ stellt eine PR auf GitHub].
 // update k x a `at` k == x
 // j /= k ==> update k x a `at` j == a `at` j
 
-#test[
+#test(dd: 2)[
   Eine Teilmenge der Operationen für eine Menge sind
   - ```hs insert :: a -> Set a -> Set a``` zum Einfügen von einem Wert in eine
     Menge und
@@ -1655,17 +1656,17 @@ stellt eine PR auf GitHub].
   Das Gesetz ist falsch. Warum und wie können es korrigieren?
 ]
 
-#test[
+#test(dd: 1)[
   In ADT-Gesetzen sind Variablen allquantifiziert. Wie können wir gewährleisten,
   dass ein Wert bestimmte Bedingungen erfüllt, bevor wir ein entsprechendes
   Gesetz für solche Werte definieren?
 ]
 
-#test[
+#test(dd: 1)[
   Warum benötigen wir Konstruktoren als Teil eines ADTs?
 ]
 
-#test[
+#test(dd: 1)[
   Im Kontext der objektorientierten Programmierung hast du wahrscheinlich das
   Konzept der Datenkapselung kennengelernt. Dabei geht es um das Verbergen von
   Daten, sodass Zugriffe von außen nicht möglich sind. In der objektorientierten
@@ -1678,7 +1679,7 @@ stellt eine PR auf GitHub].
   constructors in diesem Zusammenhang?
 ]
 
-#test[
+#test(dd: 2)[
   Kritisiere folgenden ADT für eine queue, so pingelig wie du kannst, und
   bessere ihn.
   ```hs
@@ -1748,26 +1749,26 @@ stellt eine PR auf GitHub].
   - #link("https://learnyouahaskell.github.io/making-our-own-types-and-typeclasses.html")[Making Our Own Types and Typeclasses -- Learn You a Haskell for Great Good!] ("Typeclasses 102", "A yes-no typeclass")
 ]
 
-#test[
+#test(dd: 1)[
   Was sind Typklassen?
 ]
 
-#test[
+#test(dd: 1)[
   Wie unterscheidet sich der Polymorphismus, der durch Typklassen ermöglicht
   wird, vom parametrischen Polymorphismus?
 ]
 
-#test[
+#test(dd: 1)[
   In einem vorherigen Test wurdest du bereits gefragt, wieso ```hs show```
   nicht als Funktion mit dem Typ ```hs a -> String``` implementiert sein kann.
   Wieso wird die Funktion durch den Typ ```hs Show a => a -> String``` gerettet?
 ]
 
-#test[
+#test(dd: 1)[
   Welche Typklassen kennst du? Was ermöglichen sie konkret?
 ]
 
-#test[
+#test(dd: 2)[
   Eine ```hs Show```-Instanz für den Typ
   ```hs data Tree a = Leaf a | Tree a :+: Tree a```
   könnte wie folgt aussehen:
@@ -1782,7 +1783,7 @@ stellt eine PR auf GitHub].
   Laufzeiten?
 ]
 
-#test[
+#test(dd: 1)[
   Überlade die Operationen ```hs (+), (-), (*), abs, signum, fromInteger```
   für den Datentypen ```hs data Mat22 a = Mat22 a a a a```, der
   $(2 times 2)$-Matrizen repräsentieren soll -- ```hs abs, signum, fromInteger```
@@ -1795,7 +1796,7 @@ stellt eine PR auf GitHub].
   ]
 ] <matmath>
 
-#test[
+#test(dd: 1)[
   Mit $ mat(f_(n+1), f_n; f_n, f_(n-1))^n = mat(1, 1; 1, 0)^n $ und der
   binären Exponentiation (@binexp) und ```hs Mat22 Integer``` (@matmath) aus
   vorherigen Tests kannst du die $n$-te Fibonacci-Zahl in logarithmischer
@@ -1807,7 +1808,7 @@ stellt eine PR auf GitHub].
   ]
 ]
 
-#test[
+#test(dd: 1)[
   Wieso gilt sowohl #link("https://www.youtube.com/watch?v=ZCPN9SfdH7c&t=108s")[```hs 14000605 :: Int```]
   als auch ```hs 14000605 :: Float```?
 ]
@@ -1816,7 +1817,7 @@ stellt eine PR auf GitHub].
 // fromInteger (42 :: Integer) :: Num a => a
 // fromRational (3.1415 :: Rational) :: Fractional a => a
 
-#challenge[
+#challenge(dd: 2)[
   In dieser Challenge sollst du automatisches Differenzieren im Rückwärtsmodus
   mithilfe von (Operator-)Überladung implementieren. Dieser Ansatz des
   Differenzierens führt dabei das Differenzieren komplizierter Funktionen auf
@@ -1919,13 +1920,13 @@ auf Werten oder eine Vergleichsoperation auf Werten brauchten. Schau dir die
 bisherigen Selbsttests gerne erneut an und überlege dir, wo du Typen
 verallgemeinern kannst.
 
-#test[
+#test(dd: 1)[
   Welche Funktionen musst du implementieren, damit eine ```hs Eq```-Instanz
   vollständig definiert ist? Welche Gesetze sollten die Funktionen einer
   ```hs Eq```-Instanz erfüllen?
 ]
 
-#test[
+#test(dd: 2)[
   Gegeben sei der Typ
   #align(center)[```hs data Tree a b c = Empty | Leaf a | Node (Tree a b c) Int c (Tree a b c)```.]
   Implementiere eine ```hs Eq```-Instanz für diesen Typen. Die Gleichheit soll
@@ -1942,13 +1943,13 @@ verallgemeinern kannst.
     eine Gleichheit definieren würde?
 ]
 
-#test[
+#test(dd: 2)[
   Welche Funktionen musst du implementieren, damit eine ```hs Ord```-Instanz
   vollständig definiert ist? Welche Gesetze sollten die Funktionen einer
   ```hs Ord```-Instanz erfüllen?
 ]
 
-#test[
+#test(dd: 2)[
   Gegeben sei der Typ
   #align(center)[```hs data Tree a b c = Empty | Leaf a | Node (Tree a b c) Int c (Tree a b c)```.]
   Implementiere eine ```hs Ord```-Instanz für diesen Typen. Die Ordnung soll
@@ -1973,7 +1974,7 @@ verallgemeinern kannst.
   Implementiere die Ordnung auch erneut mit ```hs (<=)```.
 ]
 
-#test[
+#test(dd: 3)[
   Die Typklasse ```hs Ord``` ist wie folgt definiert:
   ```hs
   class Eq a => Ord a where
@@ -2004,7 +2005,7 @@ verallgemeinern kannst.
   ]
 ]
 
-#test[
+#test(dd: 2)[
   In nicht streng getypten Programmiersprachen haben wir oft mit impliziter
   Typkonversion zu tun.  Implementiere eine Funktion ```hs ifThenElse```, die
   als Bedingung Werte beliebiger Typen entgegennehmen kann. Ziel ist es, dass
@@ -2023,7 +2024,7 @@ verallgemeinern kannst.
   ]
 ]
 
-#test[
+#test(dd: 2)[
   Eine Halbgruppe ist eine Struktur $(H, ast.op)$, wobei $H$ eine Menge ist und
   $ast.op$ eine assoziative, binäre Verknüpfung $ast.op : H times H -> H$ ist.
   Ein Monoid erweitert die Halbgruppe um ein neutrales Element bzgl. $ast.op$.
@@ -2033,18 +2034,18 @@ verallgemeinern kannst.
   diese an.
 ]
 
-#test[
+#test(dd: 1)[
   Wo findest du das Konzept der Typklassen in Programmiersprachen wie z.B.
   Python oder Java wieder? Gibt es z.B. ein Pendant zur ```hs Show```-Typklasse
   in diesen Programmiersprachen?
 ]
 
-#test[
+#test(dd: 1)[
   Mit welcher Typklasse bzw. mit welcher Funktion können wir durch Strings
   repräsentierte Werte parsen?
 ]
 
-#test[
+#test(dd: 2)[
   Gebe für die folgenden Funktionsdefinitionen den allgemeisten Typ an.
   - ```hs
     f x []     = [x]
@@ -2072,29 +2073,29 @@ verallgemeinern kannst.
   - Skript: Funktionale Programmierung, Lazy Evaluation
 ]
 
-#test[
+#test(dd: 1)[
   Was ist Lazy Evaluation?
 ]
 
-#test[
+#test(dd: 1)[
   Wie werden Berechnungen in Haskell angestoßen? Wie viel wird berechnet?
 ]
 
-#test[
+#test(dd: 1)[
   Gebe ein Beispiel an, das zeigt, dass die faule Auswertung berechnungsstärker
   ist.
 ]
 
-#test[
+#test(dd: 1)[
   Welche praktischen Vorteile ergeben sich aus der Lazy Evaluation?
 ]
 
-#test[
+#test(dd: 1)[
   Wie werden mehrfache Berechnungen in einer nicht-strikten Auswertungsstrategie
   vermieden?
 ]
 
-#test[
+#test(dd: 1)[
   Gegeben sei folgendes Haskell-Ausdruck.
   ```hs
   let c = x == 0
@@ -2107,7 +2108,7 @@ verallgemeinern kannst.
   Lazy Evaluation kein Problem dar?
 ]
 
-#test[
+#test(dd: 1)[
   Wieso ist ```hs length [loop, loop, loop]``` berechenbar? ```hs loop```
   ist definiert durch
   ```hs
@@ -2116,7 +2117,7 @@ verallgemeinern kannst.
   ```
 ]
 
-#test[
+#test(dd: 2)[
   Eine zyklische einfach-verkettete Liste können wir in Python z.B. so
   definieren.
   ```py
@@ -2143,7 +2144,7 @@ verallgemeinern kannst.
   ]
 ]
 
-#challenge[
+#challenge(dd: 2)[
   Gegeben sei der Datentyp
   #align(center)[```hs data Tree a = Empty | Node (Tree a) a (Tree a)```.]
 
@@ -2206,7 +2207,7 @@ verallgemeinern kannst.
 // primes = 2 : map (\x -> 2 * x + 1) ([1..] `diff` preorder tree)
 // ```
 
-#test[
+#test(dd: 2)[
   Gegeben sei der Datentyp
   #align(center)[```hs data Doubly a = Null | Node (Doubly a) a (Doubly a)```.]
   - Implementiere eine Funktion ```hs fromList :: [a] -> Doubly a```, die
@@ -2230,7 +2231,7 @@ verallgemeinern kannst.
   ```
 ]
 
-#challenge[
+#challenge(dd: 2)[
   Wir können endliche Automaten als unendliche Bäume darstellen.
   Betrachte z.B. den endlichen Automaten für die reguläre Sprache $mono(a)^* mono(b)^*$.
   #align(center)[
@@ -2377,12 +2378,12 @@ verallgemeinern kannst.
 //          in if final then w:ws else ws
 // ```
 
-#test[
+#test(dd: 1)[
   Wieso können wir mit ```hs foldl``` auf unendlichen Listen mit keinem
   Ergebnis rechnen?
 ]
 
-#test[
+#test(dd: 1)[
   ```hs scanl :: (b -> a -> b) -> b -> [a] -> [b]``` und
   ```hs scanr :: (a -> b -> b) -> b -> [a] -> [b]``` sind ähnlich zu
   ```hs foldl``` und ```hs foldr```. Beide Funktionen speichern die
@@ -2406,7 +2407,7 @@ verallgemeinern kannst.
     von einer der beiden Funktionen.)
 ]
 
-#challenge[
+#challenge(dd: 1)[
   Fixpunktverfahren sind iterative Methoden, bei denen eine Funktion wiederholt
   auf einen Wert angewendet wird, bis sich ein stabiler Punkt (ein sogenannter
   Fixpunkt) ergibt, der sich durch weitere Anwendungen nicht mehr verändert.
@@ -2484,7 +2485,7 @@ verallgemeinern kannst.
 //                   | otherwise          = prec (y:ys)
 // ```
 
-#challenge[
+#challenge(dd: 1)[
   Eine Editierdistanz zwischen zwei Wörtern $u in Sigma^m, v in Sigma^n$ können
   wir mithilfe der folgenden Rekurrenz bestimmen:
   $
@@ -2540,7 +2541,7 @@ verallgemeinern kannst.
 //                                 ]
 // ```
 
-#challenge[
+#challenge(dd: 2)[
   Bevor du dich dieser Challenge stellst, bietet es sich an, sich @editdist
   anzunehmen, da in dieser der technische Teil der Lösungsidee vorgestellt
   wird.
@@ -2646,7 +2647,7 @@ verallgemeinern kannst.
   - #link("https://learnyouahaskell.github.io/starting-out.html")[Starting Out -- Learn You a Haskell for Great Good!] ("Texas ranges")
 ]
 
-#test[
+#test(dd: 1)[
   Ordne jeder der zur Typklasse ```hs Enum``` gehörenenden Funktionen eine
   äquivalente Listenkonstruktion zu.
   - ```hs enumFrom :: Enum a => a -> [a]```
@@ -2655,7 +2656,7 @@ verallgemeinern kannst.
   - ```hs enumFrom :: Enum a => a -> a -> a -> [a]```
 ]
 
-#test[
+#test(dd: 1)[
   Gegeben sei der Datentyp
   #align(center)[```hs data Direction = North | East | South | West```.]
 
@@ -2671,7 +2672,7 @@ verallgemeinern kannst.
     die vorherigen Typklassen bereitgestellt werden.
 ]
 
-#test[
+#test(dd: 2)[
   Implementiere Funktion ```hs cycleFrom :: (Enum a, Bounded a) => a -> [a]```,
   die ab einem gegebenen Wert alle Werte des Typen nicht absteigend durchläuft.
   Wenn der größte Wert erreicht ist, soll die Liste wieder beim kleinsten Wert
@@ -2692,21 +2693,21 @@ verallgemeinern kannst.
   - #link("https://learnyouahaskell.github.io/starting-out.html")[Starting Out -- Learn You a Haskell for Great Good!] ("I'm a list comprehension")
 ]
 
-#test[
+#test(dd: 1)[
   An welches mathematische Konzept sind list comprehensions angelehnt?
 ]
 
-#test[
+#test(dd: 1)[
   Aus welchen Teilen besteht eine list comprehension?
 ]
 
-#test[
+#test(dd: 1)[
   Implementiere die Funktionen ```hs map```, ```hs filter``` und
   ```hs concatMap``` mithilfe von list comprehensions (sowohl in Haskell als
   auch Python).
 ]
 
-#test[
+#test(dd: 2)[
   Übersetze die gegebenen Funktion in eine äquivalente Funktion, die keine list
   comprehensions verwendet.
   - ```hs f xs = [x * 2 | x <- xs, x > 0]```
@@ -2733,21 +2734,21 @@ verallgemeinern kannst.
   - #link("https://learnyouahaskell.github.io/input-and-output.html")[Input and Output -- Learn You a Haskell for Great Good!]
 ]
 
-#test[
+#test(dd: 1)[
   Was ist referenzielle Transparenz?
 ]
 
-#test[
+#test(dd: 1)[
   Welche Rolle spielt der Typ ```hs IO a``` bzgl. Seiteneffekte?
   Was beschreibt ein Wert vom Typ ```hs IO a```?
 ]
 
-#test[
+#test(dd: 1)[
   Wie können wir zwei ```hs IO```-Aktionen zu einer neuen ```hs IO```-Aktion
   kombinieren?
 ]
 
-#test[
+#test(dd: 3)[
   Betrachte die ```hs IO```-Aktion ```hs act1 >> act2```.
   - Welche der beiden Aktionen wird zuerst ausgeführt?
   - Warum erscheint das bei Lazy Evaluation kontraintuitiv?
@@ -2755,7 +2756,7 @@ verallgemeinern kannst.
   - Wieso können ```hs IO```-Berechnung in Haskell als "pure" betrachtet werden?
 ]
 
-#test[
+#test(dd: 1)[
   Mit ```hs getLine :: IO String``` können Zeilen aus der Standardeingabe
   gelesen werden. Oft wollen wir den Wert haben, der durch die eingebene
   Zeichenkette repräsentiert wird. Wie können wir diesen Wert erhalten?
@@ -2763,13 +2764,13 @@ verallgemeinern kannst.
   Implementiere eine Funktion ```hs readInt :: IO Int```, die genau dies tut.
 ]
 
-#test[
+#test(dd: 2)[
   Implementiere ein Programm, das Zahlen aus einer Datei aufsummiert, bzw.
   implementiere eine Funktion ```hs sumFile :: FilePath -> IO Int```.
   In jeder Zeile einer Datei steht eine nicht-negative Zahl.
 ]
 
-#test[
+#test(dd: 2)[
   Implementiere folgendes Rate-Spiel als IO-Programm. Es soll eine Zahl erraten
   werden.
   - Du bekommst ein Orakel vom Typ ```hs a -> Ordering```, das
@@ -2814,12 +2815,12 @@ verallgemeinern kannst.
   ]
 ]
 
-#test[
+#test(dd: 1)[
   Was ist der Unterschied zwischen Typklassen und Typkonstruktorklassen?
   Gebe Beispiele für beide an.
 ]
 
-#test[
+#test(dd: 1)[
   Gegeben sei folgende Typkonstruktorklasse.
   ```hs
   class TCC t where
@@ -2829,11 +2830,11 @@ verallgemeinern kannst.
   Beantworte die Frage möglichst allgemein.
 ]
 
-#test[
+#test(dd: 1)[
   Wie lauten die ```hs Functor```-Gesetze?
 ]
 
-#test[
+#test(dd: 1)[
   Die Funktor-Typkonstruktorklasse ist wie folgt definiert.
   ```hs
   class Functor f where
@@ -2842,30 +2843,30 @@ verallgemeinern kannst.
   Welchen kind hat ```hs f```?
 ]
 
-#test[
+#test(dd: 1)[
   Wie sind die ```hs Functor```-Instanzen für ```hs Identity```, ```hs Maybe```,
   ```hs Either e```, ```hs []``` und ```hs ((->) r)``` definiert?
 ]
 
-#test[
+#test(dd: 1)[
   Wie lauten die ```hs Applicative```-Gesetze?
 ]
 
-#test[
+#test(dd: 1)[
   Wie sind die ```hs Applicative```-Instanzen für ```hs Identity```, ```hs Maybe```,
   ```hs Either e```, ```hs []``` und ```hs ((->) r)``` definiert?
 ]
 
-#test[
+#test(dd: 1)[
   Wie lauten die ```hs Monad```-Gesetze?
 ]
 
-#test[
+#test(dd: 1)[
   Wie sind die ```hs Monad```-Instanzen für ```hs Identity```, ```hs Maybe```,
   ```hs Either e```, ```hs []``` und ```hs ((->) r)``` definiert?
 ]
 
-#test[
+#test(dd: 2)[
   Die ```hs Applicative```-Typkonstruktorklasse erlaubt es uns, ```hs fmap```
   auf Funktionen mit mehreren Argumenten zu verallgemeinern. Dadurch können wir
   #align(center)[
@@ -2886,7 +2887,7 @@ verallgemeinern kannst.
   verarbeitest und anschließend wieder hereinpackst.
 ]
 
-#test[
+#test(dd: 1)[
   Um zu verifizieren, dass die ```hs Functor```-Gesetze für z.B. den Typ
   ```hs Maybe a``` gelten, müssen wir
   - das Identitätsgesetz ```hs fmap id = id``` und
@@ -2896,7 +2897,7 @@ verallgemeinern kannst.
   ```hs [a]``` zeigen wollen, was ändert sich an deinem Vorgehen?
 ]
 
-#test[
+#test(dd: 2)[
   Warum gilt
   #align(center)[```hs (1 +) <$> Just 1 == Just (1 +) <*> Just 1 == pure (1 +) <*> Just 1```?]
   Wie ergibt sich aus deinen Beobachtungen eine Definition für ```hs fmap```?
@@ -2905,15 +2906,21 @@ verallgemeinern kannst.
   tatsächlich passiert?
 ]
 
-#test[
+#test(dd: 2)[
   Monaden sind ausdrucksstärker als applikative Funktoren, und applikative
   Funktoren sind ausdrucksstärker als Funktoren.
   - Implementiere ```hs fmap```, ```hs pure``` und ```hs (<*>)``` mithilfe von
     ```hs return``` und ```hs (>>=)```.
   - Implementiere ```hs fmap``` mithilfe von ```hs pure``` und ```hs (<*>)```.
+
+  #extra[
+    Die Erkenntnis dieses Tests kannst du nutzen, wenn es für dich einfacher
+    ist eine Monaden-Instanz anzugeben, anstatt Funktoren- und applikative
+    Funktor-Instanzen anzugeben, oder zum Zeit sparen.
+  ]
 ]
 
-#test[
+#test(dd: 1)[
   Betrachten wir die Typen von ```hs fmap``` und ```hs (>>=)```, dann sehen
   wir gewisse Ähnlichkeiten.
   #align(center)[
@@ -2929,7 +2936,7 @@ verallgemeinern kannst.
   des Wertes vom Typ ```hs a``` verändern?
 ]
 
-#test[
+#test(dd: 1)[
   Gegeben sei diese fehlerhafe Definition einer sicheren Division:
   ```hs
   safeDiv :: Int -> Int -> Maybe Int
@@ -2947,7 +2954,7 @@ verallgemeinern kannst.
 // -- oder: safeDiv x y = pure (div x) <*> (guard (y /= 0) *> pure y)
 // ```
 
-#test[
+#test(dd: 1)[
   Monaden bieten uns die Möglichkeit, Berechnungen als Folge von kleineren
   Berechnungen zu sequenzieren. Je nachdem welche Monade wir betrachten,
   beobachten wir verschiedene Effekte.
@@ -2960,7 +2967,7 @@ verallgemeinern kannst.
     Information hervorbringen?
 ]
 
-#test[
+#test(dd: 1)[
   Wir nutzen Monaden zur Sequenzierung von Berechnungen. Identifiziere diese
   Sequenzierung in den folgenden ```hs Monad```-Instanzen bzw. stelle fest, dass
   ```hs m``` in ```hs m >>= k``` zuerst berechnet wird, bevor die Berechnung mit
@@ -2980,7 +2987,7 @@ verallgemeinern kannst.
   ```
 ]
 
-#test[
+#test(dd: 2)[
   Die ```hs Reader```-Monade ermöglicht es, eine gemeinsame Umgebung mit vielen
   Berechnungen zu teilen.
   ```hs
@@ -2997,7 +3004,7 @@ verallgemeinern kannst.
   Weiterführung mit ```hs k``` und dem Ergebnis ```hs r``` stattfindet?
 ] <reader_monad>
 
-#test[
+#test(dd: 3)[
   Das Pendant zur ```hs Reader```-Monade aus @reader_monad ist die
   ```hs Writer```-Monade. Eine Spezialisierung der Monade soll hier die
   ```hs ListWriter```-Monade sein. Diese Monade kann genutzt werden, um
@@ -3017,7 +3024,7 @@ verallgemeinern kannst.
   ]
 ]
 
-#test[
+#test(dd: 1)[
   Argumentiere anhand der Gesetze, die für eine ```hs Functor```-Instanzen
   gelten sollen, dass die folgenden ```hs Functor```-Instanzen keine gültigen
   Instanzen sind. Gebe auch Beispiele an, die zeigen, dass die Gesetze nicht
@@ -3036,7 +3043,7 @@ verallgemeinern kannst.
   ```
 ]
 
-#test[
+#test(dd: 2)[
   Das Verwenden von monadischen Funktionen kommt einem zum Anfang möglicherweise
   als erbitterter Kampf gegen das Typsystem vor. Diese Situationen ergeben sich
   bereits aus den scheinbar einfachsten Absichten. Oft fehlt dann die Erfahrung,
@@ -3087,7 +3094,7 @@ verallgemeinern kannst.
     - ```hs join (Left (Right True))```?
 ]
 
-#challenge[
+#challenge(dd: 2)[
   Gegeben sei der Datentyp
   #align(center)[
     ```hs newtype ZipList a = ZipList { getZipList :: [a] }```.
@@ -3209,7 +3216,7 @@ verallgemeinern kannst.
 // -- = pure ($ y) <*> ZipList fs
 // ```
 
-#test[
+#test(dd: 3)[
   ```hs guard :: MonadZero m => Bool -> m ()``` kann genutzt werden, um eine
   Berechnung bedingt fehlschlagen zu lassen.
   Zum Beispiel können wir mithilfe von ```hs guard``` eine sichere Division
@@ -3260,7 +3267,7 @@ verallgemeinern kannst.
 // guard True  = return ()
 // ```
 
-#test[
+#test(dd: 2)[
   In @monadzero haben wir eine Typkonstruktorklasse definiert, die es uns
   erlaubt hat, einen Fehlschlag bzw. die Abwesenheit eines Ergebnisses
   auszudrücken. Diese können wir auch eine Abstraktionsebene früher einführen.
@@ -3275,7 +3282,7 @@ verallgemeinern kannst.
   sich wie ```hs (>>)``` für applikative Funktoren verhält.
 ]
 
-#test[
+#test(dd: 3)[
   Als motivierendes Beispiel für Monaden hast du die Auswertung eines
   arithmetischen Ausdrucks, gegeben als Termstruktur, kennengelernt. Dort haben
   wir die ```hs Maybe```-Monade verwendet, um fehlschlagende Berechnung
@@ -3396,7 +3403,7 @@ verallgemeinern kannst.
 //              return (x `div` y)
 // ```
 
-#test[
+#test(dd: 2)[
   Wie hängen die Listenmonade und list comprehensions zusammen?
   - Schreibe den folgenden Ausdruck
     ```hs
@@ -3422,7 +3429,7 @@ verallgemeinern kannst.
     mithilfe der Listenmonade.
 ]
 
-#test[
+#test(dd: 2)[
   Die ```hs do```-Notation erlaubt es uns, statements der Form ```hs p <- e```
   zu schreiben, wobei ```hs p``` ein beliebiges Muster sein kann. Zum Beispiel
   ist folgender Ausdruck valide und berechnenbar.
@@ -3440,7 +3447,7 @@ verallgemeinern kannst.
     @eval_exp ein?
 ]
 
-#test[
+#test(dd: 1)[
   Wie übersetzen wir
   #align(center)[```hs do x <- e1; e2``` #h(1em) und #h(1em) ```hs do e1; e2```]
   in einen äquivalente Ausdrucke mithilfe von ```hs (>>=)``` und ```hs (>>)```?
@@ -3455,7 +3462,7 @@ verallgemeinern kannst.
   ```
 ]
 
-#test[
+#test(dd: 1)[
   Wie übersetzen wir die Audrücke
   #align(center)[
     ```hs
@@ -3477,7 +3484,7 @@ verallgemeinern kannst.
   in einen äquivalenten Ausdruck mithilfe der ```hs do```-Notation?
 ]
 
-#test[
+#test(dd: 1)[
   Gegeben sei folgendes Haskell-Programm.
   ```hs
   main :: IO ()
@@ -3490,7 +3497,7 @@ verallgemeinern kannst.
   Was ist die Ausgabe des Programm und warum?
 ]
 
-#test[
+#test(dd: 1)[
   Gegeben sei folgendes fehlerhafte Haskell-Programm.
   ```hs
   main :: IO ()
@@ -3508,7 +3515,7 @@ verallgemeinern kannst.
   stattfinden muss.)
 ]
 
-#test[
+#test(dd: 2)[
   Gegeben sei der Datentyp ```hs Tree a = Leaf a | Tree a :+: Tree a```.
   - Implementiere eine Funktion ```hs splits :: [a] -> [([a], [a])]```, die
     alle nicht-leeren Aufteilungen der Eingabeliste berechnet.
@@ -3540,7 +3547,7 @@ verallgemeinern kannst.
 // splits (x:xs) = ([x], xs) : ((\(ys, zs) -> (x:ys, zs)) <$> splits xs)
 // ```
 
-#test[
+#test(dd: 2)[
   Gegeben ist der Typ
   ```hs data Deep a b = Deep [Maybe (Either a (Deep a b))]```.
   Die Faltungsfunktion sieht im Wesentlichen so aus.
@@ -3560,7 +3567,7 @@ verallgemeinern kannst.
 //   where fold = foldDeep fdeep
 // ```
 
-#test[
+#test(dd: 3)[
   Oft kommt es vor, dass Berechnungen zustandabhängig verschiedene Ergebnisse
   liefern. Zum Beispiel merken wir uns in einer Tiefensuche durch einen
   Graph, welche Knoten bereits besucht wurden, damit die Tiefensuche sich nicht
@@ -3664,7 +3671,7 @@ verallgemeinern kannst.
   ]
 ] <sequence_state>
 
-#challenge[
+#challenge(dd: 2)[
   Im Folgenden modellieren wir einen Graph als Paar $(V, E)$ mit
   einer Knoten- und Kantenbewertung $w_v : V -> A$ und $w_e : E -> B$,
   und $E subset.eq V times V$.
@@ -3833,7 +3840,7 @@ verallgemeinern kannst.
   - #link("https://dl.acm.org/doi/10.1145/351240.351266")[QuickCheck: a lightweight tool for random testing of Haskell programs]
 ]
 
-#test[
+#test(dd: 2)[
   Es kommt häufiger vor, dass zufällig generierte Werte bestimmte Eigenschaften
   erfüllen sollen. QuickCheck bietet auf Generatoren-Ebene z.B. die Funktion
   ```hs suchThat :: Gen a -> (a -> Bool) -> Gen a``` dafür an. Diese nimmt einen
@@ -3858,7 +3865,7 @@ verallgemeinern kannst.
 //                              else g `suchThat` p
 // ```
 
-#test[
+#test(dd: 2)[
   Wenn du folgende (etwas künstliche) Eigenschaft mithilfe von QuickCheck
   prüfst, muss im Durchschnitt jeder zweite Test verworfen werden, weil die
   Vorbedingung der Eigenschaft nicht erfüllt ist.
@@ -3896,7 +3903,7 @@ Die folgenden zwei Challenges steigen tiefer in die Funktionsweise von
 QuickCheck ein. Dabei werden zwar weiter viele Vereinfachungen gemacht, wir
 nähern uns dennoch der tatsächlichen Implementierung von QuickCheck stark an.
 
-#challenge[
+#challenge(dd: 3)[
   Eigenschaften lassen sich mit QuickCheck z.B. mithilfe der Funktion
   ```hs quickCheck``` prüfen.
 
@@ -3973,7 +3980,7 @@ nähern uns dennoch der tatsächlichen Implementierung von QuickCheck stark an.
 // quickCheck p = unProperty (property p)
 // ```
 
-#challenge[
+#challenge(dd: 3)[
   Bevor du diese Challenge bestreitest, sage @quickcheck_noprng den Kampf an!
 
   Während QuickCheck #link("https://dl.acm.org/doi/10.1145/2660193.2660195")[SplitMix64]
@@ -4147,7 +4154,9 @@ nähern uns dennoch der tatsächlichen Implementierung von QuickCheck stark an.
 
 #line()
 
-#test[
+Diese Aufgaben haben noch keinen Platz gefunden.
+
+#test(dd: 2)[
   Implementiere Arrays als nicht-mutierende Datenstruktur in Python. Die
   Klasse soll so funktionieren, dass der folgende Beispielcode lauffähig ist
   und die angegebene Ausgabe erzeugt.
@@ -4196,7 +4205,7 @@ nähern uns dennoch der tatsächlichen Implementierung von QuickCheck stark an.
 //     return Array(self.size, data)
 // ```
 
-#challenge[
+#challenge(dd: 3)[
   Du hörst parallel zu diesem Modul "Berechnung und Logik" und möchtest
   die Automaten-Konstruktionen für reguläre Sprachen in Haskell implementieren?
   Dann schaue nicht weiter. Du hast die korrekte Challenge gefunden. Dieser Weg
@@ -4306,39 +4315,39 @@ nähern uns dennoch der tatsächlichen Implementierung von QuickCheck stark an.
   - Skript: Einführung in die Logikprogrammierung, Syntax von Prolog
 ]
 
-#test[
+#test(dd: none)[
   Wie unterscheiden sich Variablen in Haskell und Prolog?
 ]
 
-#test[
+#test(dd: none)[
   Was ist das Berechnungsprinzip von Prolog bzw. wie leitet Prolog aus
   gegebenen Informationen neue Erkenntnisse ab?
 ]
 
-#test[
+#test(dd: none)[
   Formuliere folgende Aussage als Prolog-Programm:
   Seien $A$ und $B$. Dann gilt $C$, wenn $A$ und $B$ gelten.
 ]
 
-#test[
+#test(dd: none)[
   Wie können wir Funktionen, wie wir sie aus Haskell kennen, in Prolog umsetzen?
   Erkläre es mithilfe eines Beispiels (wie z.B.
   ```hs (++) :: [a] -> [a] -> [a]```).
 ]
 
-#test[
+#test(dd: none)[
   $n$-stellige Funktionen können wir in Prolog als $(n+1)$-stellige Relation
   umsetzen. Dabei nimmt die letzte Position der Relation die Rolle des
   Ergebnisses ein. Gehen wir mit Funktionen vom Typ
   ```hs a1 -> ... an -> Bool``` besonders um?
 ]
 
-#test[
+#test(dd: none)[
   Wie hängen die Syntax von Prolog und die der Aussagenlogik zusammen? Welche
   Symbole entsprechen sich?
 ]
 
-#test[
+#test(dd: none)[
   In Prolog können wir Termstrukturen erzeugen. Der Haskell-Typ
   #align(center)[```hs data Maybe a = Nothing | Just a```]
   kann z.B. wie folgt in Prolog umgesetzt werden.
@@ -4350,7 +4359,7 @@ nähern uns dennoch der tatsächlichen Implementierung von QuickCheck stark an.
   #align(center)[```hs data Tree a = Empty | Node (Tree a) a (Tree a)```.]
 ]
 
-#test[
+#test(dd: none)[
   Wie viele Ergebnisse liefern die folgenden Anfragen?
   - ```SWI-Prolog ?- append(_, [X|_], [1, 2, 3, 4]).```
   - ```SWI-Prolog ?- append(_, [_,X|_], [1, 2, 3, 4]).```
@@ -4358,17 +4367,17 @@ nähern uns dennoch der tatsächlichen Implementierung von QuickCheck stark an.
   - ```SWI-Prolog ?- append(_, [X|Ys], [1, 2, 3, 4]), append(_, [Y|_], Ys).```
 ]
 
-#test[
+#test(dd: none)[
   Wie stehen die Begriffe Fakt, Regel, Klausel, Prädikat und Relation in
   Beziehung?
 ]
 
-#test[
+#test(dd: none)[
   Gebe Beispiele für Formeln an, die zeigen, dass Prolog nur eine echte
   Teilmenge der Prädikatenlogik erster Stufe umsetzt.
 ]
 
-#test[
+#test(dd: none)[
   Ordne die Begriffe Atom, Fakt, Regel und Variable dem folgenden
   Prolog-Programm zu?
   ```SWI-Prolog
@@ -4386,7 +4395,7 @@ nähern uns dennoch der tatsächlichen Implementierung von QuickCheck stark an.
   ```
 ] <major_chord>
 
-#test[
+#test(dd: none)[
   In @major_chord sind die Halbtonschritte als Fakten definiert. Um diese
   etwas kompakter zu schreiben, können wir ```SWI-Prolog append/3``` verwenden.
   Implementiere ```SWI-Prolog semitone/2``` mithilfe von ```SWI-Prolog append/3```.
@@ -4397,7 +4406,7 @@ nähern uns dennoch der tatsächlichen Implementierung von QuickCheck stark an.
 //   append(_, [X, Y|_], [c, cs, d, ds, e, f, fs, g, gs, a, as, b, c]).
 // ```
 
-#test[
+#test(dd: none)[
   Warum ergibt es Sinn, beim Prolog-Programmieren in Relationen statt
   Funktionen zu denken? Betrachte z.B. das Prädikat ```SWI-Prolog append/3```
   gemeinsam mit den Anfragen
@@ -4411,7 +4420,7 @@ nähern uns dennoch der tatsächlichen Implementierung von QuickCheck stark an.
   der Benennung des Prädikats erwarten würden?
 ]
 
-#test[
+#test(dd: none)[
   Wenn wir Haskell um die Möglichkeit erweitern könnten, mehrere Regeln
   auszuprobieren und mehrere Lösungen zu kombinieren, hätten wir trotz der
   Abwesenheit logischer Variablen bereits viele Möglichkeiten der Modellierung,
@@ -4482,7 +4491,7 @@ nähern uns dennoch der tatsächlichen Implementierung von QuickCheck stark an.
 //     else []
 // ```
 
-#test[
+#test(dd: none)[
   Implementiere das Prädikat ```SWI-Prolog zip/3```, dass zwei Liste bekommt
   und eine Liste von Paaren zurückliefert -- so wie du es aus Haskell kennst.
   Es soll
@@ -4493,7 +4502,7 @@ nähern uns dennoch der tatsächlichen Implementierung von QuickCheck stark an.
   Länge eingeschränkt ist.
 ]
 
-#test[
+#test(dd: none)[
   Mithilfe von ```SWI-Prolog append/3``` lassen sehr viele andere Prädikate
   auf Listen definieren. Überlege dir, wie du folgende Prädikate unter dessen
   Nutzung implementieren kannst. Die Prädikate sollen sich wie deren
@@ -4529,7 +4538,7 @@ nähern uns dennoch der tatsächlichen Implementierung von QuickCheck stark an.
 //   not_member(X, Ys4).
 // ```
 
-#test[
+#test(dd: none)[
   Das Prädikat ```SWI-Prolog sublist/2``` soll genau dann erfüllbar sein, wenn
   eine gegebene Liste in einer anderen gegebenen Liste enthalten ist. Eine
   mögliche Implementierung sieht wie folgt aus:
@@ -4543,13 +4552,13 @@ nähern uns dennoch der tatsächlichen Implementierung von QuickCheck stark an.
   Was sind die Ergebnisse der Anfrage ```SWI-Prolog ?- sublist(Xs, [1, 2]).```?
 ]
 
-#test[
+#test(dd: none)[
   Warum ist ```SWI-Prolog not_member(X, Xs) :- append(_, [Y|_], Xs), X \= Y.```
   keine korrekte Implementierung des Prädikates, das testet, ob ein Element
   nicht einer Liste enthalten ist?
 ] <not_member>
 
-#test[
+#test(dd: none)[
   In diesem Selbsttest wollen wir die Peano-Arithmetik wiederholen.
   Implementiere folgende Prädikate:
   - ```SWI-Prolog peano/1``` soll beweisbar sein, wenn der übergebene Term
@@ -4573,7 +4582,7 @@ nähern uns dennoch der tatsächlichen Implementierung von QuickCheck stark an.
     Peano-Zahlen, also die $<$-Relation und Gleichheit auf Peano-Zahlen.
 ]
 
-#test[
+#test(dd: none)[
   Das Sieb des Eratosthenes ist ein Algorithmus zur Bestimmung von Primzahlen.
   Dieses wollen wir nun in Prolog implementieren -- mit Peano-Zahlen natürlich.
   - Implementiere zuerst ein Prädikat ```SWI-Prolog range/3```, das eine Liste
@@ -4593,13 +4602,13 @@ nähern uns dennoch der tatsächlichen Implementierung von QuickCheck stark an.
 
 ]
 
-#test[
+#test(dd: none)[
   Implementiere ein Prädikat ```SWI-Prolog to_nat/2```, das eine Peano-Zahl in
   eine natürliche Zahl konvertiert. Nutze dafür ```SWI-Prolog is/2```. Wieso
   terminiert die Anfrage ```SWI-Prolog ?- to_nat(P, 3).``` nicht?
 ] <to_nat>
 
-#test[
+#test(dd: none)[
   Ein Graph sei dargestellt als eine Liste von Kanten. Die Kanten seien
   wiederum als Tupel dargestellt.
 
@@ -4670,18 +4679,18 @@ nähern uns dennoch der tatsächlichen Implementierung von QuickCheck stark an.
 //   reachable(Z, Y, G, [X|V]).
 // ```
 
-#test[
+#test(dd: none)[
   Wie unterscheiden sich die Gleichheit ```SWI-Prolog ==/2``` in Prolog
   und die Gleichheit in Haskell?
 ]
 
-#test[
+#test(dd: none)[
   Welche Konzepte, die Haskell verwendet, stecken hinter den Anfragen
   - ```SWI-Prolog ?- just((X, Y)) = just((1, 2))``` und
   - ```SWI-Prolog ?- to(X, to(X, list(X))) = to(int, to(int, list(int)))```?
 ]
 
-#test[
+#test(dd: none)[
   Eine Dur-Tonleiter hat folgendes Muster relativ zum vorherigen Ton in
   Halbtonschritten:
   #align(center)[+2, +2, +1, +2, +2, +2, +1]
@@ -4710,7 +4719,7 @@ nähern uns dennoch der tatsächlichen Implementierung von QuickCheck stark an.
 // all_major(R, Cs, [_|S]) :- all_major(R, Cs, S).
 // ```
 
-#test[
+#test(dd: none)[
   Entwickle ein Prädikat ```SWI-Prolog nth/3```, dass das $n$-te Element
   einer Liste zurückgibt. Zum Beispiel soll folgende Anfrage beweisbar sein.
   ```SWI-Prolog
@@ -4719,7 +4728,7 @@ nähern uns dennoch der tatsächlichen Implementierung von QuickCheck stark an.
   ```
 ]
 
-#test[
+#test(dd: none)[
   Für die nächste Ausgabe des Mittelerde-Kuriers benötigst du noch ein
   Titelbild für den Artikel "Die Gefährten ziehen zum Schicksalsberg". Dafür
   möchtest du die Gefährten der Größe nach aufstellen. Merry und Pippin sind
@@ -4787,16 +4796,16 @@ nähern uns dennoch der tatsächlichen Implementierung von QuickCheck stark an.
   - Skript: Logische Programmierung, Elementare Programmiertechniken
 ]
 
-#test[
+#test(dd: none)[
   Aus welchen Teilen besteht das generate-and-test Schema?
 ]
 
-#test[
+#test(dd: none)[
   Wie hängen musterorientierte Prädikate und induktiv definierte Funktionen
   miteinander zusammen?
 ]
 
-#challenge[
+#challenge(dd: none)[
   Das Erfüllbarkeitsproblem der Aussagenlogik fragt, ob es für eine gegebene
   aussagenlogische Formel eine Belegung der Variablen mit wahr oder falsch
   gibt, sodass die Formel insgesamt wahr ist.
@@ -4890,7 +4899,7 @@ nähern uns dennoch der tatsächlichen Implementierung von QuickCheck stark an.
 // sat(F, A) :- get_vars(F, Vs), assignment(Vs, A), eval(F, A, true).
 // ```
 
-#test[
+#test(dd: none)[
   In diesem Test ergänzen wir den SAT-Löser aus @sat_solver um die Implikation
   und Äquivalenz. Anstatt das ```SWI-Prolog eval```-Prädikat entsprechend zu
   erweitern, wollen wir diese Terme in andere Terme übersetzen, die wir bereits
@@ -4911,7 +4920,7 @@ nähern uns dennoch der tatsächlichen Implementierung von QuickCheck stark an.
 // desugar(iff(A, B), C) :- desugar(and(impl(A, B), impl(B, A)), C).
 // ```
 
-#test[
+#test(dd: none)[
   Wir machen uns auf in die Kombinatorik und wollen ein paar nützliche Prädikate
   definieren, die uns helfen Suchräume zu durchlaufen.
   - Implementiere ein Prädikat ```SWI-Prolog varia_rep/3```, das genau dann
@@ -4922,7 +4931,7 @@ nähern uns dennoch der tatsächlichen Implementierung von QuickCheck stark an.
     beweisbar ist, wenn zwei übergebene Listen Permutationen voneinander sind.
 ] <combinatorics>
 
-#challenge[
+#challenge(dd: none)[
   Oft eignet sich Prolog gut, um Algorithmen für Entscheidungsprobleme, die in
   NP liegen, zu implementieren. Als Methode dafür hast du generate-and-test
   kennengelernt -- wir generieren mögliche (also korrekte oder falsche)
@@ -5051,28 +5060,28 @@ nähern uns dennoch der tatsächlichen Implementierung von QuickCheck stark an.
 Im Folgenden stehen Großbuchstaben für Variablen und Kleinbuchstaben für
 atomare Ausdrücke -- wenn nicht anders in Test oder Challenge eingeführt.
 
-#test[
+#test(dd: none)[
   Was besagt die Abtrennungsregel (modus ponens)?
 ]
 
-#test[
+#test(dd: none)[
   Was ist das (einfache) Resolutionsprinzip?
 ]
 
-#test[
+#test(dd: none)[
   Wann ist eine Anfrage mithilfe des Resolutionsprinzips beweisbar?
 ]
 
-#test[
+#test(dd: none)[
   Mithilfe welcher Methode stellen wir fest, ob ein Literal zu einer linken
   Regelseite passt?
 ]
 
-#test[
+#test(dd: none)[
   Wie sind Terme definiert?
 ]
 
-#test[
+#test(dd: none)[
   Welche der folgenden Terme sind syntaktisch korrekt?
   - $X$
   - $a$
@@ -5082,21 +5091,21 @@ atomare Ausdrücke -- wenn nicht anders in Test oder Challenge eingeführt.
   - $g(f(X)(Y))$
 ]
 
-#test[
+#test(dd: none)[
   Mithilfe welcher Methode ersetzen wir Variablen in Termen?
 ]
 
-#test[
+#test(dd: none)[
   Wie ist die Substitution auf Termen definiert? Was wird insbesondere durch
   eine Substitution verändert und was nicht?
 ]
 
-#test[
+#test(dd: none)[
   Falls du @sat_solver gemeistert hast -- an welcher Stelle deines Programms
   führst du eine Substitution durch?
 ]
 
-#test[
+#test(dd: none)[
   Sei $sigma = { X |-> 1, Y |-> 2 }$ eine Substitution. Welche Anwendungen
   oder Aussagen sind korrekt?
   - $sigma("add"(X, Y)) = "add"(1, 2)$
@@ -5104,7 +5113,7 @@ atomare Ausdrücke -- wenn nicht anders in Test oder Challenge eingeführt.
   - $sigma(f(g(X, Y), Z))$ ist nicht definiert.
 ]
 
-#test[
+#test(dd: none)[
   Welche der folgenden Substitutionen sind wohldefiniert?
   - $sigma = { X |-> 1 }$
   - $sigma = { X |-> X }$
@@ -5113,27 +5122,27 @@ atomare Ausdrücke -- wenn nicht anders in Test oder Challenge eingeführt.
   - $sigma = { [X|Y] |-> [1|[]] }$
 ]
 
-#test[
+#test(dd: none)[
   Sind $[X]$ und $[1, 2]$ unifizierbar?
 ]
 
-#test[
+#test(dd: none)[
   Wende die Substitution $sigma = { X |-> 1, Y |-> f(X) }$ auf den Term
   $g(X, h(Y))$ an, ohne einen Zwischenschritt auszulassen.
 ]
 
-#test[
+#test(dd: none)[
   Was ist ein Unifikator? Was ist ein allgemeinster Unifikator?
 ]
 
-#test[
+#test(dd: none)[
   Was sind die Ergebnisse der folgenden Kompositionen von Substitutionen?
   - ${ Y |-> X } compose { Z |-> 1 }$
   - ${ Y |-> X } compose { Z |-> Y }$
   - ${ Z |-> Y } compose { Y |-> X }$
 ]
 
-#test[
+#test(dd: none)[
   Beim Durchführen des Unifikationsalgorithmus treten in zwei verschiedenen
   Iterationen $i, j$ mit $i < j$ die Substitutionen
   $ sigma_i = { X |-> f(Y) } "und" sigma_j = { X |-> a } $
@@ -5141,30 +5150,30 @@ atomare Ausdrücke -- wenn nicht anders in Test oder Challenge eingeführt.
   Dabei kann angenommen werden, dass $X$ nicht in $Y$ vorkommt.
 ]
 
-#test[
+#test(dd: none)[
   Warum gilt ${ Y |-> X } compose { Z |-> Y } = { Z |-> Y } compose { Y |-> X }$
   nicht?
 ]
 
-#test[
+#test(dd: none)[
   Warum ist ${ Y |-> X } compose { Y |-> 2 } = { Y |-> 2 }$?
 ]
 
-#test[
+#test(dd: none)[
   Warum ist die Komposition von Substitutionen im Allgemeinen nicht die
   Vereinigung der jeweiligen Mengendarstellungen?
 ]
 
-#test[
+#test(dd: none)[
   Wann existiert ein allgemeinster Unifikator?
 ]
 
-#test[
+#test(dd: none)[
   Was ist die Unstimmigkeitsmenge zweier Terme, was gibt sie an und wie ist sie
   definiert?
 ]
 
-#test[
+#test(dd: none)[
   Welche Unstimmigkeitsmengen sind korrekt berechnet?
   - $"ds"(f(X), f(1)) = {X, 1}$
   - $"ds"(1, 2) = {1, 2}$
@@ -5173,7 +5182,7 @@ atomare Ausdrücke -- wenn nicht anders in Test oder Challenge eingeführt.
   - $"ds"(f(X, Y), f(1, 2)) = {Y, 2}$
 ]
 
-#test[
+#test(dd: none)[
   Finde die allgemeinsten Unifikatoren für die folgende Terme:
   - $(X + 1) dot Y + Z$ und $((3 + Z) + 1) dot Z + 3$,
   - $f(X, Y)$ und $f([Y|R], 1)$,
@@ -5235,36 +5244,36 @@ atomare Ausdrücke -- wenn nicht anders in Test oder Challenge eingeführt.
     )
 ] <det_mgus>
 
-#test[
+#test(dd: none)[
   Unter welchen Umständen terminiert der Unifikationsalgorithmus?
 ]
 
-#test[
+#test(dd: none)[
   Aus welcher Eigenschaft des Unifikationsalgorithmus folgt, dass ein
   berechneter Unifikator ein allgemeinster Unifikator ist?
 ]
 
-#test[
+#test(dd: none)[
   Seien $t_1, t_2$ Terme. Wenn $"ds"(sigma(t_1), sigma(t_2)) = emptyset$ gilt,
   was können wir über $sigma$ folgern?
 ]
 
-#test[
+#test(dd: none)[
   Welche Arten von Fehlschlägen können während des Unifikationsalgorithmus
   auftreten? Unter welchen Umständen treten diese auf?
 ]
 
-#test[
+#test(dd: none)[
   In welches Problem laufen wir, wenn wir mit einer Substitution, die sich
   aus $"ds"(t_1, t_2) = {X, f(X)}$ ergibt, naiv weiter rechnen würden, wobei
   $t_1$ und $t_2$ Terme sind?
 ]
 
-#test[
+#test(dd: none)[
   Was bedeutet es, wenn der Vorkommenstest (occurs check) positiv ist?
 ]
 
-#test[
+#test(dd: none)[
   Gebe ein Beispiel für eine Eingabe an, für das der Unifikationsalgorithmus
   exponentielle Laufzeit bzgl. der Größe der Eingabeterme hat.
 
@@ -5275,32 +5284,32 @@ atomare Ausdrücke -- wenn nicht anders in Test oder Challenge eingeführt.
     $t_1, ..., t_n$ und $n$-stelligen Funktor $f$.
 ]
 
-#test[
+#test(dd: none)[
   Wieso kommt der Fall der exponentiellen Laufzeit in der Größe der Eingabeterme
   überhaupt zustande?
 ]
 
-#test[
+#test(dd: none)[
   Aus welchen Komponenten setzt sich das allgemeine Resolutionsprinzip zusammen?
   Wie wird es auch genannt?
 ]
 
-#test[
+#test(dd: none)[
   Was legt die Selektionsfunktion der SLD-Resolution fest? Welche verwendet Prolog?
 ]
 
-#test[
+#test(dd: none)[
   Gegeben sei die Anfrage $"?-" A_1, ..., A_m$. Du stellst fest, dass $A_1$
   mit der linken Seite der Regel $L ":-" L_1, ..., L_n$ unifizierbar ist. Welche
   Anfrage ist in einem SLD-Resolutionsschritt daraus ableitbar.
 ]
 
-#test[
+#test(dd: none)[
   Wieso benennen wir Variablen einer Regel um, bevor wir eine Unifikation als
   Teil eines SLD-Resolutionsschritt durchführen?
 ]
 
-#test[
+#test(dd: none)[
   Wodurch ergibt sich die Struktur eines SLD-Baums?
 ]
 
@@ -5375,32 +5384,32 @@ Seite gefunden haben.
   })
 ]
 
-#test[
+#test(dd: none)[
   Welche Auswertungsstrategie findet immer eine Lösung, falls eine existiert?
 ]
 
-#test[
+#test(dd: none)[
   Warum wird die Tiefensuche als Auswertungsstrategie der Breitensuche bevorzugt?
 ]
 
-#test[
+#test(dd: none)[
   Wie ergibt sich die Reihenfolge der Kindknoten eines Knoten in einem SLD-Baum?
 ]
 
-#test[
+#test(dd: none)[
   Welche Rolle spielt Backtracking in Prolog?
 ]
 
-#test[
+#test(dd: none)[
   Wie werden Variablen in Prolog gebunden?
 ]
 
-#test[
+#test(dd: none)[
   Wieso wird empfohlen, dass Klauseln für Spezialfälle vor allgemeineren
   Klauseln stehen sollten?
 ]
 
-#test[
+#test(dd: none)[
   Gegeben sei das Prolog-Programm.
   ```SWI-Prolog
   fruit(apple).
@@ -5413,7 +5422,7 @@ Seite gefunden haben.
   die Belegungen für ```SWI-Prolog F2``` und ```SWI-Prolog F3``` zuerst?
 ]
 
-#test[
+#test(dd: none)[
   Gegeben sei das Prolog-Programm:
   ```SWI-Prolog
   nth(0, [X|_], X).
@@ -5434,13 +5443,13 @@ Seite gefunden haben.
   Was ist hier schief gelaufen?
 ]
 
-#test[
+#test(dd: none)[
   Begründe warum die folgende Aussage korrekt oder falsch ist:
   Beim Berechnen der Unstimmigkeitsmenge kann folgendes Ergebnis herauskommen:
   $ { g(X, Y), g(Y, X) }. $
 ]
 
-#test[
+#test(dd: none)[
   Gegeben sei folgendes Prolog-Programm.
   ```SWI-Prolog
   append([],    L, L     ).
@@ -5455,7 +5464,7 @@ Seite gefunden haben.
   Unifikationsalgorithmus entstanden ist?
 ]
 
-#test[
+#test(dd: none)[
   Gegeben sei folgendes Prolog-Programm.
   ```SWI-Prolog
   f(X, 2).
@@ -5555,7 +5564,7 @@ Gedanken machen kann.
   eines Algorithmus und nicht darum, dass ihr logisch schließen könnt, dass
   manche Belegungen irrelevant sind.
 
-#test[
+#test(dd: none)[
   Welche der folgenden Listen entsprechen syntaktisch korrekten Listen in
   Prolog. Darüber hinaus, welche der Listen entsprechen der Liste $(1, 2, 3)$.
   - ```SWI-Prolog [1, 2, 3]```
@@ -5567,7 +5576,7 @@ Gedanken machen kann.
   - ```SWI-Prolog [1|[2|[3|[]]]]```
 ]
 
-#test[
+#test(dd: none)[
   Die Komposition von Substitutionen ist definiert durch
   $
   phi compose psi
@@ -5578,7 +5587,7 @@ Gedanken machen kann.
   akribisch Unifikationsalgorithmus anwenden?
 ]
 
-#test[
+#test(dd: none)[
   Wieso tritt das Szenario, in dem wir z.B. $f(X, 1)$ und $f(1, X)$ unifizieren
   müssten, beim Angeben eines SLD-Baums nicht auf?
 ]
@@ -5602,27 +5611,27 @@ Gedanken machen kann.
   - Skript: Einführung in die Logikprogrammierung, Negation
 ]
 
-#test[
+#test(dd: none)[
   Was verbirgt sich hinter dem Begriff "Negation als Fehlschlag"?
 ]
 
-#test[
+#test(dd: none)[
   Wann ist ```SWI-Prolog \+ p``` beweisbar?
 ]
 
-#test[
+#test(dd: none)[
   Wieso stimmt die Negation als Fehlschlag nicht mit der prädikatenlogischen
   Negation überein?
 ]
 
-#test[
+#test(dd: none)[
   Warum sollte ```SWI-Prolog p``` keine freien Variablen enthalten, wenn wir
   ```SWI-Prolog \+ p``` beweisen wollen? Wieso ergibt sich daraus die
   Empfehlung, dass Negationen soweit wie möglich rechts in einer Regel stehen
   sollten?
 ]
 
-#test[
+#test(dd: none)[
   Wie sind die Variablen ```SWI-Prolog X, Y``` in der folgenden Regel
   quantifiziert?
   ```SWI-Prolog
@@ -5630,7 +5639,7 @@ Gedanken machen kann.
   ```
 ]
 
-#test[
+#test(dd: none)[
   Nutze $forall x : p <=> not (exists x : not p)$, um ein Prädikat
   ```SWI-Prolog forall/2``` zu definieren.
 
@@ -5657,16 +5666,16 @@ Gedanken machen kann.
   - Skript: Einführung in die Logikprogrammierung, Der "Cut"-Operator
 ]
 
-#test[
+#test(dd: none)[
   Wofür verwenden wir den Cut-Operator konzeptionell?
 ]
 
-#test[
+#test(dd: none)[
   Wann ist ```SWI-Prolog p``` in ```SWI-Prolog p :- q, !, r.``` beweisbar?
   Was ist insbesondere der Fall, wenn ```SWI-Prolog q``` beweisbar ist?
 ]
 
-#test[
+#test(dd: none)[
   Was sind die Ausgaben der jeweiligen Prolog-Programme, wenn die Anfrage
   ```SWI-Prolog ?- a(1).``` bewiesen wird.
   #grid(
@@ -5696,21 +5705,21 @@ Gedanken machen kann.
   )
 ]
 
-#test[
+#test(dd: none)[
   Wir ergibt sich aus der Semantik des Cut-Operators ein
   Fallunterscheidung-Konstrukt?
 ]
 
-#test[
+#test(dd: none)[
   Wie können wir mithilfe des Cut-Operators die Negation als Fehlschlag
   implementieren?
 ]
 
-#test[
+#test(dd: none)[
   Wie wirkt sich der Cut-Operator auf die Struktur eines SLD-Baums aus?
 ]
 
-#test[
+#test(dd: none)[
   Wie können wir mithilfe des Cut-Operators im folgenden Prädikat Berechnungen
   sparen?
   ```SWI-Prolog
@@ -5719,7 +5728,7 @@ Gedanken machen kann.
   ```
 ]
 
-#test[
+#test(dd: none)[
   Gegeben sei folgendes Prolog-Programm.
   ```SWI-Prolog
   member(X, [X|_]).
@@ -5752,11 +5761,11 @@ Gedanken machen kann.
     entfällt)
 ]
 
-#test[
+#test(dd: none)[
   Wofür wird das Prädikat ```SWI-Prolog is/2``` verwendet?
 ]
 
-#test[
+#test(dd: none)[
   Welche Anfragen sind valide?
   - ```SWI-Prolog X is 42 - 3```
   - ```SWI-Prolog X is Y + 1```
@@ -5765,17 +5774,17 @@ Gedanken machen kann.
   - ```SWI-Prolog 42 is 40 + Y```
 ]
 
-#test[
+#test(dd: none)[
   Warum können wir ```SWI-Prolog =/2``` nicht für Arithmetik verwenden bzw.
   wieso gilt ```SWI-Prolog 42 = 40 + 2``` nicht?
 ]
 
-#test[
+#test(dd: none)[
   Welche weiteren Prädikate kennst du neben ```SWI-Prolog is/2``` die auch
   Terme ausrechnen?
 ]
 
-#test[
+#test(dd: none)[
   Das Prädikat ```SWI-Prolog is/2``` muss in seinem zweiten Argument hinreichend
   instanziiert sein, damit wir es auswerten können. Als Faustregel kann man sich
   merken, dass Prädikate, die arithmetische Ausdrücke oder aussagenlogische
@@ -5790,11 +5799,11 @@ Gedanken machen kann.
   ]
 ]
 
-#test[
+#test(dd: none)[
   Ist ```SWI-Prolog X =:= 4 + 7.``` eine valide Anfrage in Prolog?
 ]
 
-#test[
+#test(dd: none)[
   Benenne Vor- und Nachteile der Prolog-Arithmetik gegenüber Arithmetik mit
   Peano-Zahlen.
 
@@ -5802,7 +5811,7 @@ Gedanken machen kann.
   ```SWI-Prolog ?- add(X, s(s(o)), s(s(s(s(o))))).```.
 ]
 
-#test[
+#test(dd: none)[
   Implementiere ein Prädikat ```SWI-Prolog count_nodes/2```, dass die Anzahl
   von internen Knoten in einem Binärbaum zählt. Hier ist eine Beispielanwendung
   des Prädikats.
@@ -5815,15 +5824,15 @@ Gedanken machen kann.
   herauskommt?
 ] <count_nodes>
 
-#test[
+#test(dd: none)[
   Wann nennen wir einen Term vollständig instanziiert?
 ]
 
-#test[
+#test(dd: none)[
   Wann nennen wir ein Prädikat relational bzw. multimodal?
 ]
 
-#test[
+#test(dd: none)[
   Du hast Prolog lieben gelernt und liest die Dokumentation von SWI-Prolog
   gerne vor dem Schlafen gehen. Du entdeckst sonderliche Sonderzeichen vor den
   Variablen eines Prädikats und fragst dich, wofür diese stehen. Das sind
@@ -5853,7 +5862,7 @@ Gedanken machen kann.
   ]
 ]
 
-#test[
+#test(dd: none)[
   Gegeben sei das Prädikat
   ```SWI-Prolog
   f(X, Y) :- Y is 2 * X + 1.
@@ -5900,12 +5909,12 @@ Gedanken machen kann.
     Prädikate höherer Ordnung
 ]
 
-#test[
+#test(dd: none)[
   Erkläre, wie das Meta-Prädikat ```SWI-Prolog call``` verwendet wird. Welche
   Stelligkeit hat ```SWI-Prolog call```?
 ]
 
-#test[
+#test(dd: none)[
   Implementiere die Prädikate ```SWI-Prolog map/3```, ```SWI-Prolog filter/3```,
   ```SWI-Prolog foldr/4```, so wie du sie erwarten würdest. Implementiere
   darüber hinaus das Prädikat ```SWI-Prolog all/2```, dass genau dann erfüllt
@@ -5937,7 +5946,7 @@ Gedanken machen kann.
     Kapselung des Nichtdeterminismus
 ]
 
-#test[
+#test(dd: none)[
   Implementiere ein Prädikat ```SWI-Prolog all_trees/2```, das jeden möglichen
   blätterbeschriften Binärbaum erzeugt, deren Blätter von links nach rechts die
   Eingabeliste lesen.
@@ -5986,7 +5995,7 @@ Gedanken machen kann.
 //   ).
 // ```
 
-#test[
+#test(dd: none)[
   Implementiere ein Prädikat ```SWI-Prolog all_btrees/2```, dass alle Binärbäume
   mit einer festen internen Knotenanzahl berechnet.
 
@@ -6011,7 +6020,7 @@ Gedanken machen kann.
 Hier sind ein paar Logik-Puzzles, die zu deiner Belustigung dienen. Der
 Lerneffekt ist voraussichtlich sehr gering.
 
-#challenge[
+#challenge(dd: none)[
   Das #link("https://en.wikipedia.org/wiki/Zebra_Puzzle")[Zebra-Rätsel] ist ein
   Logikpuzzle.
 
@@ -6038,7 +6047,7 @@ Lerneffekt ist voraussichtlich sehr gering.
   Schlüsse, die du selbst in deinem Kopf machst, in deinem Programm.
 ]
 
-#challenge[
+#challenge(dd: none)[
   Ein Logikpuzzle, das einst viral ging, ist bekannt als "Cheryl's Geburtstag".
   Es ist das erste Puzzle aus dem paper
   #link("https://arxiv.org/abs/1708.02654")[Cheryl's Birthday].
