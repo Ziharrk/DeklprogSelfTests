@@ -67,23 +67,31 @@
     numbering: (..args) => args.at(-1)
   )
 
-#let test(dd: none, clock: false, ..args) = thmplain(
+#let test(dd: none, clock: false, breakable: false, ..args) = thmplain(
     "test",
     "Test",
     titlefmt: titlefmt(dd, clock),
     separator: h(0.5em),
   )(
     numbering: (..args) => args.at(-1),
+    stroke: 0.25pt + if dd == none { gray } else { dds.at(str(dd)).lighten(10%) },
+    radius: 1pt,
+    inset: 1em,
+    breakable: breakable,
     ..args
   )
 
-#let challenge(dd: none, clock: false, ..args) = thmplain(
+#let challenge(dd: none, clock: false, breakable: false, ..args) = thmplain(
     "challenge",
     "Challenge",
     titlefmt: titlefmt(dd, clock),
     separator: h(0.5em)
   )(
     numbering: (..args) => args.at(-1),
+    stroke: 0.25pt + if dd == none { gray } else { dds.at(str(dd)).lighten(10%) },
+    radius: 1pt,
+    inset: 1em,
+    breakable: breakable,
     ..args
   )
 
@@ -1465,7 +1473,7 @@ stellt eine PR auf GitHub].
   gelten.
 ]
 
-#test(dd: 2)[
+#test(dd: 2, breakable: true)[
   Gegeben sei folgendes Python-Programm.
   ```py
   from dataclasses import dataclass
@@ -3993,7 +4001,7 @@ nähern uns dennoch der tatsächlichen Implementierung von QuickCheck stark an.
 // quickCheck p = unProperty (property p)
 // ```
 
-#challenge(dd: 3, clock: true)[
+#challenge(dd: 3, clock: true, breakable: true)[
   Bevor du diese Challenge bestreitest, sage @quickcheck_noprng den Kampf an!
 
   Während QuickCheck #link("https://dl.acm.org/doi/10.1145/2660193.2660195")[SplitMix64]
