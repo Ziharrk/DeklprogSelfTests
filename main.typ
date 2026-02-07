@@ -4367,8 +4367,12 @@ nähern uns dennoch der tatsächlichen Implementierung von QuickCheck stark an.
   gemeinsam mit den Anfragen
   - ```SWI-Prolog ?- append(Xs, Ys, [1, 2, 3]).```,
   - ```SWI-Prolog ?- append(Xs, [2, 3], Zs).```,
+  - ```SWI-Prolog ?- append([1], [2, 3], Zs).```,
   - ```SWI-Prolog ?- append([1, 2], Xs, Zs).``` und
   - ```SWI-Prolog ?- append([1, 2], Ys, [1, 2, 3]).```.
+  Beschreibe, was jede dieser Anfragen berechnet. Welche der Anfragen entspricht
+  der Anwendung von ```SWI-Prolog append/3``` als Funktion, so wie wir es bzgl.
+  der Benennung des Prädikats erwarten würden?
 ]
 
 #test[
@@ -4380,9 +4384,9 @@ nähern uns dennoch der tatsächlichen Implementierung von QuickCheck stark an.
   weiteren abstrakten Blick auf die Listenmonade - anstatt z.B. der Blick der
   imperativen Programmierung als Verschachtelung von Schleifen.
 
-  Als kleines Beispiel wollen wir einen fairen Münzenwurf modellieren. Wir
-  kodieren die Ereignisse binär, wobei 0 für Kopf und 1 für Zahl stehen soll.
-  Weiter ist auch ein Beispiel angegeben für zwei unabhängige Münzenwürfe.
+  Als kleines Beispiel betrachten wir einen fairen Münzenwurf. Wir kodieren
+  die Ereignisse binär, wobei 0 für Kopf und 1 für Zahl stehen soll. Weiter ist
+  auch ein Beispiel angegeben für zwei unabhängige Münzenwürfe.
   #grid(
     columns: (1fr, 1fr),
     [
@@ -4413,7 +4417,10 @@ nähern uns dennoch der tatsächlichen Implementierung von QuickCheck stark an.
 
   Bewaffnet mit diesen Ideen, modelliere einen fairen 6-seitigen Würfel.
   Berechne alle Möglichkeiten, wie man drei Würfel werfen kann, um die
-  Augenzahl 11 zu erhalten.
+  Augenzahl 11 zu erhalten. Gebe deine Lösung sowohl in Prolog als auch in
+  Haskell an. Um zu prüfen, ob die Summe von drei Zahlen einer anderen Zahl
+  entspricht, kannst du ```SWI-Prolog sum3(X, Y, Z, S) :- S is X + Y + Z.```
+  nutzen.
 ]
 
 // ```hs
@@ -4461,7 +4468,10 @@ nähern uns dennoch der tatsächlichen Implementierung von QuickCheck stark an.
   - ```SWI-Prolog member/2``` (entspricht ```hs elem``` in Haskell)
   - ```SWI-Prolog dups/2``` soll alle Elemente in einer Liste finden, die
     genau zweimal vorkommen. Du darfst ```SWI-Prolog not_member/2``` als
-    Hilfsfunktion verwenden.
+    Hilfsprädikat verwenden. Es ist definiert durch
+    ```SWI-Prolog not_member(X, L) :- \+ member(X, L).```. Als Zwischenschritt
+    kannst du ```SWI-Prolog dups/2``` so implementieren, dass geprüft wird, ob
+    ein Element mindestens zweimal vorkommt.
   - ```SWI-Prolog sublist/2``` soll erfüllbar sein, wenn eine Liste in einer
     anderen ohne Lücken enthalten ist.
   - ```SWI-Prolog subsequence/2``` soll erfüllbar sein, wenn eine Liste in einer
