@@ -1,17 +1,9 @@
 // TODO gebrochene Boxen haben oben und unten gezogene Grenzen, die sind hässlich
 //      deshalb breakable: false, Ziel ist aber wieder true
 // TODO für ein paar Tests Lösungen angeben?
+#import "prelude.typ": *
 
-#import "@preview/diagraph:0.3.6"
-#import "@preview/cetz:0.4.2"
-#import "@preview/ctheorems:1.1.3": *
-#import "@preview/finite:0.5.0"
-#import "@preview/heroic:0.1.0": *
-
-#let blue = rgb("#648fff")
-#let magenta = rgb("#dc267f")
-
-#set document(
+#show: config.with(
   title: "Verständnisfragen zum Modul Deklarative Programmierung",
   author: ("Melf Kammholz",),
   description: "Verständnisfragen zum Modul Deklarative Programmierung",
@@ -23,120 +15,6 @@
     "Prolog",
     "Verständnisfragen"
   )
-)
-
-#set text(size: 10.5pt, lang: "de")
-
-#show raw: set text(font: "CaskaydiaCove NF")
-#set raw(syntaxes: "syntaxes/prolog.sublime-syntax")
-
-#show link: underline
-#show heading.where(level: 1): set block(below: 1.25em)
-#show math.equation.where(block: false): box
-#show raw.where(block: false): box
-#show: thmrules
-
-#let is-type = type => {
-  val => std.type(val) == dictionary and "type" in val and val.type == type
-}
-
-#let get-metadata = type => {
-  query(metadata)
-    .map(res => res.value)
-    .filter(is-type(type))
-    .map(res => res.value)
-}
-
-#let dds = ("1": blue, "2": orange, "3": magenta)
-#let titlefmt(dd, clock) = {
-  let label = s => strong(smallcaps(s), delta: 200) + if clock { " " + hi("clock", solid: false) } else {}
-  if dd == none {
-    label
-  } else {
-    assert(type(dd) == int and 1 <= dd and dd <= 3)
-    s => box(
-      radius: 1pt,
-      outset: (y: if clock { 2pt } else { 3pt }, x: 4pt),
-      baseline: if clock { 2pt } else { 0% + 0pt },
-      fill: dds.at(str(dd)).lighten(90%),
-      text(fill: dds.at(str(dd)).darken(5%), label(s))
-    )
-  }
-}
-
-#let thmstyle(dd, breakable) = (
-  stroke: 0.25pt + if dd == none { gray } else { dds.at(str(dd)).lighten(35%) },
-  radius: 1pt,
-  inset: 1em,
-  breakable: breakable
-)
-
-#let remark = thmplain(
-    "remark",
-    "Bemerkung",
-    titlefmt: strong,
-    separator: h(0.5em)
-  ).with(
-    numbering: (..args) => args.at(-1)
-  )
-
-#let test(dd: none, clock: false, breakable: false, ..args) = thmplain(
-    "test",
-    "Test",
-    titlefmt: titlefmt(dd, clock),
-    separator: h(0.5em),
-  )(
-    numbering: (..args) => args.at(-1),
-    ..thmstyle(dd, breakable),
-    ..args
-  )
-
-#let challenge(dd: none, clock: false, breakable: false, ..args) = thmplain(
-    "challenge",
-    "Challenge",
-    titlefmt: titlefmt(dd, clock),
-    separator: h(0.5em)
-  )(
-    numbering: (..args) => args.at(-1),
-    ..thmstyle(dd, breakable),
-    ..args
-  )
-
-#let hint(content) = {
-  context {
-    let fig = query(figure.where(kind: "thmenv").before(here())).last()
-    let num = thmcounters.get().counters.at(lower(fig.supplement.text)).last()
-    let value = strong[Hinweis zu #fig.supplement #num] + h(0.5em) + content
-    metadata((type: "hint", value: value))
-  }
-}
-
-#let extra(content) = block(text(0.8em, content))
-
-#let mybox(color, icon, label, content) = {
-  box(
-    width: 100%,
-    fill: color.lighten(97%),
-    stroke: (left: 2pt + color),
-    inset: (top: 0.75em, bottom: 0.75em, left: 1em),
-    radius: 1pt
-  )[
-    #text(fill: color)[
-      #hi(icon, height: 1.2em, solid: false)
-      #h(0.2em)
-      #text(weight: "bold", label)
-    ]
-    #v(-0.5em)
-    #content
-  ]
-}
-
-#let check = mybox.with(purple, "academic-cap", "Selbstevaluation")
-#let refs = mybox.with(magenta, "book-open", "Referenzen")
-
-#set page(
-  paper: "a4",
-  numbering: "1"
 )
 
 #let git(path) = "https://github.com/Ziharrk/DeklprogSelfTests/blob/main/" + path
