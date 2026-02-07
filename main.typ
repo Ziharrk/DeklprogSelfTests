@@ -1,3 +1,6 @@
+// TODO Schwierigkeitsgrad angeben?
+// TODO für ein paar Tests Lösungen angeben?
+
 #import "@preview/diagraph:0.3.6"
 #import "@preview/cetz:0.4.2"
 #import "@preview/ctheorems:1.1.3": *
@@ -5631,6 +5634,36 @@ Gedanken machen kann.
 ]
 
 #test[
+  Was sind die Ausgaben der jeweiligen Prolog-Programme, wenn die Anfrage
+  ```SWI-Prolog ?- a(1).``` bewiesen wird.
+  #grid(
+    columns: (1fr, 1fr),
+    [
+      Programm 1:
+      ```SWI-Prolog
+      a(1) :- writeln(a).
+      a(2) :- writeln(b).
+      a(1) :- writeln(c), !.
+      a(1) :- writeln(d).
+      a(2) :- writeln(e).
+      ```
+    ],
+    [
+      Programm 2:
+      ```SWI-Prolog
+      a(1) :- writeln(a).
+      a(1) :- false, !, writeln(b).
+      a(2) :- writeln(c).
+      a(1) :- !, writeln(d).
+      a(1) :- writeln(e), !.
+      a(1) :- writeln(f).
+      a(2) :- writeln(g).
+      ```
+    ]
+  )
+]
+
+#test[
   Wir ergibt sich aus der Semantik des Cut-Operators ein
   Fallunterscheidung-Konstrukt?
 ]
@@ -5653,10 +5686,28 @@ Gedanken machen kann.
   ```
 ]
 
+#test[
+  Gegeben sei folgendes Prolog-Programm.
+  ```SWI-Prolog
+  member(X, [X|_]).
+  member(X, [_|R]) :- member(X, R).
+
+  member_cut(X, [X|_]) :- !.
+  member_cut(X, [_|R]) :- member_cut(X, R).
+  ```
+  Wie verändert der Cut-Operator das Verhalten in ```SWI-Prolog member_cut/2```
+  von ```SWI-Prolog member/2```?
+]
+
 #check[
   Ich bin in der Lage, ...
-  - den cut-Operator zu nutzen,
-  - die Semantik des cuts in SLD-Bäumen kenntlichen machen.
+  - zu erklären, was der Cut-Operator in Prolog macht und wie er das
+    Backtracking beeinflusst,
+  - die Semantik des Cut-Operators in SLD-Bäumen kenntlich zu machen,
+  - anhand eines Prolog-Programms vorherzusagen, welche Lösungen durch einen Cut
+    verhindert werden, und
+  - den Cut gezielt einzusetzen, um unnötiges Backtracking zu vermeiden, ohne
+    die logische Bedeutung eines Programms zu verändern.
 ]
 
 
