@@ -45,15 +45,15 @@
 }
 
 #let dds = ("1": blue, "2": orange, "3": magenta)
-#let titlefmt(dd) = if dd == none {
-  strong
+#let titlefmt(dd, clock) = if dd == none {
+  strong + if clock { hi("clock", solid: false) } else {}
 } else {
   assert(type(dd) == int and 1 <= dd and dd <= 3)
   s => highlight(
     extent: 3pt,
     radius: 1pt,
     fill: dds.at(str(dd)).lighten(90%),
-    text(fill: dds.at(str(dd)).darken(5%), strong(s)),
+    text(fill: dds.at(str(dd)).darken(5%), strong(s) + if clock { hi("clock", solid: false) } else {})
   )
 }
 
@@ -66,20 +66,20 @@
     numbering: (..args) => args.at(-1)
   )
 
-#let test(dd: none, ..args) = thmplain(
+#let test(dd: none, clock: false, ..args) = thmplain(
     "test",
     "Test",
-    titlefmt: titlefmt(dd),
+    titlefmt: titlefmt(dd, clock),
     separator: h(0.5em),
   )(
     numbering: (..args) => args.at(-1),
     ..args
   )
 
-#let challenge(dd: none, ..args) = thmplain(
+#let challenge(dd: none, clock: false, ..args) = thmplain(
     "challenge",
     "Challenge",
-    titlefmt: titlefmt(dd),
+    titlefmt: titlefmt(dd, clock),
     separator: h(0.5em)
   )(
     numbering: (..args) => args.at(-1),
@@ -151,15 +151,17 @@ Die Nomenklatur des Aufgaben ist aktuell vielleicht noch etwas willkürlich,
 da es Tests gibt, die wie Challenges wirken -- und möglicherweise sogar
 andersherum. Als zusätzliche Hilfestellung ist die Schwierigkeit der Aufgaben
 grob in drei Stufen aufgeteilt, die sich wie folgt auszeichnen sollen.
-- #titlefmt(1)("Stufe 1") #h(0.3em) Aufgaben zur Überprüfung grundlegender
-  Kenntnisse. Die Lösung erfolgt durch direktes Anwenden bekannter Regeln oder
-  Verfahren und erfordert kein vertieftes Nachdenken.
-- #titlefmt(2)("Stufe 2") #h(0.3em) Aufgaben, bei denen grundlegende Kenntnisse
-  angewendet und durch eigene Überlegungen ergänzt werden müssen. Es sind erste
-  Ideen oder einfache Lösungsstrategien notwendig.
-- #titlefmt(3)("Stufe 3") #h(0.3em) Komplexe Aufgaben, die ein vertieftes
+- #titlefmt(1, false)("Stufe 1") #h(0.3em) Aufgaben zur Überprüfung
+  grundlegender Kenntnisse. Die Lösung erfolgt durch direktes Anwenden bekannter
+  Regeln oder Verfahren und erfordert kein vertieftes Nachdenken.
+- #titlefmt(2, false)("Stufe 2") #h(0.3em) Aufgaben, bei denen grundlegende
+  Kenntnisse angewendet und durch eigene Überlegungen ergänzt werden müssen. Es
+  sind erste Ideen oder einfache Lösungsstrategien notwendig.
+- #titlefmt(3, false)("Stufe 3") #h(0.3em) Komplexe Aufgaben, die ein vertieftes
   Verständnis voraussetzen. Die Lösung erfordert mehrere Gedankenschritte, das
   Verknüpfen verschiedener Inhalte sowie eigenständigen Lösungsstrategien.
+Aufgaben, von denen wir erwarten, dass sie euch länger als 10min beschäftigen,
+sind mit #hi("clock", solid: false) markiert.
 
 Für die Selbsttests wird es absehbar keine Lösungen geben. Stattdessen möchten
 wir dich ermutigen deine Lösungen mit anderen Mitstudierenden oder
