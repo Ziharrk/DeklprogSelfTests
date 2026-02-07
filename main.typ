@@ -46,14 +46,15 @@
 
 #let dds = ("1": blue, "2": orange, "3": magenta)
 #let titlefmt(dd, clock) = if dd == none {
-  strong + if clock { hi("clock", solid: false) } else {}
+  s => strong(s) + if clock { " " + hi("clock", solid: false) } else {}
 } else {
   assert(type(dd) == int and 1 <= dd and dd <= 3)
-  s => highlight(
-    extent: 3pt,
+  s => box(
     radius: 1pt,
+    outset: (y: if clock { 2pt } else { 3pt }, x: 4pt),
+    baseline: if clock { 2pt } else { 0% + 0pt },
     fill: dds.at(str(dd)).lighten(90%),
-    text(fill: dds.at(str(dd)).darken(5%), strong(s) + if clock { hi("clock", solid: false) } else {})
+    text(fill: dds.at(str(dd)).darken(5%), strong(s) + if clock { " " + hi("clock", solid: false) } else {})
   )
 }
 
@@ -1615,7 +1616,7 @@ stellt eine PR auf GitHub].
   Gesetze erfüllen, damit sie eine sinnvolle Semantik beschreiben?
 ]
 
-#challenge(dd: none)[
+#challenge(dd: none, clock: true)[
   Gebe folgende abstrakte Datentypen an: Paar, Menge, stack, queue,
   double-ended queue, knotenbeschrifteter Binärbaum, priority queue.
 
@@ -1681,7 +1682,7 @@ stellt eine PR auf GitHub].
   constructors in diesem Zusammenhang?
 ]
 
-#test(dd: 2)[
+#test(dd: 2, clock: true)[
   Kritisiere folgenden ADT für eine queue, so pingelig wie du kannst, und
   bessere ihn.
   ```hs
@@ -1819,7 +1820,7 @@ stellt eine PR auf GitHub].
 // fromInteger (42 :: Integer) :: Num a => a
 // fromRational (3.1415 :: Rational) :: Fractional a => a
 
-#challenge(dd: 2)[
+#challenge(dd: 2, clock: true)[
   In dieser Challenge sollst du automatisches Differenzieren im Rückwärtsmodus
   mithilfe von (Operator-)Überladung implementieren. Dieser Ansatz des
   Differenzierens führt dabei das Differenzieren komplizierter Funktionen auf
@@ -1928,7 +1929,7 @@ verallgemeinern kannst.
   ```hs Eq```-Instanz erfüllen?
 ]
 
-#test(dd: 2)[
+#test(dd: 2, clock: true)[
   Gegeben sei der Typ
   #align(center)[```hs data Tree a b c = Empty | Leaf a | Node (Tree a b c) Int c (Tree a b c)```.]
   Implementiere eine ```hs Eq```-Instanz für diesen Typen. Die Gleichheit soll
@@ -1951,7 +1952,7 @@ verallgemeinern kannst.
   ```hs Ord```-Instanz erfüllen?
 ]
 
-#test(dd: 2)[
+#test(dd: 2, clock: true)[
   Gegeben sei der Typ
   #align(center)[```hs data Tree a b c = Empty | Leaf a | Node (Tree a b c) Int c (Tree a b c)```.]
   Implementiere eine ```hs Ord```-Instanz für diesen Typen. Die Ordnung soll
@@ -1976,7 +1977,7 @@ verallgemeinern kannst.
   Implementiere die Ordnung auch erneut mit ```hs (<=)```.
 ]
 
-#test(dd: 3)[
+#test(dd: 3, clock: true)[
   Die Typklasse ```hs Ord``` ist wie folgt definiert:
   ```hs
   class Eq a => Ord a where
@@ -2007,7 +2008,7 @@ verallgemeinern kannst.
   ]
 ]
 
-#test(dd: 2)[
+#test(dd: 2, clock: true)[
   In nicht streng getypten Programmiersprachen haben wir oft mit impliziter
   Typkonversion zu tun.  Implementiere eine Funktion ```hs ifThenElse```, die
   als Bedingung Werte beliebiger Typen entgegennehmen kann. Ziel ist es, dass
@@ -2026,7 +2027,7 @@ verallgemeinern kannst.
   ]
 ]
 
-#test(dd: 2)[
+#test(dd: 2, clock: true)[
   Eine Halbgruppe ist eine Struktur $(H, ast.op)$, wobei $H$ eine Menge ist und
   $ast.op$ eine assoziative, binäre Verknüpfung $ast.op : H times H -> H$ ist.
   Ein Monoid erweitert die Halbgruppe um ein neutrales Element bzgl. $ast.op$.
@@ -2119,7 +2120,7 @@ verallgemeinern kannst.
   ```
 ]
 
-#test(dd: 2)[
+#test(dd: 2, clock: true)[
   Eine zyklische einfach-verkettete Liste können wir in Python z.B. so
   definieren.
   ```py
@@ -2146,7 +2147,7 @@ verallgemeinern kannst.
   ]
 ]
 
-#challenge(dd: 2)[
+#challenge(dd: 2, clock: true)[
   Gegeben sei der Datentyp
   #align(center)[```hs data Tree a = Empty | Node (Tree a) a (Tree a)```.]
 
@@ -2209,7 +2210,7 @@ verallgemeinern kannst.
 // primes = 2 : map (\x -> 2 * x + 1) ([1..] `diff` preorder tree)
 // ```
 
-#test(dd: 2)[
+#test(dd: 2, clock: true)[
   Gegeben sei der Datentyp
   #align(center)[```hs data Doubly a = Null | Node (Doubly a) a (Doubly a)```.]
   - Implementiere eine Funktion ```hs fromList :: [a] -> Doubly a```, die
@@ -2409,7 +2410,7 @@ verallgemeinern kannst.
     von einer der beiden Funktionen.)
 ]
 
-#challenge(dd: 1)[
+#challenge(dd: 1, clock: true)[
   Fixpunktverfahren sind iterative Methoden, bei denen eine Funktion wiederholt
   auf einen Wert angewendet wird, bis sich ein stabiler Punkt (ein sogenannter
   Fixpunkt) ergibt, der sich durch weitere Anwendungen nicht mehr verändert.
@@ -2543,7 +2544,7 @@ verallgemeinern kannst.
 //                                 ]
 // ```
 
-#challenge(dd: 2)[
+#challenge(dd: 2, clock: true)[
   Bevor du dich dieser Challenge stellst, bietet es sich an, sich @editdist
   anzunehmen, da in dieser der technische Teil der Lösungsidee vorgestellt
   wird.
@@ -2772,7 +2773,7 @@ verallgemeinern kannst.
   In jeder Zeile einer Datei steht eine nicht-negative Zahl.
 ]
 
-#test(dd: 2)[
+#test(dd: 2, clock: true)[
   Implementiere folgendes Rate-Spiel als IO-Programm. Es soll eine Zahl erraten
   werden.
   - Du bekommst ein Orakel vom Typ ```hs a -> Ordering```, das
@@ -2868,7 +2869,7 @@ verallgemeinern kannst.
   ```hs Either e```, ```hs []``` und ```hs ((->) r)``` definiert?
 ]
 
-#test(dd: 2)[
+#test(dd: 2, clock: true)[
   Die ```hs Applicative```-Typkonstruktorklasse erlaubt es uns, ```hs fmap```
   auf Funktionen mit mehreren Argumenten zu verallgemeinern. Dadurch können wir
   #align(center)[
@@ -2956,6 +2957,16 @@ verallgemeinern kannst.
 // -- oder: safeDiv x y = pure (div x) <*> (guard (y /= 0) *> pure y)
 // ```
 
+#test(dd: 2)[
+  Das Sequenzieren von Berechnung haben wir bereits in einfacheren Form als
+  Funktionskomposition kennengelernt. Wenn wir die Fortsetzung einer Berechnung
+  im Kontext von Monaden betrachten, dann stellen wir, dass sich zwei Funktionen
+  des Typs ```hs Monad m => a -> m b``` nicht im Sinne des
+  ```hs (>>=)```-Operators hintereinanderausführen lassen.
+
+  Finde ein geeignetes Beispiel das zeigt, dass dieses Szenario illustriert.
+]
+
 #test(dd: 1)[
   Monaden bieten uns die Möglichkeit, Berechnungen als Folge von kleineren
   Berechnungen zu sequenzieren. Je nachdem welche Monade wir betrachten,
@@ -3006,7 +3017,7 @@ verallgemeinern kannst.
   Weiterführung mit ```hs k``` und dem Ergebnis ```hs r``` stattfindet?
 ] <reader_monad>
 
-#test(dd: 3)[
+#test(dd: 3, clock: true)[
   Das Pendant zur ```hs Reader```-Monade aus @reader_monad ist die
   ```hs Writer```-Monade. Eine Spezialisierung der Monade soll hier die
   ```hs ListWriter```-Monade sein. Diese Monade kann genutzt werden, um
@@ -3045,7 +3056,7 @@ verallgemeinern kannst.
   ```
 ]
 
-#test(dd: 2)[
+#test(dd: 2, clock: true)[
   Das Verwenden von monadischen Funktionen kommt einem zum Anfang möglicherweise
   als erbitterter Kampf gegen das Typsystem vor. Diese Situationen ergeben sich
   bereits aus den scheinbar einfachsten Absichten. Oft fehlt dann die Erfahrung,
@@ -3096,7 +3107,7 @@ verallgemeinern kannst.
     - ```hs join (Left (Right True))```?
 ]
 
-#challenge(dd: 2)[
+#challenge(dd: 2, clock: true)[
   Gegeben sei der Datentyp
   #align(center)[
     ```hs newtype ZipList a = ZipList { getZipList :: [a] }```.
@@ -3218,7 +3229,7 @@ verallgemeinern kannst.
 // -- = pure ($ y) <*> ZipList fs
 // ```
 
-#test(dd: 3)[
+#test(dd: 3, clock: true)[
   ```hs guard :: MonadZero m => Bool -> m ()``` kann genutzt werden, um eine
   Berechnung bedingt fehlschlagen zu lassen.
   Zum Beispiel können wir mithilfe von ```hs guard``` eine sichere Division
@@ -3284,7 +3295,7 @@ verallgemeinern kannst.
   sich wie ```hs (>>)``` für applikative Funktoren verhält.
 ]
 
-#test(dd: 3)[
+#test(dd: 3, clock: true)[
   Als motivierendes Beispiel für Monaden hast du die Auswertung eines
   arithmetischen Ausdrucks, gegeben als Termstruktur, kennengelernt. Dort haben
   wir die ```hs Maybe```-Monade verwendet, um fehlschlagende Berechnung
@@ -3431,7 +3442,7 @@ verallgemeinern kannst.
     mithilfe der Listenmonade.
 ]
 
-#test(dd: 2)[
+#test(dd: 2, clock: true)[
   Die ```hs do```-Notation erlaubt es uns, statements der Form ```hs p <- e```
   zu schreiben, wobei ```hs p``` ein beliebiges Muster sein kann. Zum Beispiel
   ist folgender Ausdruck valide und berechnenbar.
@@ -3517,7 +3528,7 @@ verallgemeinern kannst.
   stattfinden muss.)
 ]
 
-#test(dd: 2)[
+#test(dd: 2, clock: true)[
   Gegeben sei der Datentyp ```hs Tree a = Leaf a | Tree a :+: Tree a```.
   - Implementiere eine Funktion ```hs splits :: [a] -> [([a], [a])]```, die
     alle nicht-leeren Aufteilungen der Eingabeliste berechnet.
@@ -3569,7 +3580,7 @@ verallgemeinern kannst.
 //   where fold = foldDeep fdeep
 // ```
 
-#test(dd: 3)[
+#test(dd: 3, clock: true)[
   Oft kommt es vor, dass Berechnungen zustandabhängig verschiedene Ergebnisse
   liefern. Zum Beispiel merken wir uns in einer Tiefensuche durch einen
   Graph, welche Knoten bereits besucht wurden, damit die Tiefensuche sich nicht
@@ -3673,7 +3684,7 @@ verallgemeinern kannst.
   ]
 ] <sequence_state>
 
-#challenge(dd: 2)[
+#challenge(dd: 2, clock: true)[
   Im Folgenden modellieren wir einen Graph als Paar $(V, E)$ mit
   einer Knoten- und Kantenbewertung $w_v : V -> A$ und $w_e : E -> B$,
   und $E subset.eq V times V$.
@@ -3905,7 +3916,7 @@ Die folgenden zwei Challenges steigen tiefer in die Funktionsweise von
 QuickCheck ein. Dabei werden zwar weiter viele Vereinfachungen gemacht, wir
 nähern uns dennoch der tatsächlichen Implementierung von QuickCheck stark an.
 
-#challenge(dd: 3)[
+#challenge(dd: 3, clock: true)[
   Eigenschaften lassen sich mit QuickCheck z.B. mithilfe der Funktion
   ```hs quickCheck``` prüfen.
 
@@ -3982,7 +3993,7 @@ nähern uns dennoch der tatsächlichen Implementierung von QuickCheck stark an.
 // quickCheck p = unProperty (property p)
 // ```
 
-#challenge(dd: 3)[
+#challenge(dd: 3, clock: true)[
   Bevor du diese Challenge bestreitest, sage @quickcheck_noprng den Kampf an!
 
   Während QuickCheck #link("https://dl.acm.org/doi/10.1145/2660193.2660195")[SplitMix64]
@@ -4207,7 +4218,7 @@ Diese Aufgaben haben noch keinen Platz gefunden.
 //     return Array(self.size, data)
 // ```
 
-#challenge(dd: 3)[
+#challenge(dd: 3, clock: true)[
   Du hörst parallel zu diesem Modul "Berechnung und Logik" und möchtest
   die Automaten-Konstruktionen für reguläre Sprachen in Haskell implementieren?
   Dann schaue nicht weiter. Du hast die korrekte Challenge gefunden. Dieser Weg
@@ -4584,7 +4595,7 @@ Diese Aufgaben haben noch keinen Platz gefunden.
     Peano-Zahlen, also die $<$-Relation und Gleichheit auf Peano-Zahlen.
 ]
 
-#test(dd: 2)[
+#test(dd: 2, clock: true)[
   Das Sieb des Eratosthenes ist ein Algorithmus zur Bestimmung von Primzahlen.
   Dieses wollen wir nun in Prolog implementieren -- mit Peano-Zahlen natürlich.
   - Implementiere zuerst ein Prädikat ```SWI-Prolog range/3```, das eine Liste
@@ -4610,7 +4621,7 @@ Diese Aufgaben haben noch keinen Platz gefunden.
   terminiert die Anfrage ```SWI-Prolog ?- to_nat(P, 3).``` nicht?
 ] <to_nat>
 
-#test(dd: 2)[
+#test(dd: 2, clock: true)[
   Ein Graph sei dargestellt als eine Liste von Kanten. Die Kanten seien
   wiederum als Tupel dargestellt.
 
@@ -4730,7 +4741,7 @@ Diese Aufgaben haben noch keinen Platz gefunden.
   ```
 ]
 
-#test(dd: 3)[
+#test(dd: 3, clock: true)[
   Für die nächste Ausgabe des Mittelerde-Kuriers benötigst du noch ein
   Titelbild für den Artikel "Die Gefährten ziehen zum Schicksalsberg". Dafür
   möchtest du die Gefährten der Größe nach aufstellen. Merry und Pippin sind
@@ -4901,7 +4912,7 @@ Diese Aufgaben haben noch keinen Platz gefunden.
 // sat(F, A) :- get_vars(F, Vs), assignment(Vs, A), eval(F, A, true).
 // ```
 
-#test(dd: 2)[
+#test(dd: 2, clock: true)[
   In diesem Test ergänzen wir den SAT-Löser aus @sat_solver um die Implikation
   und Äquivalenz. Anstatt das ```SWI-Prolog eval```-Prädikat entsprechend zu
   erweitern, wollen wir diese Terme in andere Terme übersetzen, die wir bereits
@@ -4922,7 +4933,7 @@ Diese Aufgaben haben noch keinen Platz gefunden.
 // desugar(iff(A, B), C) :- desugar(and(impl(A, B), impl(B, A)), C).
 // ```
 
-#test(dd: 2)[
+#test(dd: 2, clock: true)[
   Wir machen uns auf in die Kombinatorik und wollen ein paar nützliche Prädikate
   definieren, die uns helfen Suchräume zu durchlaufen.
   - Implementiere ein Prädikat ```SWI-Prolog varia_rep/3```, das genau dann
@@ -5948,7 +5959,7 @@ Gedanken machen kann.
     Kapselung des Nichtdeterminismus
 ]
 
-#test(dd: 2)[
+#test(dd: 2, clock: true)[
   Implementiere ein Prädikat ```SWI-Prolog all_trees/2```, das jeden möglichen
   blätterbeschriften Binärbaum erzeugt, deren Blätter von links nach rechts die
   Eingabeliste lesen.
