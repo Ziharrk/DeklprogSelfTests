@@ -169,12 +169,12 @@ Checkliste zur Selbstevaluation angehängt. Wenn du auf einer geeigneten
 Bewertungsskala (z.B. Schulnoten) für dich feststellst, dass du weiterhin
 Schwierigkeiten hast, melde dich gerne, damit wir dir helfen können.
 
-Die Inhalte dieses Dokuments sind nicht vollständig und nicht fehlerfrei -- und
-hat auch nicht den Anspruch, es zu sein. Es kann sein, dass Modulinhalte nicht
-durch Selbsttests, Referenzen oder Selbstevaluationen abdeckt werden und es nie
-werden -- insbesondere fehlen derzeitig noch viele Lernziele in den
-Selbstevaluationen. Betrachte dieses Dokument immer als "work in progress" und
-ziehe auch immer andere Quellen zum Lernen heran.
+Die Inhalte dieses Dokuments sind nicht vollständig und nicht fehlerfrei. Wir
+machen Fehler! Es kann sein, dass Modulinhalte nicht durch Selbsttests,
+Referenzen oder Selbstevaluationen abdeckt werden und es nie werden --
+insbesondere fehlen derzeitig noch viele Lernziele in den Selbstevaluationen.
+Betrachte dieses Dokument immer als "work in progress" und ziehe auch immer
+andere Quellen zum Lernen heran.
 
 Wenn du Anmerkungen oder weitere Ideen oder Quellen für Inhalte für dieses
 Dokument hast, dann schreibe uns gerne über z.B. mattermost an -- oder
