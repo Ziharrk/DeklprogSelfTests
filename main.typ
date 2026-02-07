@@ -4317,39 +4317,39 @@ Diese Aufgaben haben noch keinen Platz gefunden.
   - Skript: Einführung in die Logikprogrammierung, Syntax von Prolog
 ]
 
-#test(dd: none)[
+#test(dd: 1)[
   Wie unterscheiden sich Variablen in Haskell und Prolog?
 ]
 
-#test(dd: none)[
+#test(dd: 1)[
   Was ist das Berechnungsprinzip von Prolog bzw. wie leitet Prolog aus
   gegebenen Informationen neue Erkenntnisse ab?
 ]
 
-#test(dd: none)[
+#test(dd: 1)[
   Formuliere folgende Aussage als Prolog-Programm:
   Seien $A$ und $B$. Dann gilt $C$, wenn $A$ und $B$ gelten.
 ]
 
-#test(dd: none)[
+#test(dd: 1)[
   Wie können wir Funktionen, wie wir sie aus Haskell kennen, in Prolog umsetzen?
   Erkläre es mithilfe eines Beispiels (wie z.B.
   ```hs (++) :: [a] -> [a] -> [a]```).
 ]
 
-#test(dd: none)[
+#test(dd: 1)[
   $n$-stellige Funktionen können wir in Prolog als $(n+1)$-stellige Relation
   umsetzen. Dabei nimmt die letzte Position der Relation die Rolle des
   Ergebnisses ein. Gehen wir mit Funktionen vom Typ
   ```hs a1 -> ... an -> Bool``` besonders um?
 ]
 
-#test(dd: none)[
+#test(dd: 1)[
   Wie hängen die Syntax von Prolog und die der Aussagenlogik zusammen? Welche
   Symbole entsprechen sich?
 ]
 
-#test(dd: none)[
+#test(dd: 1)[
   In Prolog können wir Termstrukturen erzeugen. Der Haskell-Typ
   #align(center)[```hs data Maybe a = Nothing | Just a```]
   kann z.B. wie folgt in Prolog umgesetzt werden.
@@ -4361,7 +4361,7 @@ Diese Aufgaben haben noch keinen Platz gefunden.
   #align(center)[```hs data Tree a = Empty | Node (Tree a) a (Tree a)```.]
 ]
 
-#test(dd: none)[
+#test(dd: 1)[
   Wie viele Ergebnisse liefern die folgenden Anfragen?
   - ```SWI-Prolog ?- append(_, [X|_], [1, 2, 3, 4]).```
   - ```SWI-Prolog ?- append(_, [_,X|_], [1, 2, 3, 4]).```
@@ -4369,17 +4369,17 @@ Diese Aufgaben haben noch keinen Platz gefunden.
   - ```SWI-Prolog ?- append(_, [X|Ys], [1, 2, 3, 4]), append(_, [Y|_], Ys).```
 ]
 
-#test(dd: none)[
+#test(dd: 1)[
   Wie stehen die Begriffe Fakt, Regel, Klausel, Prädikat und Relation in
   Beziehung?
 ]
 
-#test(dd: none)[
+#test(dd: 1)[
   Gebe Beispiele für Formeln an, die zeigen, dass Prolog nur eine echte
   Teilmenge der Prädikatenlogik erster Stufe umsetzt.
 ]
 
-#test(dd: none)[
+#test(dd: 1)[
   Ordne die Begriffe Atom, Fakt, Regel und Variable dem folgenden
   Prolog-Programm zu?
   ```SWI-Prolog
@@ -4397,7 +4397,7 @@ Diese Aufgaben haben noch keinen Platz gefunden.
   ```
 ] <major_chord>
 
-#test(dd: none)[
+#test(dd: 2)[
   In @major_chord sind die Halbtonschritte als Fakten definiert. Um diese
   etwas kompakter zu schreiben, können wir ```SWI-Prolog append/3``` verwenden.
   Implementiere ```SWI-Prolog semitone/2``` mithilfe von ```SWI-Prolog append/3```.
@@ -4408,7 +4408,7 @@ Diese Aufgaben haben noch keinen Platz gefunden.
 //   append(_, [X, Y|_], [c, cs, d, ds, e, f, fs, g, gs, a, as, b, c]).
 // ```
 
-#test(dd: none)[
+#test(dd: 2)[
   Warum ergibt es Sinn, beim Prolog-Programmieren in Relationen statt
   Funktionen zu denken? Betrachte z.B. das Prädikat ```SWI-Prolog append/3```
   gemeinsam mit den Anfragen
@@ -4422,7 +4422,7 @@ Diese Aufgaben haben noch keinen Platz gefunden.
   der Benennung des Prädikats erwarten würden?
 ]
 
-#test(dd: none)[
+#test(dd: 1)[
   Wenn wir Haskell um die Möglichkeit erweitern könnten, mehrere Regeln
   auszuprobieren und mehrere Lösungen zu kombinieren, hätten wir trotz der
   Abwesenheit logischer Variablen bereits viele Möglichkeiten der Modellierung,
@@ -4493,7 +4493,7 @@ Diese Aufgaben haben noch keinen Platz gefunden.
 //     else []
 // ```
 
-#test(dd: none)[
+#test(dd: 1)[
   Implementiere das Prädikat ```SWI-Prolog zip/3```, dass zwei Liste bekommt
   und eine Liste von Paaren zurückliefert -- so wie du es aus Haskell kennst.
   Es soll
@@ -4504,7 +4504,7 @@ Diese Aufgaben haben noch keinen Platz gefunden.
   Länge eingeschränkt ist.
 ]
 
-#test(dd: none)[
+#test(dd: 2, clock: true)[
   Mithilfe von ```SWI-Prolog append/3``` lassen sehr viele andere Prädikate
   auf Listen definieren. Überlege dir, wie du folgende Prädikate unter dessen
   Nutzung implementieren kannst. Die Prädikate sollen sich wie deren
@@ -4540,7 +4540,7 @@ Diese Aufgaben haben noch keinen Platz gefunden.
 //   not_member(X, Ys4).
 // ```
 
-#test(dd: none)[
+#test(dd: 1)[
   Das Prädikat ```SWI-Prolog sublist/2``` soll genau dann erfüllbar sein, wenn
   eine gegebene Liste in einer anderen gegebenen Liste enthalten ist. Eine
   mögliche Implementierung sieht wie folgt aus:
@@ -4554,13 +4554,13 @@ Diese Aufgaben haben noch keinen Platz gefunden.
   Was sind die Ergebnisse der Anfrage ```SWI-Prolog ?- sublist(Xs, [1, 2]).```?
 ]
 
-#test(dd: none)[
+#test(dd: 2)[
   Warum ist ```SWI-Prolog not_member(X, Xs) :- append(_, [Y|_], Xs), X \= Y.```
   keine korrekte Implementierung des Prädikates, das testet, ob ein Element
   nicht einer Liste enthalten ist?
 ] <not_member>
 
-#test(dd: none)[
+#test(dd: 2)[
   In diesem Selbsttest wollen wir die Peano-Arithmetik wiederholen.
   Implementiere folgende Prädikate:
   - ```SWI-Prolog peano/1``` soll beweisbar sein, wenn der übergebene Term
@@ -4584,7 +4584,7 @@ Diese Aufgaben haben noch keinen Platz gefunden.
     Peano-Zahlen, also die $<$-Relation und Gleichheit auf Peano-Zahlen.
 ]
 
-#test(dd: none)[
+#test(dd: 2)[
   Das Sieb des Eratosthenes ist ein Algorithmus zur Bestimmung von Primzahlen.
   Dieses wollen wir nun in Prolog implementieren -- mit Peano-Zahlen natürlich.
   - Implementiere zuerst ein Prädikat ```SWI-Prolog range/3```, das eine Liste
@@ -4604,13 +4604,13 @@ Diese Aufgaben haben noch keinen Platz gefunden.
 
 ]
 
-#test(dd: none)[
+#test(dd: 1)[
   Implementiere ein Prädikat ```SWI-Prolog to_nat/2```, das eine Peano-Zahl in
   eine natürliche Zahl konvertiert. Nutze dafür ```SWI-Prolog is/2```. Wieso
   terminiert die Anfrage ```SWI-Prolog ?- to_nat(P, 3).``` nicht?
 ] <to_nat>
 
-#test(dd: none)[
+#test(dd: 2)[
   Ein Graph sei dargestellt als eine Liste von Kanten. Die Kanten seien
   wiederum als Tupel dargestellt.
 
@@ -4681,18 +4681,18 @@ Diese Aufgaben haben noch keinen Platz gefunden.
 //   reachable(Z, Y, G, [X|V]).
 // ```
 
-#test(dd: none)[
+#test(dd: 1)[
   Wie unterscheiden sich die Gleichheit ```SWI-Prolog ==/2``` in Prolog
   und die Gleichheit in Haskell?
 ]
 
-#test(dd: none)[
+#test(dd: 1)[
   Welche Konzepte, die Haskell verwendet, stecken hinter den Anfragen
   - ```SWI-Prolog ?- just((X, Y)) = just((1, 2))``` und
   - ```SWI-Prolog ?- to(X, to(X, list(X))) = to(int, to(int, list(int)))```?
 ]
 
-#test(dd: none)[
+#test(dd: 2)[
   Eine Dur-Tonleiter hat folgendes Muster relativ zum vorherigen Ton in
   Halbtonschritten:
   #align(center)[+2, +2, +1, +2, +2, +2, +1]
@@ -4721,7 +4721,7 @@ Diese Aufgaben haben noch keinen Platz gefunden.
 // all_major(R, Cs, [_|S]) :- all_major(R, Cs, S).
 // ```
 
-#test(dd: none)[
+#test(dd: 1)[
   Entwickle ein Prädikat ```SWI-Prolog nth/3```, dass das $n$-te Element
   einer Liste zurückgibt. Zum Beispiel soll folgende Anfrage beweisbar sein.
   ```SWI-Prolog
@@ -4730,7 +4730,7 @@ Diese Aufgaben haben noch keinen Platz gefunden.
   ```
 ]
 
-#test(dd: none)[
+#test(dd: 3)[
   Für die nächste Ausgabe des Mittelerde-Kuriers benötigst du noch ein
   Titelbild für den Artikel "Die Gefährten ziehen zum Schicksalsberg". Dafür
   möchtest du die Gefährten der Größe nach aufstellen. Merry und Pippin sind
@@ -4798,16 +4798,16 @@ Diese Aufgaben haben noch keinen Platz gefunden.
   - Skript: Logische Programmierung, Elementare Programmiertechniken
 ]
 
-#test(dd: none)[
+#test(dd: 1)[
   Aus welchen Teilen besteht das generate-and-test Schema?
 ]
 
-#test(dd: none)[
+#test(dd: 1)[
   Wie hängen musterorientierte Prädikate und induktiv definierte Funktionen
   miteinander zusammen?
 ]
 
-#challenge(dd: none)[
+#challenge(dd: 1, clock: true)[
   Das Erfüllbarkeitsproblem der Aussagenlogik fragt, ob es für eine gegebene
   aussagenlogische Formel eine Belegung der Variablen mit wahr oder falsch
   gibt, sodass die Formel insgesamt wahr ist.
@@ -4901,7 +4901,7 @@ Diese Aufgaben haben noch keinen Platz gefunden.
 // sat(F, A) :- get_vars(F, Vs), assignment(Vs, A), eval(F, A, true).
 // ```
 
-#test(dd: none)[
+#test(dd: 2)[
   In diesem Test ergänzen wir den SAT-Löser aus @sat_solver um die Implikation
   und Äquivalenz. Anstatt das ```SWI-Prolog eval```-Prädikat entsprechend zu
   erweitern, wollen wir diese Terme in andere Terme übersetzen, die wir bereits
@@ -4922,7 +4922,7 @@ Diese Aufgaben haben noch keinen Platz gefunden.
 // desugar(iff(A, B), C) :- desugar(and(impl(A, B), impl(B, A)), C).
 // ```
 
-#test(dd: none)[
+#test(dd: 2)[
   Wir machen uns auf in die Kombinatorik und wollen ein paar nützliche Prädikate
   definieren, die uns helfen Suchräume zu durchlaufen.
   - Implementiere ein Prädikat ```SWI-Prolog varia_rep/3```, das genau dann
@@ -4933,7 +4933,7 @@ Diese Aufgaben haben noch keinen Platz gefunden.
     beweisbar ist, wenn zwei übergebene Listen Permutationen voneinander sind.
 ] <combinatorics>
 
-#challenge(dd: none)[
+#challenge(dd: 2, clock: true)[
   Oft eignet sich Prolog gut, um Algorithmen für Entscheidungsprobleme, die in
   NP liegen, zu implementieren. Als Methode dafür hast du generate-and-test
   kennengelernt -- wir generieren mögliche (also korrekte oder falsche)
@@ -5062,28 +5062,28 @@ Diese Aufgaben haben noch keinen Platz gefunden.
 Im Folgenden stehen Großbuchstaben für Variablen und Kleinbuchstaben für
 atomare Ausdrücke -- wenn nicht anders in Test oder Challenge eingeführt.
 
-#test(dd: none)[
+#test(dd: 1)[
   Was besagt die Abtrennungsregel (modus ponens)?
 ]
 
-#test(dd: none)[
+#test(dd: 1)[
   Was ist das (einfache) Resolutionsprinzip?
 ]
 
-#test(dd: none)[
+#test(dd: 1)[
   Wann ist eine Anfrage mithilfe des Resolutionsprinzips beweisbar?
 ]
 
-#test(dd: none)[
+#test(dd: 1)[
   Mithilfe welcher Methode stellen wir fest, ob ein Literal zu einer linken
   Regelseite passt?
 ]
 
-#test(dd: none)[
+#test(dd: 1)[
   Wie sind Terme definiert?
 ]
 
-#test(dd: none)[
+#test(dd: 1)[
   Welche der folgenden Terme sind syntaktisch korrekt?
   - $X$
   - $a$
@@ -5093,21 +5093,21 @@ atomare Ausdrücke -- wenn nicht anders in Test oder Challenge eingeführt.
   - $g(f(X)(Y))$
 ]
 
-#test(dd: none)[
+#test(dd: 1)[
   Mithilfe welcher Methode ersetzen wir Variablen in Termen?
 ]
 
-#test(dd: none)[
+#test(dd: 1)[
   Wie ist die Substitution auf Termen definiert? Was wird insbesondere durch
   eine Substitution verändert und was nicht?
 ]
 
-#test(dd: none)[
+#test(dd: 1)[
   Falls du @sat_solver gemeistert hast -- an welcher Stelle deines Programms
   führst du eine Substitution durch?
 ]
 
-#test(dd: none)[
+#test(dd: 1)[
   Sei $sigma = { X |-> 1, Y |-> 2 }$ eine Substitution. Welche Anwendungen
   oder Aussagen sind korrekt?
   - $sigma("add"(X, Y)) = "add"(1, 2)$
@@ -5115,7 +5115,7 @@ atomare Ausdrücke -- wenn nicht anders in Test oder Challenge eingeführt.
   - $sigma(f(g(X, Y), Z))$ ist nicht definiert.
 ]
 
-#test(dd: none)[
+#test(dd: 1)[
   Welche der folgenden Substitutionen sind wohldefiniert?
   - $sigma = { X |-> 1 }$
   - $sigma = { X |-> X }$
@@ -5124,27 +5124,27 @@ atomare Ausdrücke -- wenn nicht anders in Test oder Challenge eingeführt.
   - $sigma = { [X|Y] |-> [1|[]] }$
 ]
 
-#test(dd: none)[
+#test(dd: 1)[
   Sind $[X]$ und $[1, 2]$ unifizierbar?
 ]
 
-#test(dd: none)[
+#test(dd: 1)[
   Wende die Substitution $sigma = { X |-> 1, Y |-> f(X) }$ auf den Term
   $g(X, h(Y))$ an, ohne einen Zwischenschritt auszulassen.
 ]
 
-#test(dd: none)[
+#test(dd: 1)[
   Was ist ein Unifikator? Was ist ein allgemeinster Unifikator?
 ]
 
-#test(dd: none)[
+#test(dd: 1)[
   Was sind die Ergebnisse der folgenden Kompositionen von Substitutionen?
   - ${ Y |-> X } compose { Z |-> 1 }$
   - ${ Y |-> X } compose { Z |-> Y }$
   - ${ Z |-> Y } compose { Y |-> X }$
 ]
 
-#test(dd: none)[
+#test(dd: 1)[
   Beim Durchführen des Unifikationsalgorithmus treten in zwei verschiedenen
   Iterationen $i, j$ mit $i < j$ die Substitutionen
   $ sigma_i = { X |-> f(Y) } "und" sigma_j = { X |-> a } $
@@ -5152,30 +5152,30 @@ atomare Ausdrücke -- wenn nicht anders in Test oder Challenge eingeführt.
   Dabei kann angenommen werden, dass $X$ nicht in $Y$ vorkommt.
 ]
 
-#test(dd: none)[
+#test(dd: 1)[
   Warum gilt ${ Y |-> X } compose { Z |-> Y } = { Z |-> Y } compose { Y |-> X }$
   nicht?
 ]
 
-#test(dd: none)[
+#test(dd: 1)[
   Warum ist ${ Y |-> X } compose { Y |-> 2 } = { Y |-> 2 }$?
 ]
 
-#test(dd: none)[
+#test(dd: 1)[
   Warum ist die Komposition von Substitutionen im Allgemeinen nicht die
   Vereinigung der jeweiligen Mengendarstellungen?
 ]
 
-#test(dd: none)[
+#test(dd: 1)[
   Wann existiert ein allgemeinster Unifikator?
 ]
 
-#test(dd: none)[
+#test(dd: 1)[
   Was ist die Unstimmigkeitsmenge zweier Terme, was gibt sie an und wie ist sie
   definiert?
 ]
 
-#test(dd: none)[
+#test(dd: 1)[
   Welche Unstimmigkeitsmengen sind korrekt berechnet?
   - $"ds"(f(X), f(1)) = {X, 1}$
   - $"ds"(1, 2) = {1, 2}$
@@ -5184,7 +5184,7 @@ atomare Ausdrücke -- wenn nicht anders in Test oder Challenge eingeführt.
   - $"ds"(f(X, Y), f(1, 2)) = {Y, 2}$
 ]
 
-#test(dd: none)[
+#test(dd: 1)[
   Finde die allgemeinsten Unifikatoren für die folgende Terme:
   - $(X + 1) dot Y + Z$ und $((3 + Z) + 1) dot Z + 3$,
   - $f(X, Y)$ und $f([Y|R], 1)$,
@@ -5246,36 +5246,36 @@ atomare Ausdrücke -- wenn nicht anders in Test oder Challenge eingeführt.
     )
 ] <det_mgus>
 
-#test(dd: none)[
+#test(dd: 1)[
   Unter welchen Umständen terminiert der Unifikationsalgorithmus?
 ]
 
-#test(dd: none)[
+#test(dd: 1)[
   Aus welcher Eigenschaft des Unifikationsalgorithmus folgt, dass ein
   berechneter Unifikator ein allgemeinster Unifikator ist?
 ]
 
-#test(dd: none)[
+#test(dd: 1)[
   Seien $t_1, t_2$ Terme. Wenn $"ds"(sigma(t_1), sigma(t_2)) = emptyset$ gilt,
   was können wir über $sigma$ folgern?
 ]
 
-#test(dd: none)[
+#test(dd: 1)[
   Welche Arten von Fehlschlägen können während des Unifikationsalgorithmus
   auftreten? Unter welchen Umständen treten diese auf?
 ]
 
-#test(dd: none)[
+#test(dd: 1)[
   In welches Problem laufen wir, wenn wir mit einer Substitution, die sich
   aus $"ds"(t_1, t_2) = {X, f(X)}$ ergibt, naiv weiter rechnen würden, wobei
   $t_1$ und $t_2$ Terme sind?
 ]
 
-#test(dd: none)[
+#test(dd: 1)[
   Was bedeutet es, wenn der Vorkommenstest (occurs check) positiv ist?
 ]
 
-#test(dd: none)[
+#test(dd: 1)[
   Gebe ein Beispiel für eine Eingabe an, für das der Unifikationsalgorithmus
   exponentielle Laufzeit bzgl. der Größe der Eingabeterme hat.
 
@@ -5286,32 +5286,32 @@ atomare Ausdrücke -- wenn nicht anders in Test oder Challenge eingeführt.
     $t_1, ..., t_n$ und $n$-stelligen Funktor $f$.
 ]
 
-#test(dd: none)[
+#test(dd: 1)[
   Wieso kommt der Fall der exponentiellen Laufzeit in der Größe der Eingabeterme
   überhaupt zustande?
 ]
 
-#test(dd: none)[
+#test(dd: 1)[
   Aus welchen Komponenten setzt sich das allgemeine Resolutionsprinzip zusammen?
   Wie wird es auch genannt?
 ]
 
-#test(dd: none)[
+#test(dd: 1)[
   Was legt die Selektionsfunktion der SLD-Resolution fest? Welche verwendet Prolog?
 ]
 
-#test(dd: none)[
+#test(dd: 1)[
   Gegeben sei die Anfrage $"?-" A_1, ..., A_m$. Du stellst fest, dass $A_1$
   mit der linken Seite der Regel $L ":-" L_1, ..., L_n$ unifizierbar ist. Welche
   Anfrage ist in einem SLD-Resolutionsschritt daraus ableitbar.
 ]
 
-#test(dd: none)[
+#test(dd: 2)[
   Wieso benennen wir Variablen einer Regel um, bevor wir eine Unifikation als
   Teil eines SLD-Resolutionsschritt durchführen?
 ]
 
-#test(dd: none)[
+#test(dd: 1)[
   Wodurch ergibt sich die Struktur eines SLD-Baums?
 ]
 
@@ -5386,32 +5386,32 @@ Seite gefunden haben.
   })
 ]
 
-#test(dd: none)[
+#test(dd: 1)[
   Welche Auswertungsstrategie findet immer eine Lösung, falls eine existiert?
 ]
 
-#test(dd: none)[
+#test(dd: 1)[
   Warum wird die Tiefensuche als Auswertungsstrategie der Breitensuche bevorzugt?
 ]
 
-#test(dd: none)[
+#test(dd: 1)[
   Wie ergibt sich die Reihenfolge der Kindknoten eines Knoten in einem SLD-Baum?
 ]
 
-#test(dd: none)[
+#test(dd: 1)[
   Welche Rolle spielt Backtracking in Prolog?
 ]
 
-#test(dd: none)[
+#test(dd: 1)[
   Wie werden Variablen in Prolog gebunden?
 ]
 
-#test(dd: none)[
+#test(dd: 1)[
   Wieso wird empfohlen, dass Klauseln für Spezialfälle vor allgemeineren
   Klauseln stehen sollten?
 ]
 
-#test(dd: none)[
+#test(dd: 2)[
   Gegeben sei das Prolog-Programm.
   ```SWI-Prolog
   fruit(apple).
@@ -5424,7 +5424,7 @@ Seite gefunden haben.
   die Belegungen für ```SWI-Prolog F2``` und ```SWI-Prolog F3``` zuerst?
 ]
 
-#test(dd: none)[
+#test(dd: 2)[
   Gegeben sei das Prolog-Programm:
   ```SWI-Prolog
   nth(0, [X|_], X).
@@ -5445,13 +5445,13 @@ Seite gefunden haben.
   Was ist hier schief gelaufen?
 ]
 
-#test(dd: none)[
+#test(dd: 1)[
   Begründe warum die folgende Aussage korrekt oder falsch ist:
   Beim Berechnen der Unstimmigkeitsmenge kann folgendes Ergebnis herauskommen:
   $ { g(X, Y), g(Y, X) }. $
 ]
 
-#test(dd: none)[
+#test(dd: 1)[
   Gegeben sei folgendes Prolog-Programm.
   ```SWI-Prolog
   append([],    L, L     ).
@@ -5466,7 +5466,7 @@ Seite gefunden haben.
   Unifikationsalgorithmus entstanden ist?
 ]
 
-#test(dd: none)[
+#test(dd: 1)[
   Gegeben sei folgendes Prolog-Programm.
   ```SWI-Prolog
   f(X, 2).
@@ -5566,7 +5566,7 @@ Gedanken machen kann.
   eines Algorithmus und nicht darum, dass ihr logisch schließen könnt, dass
   manche Belegungen irrelevant sind.
 
-#test(dd: none)[
+#test(dd: 1)[
   Welche der folgenden Listen entsprechen syntaktisch korrekten Listen in
   Prolog. Darüber hinaus, welche der Listen entsprechen der Liste $(1, 2, 3)$.
   - ```SWI-Prolog [1, 2, 3]```
@@ -5578,7 +5578,7 @@ Gedanken machen kann.
   - ```SWI-Prolog [1|[2|[3|[]]]]```
 ]
 
-#test(dd: none)[
+#test(dd: 2)[
   Die Komposition von Substitutionen ist definiert durch
   $
   phi compose psi
@@ -5589,7 +5589,7 @@ Gedanken machen kann.
   akribisch Unifikationsalgorithmus anwenden?
 ]
 
-#test(dd: none)[
+#test(dd: 2)[
   Wieso tritt das Szenario, in dem wir z.B. $f(X, 1)$ und $f(1, X)$ unifizieren
   müssten, beim Angeben eines SLD-Baums nicht auf?
 ]
@@ -5613,27 +5613,27 @@ Gedanken machen kann.
   - Skript: Einführung in die Logikprogrammierung, Negation
 ]
 
-#test(dd: none)[
+#test(dd: 1)[
   Was verbirgt sich hinter dem Begriff "Negation als Fehlschlag"?
 ]
 
-#test(dd: none)[
+#test(dd: 1)[
   Wann ist ```SWI-Prolog \+ p``` beweisbar?
 ]
 
-#test(dd: none)[
+#test(dd: 2)[
   Wieso stimmt die Negation als Fehlschlag nicht mit der prädikatenlogischen
   Negation überein?
 ]
 
-#test(dd: none)[
+#test(dd: 1)[
   Warum sollte ```SWI-Prolog p``` keine freien Variablen enthalten, wenn wir
   ```SWI-Prolog \+ p``` beweisen wollen? Wieso ergibt sich daraus die
   Empfehlung, dass Negationen soweit wie möglich rechts in einer Regel stehen
   sollten?
 ]
 
-#test(dd: none)[
+#test(dd: 1)[
   Wie sind die Variablen ```SWI-Prolog X, Y``` in der folgenden Regel
   quantifiziert?
   ```SWI-Prolog
@@ -5641,7 +5641,7 @@ Gedanken machen kann.
   ```
 ]
 
-#test(dd: none)[
+#test(dd: 1)[
   Nutze $forall x : p <=> not (exists x : not p)$, um ein Prädikat
   ```SWI-Prolog forall/2``` zu definieren.
 
@@ -5662,22 +5662,22 @@ Gedanken machen kann.
 ]
 
 
-== Der "Cut"-Operator
+== Der Cut-Operator
 
 #refs[
   - Skript: Einführung in die Logikprogrammierung, Der "Cut"-Operator
 ]
 
-#test(dd: none)[
+#test(dd: 1)[
   Wofür verwenden wir den Cut-Operator konzeptionell?
 ]
 
-#test(dd: none)[
+#test(dd: 1)[
   Wann ist ```SWI-Prolog p``` in ```SWI-Prolog p :- q, !, r.``` beweisbar?
   Was ist insbesondere der Fall, wenn ```SWI-Prolog q``` beweisbar ist?
 ]
 
-#test(dd: none)[
+#test(dd: 1)[
   Was sind die Ausgaben der jeweiligen Prolog-Programme, wenn die Anfrage
   ```SWI-Prolog ?- a(1).``` bewiesen wird.
   #grid(
@@ -5707,21 +5707,21 @@ Gedanken machen kann.
   )
 ]
 
-#test(dd: none)[
+#test(dd: 1)[
   Wir ergibt sich aus der Semantik des Cut-Operators ein
   Fallunterscheidung-Konstrukt?
 ]
 
-#test(dd: none)[
+#test(dd: 2)[
   Wie können wir mithilfe des Cut-Operators die Negation als Fehlschlag
   implementieren?
 ]
 
-#test(dd: none)[
+#test(dd: 1)[
   Wie wirkt sich der Cut-Operator auf die Struktur eines SLD-Baums aus?
 ]
 
-#test(dd: none)[
+#test(dd: 1)[
   Wie können wir mithilfe des Cut-Operators im folgenden Prädikat Berechnungen
   sparen?
   ```SWI-Prolog
@@ -5730,7 +5730,7 @@ Gedanken machen kann.
   ```
 ]
 
-#test(dd: none)[
+#test(dd: 1)[
   Gegeben sei folgendes Prolog-Programm.
   ```SWI-Prolog
   member(X, [X|_]).
@@ -5763,11 +5763,11 @@ Gedanken machen kann.
     entfällt)
 ]
 
-#test(dd: none)[
+#test(dd: 1)[
   Wofür wird das Prädikat ```SWI-Prolog is/2``` verwendet?
 ]
 
-#test(dd: none)[
+#test(dd: 1)[
   Welche Anfragen sind valide?
   - ```SWI-Prolog X is 42 - 3```
   - ```SWI-Prolog X is Y + 1```
@@ -5776,17 +5776,17 @@ Gedanken machen kann.
   - ```SWI-Prolog 42 is 40 + Y```
 ]
 
-#test(dd: none)[
+#test(dd: 1)[
   Warum können wir ```SWI-Prolog =/2``` nicht für Arithmetik verwenden bzw.
   wieso gilt ```SWI-Prolog 42 = 40 + 2``` nicht?
 ]
 
-#test(dd: none)[
+#test(dd: 2)[
   Welche weiteren Prädikate kennst du neben ```SWI-Prolog is/2``` die auch
   Terme ausrechnen?
 ]
 
-#test(dd: none)[
+#test(dd: 2)[
   Das Prädikat ```SWI-Prolog is/2``` muss in seinem zweiten Argument hinreichend
   instanziiert sein, damit wir es auswerten können. Als Faustregel kann man sich
   merken, dass Prädikate, die arithmetische Ausdrücke oder aussagenlogische
@@ -5801,11 +5801,11 @@ Gedanken machen kann.
   ]
 ]
 
-#test(dd: none)[
+#test(dd: 1)[
   Ist ```SWI-Prolog X =:= 4 + 7.``` eine valide Anfrage in Prolog?
 ]
 
-#test(dd: none)[
+#test(dd: 2)[
   Benenne Vor- und Nachteile der Prolog-Arithmetik gegenüber Arithmetik mit
   Peano-Zahlen.
 
@@ -5813,7 +5813,7 @@ Gedanken machen kann.
   ```SWI-Prolog ?- add(X, s(s(o)), s(s(s(s(o))))).```.
 ]
 
-#test(dd: none)[
+#test(dd: 1)[
   Implementiere ein Prädikat ```SWI-Prolog count_nodes/2```, dass die Anzahl
   von internen Knoten in einem Binärbaum zählt. Hier ist eine Beispielanwendung
   des Prädikats.
@@ -5826,15 +5826,15 @@ Gedanken machen kann.
   herauskommt?
 ] <count_nodes>
 
-#test(dd: none)[
+#test(dd: 1)[
   Wann nennen wir einen Term vollständig instanziiert?
 ]
 
-#test(dd: none)[
-  Wann nennen wir ein Prädikat relational bzw. multimodal?
+#test(dd: 1)[
+  Wann nennen wir ein Prädikat relational, multimodal bzw. multidirektional?
 ]
 
-#test(dd: none)[
+#test(dd: 1)[
   Du hast Prolog lieben gelernt und liest die Dokumentation von SWI-Prolog
   gerne vor dem Schlafen gehen. Du entdeckst sonderliche Sonderzeichen vor den
   Variablen eines Prädikats und fragst dich, wofür diese stehen. Das sind
@@ -5864,7 +5864,7 @@ Gedanken machen kann.
   ]
 ]
 
-#test(dd: none)[
+#test(dd: 2, clock: true)[
   Gegeben sei das Prädikat
   ```SWI-Prolog
   f(X, Y) :- Y is 2 * X + 1.
@@ -5911,12 +5911,12 @@ Gedanken machen kann.
     Prädikate höherer Ordnung
 ]
 
-#test(dd: none)[
+#test(dd: 1)[
   Erkläre, wie das Meta-Prädikat ```SWI-Prolog call``` verwendet wird. Welche
   Stelligkeit hat ```SWI-Prolog call```?
 ]
 
-#test(dd: none)[
+#test(dd: 2)[
   Implementiere die Prädikate ```SWI-Prolog map/3```, ```SWI-Prolog filter/3```,
   ```SWI-Prolog foldr/4```, so wie du sie erwarten würdest. Implementiere
   darüber hinaus das Prädikat ```SWI-Prolog all/2```, dass genau dann erfüllt
@@ -5948,7 +5948,7 @@ Gedanken machen kann.
     Kapselung des Nichtdeterminismus
 ]
 
-#test(dd: none)[
+#test(dd: 2)[
   Implementiere ein Prädikat ```SWI-Prolog all_trees/2```, das jeden möglichen
   blätterbeschriften Binärbaum erzeugt, deren Blätter von links nach rechts die
   Eingabeliste lesen.
@@ -5997,7 +5997,7 @@ Gedanken machen kann.
 //   ).
 // ```
 
-#test(dd: none)[
+#test(dd: 2)[
   Implementiere ein Prädikat ```SWI-Prolog all_btrees/2```, dass alle Binärbäume
   mit einer festen internen Knotenanzahl berechnet.
 
@@ -6022,7 +6022,7 @@ Gedanken machen kann.
 Hier sind ein paar Logik-Puzzles, die zu deiner Belustigung dienen. Der
 Lerneffekt ist voraussichtlich sehr gering.
 
-#challenge(dd: none)[
+#challenge(dd: 3, clock: true)[
   Das #link("https://en.wikipedia.org/wiki/Zebra_Puzzle")[Zebra-Rätsel] ist ein
   Logikpuzzle.
 
@@ -6049,7 +6049,7 @@ Lerneffekt ist voraussichtlich sehr gering.
   Schlüsse, die du selbst in deinem Kopf machst, in deinem Programm.
 ]
 
-#challenge(dd: none)[
+#challenge(dd: 3, clock: true)[
   Ein Logikpuzzle, das einst viral ging, ist bekannt als "Cheryl's Geburtstag".
   Es ist das erste Puzzle aus dem paper
   #link("https://arxiv.org/abs/1708.02654")[Cheryl's Birthday].
@@ -6105,7 +6105,6 @@ Lerneffekt ist voraussichtlich sehr gering.
 //   bernard_statement(Day),
 //   albert_statement2(Month).
 // ```
-
 
 #pagebreak(weak: true)
 
