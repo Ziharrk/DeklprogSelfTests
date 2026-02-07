@@ -7,6 +7,9 @@
 #import "@preview/finite:0.5.0"
 #import "@preview/heroic:0.1.0": *
 
+#let blue = rgb("#648fff")
+#let magenta = rgb("#dc267f")
+
 #set document(
   title: "Verständnisfragen zum Modul Deklarative Programmierung",
   author: ("Melf Kammholz",),
@@ -42,6 +45,18 @@
     .map(res => res.value)
 }
 
+#let dds = ("1": blue, "2": orange, "3": magenta)
+#let titlefmt(dd) = if dd == none {
+  strong
+} else {
+  s => highlight(
+    extent: 3pt,
+    radius: 1pt,
+    fill: magenta.lighten(90%),
+    text(fill: magenta.darken(5%), strong(s)),
+  )
+}
+
 #let remark = thmplain(
     "remark",
     "Bemerkung",
@@ -51,22 +66,24 @@
     numbering: (..args) => args.at(-1)
   )
 
-#let test = thmplain(
+#let test(dd: none, ..args) = thmplain(
     "test",
     "Test",
-    titlefmt: strong,
-    separator: h(0.5em)
-  ).with(
-    numbering: (..args) => args.at(-1)
+    titlefmt: titlefmt(dd),
+    separator: h(0.5em),
+  )(
+    numbering: (..args) => args.at(-1),
+    ..args
   )
 
-#let challenge = thmplain(
+#let challenge(dd: none, ..args) = thmplain(
     "challenge",
     "Challenge",
-    titlefmt: strong,
+    titlefmt: titlefmt(dd),
     separator: h(0.5em)
-  ).with(
-    numbering: (..args) => args.at(-1)
+  )(
+    numbering: (..args) => args.at(-1),
+    ..args
   )
 
 #let hint(content) = {
@@ -98,7 +115,7 @@
 }
 
 #let check = mybox.with(purple, "academic-cap", "Selbstevaluation")
-#let refs = mybox.with(rgb("#dc267f"), "book-open", "Referenzen")
+#let refs = mybox.with(magenta, "book-open", "Referenzen")
 
 #set page(
   paper: "a4",
