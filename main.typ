@@ -1,4 +1,3 @@
-// TODO Schwierigkeitsgrad angeben?
 // TODO für ein paar Tests Lösungen angeben?
 
 #import "@preview/diagraph:0.3.6"
@@ -49,11 +48,12 @@
 #let titlefmt(dd) = if dd == none {
   strong
 } else {
+  assert(type(dd) == int and 1 <= dd and dd <= 3)
   s => highlight(
     extent: 3pt,
     radius: 1pt,
-    fill: magenta.lighten(90%),
-    text(fill: magenta.darken(5%), strong(s)),
+    fill: dds.at(str(dd)).lighten(90%),
+    text(fill: dds.at(str(dd)).darken(5%), strong(s)),
   )
 }
 
@@ -103,6 +103,7 @@
     fill: color.lighten(97%),
     stroke: (left: 2pt + color),
     inset: (top: 0.75em, bottom: 0.75em, left: 1em),
+    radius: 1pt
   )[
     #text(fill: color)[
       #hi(icon, height: 1.2em, solid: false)
@@ -148,7 +149,17 @@ Lösen der Aufgabe wichtig sind. Wenn die zusätzlichen Konzepte, dir zu sehr
 Schwierigkeiten bereiten, überspringe die entsprechende Frage oder Aufgabe.
 Die Nomenklatur des Aufgaben ist aktuell vielleicht noch etwas willkürlich,
 da es Tests gibt, die wie Challenges wirken -- und möglicherweise sogar
-andersherum.
+andersherum. Als zusätzliche Hilfestellung ist die Schwierigkeit der Aufgaben
+grob in drei Stufen aufgeteilt, die sich wie folgt auszeichnen sollen.
+- #titlefmt(1)("Stufe 1") #h(0.3em) Aufgaben zur Überprüfung grundlegender
+  Kenntnisse. Die Lösung erfolgt durch direktes Anwenden bekannter Regeln oder
+  Verfahren und erfordert kein vertieftes Nachdenken.
+- #titlefmt(2)("Stufe 2") #h(0.3em) Aufgaben, bei denen grundlegende Kenntnisse
+  angewendet und durch eigene Überlegungen ergänzt werden müssen. Es sind erste
+  Ideen oder einfache Lösungsstrategien notwendig.
+- #titlefmt(3)("Stufe 3") #h(0.3em) Komplexe Aufgaben, die ein vertieftes
+  Verständnis voraussetzen. Die Lösung erfordert mehrere Gedankenschritte, das
+  Verknüpfen verschiedener Inhalte sowie eigenständigen Lösungsstrategien.
 
 Für die Selbsttests wird es absehbar keine Lösungen geben. Stattdessen möchten
 wir dich ermutigen deine Lösungen mit anderen Mitstudierenden oder
@@ -158,19 +169,24 @@ Checkliste zur Selbstevaluation angehängt. Wenn du auf einer geeigneten
 Bewertungsskala (z.B. Schulnoten) für dich feststellst, dass du weiterhin
 Schwierigkeiten hast, melde dich gerne, damit wir dir helfen können.
 
-Die Inhalte dieses Dokuments sind nicht vollständig und nicht fehlerfrei. Es
-kann sein, dass Modulinhalte nicht durch Selbsttests, Referenzen oder
-Selbstevaluationen abdeckt werden und es nie werden -- insbesondere fehlen
-derzeitig noch viele Lernziele in den Selbstevaluationen. Betrachte dieses
-Dokument immer als "work in progress" und ziehe auch immer andere Quellen zum
-Lernen heran.
+Die Inhalte dieses Dokuments sind nicht vollständig und nicht fehlerfrei -- und
+hat auch nicht den Anspruch, es zu sein. Es kann sein, dass Modulinhalte nicht
+durch Selbsttests, Referenzen oder Selbstevaluationen abdeckt werden und es nie
+werden -- insbesondere fehlen derzeitig noch viele Lernziele in den
+Selbstevaluationen. Betrachte dieses Dokument immer als "work in progress" und
+ziehe auch immer andere Quellen zum Lernen heran.
 
 Wenn du Anmerkungen oder weitere Ideen oder Quellen für Inhalte für dieses
 Dokument hast, dann schreibe uns gerne über z.B. mattermost an -- oder
 #link("https://github.com/Ziharrk/DeklprogSelfTests/")[erstellt ein issue oder
 stellt eine PR auf GitHub].
 
+#pagebreak(weak: true)
+
+
 #outline()
+
+#pagebreak(weak: true)
 
 
 = Funktionale Programmierung
