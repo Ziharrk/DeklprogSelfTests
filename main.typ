@@ -1,3 +1,5 @@
+// TODO gebrochene Boxen haben oben und unten gezogene Grenzen, die sind hässlich
+//      deshalb breakable: false, Ziel ist aber wieder true
 // TODO für ein paar Tests Lösungen angeben?
 
 #import "@preview/diagraph:0.3.6"
@@ -45,18 +47,28 @@
 }
 
 #let dds = ("1": blue, "2": orange, "3": magenta)
-#let titlefmt(dd, clock) = if dd == none {
-  s => strong(s) + if clock { " " + hi("clock", solid: false) } else {}
-} else {
-  assert(type(dd) == int and 1 <= dd and dd <= 3)
-  s => box(
-    radius: 1pt,
-    outset: (y: if clock { 2pt } else { 3pt }, x: 4pt),
-    baseline: if clock { 2pt } else { 0% + 0pt },
-    fill: dds.at(str(dd)).lighten(90%),
-    text(fill: dds.at(str(dd)).darken(5%), strong(s) + if clock { " " + hi("clock", solid: false) } else {})
-  )
+#let titlefmt(dd, clock) = {
+  let label = s => strong(smallcaps(s), delta: 200) + if clock { " " + hi("clock", solid: false) } else {}
+  if dd == none {
+    label
+  } else {
+    assert(type(dd) == int and 1 <= dd and dd <= 3)
+    s => box(
+      radius: 1pt,
+      outset: (y: if clock { 2pt } else { 3pt }, x: 4pt),
+      baseline: if clock { 2pt } else { 0% + 0pt },
+      fill: dds.at(str(dd)).lighten(90%),
+      text(fill: dds.at(str(dd)).darken(5%), label(s))
+    )
+  }
 }
+
+#let thmstyle(dd, breakable) = (
+  stroke: 0.25pt + if dd == none { gray } else { dds.at(str(dd)).lighten(35%) },
+  radius: 1pt,
+  inset: 1em,
+  breakable: breakable
+)
 
 #let remark = thmplain(
     "remark",
@@ -74,10 +86,7 @@
     separator: h(0.5em),
   )(
     numbering: (..args) => args.at(-1),
-    stroke: 0.25pt + if dd == none { gray } else { dds.at(str(dd)).lighten(10%) },
-    radius: 1pt,
-    inset: 1em,
-    breakable: breakable,
+    ..thmstyle(dd, breakable),
     ..args
   )
 
@@ -88,10 +97,7 @@
     separator: h(0.5em)
   )(
     numbering: (..args) => args.at(-1),
-    stroke: 0.25pt + if dd == none { gray } else { dds.at(str(dd)).lighten(10%) },
-    radius: 1pt,
-    inset: 1em,
-    breakable: breakable,
+    ..thmstyle(dd, breakable),
     ..args
   )
 
