@@ -67,7 +67,8 @@
     "2": orange,
     "3": magenta
   )
-  if type(k) == int { m.at(str(k), default: gray) } else { gray }
+  let d = gray.darken(10%)
+  if type(k) == int { m.at(str(k), default: d) } else { d }
 }
 
 #let titlefmt(level, clock) = {
