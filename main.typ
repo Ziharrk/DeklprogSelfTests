@@ -106,6 +106,10 @@ stellt eine PR auf GitHub].
 #test(dd: 1)[
   Was bedeutet es, wenn eine Funktion keine Seiteneffekte hat? Warum ist die
   Abwesenheit von Seiteneffekten wünschenwert, sofern es möglich ist?
+
+  #extra[
+    #link("https://xkcd.com/1312/")[xkbd: Haskell]
+  ]
 ]
 
 #test(dd: 1)[
@@ -461,6 +465,7 @@ stellt eine PR auf GitHub].
            x3 = x2 :*: x
         in x3 :+: x2 :+: x :+: Num 1.0  -- x^3 + x^2 + x + 1
   ```
+  - Gebe die Funktion $1/(1+e^(-x))$ als Wert des Typs ```hs Fun``` an.
   - Implementiere eine Funktion ```hs ($$) :: Fun -> Double -> Double```, die
     eine gegebene Funktion in einem gegebenen Punkt auswertet.
   - Implementiere eine Funktion ```hs derive :: Fun -> Fun```, die eine
