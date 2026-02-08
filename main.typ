@@ -192,9 +192,8 @@ stellt eine PR auf GitHub].
 
 #test(dd: 1)[
   Das Potenzieren einer Zahl $x$ (oder eines Elements einer Halbgruppe) mit
-  einem natürlich-zahligen Exponent $n$ ist in $cal(O)(log n)$ Laufzeit möglich,
-  sofern wir die Laufzeit für die Verknüpfung vernachlässigen können. Dafür
-  betrachten wir
+  einem natürlich-zahligen Exponenten $n$ ist mit $cal(O)(log n)$
+  Multiplikationen möglich. Dafür betrachten wir
   $
   x^n = cases((x^(n/2))^2 & "falls" n "gerade,", x dot x(x^((n-1)/2))^2 & "sonst.")
   $
