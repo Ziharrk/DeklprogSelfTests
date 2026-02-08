@@ -4961,7 +4961,10 @@ Diese Aufgaben haben noch keinen Platz gefunden.
 
 #check[
   Ich bin in der Lage, ...
-  - ...
+  - einen Suchraum zu generieren,
+  - den gleichen Suchraum zu durchsuchen,
+  - und währenddessen (große) Teile des Suchraums, die keine Lösung enthalten
+    können, kategorisch auszuschließen.
 ]
 
 
