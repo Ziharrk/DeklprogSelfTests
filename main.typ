@@ -41,9 +41,9 @@ Größere Aufgaben haben wir als Challenges markiert. Diese Aufgaben benötigen
 öfter mehrere Konzepte und führen zusätzlich Konzepte ein, die nur für das
 Lösen der Aufgabe wichtig sind. Wenn die zusätzlichen Konzepte, dir zu sehr
 Schwierigkeiten bereiten, überspringe die entsprechende Frage oder Aufgabe.
-Die Nomenklatur des Aufgaben ist aktuell vielleicht noch etwas willkürlich,
+Die Nomenklatur der Aufgaben ist aktuell vielleicht noch etwas willkürlich,
 da es Tests gibt, die wie Challenges wirken -- und möglicherweise sogar
-andersherum. Als zusätzliche Hilfestellung ist die Schwierigkeit der Aufgaben
+andersherum. Als zusätzliche Hilfestellung ist die Schwierigkeit jeder Aufgabe
 grob in drei Stufen aufgeteilt, die sich wie folgt auszeichnen sollen.
 - #titlefmt(1, false)("Stufe 1") #h(0.3em) Aufgaben zur Überprüfung
   grundlegender Kenntnisse. Die Lösung erfolgt durch direktes Anwenden bekannter
@@ -58,7 +58,7 @@ Tests, von denen wir erwarten, dass sie euch länger als 10min beschäftigen,
 sind mit #hi("clock", solid: false) markiert, Challenges bei 30min.
 
 Für die Selbsttests wird es absehbar keine Lösungen geben. Stattdessen möchten
-wir dich ermutigen deine Lösungen mit anderen Mitstudierenden oder
+wir dich ermutigen, deine Lösungen mit anderen Mitstudierenden oder
 Mitarbeitenden zu diskutieren, solltest du offene Fragen haben -- oder du
 promptest verantwortungsvoll das LLM deiner Wahl. An jeden Abschnitt ist eine
 Checkliste zur Selbstevaluation angehängt. Wenn du auf einer geeigneten
@@ -154,8 +154,8 @@ stellt eine PR auf GitHub].
     ```
   ]
   In Haskell sind Variablen keine Namen für Speicherzellen. Wie können wir
-  dieses Programm in Haskell umsetzen? Wo wandert das `k` hin, oder allgemein
-  wo wandert der Zustand hin?
+  dieses Programm in Haskell umsetzen? Wo wandert das `k` hin oder wo wandert
+  im Allgemeinen der Zustand hin?
 ] <clz_popcnt>
 
 #test(dd: 1)[
@@ -342,7 +342,7 @@ stellt eine PR auf GitHub].
 ]
 
 #test(dd: 1)[
-  Beim Programmieren in Haskell vernachlässigen redundante Syntax.
+  Beim Programmieren in Haskell vernachlässigen wir redundante Syntax.
   Gibt es in Haskell einen Unterschied zwischen ```hs f 1 2``` und
   ```hs f(1, 2)```.
 ]
@@ -367,7 +367,7 @@ stellt eine PR auf GitHub].
 ]
 
 #test(dd: 1)[
-  Was ist der Unterschied zwischen einem Typ, einen Datenkonstrukor und einem
+  Was ist der Unterschied zwischen einem Typ, einem Datenkonstrukor und einem
   Typkonstruktor?
 ]
 
@@ -387,8 +387,8 @@ stellt eine PR auf GitHub].
     euklidschen Algorithmus berechnet werden. Implementiere das Verfahren.
     $
     "gcd"(x, y) = cases(
-      abs(x) & quad "falls" y = 0,
-      gcd(y, x "mod" y) & quad "sonst"
+      abs(x) & quad "falls" y = 0\,,
+      gcd(y, x "mod" y) & quad "sonst."
     )
     $
   - Alternativ kann der ggT auch berechnet werden, indem wir das Produkt des
@@ -465,7 +465,8 @@ stellt eine PR auf GitHub].
            x3 = x2 :*: x
         in x3 :+: x2 :+: x :+: Num 1.0  -- x^3 + x^2 + x + 1
   ```
-  - Gebe die Funktion $1/(1+e^(-x))$ als Wert des Typs ```hs Fun``` an.
+  - Gebe die Funktion $sigma(x) = 1/(1+e^(-x))$ als Wert des Typs ```hs Fun```
+    an.
   - Implementiere eine Funktion ```hs ($$) :: Fun -> Double -> Double```, die
     eine gegebene Funktion in einem gegebenen Punkt auswertet.
   - Implementiere eine Funktion ```hs derive :: Fun -> Fun```, die eine
@@ -513,7 +514,7 @@ stellt eine PR auf GitHub].
 // ```
 
 #challenge(dd: 1)[
-  In Einführung in die Algorithmik hast du verschiedene Varianten des
+  In Franks Einführung in die Algorithmik hast du verschiedene Varianten des
   `mergesort`-Algorithmus kennengelernt. Eine davon hat ausgenutzt, dass in
   einer Eingabeliste bereits nicht-absteigend sortierte Teillisten vorkommen
   können, um den Algorithmus zu beschleunigen. Implementiere diese Variante in
@@ -667,7 +668,7 @@ stellt eine PR auf GitHub].
 
   #extra[
     Da Datenkonstruktoren in Haskell nicht überladen werden können, können hier
-    leider nicht ```hs Left``` und ```hs Right``` verwendet werden, solange
+    wir leider nicht ```hs Left``` und ```hs Right``` verwendet werden, solange
     die Datenkonstruktoren des ```hs Either```-Typs im scope sind.
   ]
 ]
@@ -728,8 +729,8 @@ stellt eine PR auf GitHub].
   werden. Die Idee ist es, eine (linke) Liste vorzuhalten, die eine
   (amortisiert) konstante ```hs dequeue```-Operationen erlaubt, und eine andere
   (rechte), die eine konstante ```hs enqueue```-Operationen erlaubt. Das heißt,
-  die fast alle dieser Operationen benötigen konstante Laufzeit und konstant
-  wenige können lineare Laufzeit haben.
+  fast alle dieser Operationen benötigen konstante Laufzeit und konstant wenige
+  können lineare Laufzeit haben.
 
   Implementiere die Funktionen
   - ```hs empty :: Queue a```, die eine leere Queue erzeugt,
@@ -984,16 +985,14 @@ stellt eine PR auf GitHub].
 ]
 
 #test(dd: 1)[
-  Die Funktionen ```hs map :: (a -> b) -> [a] -> [b]``` und
-  ```hs filter :: (a -> Bool) -> [a] -> [a]``` lassen sich alle mithilfe von
-  ```hs foldr :: (a -> r -> r) -> r -> [a] -> r``` ausdrücken. Wie lauten
-  diese Definitionen?
+  Gebe ```hs map``` und ```hs filter``` unter der Unterverwendung von
+  ```hs foldr``` an.
 ]
 
 #test(dd: 1)[
   Gegeben seien folgende Funktionen:
   - ```hs rgbToHsv :: RGB -> HSV```, die eine Farbe von einer Darstellung
-    in einen anderen konvertiert, und
+    in eine andere konvertiert, und
   - ```hs hue :: HSV -> Float```, die den Farbwert einer Farbe im Wertebereich
     $[0°, 360°)$ im HSV-Farbraum zurückgibt.
   Du bekommst als Eingabe einen Bild, das hier als Liste von ```hs RGB```-Werten
@@ -1124,7 +1123,7 @@ stellt eine PR auf GitHub].
   - Implementiere das Prädikat ```hs isSorted``` mithilfe von ```hs zipWith```.
 ]
 
-#test(dd: 3)[
+#test(dd: 3, clock: true)[
   Das Pendant zum Falten #strike[ist das Bügeln] mit ```hs foldr``` ist
   ```hs unfoldr``` (aus ```hs Data.List```). Anstatt eine Liste von Werten zu
   falten, können wir mit ```hs unfoldr``` aus einem Wert eine Liste erzeugen.
