@@ -159,7 +159,7 @@
     width: 100%,
     fill: color.lighten(97%),
     stroke: (left: 1pt + color),
-    inset: (top: 0.75em, bottom: 0.75em, left: 1em),
+    inset: (y: 0.75em, x: 1em),
     radius: 1pt,
   )[
     #thm-stroke-state.update(_ => 0.75pt + color)
