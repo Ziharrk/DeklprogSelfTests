@@ -158,10 +158,11 @@
   box(
     width: 100%,
     fill: color.lighten(97%),
-    stroke: (left: 2pt + color),
+    stroke: (left: 1pt + color),
     inset: (top: 0.75em, bottom: 0.75em, left: 1em),
     radius: 1pt,
   )[
+    #thm-stroke-state.update(_ => 0.75pt + color)
     #text(fill: color)[
       #hi(icon, height: 1.2em, solid: false)
       #h(0.2em)
