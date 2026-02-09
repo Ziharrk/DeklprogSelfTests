@@ -62,6 +62,21 @@
     .map(res => res.value)
 }
 
+
+#let tag(fill: blue, content) = {
+  box(
+    inset: (x: 0.8em),
+    box(
+      fill: fill.lighten(90%),
+      outset: (x: 0.6em - 0.25pt, y: 0.4em - 0.25pt),
+      stroke: 0.25pt + fill.darken(5%),
+      radius: 1pt,
+      text(fill: fill.darken(5%), content)
+    )
+  )
+}
+
+
 #let dd(k) = {
   let m = (
     "1": blue,
@@ -89,61 +104,76 @@
   )
 }
 
-#let thm-stroke-state = state("thm-stroke", 1pt + black)
-#let thm-stroke(k) = 0.25pt + dd(k).lighten(35%)
+#let nemo-state = state("test", none)
 
-#let thmstyle(fill, breakable) = (
-  stroke: thm-stroke(fill),
-  radius: 1pt,
-  inset: 1em,
-  breakable: breakable,
+#let nemo-new(title: none, tags: ()) = (
+  title: none,
+  tags: (),
+  footnotes: (),
+  has-hints: false,
+  extra: none
 )
 
-#let sep(..args) = context line(
-  length: 100%,
-  stroke: thm-stroke-state.get(),
-  ..args,
-)
-
-#let extra(content) = block[
-  #sep()
-  #text(0.8em, content)
-]
-
-#let mythmplain = (identifier, name, task) => {
-  if task {
-    (dd: none, clock: false, breakable: false, ..args) => thmplain(
-      identifier,
-      name,
-      titlefmt: titlefmt(dd, clock),
-      bodyfmt: body => {
-        // update for separator
-        thm-stroke-state.update(_ => thm-stroke(dd))
-        body
-      },
-      separator: h(0.5em),
-    )(
-      numbering: (..args) => args.at(-1),
-      ..thmstyle(dd, breakable),
-      ..args,
-    )
-  } else {
-    thmplain(
-      identifier,
-      name,
-      titlefmt: strong,
-      separator: h(0.5em),
-    ).with(
-      numbering: (..args) => args.at(-1),
-    )
-  }
+#let note(content) = {
+  nemo-state.update(state => {
+    state.footnotes.push(content)
+    state
+  })
+  context super(str(nemo-state.get().footnotes.len()))
 }
 
-#let remark = mythmplain("remark", "Bemerkung", false)
-#let test = mythmplain("test", "Test", true)
-#let challenge = mythmplain("challenge", "Challenge", true)
+#let extra(content) = {
+  nemo-state.update(state => {
+    state.extra = content
+    state
+  })
+}
+
+#let nemo-env(identifier, head) = thmenv(
+  identifier,
+  none,
+  none,
+  (name, number, body, title: none, level: none, tags: (), clock: false, breakable: false) => {
+    let fill = dd(level)
+    let stroke = 0.25pt + fill
+
+    nemo-state.update(_ => nemo-new())
+    block(inset: 1em, radius: 1pt, stroke: stroke, breakable: breakable)[
+      #grid(
+        columns: (1fr, auto),
+        grid.cell(titlefmt(level, clock)(head + " " + number) + if title != none { h(1em) + strong(title, delta: 200) }),
+        grid.cell(move(dy: 1.25pt, tags.join()))
+      )
+      #body
+
+      // print test footer if footnotes or extra content is available
+      #context {
+        let (footnotes, extra) = nemo-state.get()
+        if footnotes.len() > 0 or extra != none {
+          text(0.8em, {
+            line(length: 100%, stroke: stroke)
+            for (i, footnote) in footnotes.enumerate() {
+              super(str(i + 1)) + footnote + linebreak()
+            }
+
+            if extra != none { block(extra) }
+          })
+        }
+      }
+    ]
+  }
+)
+
+#let remark = thmplain("remark", "Bemerkung")
+#let test = nemo-env("test", "Test")
+#let challenge = nemo-env("challenge", "Challenge")
 
 #let hint(content) = {
+  nemo-state.update(state => {
+    state.has-hints = true
+    state
+  })
+
   context {
     let fig = query(figure.where(kind: "thmenv").before(here())).last()
     let num = thmcounters.get().counters.at(lower(fig.supplement.text)).last()
@@ -163,7 +193,6 @@
     inset: (y: 0.75em, x: 1em),
     radius: 1pt,
   )[
-    #thm-stroke-state.update(_ => 0.75pt + color)
     #text(fill: color)[
       #hi(icon, height: 1.2em, solid: false)
       #h(0.2em)

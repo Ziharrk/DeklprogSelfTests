@@ -9,7 +9,7 @@
 ]
 
 #context {
-  let (test: (_, test), challenge: (_, challenge)) = thmcounters.final().counters
+  let (test, challenge) = thmcounters.final().counters
   [
     Dieses Dokument enthält #test Fragen, #challenge kleinere bis
     größere Aufgaben und andere Ressourcen zum Thema Deklarative Programmierung.

@@ -7,7 +7,7 @@ SYNTAXES_DIR = syntaxes
 
 all: main.pdf
 
-main.pdf: src/main.typ $(FONTS_DIR)/.fonts-extracted syntaxes/prolog.sublime-syntax
+main.pdf: src/* $(FONTS_DIR)/.fonts-extracted syntaxes/prolog.sublime-syntax
 	typst compile --root . --font-path $(FONTS_DIR) src/main.typ main.pdf
 
 syntaxes/prolog.sublime-syntax:
