@@ -8,33 +8,23 @@
   paper: "a4",
   lang: "de",
 
-  title: none,
-  author: (),
-  description: none,
-  keywords: (),
-  date: auto,
+  doc: none,
 
   fontsize: 10.5pt,
   text-font: none,
   math-font: none,
   raw-font: "CaskaydiaCove NF",
 
-  doc,
+  content,
 ) = {
-  set document(
-    title: title,
-    author: author,
-    description: description,
-    keywords: keywords,
-    date: date,
-  )
+  set document(..doc) if doc != none
   set page(paper: paper, numbering: "1")
 
   set text(size: fontsize, lang: lang)
 
   show raw: set text(font: raw-font)
   show raw.where(block: false): box
-  set raw(syntaxes: "syntaxes/prolog.sublime-syntax")
+  set raw(syntaxes: "../syntaxes/prolog.sublime-syntax")
 
   show link: underline
   show heading.where(level: 1): set block(below: 1.25em)
@@ -42,7 +32,7 @@
 
   show: thmrules
 
-  doc
+  content
 }
 
 
@@ -175,4 +165,6 @@
 
 #let check = mybox.with(purple, "academic-cap", "Selbstevaluation")
 #let refs = mybox.with(magenta, "book-open", "Referenzen")
+
+#let git(path) = "https://github.com/Ziharrk/DeklprogSelfTests/" + path
 
