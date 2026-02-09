@@ -1896,23 +1896,23 @@ verallgemeinern kannst.
   - Was ermöglicht es, eine Standarddefinition für ```hs compare``` angeben zu
     können?
   - Deine Standarddefinition von ```hs compare``` ist voraussichtlich
-    ineffizient - die Vordefinierte ist es auch. Woran liegt das? Mit Hinsicht
-    auf Effizienz -- welche der beiden Funktionen würdest du implementieren,
-    wenn du nur eine implementieren dürftest?
+    ineffizient -- die Vordefinierte ist es auch. Woran liegt das? Welche der
+    beiden Funktionen würdest du implementieren, wenn du nur eine implementieren
+    dürftest und es um die beste Laufzeit ginge?
 
   #extra[
-    Auch wenn Standarddefinitionen für den Anfang hilfreich sind, um
-    mit minimalem Aufwand alle Funktionen einer Typklasse verwenden zu können,
-    findet man häufig konkrete Implementierungen für mehr als nur die
-    Funktionen, für die es notwendig ist.
+    Standarddefinitionen sind für den Anfang hilfreich, um mit minimalem
+    Aufwand alle Funktionen einer Typklasse verwenden zu können. Häufig findet
+    man aber konkrete Implementierungen für mehr als nur die notwendingen
+    Funktionen, da diese eine bessere Laufzeit haben.
   ]
 ]
 
 #test(dd: 2, clock: true)[
-  In nicht streng getypten Programmiersprachen haben wir oft mit impliziter
-  Typkonversion zu tun.  Implementiere eine Funktion ```hs ifThenElse```, die
-  als Bedingung Werte beliebiger Typen entgegennehmen kann. Ziel ist es, dass
-  der folgende Ausdruck ausgewertet werden kann.
+  In nicht streng getypten Programmiersprachen haben wir es oft mit impliziter
+  Typkonversion zu tun. Implementiere eine Funktion ```hs ifThenElse```, die als
+  Bedingung Werte beliebiger Typen entgegennehmen kann. Ziel ist es, dass der
+  folgende Ausdruck ausgewertet werden kann.
   ```hs
   let a = ifThenElse 0 3 4
       b = ifThenElse [5] 6 7
@@ -1922,8 +1922,8 @@ verallgemeinern kannst.
   #extra[
     Theoretisch könnten wir über eine Spracherweiterung des GHC sogar die
     #link("https://ghc.gitlab.haskell.org/ghc/doc/users_guide/exts/rebindable_syntax.html")[Standardimplementierung von bedingten Ausdrücken ersetzen].
-    Das wollen wir aber ganz schnell wieder vergessen, genauso den Inhalt dieses
-    Tests, nachdem wir ihn bearbeiten haben.
+    Das wollen wir aber ganz schnell wieder vergessen, genauso wie den Inhalt
+    dieses Tests, nachdem wir ihn bearbeitet haben.
   ]
 ]
 
@@ -1935,6 +1935,12 @@ verallgemeinern kannst.
   Definiere Typklassen ```hs Semigroup``` und ```hs Monoid```, die diese
   Strukturen implementieren. Gebe auch beispielhaft ein paar Instanzen für
   diese an.
+
+  #extra[
+    Diese Typklassen sind vorimplementiert in Haskell. Sie befinden sich in den
+    Modulen #link("https://hackage-content.haskell.org/package/base/docs/Data-Semigroup.html")[```hs Data.Semigroup```]
+    und #link("https://hackage-content.haskell.org/package/base/docs/Data-Monoid.html")[```hs Data.Monoid```].
+  ]
 ]
 
 #test(dd: 1)[
@@ -1999,7 +2005,7 @@ verallgemeinern kannst.
 ]
 
 #test(dd: 1)[
-  Gegeben sei folgendes Haskell-Ausdruck.
+  Gegeben sei folgender Haskell-Ausdruck.
   ```hs
   let c = x == 0
       a = u `div` x
@@ -2038,7 +2044,8 @@ verallgemeinern kannst.
   Die Mutierbarkeit des ```hs next```-Zeigers macht das Verlinken der Knoten in
   Python möglich. Wie können wir in Haskell, trotz der Abwesenheit von
   Mutierbarkeit, zyklische Datenstrukturen umsetzen? Versuche, dein Programm
-  ähnlich zum Python-Programm aussehen zu lassen.
+  ähnlich zum Python-Programm aussehen zu lassen. Verwende dafür auch den
+  (polymorphen) Datentyp ```py Node```.
 
   #extra[
     Die Technik ist als
@@ -2052,9 +2059,9 @@ verallgemeinern kannst.
   #align(center)[```hs data Tree a = Empty | Node (Tree a) a (Tree a)```.]
 
   - Implementiere eine Funktion ```hs preorder :: Tree a -> [a]```, die
-    Knotenwerte in pre-order zurückgibt. Das heißt, zuerst wird ein Knoten
-    betrachtet und anschließend dessen linker und danach dessen rechter
-    Teilbaum.
+    Knotenwerte in #link("https://de.wikipedia.org/wiki/Bin%C3%A4rbaum#Traversierung")[pre-order]
+    zurückgibt. Das heißt, zuerst wird ein Knoten betrachtet und anschließend
+    dessen linker und danach dessen rechter Teilbaum.
   - Implementiere einen unendlichen Baum ```hs tree :: Tree Int```, der die Menge
     $ { f(i, j) | i, j in NN, i <= j } "mit" f(i, j) = i + j + 2 i j $
     darstellt. Die Wurzel soll den Wert $f(1,1)$ haben. Für einen beliebigen
@@ -2067,7 +2074,7 @@ verallgemeinern kannst.
     sehen und der Ergbenisliste von ```hs preorder```? Wie hängt deine
     Beobachtung mit ```hs [f i j | i <- [1..], j <- [i..]]``` zusammen?
   - Implementiere eine Abwandlung von ```hs preorder```, die statt
-    ```hs (++)``` die Funktion ```hs merge``` verwendet.
+    ```hs (++)``` die Funktion ```hs merge``` (aus z.B. mergesort) verwendet.
   - Implementiere als Nächstes die Mengendifferenz als Funktion
     ```hs diff :: Ord a => [a] -> [a] -> [a]```. Du darfst dabei annehmen, dass
     die Eingabelisten bereits sortiert sind.
@@ -2239,9 +2246,9 @@ verallgemeinern kannst.
     )
   ]
   - Konstruiere diesen Baum als ```hs asbs :: State Char``` mithilfe des Typs
-    #align(center)[```hs data State a = State Bool [(a, State a)]```.] Der Boolean
-    gibt an, ob der Zustand akzeptiert, und ```hs [(a, State a)]``` gibt die
-    ausgehenden Transitionen an.
+    #align(center)[```hs data State a = State Bool [(a, State a)]```.] Der
+    Boolean gibt an, ob der Zustand akzeptierend ist, und
+    ```hs [(a, State a)]``` gibt die ausgehenden Transitionen an.
   - Implementiere eine Funktion ```hs accept :: Eq a => [a] -> State a -> Bool```,
     die bestimmt, ob eine Eingabe akzeptiert wird.
   - Implementiere eine Funktion ```hs language :: State a -> [[a]]```, die die
@@ -2313,7 +2320,8 @@ verallgemeinern kannst.
 #challenge(dd: 1, clock: true)[
   Fixpunktverfahren sind iterative Methoden, bei denen eine Funktion wiederholt
   auf einen Wert angewendet wird, bis sich ein stabiler Punkt (ein sogenannter
-  Fixpunkt) ergibt, der sich durch weitere Anwendungen nicht mehr verändert.
+  Fixpunkt) ergibt, der sich durch weitere Anwendungen der Funktion nicht mehr
+  verändert.
 
   Dieses Berechnungsmuster wird durch die Funktion
   ```hs iterate :: (a -> a) -> a -> [a]``` in der Prelude festgehalten.
@@ -2325,9 +2333,9 @@ verallgemeinern kannst.
   - Implementiere ```hs iterate```.
   - Ein klassisches Beispiel für ein Fixpunktverfahren aus der Numerik ist die
     Berechnung der Wurzel mithilfe des Heron-Verfahrens. Es ist gegeben durch
-    $ x_(n + 1) = 1/2 (x_n + a/x_n) $ Diese Folge nährt den Wert von $sqrt(a)$
-    mit jedem Folgeglied besser an. Implementiere das Verfahren mithilfe von
-    ```hs iterate```. Wähle die erste Nährung $x_(n+1)$, die
+    $ x_0 = a, quad x_(n + 1) = 1/2 (x_n + a/x_n) $ Diese Folge nährt den Wert
+    von $sqrt(a)$ mit jedem Folgeglied besser an. Implementiere das Verfahren
+    mithilfe von ```hs iterate```. Wähle die erste Nährung $x_(n+1)$, die
     $abs(x_(n+1) - x_n) < epsilon$ erfüllt, für ein gegebenes $epsilon > 0$.
   - Implementiere die Fibonacci-Folge als unendliche Liste
     ```hs fibs :: [Integer]``` mithilfe von ```hs iterate```. Du brauchst
@@ -2347,7 +2355,7 @@ verallgemeinern kannst.
     @reverse_mode_ad). Diese benötigt man unter anderem für das
     #link("https://de.wikipedia.org/wiki/Gradientenverfahren")[Gradientenverfahren].
     Eine vereinfachte Iterationsvorschrift des Verfahren ist gegeben durch
-    $ x_(k + 1) = x_k - 10^(-4) f'(x_k) quad "für alle" k in NN $
+    $ x_(k + 1) = x_k - 3 dot 10^(-4) dot f'(x_k) quad "für alle" k in NN $
     und einem Startpunkt $x_0 in RR$. Implementiere das Verfahren mithilfe von
     ```hs iterate```. Wähle als Ergebnis die erste Nährung $x_(n+1)$, die
     $abs(x_(n+1) - x_n) < epsilon$ für ein festes $epsilon > 0$ erfüllt (z. B.
@@ -2393,10 +2401,10 @@ verallgemeinern kannst.
   wir mithilfe der folgenden Rekurrenz bestimmen:
   $
   "ed"(i, j) = cases(
-    0 & quad "falls" (i, j) = (0, 0),
-    i & quad "falls" j = 0,
-    j & quad "falls" i = 0,,
-    "ed"(i - 1, j - 1) & quad "falls" u_(i - 1) = v_(j - 1),
+    0 & quad "falls" (i, j) = (0, 0)\,,
+    i & quad "falls" j = 0\,,
+    j & quad "falls" i = 0\,,
+    "ed"(i - 1, j - 1) & quad "falls" u_(i - 1) = v_(j - 1)\,,
     min("ed"(i - 1, j - 1), "ed"(i, j - 1), "ed"(i - 1, j)) + 1 & quad "sonst"
   )
   $
@@ -2449,11 +2457,10 @@ verallgemeinern kannst.
   anzunehmen, da in dieser der technische Teil der Lösungsidee vorgestellt
   wird.
 
-  Gegeben sei ein Gitter $G in ZZ^(m times n)$. Ein Pfad durch das
-  Gitter startet oben links und endet unten rechts. In jedem Schritt
-  kannst du von einer Zelle in die rechtsanschließende oder darunteranschließende
-  Zelle gehen. Die Pfadsumme ist die Summe aller Zellenwerte, durch die der Pfad
-  führt.
+  Gegeben sei ein Gitter $G in ZZ^(m times n)$. Ein Pfad durch das Gitter
+  startet oben links und endet unten rechts. In jedem Schritt kannst du von
+  einer Zelle in die rechts- oder darunteranschließende Zelle gehen. Die
+  Pfadsumme ist die Summe aller Zellenwerte, durch die der Pfad führt.
 
   Hier ist ein Beispiel für ein solches Gitter. Der Pfad der minimalen Pfadsumme
   ist durch die Pfeile angedeutet. Für dieses Beispiel ist die minimale Pfadsumme
@@ -2552,7 +2559,7 @@ verallgemeinern kannst.
 
 #test(dd: 1)[
   Ordne jeder der zur Typklasse ```hs Enum``` gehörenenden Funktionen eine
-  äquivalente Listenkonstruktion zu.
+  äquivalente range zu, also Ausdrücke der Form ```hs [a,b..c]```.
   - ```hs enumFrom :: Enum a => a -> [a]```
   - ```hs enumFromThen :: Enum a => a -> a -> [a]```
   - ```hs enumFromTo :: Enum a => a -> a -> [a]```
@@ -2611,8 +2618,8 @@ verallgemeinern kannst.
 ]
 
 #test(dd: 2)[
-  Übersetze die gegebenen Funktion in eine äquivalente Funktion, die keine list
-  comprehensions verwendet.
+  Übersetze die gegebenen Funktionen in eine äquivalente Funktion, die keine
+  list comprehensions verwendet.
   - ```hs f xs = [x * 2 | x <- xs, x > 0]```
   - ```hs f xs ys = [x + y | x <- xs, y <- ys]```
   - ```hs f xs ys = [(x, y) | x <- xs, y <- ys, x < y]```
@@ -2779,8 +2786,8 @@ verallgemeinern kannst.
   dabei ähnlich wie ```hs ($)``` -- mit ```hs (<$>)``` muss die Funktion nicht
   explizit in den entsprechenden ```hs Applicative``` gehoben werden.
 
-  Ein Typ, der uns konzeptionell noch näher an die gewöhnliche
-  Funktionsapplikation heranführt, ist
+  Ein Typ, der uns konzeptionell auf Ebene der applikativen Funktoren näher an
+  die gewöhnliche Funktionsapplikation heranführt, ist
   #align(center)[```hs newtype Identity a = Identity { runIdentity :: a }```.]
   Implementiere ```hs Functor```-, ```hs Applicative```- und
   ```hs Monad```-Instanzen für ```hs Identity```.
@@ -2819,7 +2826,7 @@ verallgemeinern kannst.
   #extra[
     Die Erkenntnis dieses Tests kannst du nutzen, wenn es für dich einfacher
     ist eine Monaden-Instanz anzugeben, anstatt Funktoren- und applikative
-    Funktor-Instanzen anzugeben, oder zum Zeit sparen.
+    Funktor-Instanzen anzugeben oder um Zeit zu sparen.
   ]
 ]
 
@@ -2843,7 +2850,7 @@ verallgemeinern kannst.
   Gegeben sei diese fehlerhafe Definition einer sicheren Division:
   ```hs
   safeDiv :: Int -> Int -> Maybe Int
-  safeDiv x y = pure (div x) <*> pure y
+  safeDiv x y = Just (div x) <*> Just y
   ```
   Wie können wir diese Implementierung reparieren, ohne ```hs (>>=)``` zu
   verwenden und die rechte Seite soweit wie möglich zu erhalten?
@@ -2860,8 +2867,8 @@ verallgemeinern kannst.
 #test(dd: 2)[
   Das Sequenzieren von Berechnung haben wir bereits in einfacheren Form als
   Funktionskomposition kennengelernt. Wenn wir die Fortsetzung einer Berechnung
-  im Kontext von Monaden betrachten, dann stellen wir, dass sich zwei Funktionen
-  des Typs ```hs Monad m => a -> m b``` nicht im Sinne des
+  im Kontext von Monaden betrachten, dann stellen wir fest, dass sich zwei
+  Funktionen des Typs ```hs Monad m => a -> m b``` nicht im Sinne des
   ```hs (>>=)```-Operators hintereinanderausführen lassen.
 
   Finde ein geeignetes Beispiel das zeigt, dass dieses Szenario illustriert.
@@ -2907,7 +2914,7 @@ verallgemeinern kannst.
   newtype Reader r a = Reader { runReader :: r -> a }
 
   instance Monad (Reader r) where
-    return y = Reader (\_ -> y)
+    return x = Reader (\_ -> x)
 
     r >>= k = Reader (\s -> let x = runReader r s
                                 y = runReader (k y) s
@@ -2959,25 +2966,25 @@ verallgemeinern kannst.
 #test(dd: 2, clock: true)[
   Das Verwenden von monadischen Funktionen kommt einem zum Anfang möglicherweise
   als erbitterter Kampf gegen das Typsystem vor. Diese Situationen ergeben sich
-  bereits aus den scheinbar einfachsten Absichten. Oft fehlt dann die Erfahrung,
-  um die geeignete Funktion auszuwählen bzw. sogar die Kenntnis darüber, dass es
-  Funktionen gibt, die einem helfen könnten. Hier betrachten hier ein paar
-  solcher Szenarios.
+  bereits aus den scheinbar unschuldigsten Absichten. Oft fehlt dann die
+  Erfahrung, um die geeignete Funktion auszuwählen bzw. sogar die Kenntnis
+  darüber, dass es Funktionen gibt, die einem helfen könnten. Hier betrachten
+  wir ein paar solcher Szenarien.
 
   - Angenommen du sollst eine Funktion ```hs putStrs :: [String] -> IO ()```
     implementieren, die eine Liste von Strings zeilenweise ausgeben soll, dann
     hast du die Möglichkeit, naiv und zielführend die Funktion per Induktion zu
     definieren. Als Nächstes könntest du die Beobachtung machen, dass du die
     gleiche Funktion für jeden String anwenden sollst, was dich an ```hs map```
-    erinnern könnte. Du erhältst den folgeden typinkorrekten Code.
+    erinnern könnte. Du erhältst den folgenden typinkorrekten Code.
     ```hs
     putStrs :: [String] -> IO ()
     putStrs ss = map putStrLn ss  -- :: [IO ()]
     ```
     An der Stelle wirfst du entweder den Ansatz über den Haufen oder überlegst
-    dir, wie eine Funktion mit ```hs [IO ()] -> IO ()``` definiert sein könnte, um
-    den obigen Code zu reparieren. Allgemeiner, implementiere eine Funktion
-    ```hs sequence :: Monad m => [m a] -> m [a]``` bzw. eine Funktion
+    dir, wie eine Funktion vom Typ ```hs [IO ()] -> IO ()``` definiert sein
+    könnte, um den obigen Code zu reparieren. Implementiere allgemeiner eine
+    Funktion ```hs sequence :: Monad m => [m a] -> m [a]``` bzw. eine Funktion
     ```hs sequence_ :: Monad m => [m ()] -> m ()```, um die obige
     Implementierung von ```hs putStrs``` zu reparieren.
   - Implementiere, basierend auf der vorherigen Teilaufgabe, eine Funktion
@@ -2985,7 +2992,8 @@ verallgemeinern kannst.
     ```hs mapM_``` kannst du auch implementieren.)
   - Andere hilfreiche Funktionen sind
     - ```hs replicateM :: Monad m => Int -> m a -> m [a]```, die eine monadische
-      Aktion beliebig häufig ausführt und dann eine Liste der Ergebnisse ausgibt.
+      Aktion eine feste Anzahl von Malen ausführt und dann eine Liste der
+      Ergebnisse ausgibt.
     - ```hs zipWithM :: Monad m => (a -> b -> m c) -> [a] -> [b] -> m [c]```,
       die ```hs zipWith``` auf Monaden verallgemeinert,
     - ```hs join :: Monad m => m (m a) -> m a```, die eine monadische Struktur
@@ -3023,8 +3031,8 @@ verallgemeinern kannst.
     pure :: a -> ZipList a
     pure x = ZipList [x]
     ```
-    keine gültige Definition ist? Welche Gesetze wären verletzt, würde man
-    ```hs pure``` so definieren?
+    keine gültige Definition ist? Welche Gesetze wären verletzt und warum, würde
+    man ```hs pure``` so definieren?
   - Implementiere eine ```hs Applicative```-Instanz für ```hs ZipList```.
   - Zeige, dass sowohl die ```hs Functor```- als auch die
     ```hs Applicative```-Instanz die üblichen geforderten Gesetze erfüllen.
@@ -3146,19 +3154,21 @@ verallgemeinern kannst.
     class Monad m => MonadZero m where
       mzero :: m a
     ```
-    Implementiere ```hs guard``` nun allgemein.
-  - Berechne ```hs 1 `safeDiv` 0 :: m Int``` für ```hs Maybe``` und ```hs []```.
-    Bevor das möglich ist, benötigst du entsprechende ```hs MonadZero```-Instanzen.
-
-  #extra[
-    Die Typklasse ```hs MonadZero``` wird so genannt, weil sie eine "monadische
-    Null" definiert. Bzgl. der Operation ```hs (>>=)``` verhält sich ```hs mzero```
-    absorbierend. Für Instanzen dieser Typklasse sollen diese Gesetze gelten.
+    Zu ihr gehören die folgenden Gesetze.
     ```hs
     mzero >>= f     = mzero
     m     >>= mzero = mzero
     ```
+    Damit verhält sich ```hs mzero``` wie eine "monadische Null" bzw.
+    absorbierend bzgl. der Operationen ```hs (>>=)``` und ```hs (>>)```.
+    Betrachte den folgenden Ausdruck.
+    #block[```hs m1 >> ... >> mzero >> ... >> mn```]
+    Was ist das Ergebnis dieses Ausdrucks?
+  - Implementiere ```hs guard``` mit den Gedanken der vorherigen Teilaufgabe.
+  - Berechne ```hs 1 `safeDiv` 0 :: m Int``` für ```hs Maybe``` und ```hs []```.
+    Bevor das möglich ist, benötigst du entsprechende ```hs MonadZero```-Instanzen.
 
+  #extra[
     ```hs guard``` ist auf Basis von ```hs Alternative``` bzw.
     ```hs MonadPlus``` implementiert. ```hs MonadZero``` ist nicht Teil der
     Standardbibliothek, aber es ist definiert als Teil von ```hs MonadPlus```.
@@ -3221,8 +3231,8 @@ verallgemeinern kannst.
     Allerdings können wir anhand des Fehlschlags alleine nicht feststellen,
     warum es zum Fehlschag kam. Verallgemeinere die Typkonstruktorklasse
     ```hs MonadZero``` zu einer Typkonstruktorklasse ```hs MonadFail```,
-    die es erlaubt, eine Beschreibung des Fehlschags anzugeben. Sie soll
-    also eine Funktion ```hs fail :: String -> m a``` definieren. Verallgemeinere
+    die es erlaubt, eine Beschreibung des Fehlschags anzugeben. Sie soll dafür
+    eine Funktion ```hs fail :: String -> m a``` definieren. Verallgemeinere
     ```hs eval``` erneut mit der neuen Typkonstruktorklasse. Gebe zusätzlich
     eine Instanz für den Typ ```hs Either String``` an -- alternativ,
     implementiere eine ```hs Functor```-, ```hs Applicative```-, ```hs Monad```-
@@ -3358,6 +3368,12 @@ verallgemeinern kannst.
   - Fällt dir möglicherweise ein allgemeine Übersetzungsvorschrift für
     statements dieser Form unter der Verwendung von ```hs MonadFail``` aus
     @eval_exp ein?
+
+  #extra[
+    Der Haskell Report spezifiziert in der
+    #link("https://www.haskell.org/onlinereport/haskell2010/haskellch3.html#x8-470003.14")[Sektion über die ```hs do```-Notation],
+    wie diese übersetzt wird.
+  ]
 ]
 
 #test(dd: 1)[
@@ -3407,7 +3423,8 @@ verallgemeinern kannst.
     putStrLn ", world!"
     return ()
   ```
-  Was ist die Ausgabe des Programm und warum?
+  Was ist die Ausgabe des Programm und warum? Wie steht das im Konflikt mit dem,
+  was du aus imperativen Programmiersprachen kennst?
 ]
 
 #test(dd: 1)[
@@ -3792,7 +3809,7 @@ verallgemeinern kannst.
   prop_prop :: Positive Int -> Property
   prop_prop (Positive k) = k > 0 ==> True
   ```
-  Jetzt werden keine Tests verworfen.
+  Jetzt werden keine Testeingaben verworfen.
 
   Überlege dir, wie die Lösung des Problems funktioniert und implementiere sie.
 
@@ -3835,7 +3852,9 @@ nähern uns dennoch der tatsächlichen Implementierung von QuickCheck stark an.
   - Um ```hs quickCheck``` zu implementieren, benötigen wir die Möglichkeit,
     beliebig stellige Funktionen anwenden zu können. Das ist mithilfe von
     Typklassen möglich. Hier ist eine vereinfachte Variante der Typklasse
-    ```hs Testable```, wie sie in QuickCheck zu finden ist.
+    ```hs Testable```, wie sie in QuickCheck zu finden ist. Hier ist Typ
+    ```hs Property``` ein einfacher Wrapper um den ```hs Bool```-Typ. In
+    QuickCheck ist dieser ein bisschen komplexer.
     ```hs
     newtype Property = Property { unProperty :: Bool }
 
