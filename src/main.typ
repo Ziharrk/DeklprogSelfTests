@@ -2,22 +2,10 @@
 //      deshalb breakable: false, Ziel ist aber wieder true
 // TODO für ein paar Tests Lösungen angeben?
 #import "prelude.typ": *
+#show: config
 
-#show: config.with(
-  doc: (
-    title: "Verständnisfragen zum Modul Deklarative Programmierung",
-    author: ("Melf Kammholz",),
-    description: "Verständnisfragen zum Modul Deklarative Programmierung",
-    keywords: (
-      "Deklarative Programmierung",
-      "Funktionale Programmierung",
-      "Logische Programmierung",
-      "Haskell",
-      "Prolog",
-      "Verständnisfragen"
-    )
-  )
-)
+#set document(..meta)
+
 
 #include "preface.typ"
 

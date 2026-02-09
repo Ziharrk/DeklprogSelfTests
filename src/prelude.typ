@@ -4,11 +4,23 @@
 #import "@preview/finite:0.5.0"
 #import "@preview/heroic:0.1.0": *
 
+#let meta = (
+  title: "Verständnisfragen zum Modul Deklarative Programmierung",
+  author: ("Melf Kammholz",),
+  description: "Verständnisfragen zum Modul Deklarative Programmierung",
+  keywords: (
+    "Deklarative Programmierung",
+    "Funktionale Programmierung",
+    "Logische Programmierung",
+    "Haskell",
+    "Prolog",
+    "Verständnisfragen"
+  )
+)
+
 #let config(
   paper: "a4",
   lang: "de",
-
-  doc: none,
 
   fontsize: 10.5pt,
   text-font: none,
@@ -17,7 +29,6 @@
 
   content,
 ) = {
-  set document(..doc) if doc != none
   set page(paper: paper, numbering: "1")
 
   set text(size: fontsize, lang: lang)
