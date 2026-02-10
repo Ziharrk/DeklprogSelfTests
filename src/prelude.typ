@@ -76,31 +76,35 @@
   )
 }
 
+#let nemo-level-colors = (
+  "1": blue,
+  "2": orange,
+  "3": magenta
+)
 
-#let dd(k) = {
-  let m = (
-    "1": blue,
-    "2": orange,
-    "3": magenta
-  )
-  let d = gray.darken(10%)
-  if type(k) == int { m.at(str(k), default: d) } else { d }
-}
+#let nemo-default-level-color = gray.darken(40%)
 
-#let titlefmt(level, clock) = {
-  let fill = dd(level)
+#let nemo-get-level-color(level) = if level != none {
+    nemo-level-colors.at(str(level), default: nemo-default-level-color)
+  } else {
+    nemo-default-level-color
+  }
 
-  let label = s => (
-    strong(smallcaps(s), delta: 200)
-      + if clock { " " + hi("clock", solid: false) } else {}
-  )
+#let nemo-make-titlefmt(level, clock) = {
+  let color = nemo-get-level-color(level)
+
+  let clock-tag = if clock { " " + hi("clock", solid: false) }
+  let label = s => strong(smallcaps(s), delta: 200) + clock-tag
+
+  let y-outset = if clock { 2pt } else { 3pt }
+  let baseline = if clock { 2pt } else { 0pt }
 
   s => box(
     radius: 1pt,
-    outset: (y: if clock { 2pt } else { 3pt }, x: 4pt),
-    baseline: if clock { 2pt } else { 0% + 0pt },
-    fill: fill.lighten(90%),
-    text(fill: fill.darken(5%), label(s)),
+    outset: (x: 4pt, y: y-outset),
+    baseline: baseline,
+    fill: color.lighten(90%),
+    text(fill: color.darken(5%), label(s)),
   )
 }
 
@@ -114,57 +118,80 @@
   extra: none
 )
 
+#let nemo-update-state(f) = nemo-state.update(state => {
+  let res = f(state)
+  if res == none { state } else { res }
+})
+
 #let note(content) = {
-  nemo-state.update(state => {
+  nemo-update-state(state => {
     state.footnotes.push(content)
-    state
   })
   context super(str(nemo-state.get().footnotes.len()))
 }
 
 #let extra(content) = {
-  nemo-state.update(state => {
+  nemo-update-state(state => {
     state.extra = content
-    state
   })
+}
+
+#let nemo-boxfmt = head => (
+  name,
+  number,
+  body,
+  title: none,
+  level: none,
+  tags: (),
+  clock: false,
+  breakable: false
+) => {
+  let fill = nemo-get-level-color(level)
+  let stroke = 0.25pt + fill
+
+  nemo-state.update(_ => nemo-new())
+
+  let titlefmt = nemo-make-titlefmt(level, clock)
+
+  block(
+    inset: 1em,
+    radius: 1pt,
+    stroke: stroke,
+    breakable: breakable
+  )[
+    #grid(
+      columns: (1fr, auto),
+      grid.cell(titlefmt(head + " " + number) + if title != none { h(1em) + strong(title, delta: 200) }),
+      grid.cell(move(dy: 1.25pt, tags.join()))
+    )
+
+    #body
+
+    // print test footer if footnotes or extra content is available
+    #context {
+      let (footnotes, extra) = nemo-state.get()
+      if footnotes.len() > 0 or extra != none {
+        text(0.8em, {
+          line(length: 100%, stroke: stroke)
+          for (i, footnote) in footnotes.enumerate() {
+            super(str(i + 1)) + footnote + linebreak()
+          }
+
+          if extra != none { block(extra) }
+        })
+      }
+    }
+  ]
 }
 
 #let nemo-env(identifier, head) = thmenv(
   identifier,
   none,
   none,
-  (name, number, body, title: none, level: none, tags: (), clock: false, breakable: false) => {
-    let fill = dd(level)
-    let stroke = 0.25pt + fill
+  nemo-boxfmt(head)
+).with(supplement: head)
 
-    nemo-state.update(_ => nemo-new())
-    block(inset: 1em, radius: 1pt, stroke: stroke, breakable: breakable)[
-      #grid(
-        columns: (1fr, auto),
-        grid.cell(titlefmt(level, clock)(head + " " + number) + if title != none { h(1em) + strong(title, delta: 200) }),
-        grid.cell(move(dy: 1.25pt, tags.join()))
-      )
-      #body
-
-      // print test footer if footnotes or extra content is available
-      #context {
-        let (footnotes, extra) = nemo-state.get()
-        if footnotes.len() > 0 or extra != none {
-          text(0.8em, {
-            line(length: 100%, stroke: stroke)
-            for (i, footnote) in footnotes.enumerate() {
-              super(str(i + 1)) + footnote + linebreak()
-            }
-
-            if extra != none { block(extra) }
-          })
-        }
-      }
-    ]
-  }
-)
-
-#let remark = thmplain("remark", "Bemerkung")
+#let remark = nemo-env("remark", "Bemerkung").with(breakable: true)
 #let test = nemo-env("test", "Test")
 #let challenge = nemo-env("challenge", "Challenge")
 
@@ -177,7 +204,7 @@
   context {
     let fig = query(figure.where(kind: "thmenv").before(here())).last()
     let num = thmcounters.get().counters.at(lower(fig.supplement.text)).last()
-    let value = strong[Hinweis zu #fig.supplement #num] + h(0.5em) + content
+    let value = nemo-boxfmt("Hinweis zu")(none, [#fig.supplement #num], content)
     metadata((type: "hint", value: value))
   }
 }

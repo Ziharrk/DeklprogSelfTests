@@ -9,9 +9,9 @@
 ]
 
 #context {
-  let (test, challenge) = thmcounters.final().counters
+  let (test: (test,), challenge: (challenge,)) = thmcounters.final().counters
   [
-    Dieses Dokument enthält #test Fragen, #challenge kleinere bis
+    Dieses Dokument enthält #test Fragen und #challenge kleinere bis
     größere Aufgaben und andere Ressourcen zum Thema Deklarative Programmierung.
     Die Inhalte dieses Dokuments sollen dir helfen, dein Verständnis über
     Haskell und Prolog zu prüfen und zu stärken.
@@ -26,15 +26,16 @@ Die Nomenklatur der Aufgaben ist aktuell vielleicht noch etwas willkürlich,
 da es Tests gibt, die wie Challenges wirken -- und möglicherweise sogar
 andersherum. Als zusätzliche Hilfestellung ist die Schwierigkeit jeder Aufgabe
 grob in drei Stufen aufgeteilt, die sich wie folgt auszeichnen sollen.
-- #titlefmt(1, false)("Stufe 1") #h(0.3em) Aufgaben zur Überprüfung
-  grundlegender Kenntnisse. Die Lösung erfolgt durch direktes Anwenden bekannter
-  Regeln oder Verfahren und erfordert kein vertieftes Nachdenken.
-- #titlefmt(2, false)("Stufe 2") #h(0.3em) Aufgaben, bei denen grundlegende
-  Kenntnisse angewendet und durch eigene Überlegungen ergänzt werden müssen. Es
-  sind erste Ideen oder einfache Lösungsstrategien notwendig.
-- #titlefmt(3, false)("Stufe 3") #h(0.3em) Komplexe Aufgaben, die ein vertieftes
-  Verständnis voraussetzen. Die Lösung erfordert mehrere Gedankenschritte, das
-  Verknüpfen verschiedener Inhalte sowie eigenständigen Lösungsstrategien.
+- #nemo-make-titlefmt(1, false)("Stufe 1") #h(0.3em) Aufgaben zur Überprüfung
+  grundlegender Kenntnisse. Die Lösung erfolgt durch direktes Anwenden
+  bekannter Regeln oder Verfahren und erfordert kein vertieftes Nachdenken.
+- #nemo-make-titlefmt(2, false)("Stufe 2") #h(0.3em) Aufgaben, bei denen
+  grundlegende Kenntnisse angewendet und durch eigene Überlegungen ergänzt
+  werden müssen. Es sind erste Ideen oder einfache Lösungsstrategien notwendig.
+- #nemo-make-titlefmt(3, false)("Stufe 3") #h(0.3em) Komplexe Aufgaben, die ein
+  vertieftes Verständnis voraussetzen. Die Lösung erfordert mehrere
+  Gedankenschritte, das Verknüpfen verschiedener Inhalte sowie eigenständigen
+  Lösungsstrategien.
 Tests, von denen wir erwarten, dass sie euch länger als 10min beschäftigen,
 sind mit #hi("clock", solid: false) markiert, Challenges bei 30min.
 

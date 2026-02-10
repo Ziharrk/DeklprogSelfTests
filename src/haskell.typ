@@ -2433,9 +2433,9 @@ verallgemeinern kannst.
     Die Rekursionsvorschrift ist gegeben durch
     $
     "pathsum"(i, j) = cases(
-      G_(0,0) & quad "falls" (i, j) = (0, 0),
-      G_(i,0) + "pathsum"(i-1,0) & quad "falls" j = 0,
-      G_(0,j) + "pathsum"(0,j-1) & quad "falls" i = 0,
+      G_(0,0) & quad "falls" (i, j) = (0, 0)\,,
+      G_(i,0) + "pathsum"(i-1,0) & quad "falls" j = 0\,,
+      G_(0,j) + "pathsum"(0,j-1) & quad "falls" i = 0\,,
       G_(i,j) + min("pathsum"(i-1,j), "pathsum"(i,j-1)) & quad "sonst"
     )
     $
