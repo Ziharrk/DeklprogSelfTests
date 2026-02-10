@@ -1083,6 +1083,13 @@ Gedanken machen kann.
   Wie wird es auch genannt?
 ]
 
+#test[
+  SLD-Resolution-Aufgaben findest du den Übungsserien sowohl als Präsenz- und
+  Hausaufgaben. Darüber findest du sie auch den Altklausuren des Moduls. Diese
+  kannst du auf der #link("https://www.fs-infmath.uni-kiel.de/wiki/Protokolle_Informatik")[Webseite der Fachschaft]
+  oder ggf. im aktuellen Moodle-Kurs herunterladen.
+]
+
 #test(level: 1)[
   Was legt die Selektionsfunktion der SLD-Resolution fest? Welche verwendet Prolog?
 ]
@@ -1619,6 +1626,11 @@ Seite gefunden haben.
     int(N, M) :- K is M + 1, int(N, K).
     ```
     das Problem der vorherigen Teilaufgabe lösen?
+] <relational_linear>
+
+#test(level: 2)[
+  Löse @relational_linear erneut, aber betrachte die Funktion $f(x) = x^2$ für
+  alle $x in ZZ$.
 ]
 
 #check[
