@@ -14,10 +14,11 @@ verpasst nichts.
   Diese ver- und entschachteln ```hs D```-Werte unterschiedlich tief, um die
   jeweilige Ableitung zu berechnen. Ein allgemeines ```hs d``` für beliebige
   Ableitung zu definieren, stellt sich als schwierig heraus. Mit verschiedenen
-  Haskell-Spracherweiterungen können wir eine allgemeinere Funktion angeben. Das
-  ist in #link("blob/main/AutoDiff.hs", raw("AutoDiff.hs")) im GitHub-Repository
-  demonstriert. Mit ```hs derive @3 cos (2.0 :: Double)``` können wir jetzt z.B.
-  die dritte Ableitung des Cosinus an der Stelle $2$ berechnen.
+  Haskell-Spracherweiterungen können wir eine allgemeinere Funktion angeben.
+  Das ist in #link(git("blob/main/AutoDiff.hs"), raw("AutoDiff.hs")) im
+  GitHub-Repository demonstriert. Mit ```hs derive @3 cos (2.0 :: Double)```
+  können wir jetzt z.B. die dritte Ableitung des Cosinus an der Stelle $2$
+  berechnen.
 ] <reverse_mode_ad_remark>
 
 #remark[
