@@ -295,7 +295,6 @@
     du die Liste der Primzahlen in eine lesbare Form bringen -- du kannst auch
     ein allgemeines ```SWI-Prolog  map/3``` mithilfe des Prädikats höherer
     Ordnung ```SWI-Prolog call``` implementieren.
-
 ]
 
 #test(level: 1)[
@@ -1531,11 +1530,9 @@ Seite gefunden haben.
   Prädikate gibt es, neben ```SWI-Prolog is/2```, die solche Argumente
   benötigen? Warum ist die Anfrage ```SWI-Prolog ?- 42 >= X, 42 =< X.```
   nicht beweisbar?
-
-  #extra[
-    Ein Teil der hier angesprochenen Probleme werden durch die
-    Constraint-Programmierung gelöst, die wir nicht behandelt haben.
-  ]
+][
+  Ein Teil der hier angesprochenen Probleme werden durch die
+  Constraint-Programmierung gelöst, die wir nicht behandelt haben.
 ]
 
 #test(level: 1)[
@@ -1580,25 +1577,23 @@ Seite gefunden haben.
 
   Was bedeuten die Indikatoren des ```SWI-Prolog is/2```-Prädikats (siehe
   #link("https://www.swi-prolog.org/pldoc/man?predicate=is/2")[```SWI-Prolog is/2```-Dokumentation])?
+][
+  Uns ist bisher kein nicht vollständig instanziierter Ausdruck eingefallen,
+  den wir unter der Verwendung von ausschließlich vorlesungsbekannten
+  Prädikaten konstruieren können. Um dennoch ein Beispiel gesehen zu haben,
+  warum ```SWI-Prolog Expr``` mit ```hs +``` annotiert ist und nicht mit
+  ```hs ++```, betrachte folgendes Programm:
+  ```SWI-Prolog
+  :- arithmetic_function(mult/2).
+  mult(0, _, 0) :- !.
+  mult(_, 0, 0) :- !.
+  mult(X, Y, Z) :- Z is X * Y.
 
-  #extra[
-    Uns ist bisher kein nicht vollständig instanziierter Ausdruck eingefallen,
-    den wir unter der Verwendung von ausschließlich vorlesungsbekannten
-    Prädikaten konstruieren können. Um dennoch ein Beispiel gesehen zu haben,
-    warum ```SWI-Prolog Expr``` mit ```hs +``` annotiert ist und nicht mit
-    ```hs ++```, betrachte folgendes Programm:
-    ```SWI-Prolog
-    :- arithmetic_function(mult/2).
-    mult(0, _, 0) :- !.
-    mult(_, 0, 0) :- !.
-    mult(X, Y, Z) :- Z is X * Y.
-
-    ?- X is mult(0, Y).
-    X = 0.
-    ```
-    Die rechte Seite muss so also nur hinreichend instanziiert sein, damit
-    ```SWI-Prolog is/2``` beweisbar ist.
-  ]
+  ?- X is mult(0, Y).
+  X = 0.
+  ```
+  Die rechte Seite muss so also nur hinreichend instanziiert sein, damit
+  ```SWI-Prolog is/2``` beweisbar ist.
 ]
 
 #test(level: 2, clock: true)[
@@ -1737,10 +1732,8 @@ Seite gefunden haben.
 #test(level: 2)[
   Implementiere ein Prädikat ```SWI-Prolog all_btrees/2```, dass alle Binärbäume
   mit einer festen internen Knotenanzahl berechnet.
-
-  #extra[
-    Es bietet sich an, @count_nodes vorher bearbeitet zu haben.
-  ]
+][
+  Es bietet sich an, @count_nodes vorher bearbeitet zu haben.
 ]
 
 // TODO more findall, bagof, setof

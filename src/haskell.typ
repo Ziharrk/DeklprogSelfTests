@@ -23,10 +23,8 @@
 #test(level: 1)[
   Was bedeutet es, wenn eine Funktion keine Seiteneffekte hat? Warum ist die
   Abwesenheit von Seiteneffekten wünschenwert, sofern es möglich ist?
-
-  #extra[
-    #link("https://xkcd.com/1312/")[xkbd: Haskell]
-  ]
+][
+  #link("https://xkcd.com/1312/")[xkbd: Haskell]
 ]
 
 #test(level: 1)[
@@ -115,11 +113,10 @@
   x^n = cases((x^(n/2))^2 & "falls" n "gerade,", x dot x(x^((n-1)/2))^2 & "sonst.")
   $
   Implementiere eine Funktion, die diese Variante des Potenzierens umsetzt.
-  #extra[
-    Das Verfahren ist als #link("https://de.wikipedia.org/wiki/Bin%C3%A4re_Exponentiation")[Binäre Exponentiation]
-    bekannt. ```hs (^)``` ist so in Haskell implementiert (siehe
-    #link("https://hackage-content.haskell.org/package/ghc-internal/docs/src/GHC.Internal.Real.html#powImpl")[```hs powImpl```]).
-  ]
+][
+  Das Verfahren ist als #link("https://de.wikipedia.org/wiki/Bin%C3%A4re_Exponentiation")[Binäre Exponentiation]
+  bekannt. ```hs (^)``` ist so in Haskell implementiert (siehe
+  #link("https://hackage-content.haskell.org/package/ghc-internal/docs/src/GHC.Internal.Real.html#powImpl")[```hs powImpl```]).
 ] <binexp>
 
 #test(level: 1)[
@@ -210,11 +207,9 @@
 #test(level: 1)[
   Gebe ein Listendatentypen an, für den es nicht möglich ist, kein Element
   zu enthalten.
-
-  #extra[
-    In Haskell heißt dieser Datentyp ```hs NonEmpty``` und ist definiert in
-    #link("https://hackage-content.haskell.org/package/base/docs/Data-List-NonEmpty.html")[```hs Data.List.NonEmpty```].
-  ]
+][
+  In Haskell heißt dieser Datentyp ```hs NonEmpty``` und ist definiert in
+  #link("https://hackage-content.haskell.org/package/base/docs/Data-List-NonEmpty.html")[```hs Data.List.NonEmpty```].
 ]
 
 #check[
@@ -313,14 +308,12 @@
     wobei $"PF"$ die Menge der Primfaktoren der gegebenen Zahl (mit
     entsprechenden Mehrfachvorkommen) beschreiben soll. Implementiere diesen
     Ansatz.
-
-  #hint[
-    - Zur Darstellung der Multimengen eignen sich sortierte Listen gut.
-    - Zur Berechnung des Schnittes können zwei sortierte Listen parallel
-      durchlaufen werden. Wenn zwei gleiche Elemente zu Beginn der Liste stehen,
-      wird eines der Elemente zum Ergebnis hinzugefügt. Im anderen Fall
-      überspringen wir das jeweils kleinere Element der beiden.
-  ]
+][][
+  - Zur Darstellung der Multimengen eignen sich sortierte Listen gut.
+  - Zur Berechnung des Schnittes können zwei sortierte Listen parallel
+    durchlaufen werden. Wenn zwei gleiche Elemente zu Beginn der Liste stehen,
+    wird eines der Elemente zum Ergebnis hinzugefügt. Im anderen Fall
+    überspringen wir das jeweils kleinere Element der beiden.
 ]
 
 // ```hs
@@ -388,11 +381,9 @@
   - Implementiere eine Funktion ```hs derive :: Fun -> Fun```, die eine
     gegebene Funktion ableitet. Die Funktionen müssen nach dem Ableiten nicht
     vereinfacht werden.
-
-  #extra[
-    Hier findest du eine
-    #link("https://de.wikipedia.org/wiki/Differentialrechnung#Zusammenfassung")[Zusammenfassung der Ableitungsregeln].
-  ]
+][
+  Hier findest du eine
+  #link("https://de.wikipedia.org/wiki/Differentialrechnung#Zusammenfassung")[Zusammenfassung der Ableitungsregeln].
 ] <symbolic_diff>
 
 // ```hs
@@ -440,12 +431,10 @@
   ```hs [Int]``` sind. Wenn wir Typklassen behandelt haben, kannst du
   ```hs Ord a => [a]``` nutzen -- oder du nutzt letzteres und behandelst es
   erstmal so, als wäre es ersteres.
-
-  #extra[
-    In der Haskell `base`-library wird `sort` aus `Data.List` vergleichbar
-    implementiert:
-    #link("https://hackage.haskell.org/package/ghc-internal-9.1201.0/docs/src/GHC.Internal.Data.OldList.html#sort")[Data.List.sort].
-  ]
+][
+  In der Haskell `base`-library wird `sort` aus `Data.List` vergleichbar
+  implementiert:
+  #link("https://hackage.haskell.org/package/ghc-internal-9.1201.0/docs/src/GHC.Internal.Data.OldList.html#sort")[Data.List.sort].
 ]
 
 // ```hs
@@ -560,10 +549,9 @@
   ```hs (!!)```. Sie macht den Fehlerfall explizit durch die Wahl des
   Ergebnistypen. Wie fängt der Ergebnistyp diesen Fehlerfall auf? Implementiere
   diese Funktion.
-  #extra[
-    Diese Funktion ist auch bereits vorimplementiert:
-    #link("https://hackage.haskell.org/package/base-4.21.0.0/docs/Data-List.html#v:-33--63-")[```hs (!?)``` in ```hs Data.List```].
-  ]
+][
+  Diese Funktion ist auch bereits vorimplementiert:
+  #link("https://hackage.haskell.org/package/base-4.21.0.0/docs/Data-List.html#v:-33--63-")[```hs (!?)``` in ```hs Data.List```].
 ]
 
 #test(level: 2)[
@@ -582,11 +570,10 @@
   - ```hs Node Empty 3 Empty !? [R] = Nothing```
   - ```hs Node (Node Empty 1 (Node Empty 2 Empty)) 3 Empty !? [L, R] = 2```
 
-  #extra[
-    Da Datenkonstruktoren in Haskell nicht überladen werden können, können hier
-    wir leider nicht ```hs Left``` und ```hs Right``` verwendet werden, solange
-    die Datenkonstruktoren des ```hs Either```-Typs im scope sind.
-  ]
+][
+  Da Datenkonstruktoren in Haskell nicht überladen werden können, können hier
+  wir leider nicht ```hs Left``` und ```hs Right``` verwendet werden, solange
+  die Datenkonstruktoren des ```hs Either```-Typs im scope sind.
 ]
 
 #test(level: 1)[
@@ -663,30 +650,26 @@
   kannst du z.B. mit einer Hilfsfunktion erzwingen -- oder du passt bei der
   Implementierung deiner Funktionen auf. Falls es dir für den Anfang einfacher
   fällt, ignoriere die Invariante erstmal.
-
-  #extra[
-    Wenn sogar ```hs length xs >= length ys``` für eine queue ```hs Q xs ys```
-    gewährleistet wird, ist die queue nochmal schneller. Dafür muss man die
-    Längen der Listen immer vorhalten. Mehr darüber findest du in
-    #link("https://www.cambridge.org/core/journals/journal-of-functional-programming/article/simple-and-efficient-purely-functional-queues-and-deques/7B3036772616B39E87BF7FBD119015AB")[Simple and efficient purely functional queues and deques]
-    von Chris Okasaki lesen. Falls dich funktionale Datenstrukturen allgemein
-    interessieren, sei dir
-    #link("https://www.cs.cmu.edu/~rwh/students/okasaki.pdf")[seine
-    Doktorarbeit] empfohlen.
+][
+  Wenn sogar ```hs length xs >= length ys``` für eine queue ```hs Q xs ys```
+  gewährleistet wird, ist die queue nochmal schneller. Dafür muss man die
+  Längen der Listen immer vorhalten. Mehr darüber findest du in
+  #link("https://www.cambridge.org/core/journals/journal-of-functional-programming/article/simple-and-efficient-purely-functional-queues-and-deques/7B3036772616B39E87BF7FBD119015AB")[Simple and efficient purely functional queues and deques]
+  von Chris Okasaki lesen. Falls dich funktionale Datenstrukturen allgemein
+  interessieren, sei dir
+  #link("https://www.cs.cmu.edu/~rwh/students/okasaki.pdf")[seine
+  Doktorarbeit] empfohlen.
+][
+  Nach $n$ ```hs enqueue```- Operationen in eine leere queue sieht diese wie
+  folgt aus
+  #align(center)[
+    ```hs Q [] [xn, ..., x1]```.
   ]
-
-  #hint[
-    Nach $n$ ```hs enqueue```- Operationen in eine leere queue sieht diese wie
-    folgt aus
-    #align(center)[
-      ```hs Q [] [xn, ..., x1]```.
-    ]
-    Wenn als Nächstes ```hs dequeue```-Operationen naiv ausgeführt werden,
-    müssten wir die ```hs enqueue```-Liste jedes Mal vollständig durchlaufen.
-    Wenn wir die ```hs dequeue```-Liste entsprechend verändern, können wir
-    mindestens die nächsten $n$ ```hs dequeue```-Operationen effizient
-    durchführen.
-  ]
+  Wenn als Nächstes ```hs dequeue```-Operationen naiv ausgeführt werden,
+  müssten wir die ```hs enqueue```-Liste jedes Mal vollständig durchlaufen.
+  Wenn wir die ```hs dequeue```-Liste entsprechend verändern, können wir
+  mindestens die nächsten $n$ ```hs dequeue```-Operationen effizient
+  durchführen.
 ]
 
 // ```hs
@@ -731,10 +714,8 @@
   die einen Teilbaum an der Wurzel rebalanciert, sollte der Teilbaum
   unbalanciert sein. Diese Funktion kannst du dann nutzen, um die gängigen
   Operationen auf Suchbäumen anzupassen.
-
-  #extra[
-    #link("https://de.wikipedia.org/wiki/AVL-Baum#Rebalancierung")[Rebalancierung eines AVL-Baum].
-  ]
+][
+  #link("https://de.wikipedia.org/wiki/AVL-Baum#Rebalancierung")[Rebalancierung eines AVL-Baum].
 ]
 
 // ```hs
@@ -1105,13 +1086,11 @@
   - ```hs length :: Tree a -> Int```,
   - ```hs maximum :: Tree Int -> Int``` und ```hs minimum :: Tree Int -> Int```, und
   - ```hs sum :: Tree Int -> Int``` und ```hs product :: Tree Int -> Int```.
-
-  #extra[
-    Diese Funktionen lassen sich auf alle faltbaren Datentypen verallgemeinern.
-    Dies wird mithilfe der
-    #link("https://hackage.haskell.org/package/base-4.21.0.0/docs/Data-Foldable.html")[Typklasse ```hs Foldable```]
-    festgehalten.
-  ]
+][
+  Diese Funktionen lassen sich auf alle faltbaren Datentypen verallgemeinern.
+  Dies wird mithilfe der
+  #link("https://hackage.haskell.org/package/base-4.21.0.0/docs/Data-Foldable.html")[Typklasse ```hs Foldable```]
+  festgehalten.
 ]
 
 #test(level: 2)[
@@ -1165,15 +1144,13 @@
   - ```hs foldr (\x ys -> if x `mod` 2 == 1 then x - 1 : ys else ys) [] xs```,
   - ```hs foldl (\ys x -> x : ys) [] xs``` und
   - ```hs flip (curry snd) x```.
-
-  #extra[
-    #link("https://www.youtube.com/watch?v=_oNgyUAEv0Q")["Your scientists were
-    so preoccupied with whether or not they could, that they didn't stop to
-    think if they should."] Jenseits solcher kleinen Verständnisfragen gilt
-    weiterhin, dass wir verständlichen Code schreiben wollen. Solche Ausdrücke
-    wie ```hs flip (curry snd) x``` sind häufig schwieriger zu verstehen -- auch
-    wenn es unterhaltsam ist, sich solche Ausdrücke auszudenken.
-  ]
+][
+  #link("https://www.youtube.com/watch?v=_oNgyUAEv0Q")["Your scientists were
+  so preoccupied with whether or not they could, that they didn't stop to
+  think if they should."] Jenseits solcher kleinen Verständnisfragen gilt
+  weiterhin, dass wir verständlichen Code schreiben wollen. Solche Ausdrücke
+  wie ```hs flip (curry snd) x``` sind häufig schwieriger zu verstehen -- auch
+  wenn es unterhaltsam ist, sich solche Ausdrücke auszudenken.
 ]
 
 // ```
@@ -1351,17 +1328,15 @@
   - parametrischen Polymorphismus,
   - ad-hoc Polymorphismus (Typklassen bzw. Überladung) und
   - lokale Definitionen.
+][
+  Typannotationen in Python sind nicht sonderlich elegant. Deshalb sind
+  nur die angegeben, um den parametrischen Polymorphismus zu identifizieren
+  und data classes anständig zu nutzen.
 
-  #extra[
-    Typannotationen in Python sind nicht sonderlich elegant. Deshalb sind
-    nur die angegeben, um den parametrischen Polymorphismus zu identifizieren
-    und data classes anständig zu nutzen.
-
-    Data classes und match statements brauchst du dir jenseits dieses Tests
-    nicht anschauen (wenn es dich nicht weiter interessiert). Es soll in dem
-    Test nur darum gehen, die Haskell-Konzepte zu erkennen. In
-    @typeclasses_in_python_remark kannst du das gleiche Programm in Java sehen.
-  ]
+  Data classes und match statements brauchst du dir jenseits dieses Tests
+  nicht anschauen (wenn es dich nicht weiter interessiert). Es soll in dem
+  Test nur darum gehen, die Haskell-Konzepte zu erkennen. In
+  @typeclasses_in_python_remark kannst du das gleiche Programm in Java sehen.
 ] <typeclasses_in_python>
 
 #test(level: 2)[
@@ -1608,12 +1583,10 @@
   für den Datentypen ```hs data Mat22 a = Mat22 a a a a```, der
   $(2 times 2)$-Matrizen repräsentieren soll -- ```hs abs, signum, fromInteger```
   kannst du z.B. komponentenweise implementieren.
-
-  #extra[
-    Oft sind an Funktionen von Typklassen Bedingungen bzw. Gesetze, die erfüllt
-    werden sollen, gekoppelt. Diese werden durch den Implementierungsvorschlag
-    von ```hs abs``` und ```hs signum``` nicht erfüllt.
-  ]
+][
+  Oft sind an Funktionen von Typklassen Bedingungen bzw. Gesetze, die erfüllt
+  werden sollen, gekoppelt. Diese werden durch den Implementierungsvorschlag
+  von ```hs abs``` und ```hs signum``` nicht erfüllt.
 ] <matmath>
 
 #test(level: 1)[
@@ -1676,30 +1649,26 @@
   d2 :: Num a => (D (D a) -> D (D b)) -> a -> b
   d2 f x = let (D (D _ _) (D _ d)) = f (D (D x 1) 1) in d
   ```
+][
+  Hier ist eine #link("https://de.wikipedia.org/wiki/Differentialrechnung#Zusammenfassung")[Zusammenfassung der Ableitungsregeln].
 
-  #extra[
-    Hier ist eine #link("https://de.wikipedia.org/wiki/Differentialrechnung#Zusammenfassung")[Zusammenfassung der Ableitungsregeln].
+  In @reverse_mode_ad_remark kannst du eine allgemeinere Funktion zum
+  Berechnen der Ableitung sehen.
+][
+  Wenn du Anlaufschwierigkeiten hast, helfen dir möglicherweise diese ersten
+  Implementierungen weiter.
+  ```hs
+  instance Num a => Num (D a) where
+    D x1 d1 + D x2 d2 = D (x1 + x2) (d1 + d2)  -- Summenregel
+    -- ...
 
-    In @reverse_mode_ad_remark kannst du eine allgemeinere Funktion zum
-    Berechnen der Ableitung sehen.
-  ]
+  instance Fractional a => Fractional (D a) where
+    -- ...
 
-  #hint[
-    Wenn du Anlaufschwierigkeiten hast, helfen dir möglicherweise diese ersten
-    Implementierungen weiter.
-    ```hs
-    instance Num a => Num (D a) where
-      D x1 d1 + D x2 d2 = D (x1 + x2) (d1 + d2)  -- Summenregel
-      -- ...
-
-    instance Fractional a => Fractional (D a) where
-      -- ...
-
-    instance Floating a => Floating (D a) where
-      exp (D x d) = D (exp x) (d * exp x)  -- Kettenregel und exp'(x) = exp(x)
-      -- ...
-    ```
-  ]
+  instance Floating a => Floating (D a) where
+    exp (D x d) = D (exp x) (d * exp x)  -- Kettenregel und exp'(x) = exp(x)
+    -- ...
+  ```
 ] <reverse_mode_ad>
 
 // ```hs
@@ -1816,13 +1785,11 @@ verallgemeinern kannst.
     ineffizient -- die Vordefinierte ist es auch. Woran liegt das? Welche der
     beiden Funktionen würdest du implementieren, wenn du nur eine implementieren
     dürftest und es um die beste Laufzeit ginge?
-
-  #extra[
-    Standarddefinitionen sind für den Anfang hilfreich, um mit minimalem
-    Aufwand alle Funktionen einer Typklasse verwenden zu können. Häufig findet
-    man aber konkrete Implementierungen für mehr als nur die notwendingen
-    Funktionen, da diese eine bessere Laufzeit haben.
-  ]
+][
+  Standarddefinitionen sind für den Anfang hilfreich, um mit minimalem
+  Aufwand alle Funktionen einer Typklasse verwenden zu können. Häufig findet
+  man aber konkrete Implementierungen für mehr als nur die notwendingen
+  Funktionen, da diese eine bessere Laufzeit haben.
 ]
 
 #test(level: 2, clock: true)[
@@ -1836,12 +1803,11 @@ verallgemeinern kannst.
       c = ifThenElse Nothing 8 9
    in a + b + c  -- 19
   ```
-  #extra[
-    Theoretisch könnten wir über eine Spracherweiterung des GHC sogar die
-    #link("https://ghc.gitlab.haskell.org/ghc/doc/users_guide/exts/rebindable_syntax.html")[Standardimplementierung von bedingten Ausdrücken ersetzen].
-    Das wollen wir aber ganz schnell wieder vergessen, genauso wie den Inhalt
-    dieses Tests, nachdem wir ihn bearbeitet haben.
-  ]
+][
+  Theoretisch könnten wir über eine Spracherweiterung des GHC sogar die
+  #link("https://ghc.gitlab.haskell.org/ghc/doc/users_guide/exts/rebindable_syntax.html")[Standardimplementierung von bedingten Ausdrücken ersetzen].
+  Das wollen wir aber ganz schnell wieder vergessen, genauso wie den Inhalt
+  dieses Tests, nachdem wir ihn bearbeitet haben.
 ]
 
 #test(level: 2, clock: true)[
@@ -1852,12 +1818,10 @@ verallgemeinern kannst.
   Definiere Typklassen ```hs Semigroup``` und ```hs Monoid```, die diese
   Strukturen implementieren. Gebe auch beispielhaft ein paar Instanzen für
   diese an.
-
-  #extra[
-    Diese Typklassen sind vorimplementiert in Haskell. Sie befinden sich in den
-    Modulen #link("https://hackage-content.haskell.org/package/base/docs/Data-Semigroup.html")[```hs Data.Semigroup```]
-    und #link("https://hackage-content.haskell.org/package/base/docs/Data-Monoid.html")[```hs Data.Monoid```].
-  ]
+][
+  Diese Typklassen sind vorimplementiert in Haskell. Sie befinden sich in den
+  Modulen #link("https://hackage-content.haskell.org/package/base/docs/Data-Semigroup.html")[```hs Data.Semigroup```]
+  und #link("https://hackage-content.haskell.org/package/base/docs/Data-Monoid.html")[```hs Data.Monoid```].
 ]
 
 #test(level: 1)[
@@ -1963,12 +1927,10 @@ verallgemeinern kannst.
   Mutierbarkeit, zyklische Datenstrukturen umsetzen? Versuche, dein Programm
   ähnlich zum Python-Programm aussehen zu lassen. Verwende dafür auch den
   (polymorphen) Datentyp ```py Node```.
-
-  #extra[
-    Die Technik ist als
-    #link("https://wiki.haskell.org/index.php?title=Tying_the_Knot")[Tying the Knot]
-    bekannt.
-  ]
+][
+  Die Technik ist als
+  #link("https://wiki.haskell.org/index.php?title=Tying_the_Knot")[Tying the Knot]
+  bekannt.
 ]
 
 #challenge(level: 2, clock: true)[
@@ -1996,13 +1958,12 @@ verallgemeinern kannst.
     ```hs diff :: Ord a => [a] -> [a] -> [a]```. Du darfst dabei annehmen, dass
     die Eingabelisten bereits sortiert sind.
   - Was berechnet ```hs 2 : map (\x -> 2 * x + 1) ([1..] `diff` preorder tree)```?
-
-  #extra[
-    Das Verfahren ist als #link("https://en.wikipedia.org/wiki/Sieve_of_Sundaram")[Sieb von Sundaram]
-    bekannt. Die Konstruktion der oben angegebenen Menge mithilfe von
-    unendlichen Bäumen ist nicht Teil des Verfahrens.
-  ]
+][
+  Das Verfahren ist als #link("https://en.wikipedia.org/wiki/Sieve_of_Sundaram")[Sieb von Sundaram]
+  bekannt. Die Konstruktion der oben angegebenen Menge mithilfe von
+  unendlichen Bäumen ist nicht Teil des Verfahrens.
 ]
+
 
 // ```hs
 // data Tree a = Node (Tree a) a (Tree a) | Empty
@@ -2428,20 +2389,18 @@ verallgemeinern kannst.
 
   Implementiere eine Funktion ```hs pathsum :: (Num a, Ord a) => [[a]] -> a```,
   die die minimale Pfadsumme berechnet.
-
-  #hint[
-    Die Rekursionsvorschrift ist gegeben durch
-    $
-    "pathsum"(i, j) = cases(
-      G_(0,0) & quad "falls" (i, j) = (0, 0)\,,
-      G_(i,0) + "pathsum"(i-1,0) & quad "falls" j = 0\,,
-      G_(0,j) + "pathsum"(0,j-1) & quad "falls" i = 0\,,
-      G_(i,j) + min("pathsum"(i-1,j), "pathsum"(i,j-1)) & quad "sonst"
-    )
-    $
-    für $i in {0, ..., m - 1}, j in {0, ..., n - 1}$. Die minimale Pfadsumme
-    ist dann $"pathsum"(m - 1, n - 1)$.
-  ]
+][][
+  Die Rekursionsvorschrift ist gegeben durch
+  $
+  "pathsum"(i, j) = cases(
+    G_(0,0) & quad "falls" (i, j) = (0, 0)\,,
+    G_(i,0) + "pathsum"(i-1,0) & quad "falls" j = 0\,,
+    G_(0,j) + "pathsum"(0,j-1) & quad "falls" i = 0\,,
+    G_(i,j) + min("pathsum"(i-1,j), "pathsum"(i,j-1)) & quad "sonst"
+  )
+  $
+  für $i in {0, ..., m - 1}, j in {0, ..., n - 1}$. Die minimale Pfadsumme
+  ist dann $"pathsum"(m - 1, n - 1)$.
 ]
 
 // ```hs
@@ -2636,7 +2595,7 @@ verallgemeinern kannst.
   - #link("https://learnyouahaskell.github.io/functors-applicative-functors-and-monoids.html")[Functors, Applicative Functors and Monoids -- Learn You a Haskell for Great Good!] (ohne "Monoids")
   - #link("https://learnyouahaskell.github.io/a-fistful-of-monads.html")[A Fistful of Monads -- Learn You a Haskell for Great Good!]
 
-  #extra[
+  #text(0.8em)[
     Wenn du Zeit übrig hast und es dich interessiert: Die Monoiden-Sektion ist
     interessent.
   ]
@@ -2739,12 +2698,10 @@ verallgemeinern kannst.
   - Implementiere ```hs fmap```, ```hs pure``` und ```hs (<*>)``` mithilfe von
     ```hs return``` und ```hs (>>=)```.
   - Implementiere ```hs fmap``` mithilfe von ```hs pure``` und ```hs (<*>)```.
-
-  #extra[
-    Die Erkenntnis dieses Tests kannst du nutzen, wenn es für dich einfacher
-    ist eine Monaden-Instanz anzugeben, anstatt Funktoren- und applikative
-    Funktor-Instanzen anzugeben oder um Zeit zu sparen.
-  ]
+][
+  Die Erkenntnis dieses Tests kannst du nutzen, wenn es für dich einfacher
+  ist eine Monaden-Instanz anzugeben, anstatt Funktoren- und applikative
+  Funktor-Instanzen anzugeben oder um Zeit zu sparen.
 ]
 
 #test(level: 1)[
@@ -2854,11 +2811,9 @@ verallgemeinern kannst.
   Implementiere diese Monade. Mache dir insbesondere Gedanken darüber, wie du
   Berechnungen dieses Typens sequenzierst und wie du die Zwischenergebnisse
   von zwei Berechnungen kombinierst.
-
-  #hint[
-    Die Implementierung dieser Monade ist sehr ähnlich zu der Implementierung
-    der ```hs Reader```-Monade, wie sie in @reader_monad angegeben ist.
-  ]
+][][
+  Die Implementierung dieser Monade ist sehr ähnlich zu der Implementierung
+  der ```hs Reader```-Monade, wie sie in @reader_monad angegeben ist.
 ]
 
 #test(level: 1)[
@@ -2953,27 +2908,23 @@ verallgemeinern kannst.
   - Implementiere eine ```hs Applicative```-Instanz für ```hs ZipList```.
   - Zeige, dass sowohl die ```hs Functor```- als auch die
     ```hs Applicative```-Instanz die üblichen geforderten Gesetze erfüllen.
-
-  #extra[
-    Das Umwickeln eines Typen mit ```hs newtype```, für den wir bereits
-    Typklasseninstanzen haben, ist ein gängiger Trick, um alternative Instanzen
-    für diese Typklassen bereitzustellen.
+][
+  Das Umwickeln eines Typen mit ```hs newtype```, für den wir bereits
+  Typklasseninstanzen haben, ist ein gängiger Trick, um alternative Instanzen
+  für diese Typklassen bereitzustellen.
+][
+  Das Identitätsgesetz wäre verletzt, wenn man ```hs pure``` wie gegeben
+  definieren würde. Betrachte folgendes Gegenbeispiel.
+  #align(center)[
+    ```hs
+       pure id      <*> ZipList [1, 2]
+    == ZipList [id] <*> ZipList [1, 2]
+    == ZipList [1]
+    /= ZipList [1, 2]
+    ```
   ]
-
-  #hint[
-    Das Identitätsgesetz wäre verletzt, wenn man ```hs pure``` wie gegeben
-    definieren würde. Betrachte folgendes Gegenbeispiel.
-    #align(center)[
-      ```hs
-         pure id      <*> ZipList [1, 2]
-      == ZipList [id] <*> ZipList [1, 2]
-      == ZipList [1]
-      /= ZipList [1, 2]
-      ```
-    ]
-    Es muss also dafür gesorgt sein, dass es genügend ```hs id```s in der linken
-    ```hs ZipList``` gibt.
-  ]
+  Es muss also dafür gesorgt sein, dass es genügend ```hs id```s in der linken
+  ```hs ZipList``` gibt.
 ]
 
 // TODO annotate steps properly and polish some steps
@@ -3084,12 +3035,10 @@ verallgemeinern kannst.
   - Implementiere ```hs guard``` mit den Gedanken der vorherigen Teilaufgabe.
   - Berechne ```hs 1 `safeDiv` 0 :: m Int``` für ```hs Maybe``` und ```hs []```.
     Bevor das möglich ist, benötigst du entsprechende ```hs MonadZero```-Instanzen.
-
-  #extra[
-    ```hs guard``` ist auf Basis von ```hs Alternative``` bzw.
-    ```hs MonadPlus``` implementiert. ```hs MonadZero``` ist nicht Teil der
-    Standardbibliothek, aber es ist definiert als Teil von ```hs MonadPlus```.
-  ]
+][
+  ```hs guard``` ist auf Basis von ```hs Alternative``` bzw.
+  ```hs MonadPlus``` implementiert. ```hs MonadZero``` ist nicht Teil der
+  Standardbibliothek, aber es ist definiert als Teil von ```hs MonadPlus```.
 ] <monadzero>
 
 // ```hs
@@ -3155,13 +3104,11 @@ verallgemeinern kannst.
     implementiere eine ```hs Functor```-, ```hs Applicative```-, ```hs Monad```-
     und ```hs MonadFail```-Instanz für den Typen
     ```hs data Result a = Failure String | Success a```.
-
-  #extra[
-    Der applikativen Funktor wird durch die Verwendung von Hilfsfunktion nicht
-    ausdrucksstärker! Das, was der applikative Funktor nicht leisten kann, wird
-    in die Hilfsfunktion ausgelagert. Teile der Hilfsfunktion werden durch die
-    Monade übernommen.
-  ]
+][
+  Der applikativen Funktor wird durch die Verwendung von Hilfsfunktion nicht
+  ausdrucksstärker! Das, was der applikative Funktor nicht leisten kann, wird
+  in die Hilfsfunktion ausgelagert. Teile der Hilfsfunktion werden durch die
+  Monade übernommen.
 ] <eval_exp>
 
 // ```hs
@@ -3285,12 +3232,10 @@ verallgemeinern kannst.
   - Fällt dir möglicherweise ein allgemeine Übersetzungsvorschrift für
     statements dieser Form unter der Verwendung von ```hs MonadFail``` aus
     @eval_exp ein?
-
-  #extra[
-    Der Haskell Report spezifiziert in der
-    #link("https://www.haskell.org/onlinereport/haskell2010/haskellch3.html#x8-470003.14")[Sektion über die ```hs do```-Notation],
-    wie diese übersetzt wird.
-  ]
+][
+  Der Haskell Report spezifiziert in der
+  #link("https://www.haskell.org/onlinereport/haskell2010/haskellch3.html#x8-470003.14")[Sektion über die ```hs do```-Notation],
+  wie diese übersetzt wird.
 ]
 
 #test(level: 1)[
@@ -3507,15 +3452,13 @@ verallgemeinern kannst.
   ]
   Es soll also
   ```hs sequence [f1, f2, ..., fn] s0 = ([y1, y2, ..., yn], sn)``` gelten.
-
-  #extra[
-    Diese Implementierung von ```hs sequence``` ist ein Spezialfall für die
-    #link("https://learnyouahaskell.github.io/for-a-few-monads-more.html#state")[```hs State```-Monade].
-    Mit der Intuition, dass wir hier Berechnungen sequenzieren, sollte es nicht
-    überraschend sein, dass ```hs s -> (a, s)``` eine Monade ist. Alternativ
-    kannst du die ```hs State```-Monade implementieren und das vorimplementierte
-    (oder von dir implementierte) Funktion ```hs sequence``` verwenden.
-  ]
+][
+  Diese Implementierung von ```hs sequence``` ist ein Spezialfall für die
+  #link("https://learnyouahaskell.github.io/for-a-few-monads-more.html#state")[```hs State```-Monade].
+  Mit der Intuition, dass wir hier Berechnungen sequenzieren, sollte es nicht
+  überraschend sein, dass ```hs s -> (a, s)``` eine Monade ist. Alternativ
+  kannst du die ```hs State```-Monade implementieren und das vorimplementierte
+  (oder von dir implementierte) Funktion ```hs sequence``` verwenden.
 ] <sequence_state>
 
 #challenge(level: 2, clock: true)[
@@ -3622,19 +3565,17 @@ verallgemeinern kannst.
         line("v2k-1", "v2k")
       })
     ]
+][
+  Falls du es nicht geschafft hast, in @sequence_state ```hs sequence```
+  zu implementieren, kannst du diese Implementierung verwenden.
 
-  #hint[
-    Falls du es nicht geschafft hast, in @sequence_state ```hs sequence```
-    zu implementieren, kannst du diese Implementierung verwenden.
-
-    ```hs
-    sequence :: [s -> (a, s)] -> s -> ([a], s)
-    sequence []     s = ([], s)
-    sequence (f:fs) s = let (y, s')   = f s
-                            (ys, s'') = sequence fs s'
-                         in (y:ys, s'')
-    ```
-  ]
+  ```hs
+  sequence :: [s -> (a, s)] -> s -> ([a], s)
+  sequence []     s = ([], s)
+  sequence (f:fs) s = let (y, s')   = f s
+                          (ys, s'') = sequence fs s'
+                       in (y:ys, s'')
+  ```
 ]
 
 // ```hs
@@ -3695,14 +3636,12 @@ verallgemeinern kannst.
   erfüllt ist. Diese Eigenschaft wird durch ein Prädikat formuliert.
 
   Implementiere ```hs suchThat```.
-
-  #text(0.8em)[
-    Es gibt ein paar QuickCheck-spezifische Fallstricke, die mit dem
-    ```hs size```-Parameter der Generatoren zu tun haben, die du bei deiner
-    Implementierung nicht beachten brauchst. Falls es dich interessiert, ist
-    hier die
-    #link("https://hackage-content.haskell.org/package/QuickCheck/docs/src/Test.QuickCheck.Gen.html#suchThat")[```hs suchThat```-Implementierung von QuickCheck].
-  ]
+][
+  Es gibt ein paar QuickCheck-spezifische Fallstricke, die mit dem
+  ```hs size```-Parameter der Generatoren zu tun haben, die du bei deiner
+  Implementierung nicht beachten brauchst. Falls es dich interessiert, ist
+  hier die
+  #link("https://hackage-content.haskell.org/package/QuickCheck/docs/src/Test.QuickCheck.Gen.html#suchThat")[```hs suchThat```-Implementierung von QuickCheck].
 ]
 
 // ```hs
@@ -3729,12 +3668,10 @@ verallgemeinern kannst.
   Jetzt werden keine Testeingaben verworfen.
 
   Überlege dir, wie die Lösung des Problems funktioniert und implementiere sie.
-
-  #extra[
-    QuickCheck hat viele solche
-    #link("https://hackage-content.haskell.org/package/QuickCheck/docs/Test-QuickCheck.html")[type-level modifiers],
-    die das Generator-Verhalten verändern.
-  ]
+][
+  QuickCheck hat viele solche
+  #link("https://hackage-content.haskell.org/package/QuickCheck/docs/Test-QuickCheck.html")[type-level modifiers],
+  die das Generator-Verhalten verändern.
 ]
 
 // ```hs
@@ -3799,14 +3736,12 @@ nähern uns dennoch der tatsächlichen Implementierung von QuickCheck stark an.
       ```
       Implementiere eine Funktion ```hs quickCheck :: Testable a => a -> Bool```,
       die eine Eigenschaft nimmt und prüft.
-
-  #extra[
-    In QuickCheck werden Generatoren genutzt, um zufällige Werte zu generieren.
-    Diese nutzen alle einen Zufallszahlengenerator, der als Zustand mit
-    weiteren Parametern durch alle ```hs arbitrary```-Aufrufe durchgetragen wird.
-    Das behandeln wir in der @quickcheck_prng, damit diese Challenge nicht zu
-    sehr ausartet.
-  ]
+][
+  In QuickCheck werden Generatoren genutzt, um zufällige Werte zu generieren.
+  Diese nutzen alle einen Zufallszahlengenerator, der als Zustand mit
+  weiteren Parametern durch alle ```hs arbitrary```-Aufrufe durchgetragen wird.
+  Das behandeln wir in der @quickcheck_prng, damit diese Challenge nicht zu
+  sehr ausartet.
 ] <quickcheck_noprng>
 
 // ```hs
@@ -3901,22 +3836,20 @@ nähern uns dennoch der tatsächlichen Implementierung von QuickCheck stark an.
     ```hs s``` der übergegebene Größen-Parameter der Generator-Funktion ist.
   - Passe ```hs quickCheck``` so an, dass ein Zufallsgenerator und ein
     Größenwert an die Generator-Funktionen weitergegeben wird.
-
-  #extra[
-    Die Vereinfachungen, die wir gemacht haben:
-    - einfacheren PRNG nutzen (anstatt SplitMix64)
-    - in ```hs Gen``` wird in QuickCheck der PRNG gesplittet, anstatt dass
-      er durchgereicht wird
-    - ```hs chooseInt```, so wie vorgeschlagen, erzeugt keine gleichverteilten
-      Zufallswerte in dem Intervall. Für Genaueres:
-      - #link("https://stackoverflow.com/questions/2509679/how-to-generate-a-random-integer-number-from-within-a-range")[How to generate a random integer number from within a range -- StackOverflow]
-      - #link("https://hackage-content.haskell.org/package/splitmix/docs/src/System.Random.SplitMix.html#nextInteger")[```hs nextInteger```] aus ```hs System.Random.SplitMax```
-    - wir haben einen festen seed gewählt (in SplitMix64 wird
-      #link("https://hackage-content.haskell.org/package/splitmix/docs/src/System.Random.SplitMix.Init.html#initialSeed")[initialSeed]
-      basierend auf der aktuellen Uhrzeit gesetzt, damit immer neue zufällige
-      Zahlen generiert werden, wenn das Programm erneut gestartet wird)
-    - und vieles mehr!
-  ]
+][
+  Die Vereinfachungen, die wir gemacht haben:
+  - einfacheren PRNG nutzen (anstatt SplitMix64)
+  - in ```hs Gen``` wird in QuickCheck der PRNG gesplittet, anstatt dass
+    er durchgereicht wird
+  - ```hs chooseInt```, so wie vorgeschlagen, erzeugt keine gleichverteilten
+    Zufallswerte in dem Intervall. Für Genaueres:
+    - #link("https://stackoverflow.com/questions/2509679/how-to-generate-a-random-integer-number-from-within-a-range")[How to generate a random integer number from within a range -- StackOverflow]
+    - #link("https://hackage-content.haskell.org/package/splitmix/docs/src/System.Random.SplitMix.html#nextInteger")[```hs nextInteger```] aus ```hs System.Random.SplitMax```
+  - wir haben einen festen seed gewählt (in SplitMix64 wird
+    #link("https://hackage-content.haskell.org/package/splitmix/docs/src/System.Random.SplitMix.Init.html#initialSeed")[initialSeed]
+    basierend auf der aktuellen Uhrzeit gesetzt, damit immer neue zufällige
+    Zahlen generiert werden, wenn das Programm erneut gestartet wird)
+  - und vieles mehr!
 ] <quickcheck_prng>
 
 // ```hs
