@@ -14,8 +14,8 @@
     "Logische Programmierung",
     "Haskell",
     "Prolog",
-    "Verständnisfragen"
-  )
+    "Verständnisfragen",
+  ),
 )
 
 #let config(
@@ -69,26 +69,26 @@
     box(
       fill: fill.lighten(90%),
       outset: (x: 0.6em - 0.25pt, y: 0.4em - 0.25pt),
-      stroke: 0.25pt + fill.darken(5%),
+      stroke: 0.25pt + fill.lighten(10%),
       radius: 1pt,
-      text(fill: fill.darken(5%), content)
-    )
+      text(fill: fill.darken(5%), content),
+    ),
   )
 }
 
 #let nemo-level-colors = (
   "1": blue,
   "2": orange,
-  "3": magenta
+  "3": magenta,
 )
 
 #let nemo-default-level-color = gray.darken(40%)
 
 #let nemo-get-level-color(level) = if level != none {
-    nemo-level-colors.at(str(level), default: nemo-default-level-color)
-  } else {
-    nemo-default-level-color
-  }
+  nemo-level-colors.at(str(level), default: nemo-default-level-color)
+} else {
+  nemo-default-level-color
+}
 
 #let nemo-make-titlefmt(level, clock) = {
   let color = nemo-get-level-color(level)
@@ -115,7 +115,7 @@
   tags: (),
   footnotes: (),
   hints: (),
-  extra: none
+  extra: none,
 )
 
 #let note(content) = {
@@ -127,70 +127,86 @@
 }
 
 #let nemo-boxfmt(
-    head,
-    name,
-    number,
-    body,
-    title: none,
-    level: none,
-    tags: (),
-    clock: false,
-    breakable: false,
-    extra: none,
-    hints: ()
-  ) = {
-    let fill = nemo-get-level-color(level)
-    let stroke = 0.25pt + fill
+  head,
+  name,
+  number,
+  body,
+  title: none,
+  level: none,
+  tags: (),
+  clock: false,
+  breakable: false,
+  extra: none,
+  hints: (),
+) = {
+  let fill = nemo-get-level-color(level)
+  let stroke = 0.25pt + fill.lighten(60%)
 
-    nemo-state.update(_ => nemo-new())
+  nemo-state.update(_ => nemo-new())
 
-    for (i, hint) in hints.enumerate() {
-      context {
-        let num = thmcounters.get().counters.at(lower(head)).last()
-        let hint-label = label("hint-" + str(num) + "-" + str(i))
-        let value = [#nemo-boxfmt("Hinweis zu", none, link(here())[#head #num], hint) #hint-label]
-        metadata((type: "hint", value: value))
-        nemo-state.update(state => {
-          state.hints.push(hint-label)
-          state
-        })
-      }
+  for (i, hint) in hints.enumerate() {
+    context {
+      let num = thmcounters.get().counters.at(lower(head)).last()
+      let hint-label = label("hint-" + str(num) + "-" + str(i))
+      let value = [#nemo-boxfmt(
+          "Hinweis zu",
+          none,
+          link(here())[#head #num],
+          hint,
+        ) #hint-label]
+      metadata((type: "hint", value: value))
+      nemo-state.update(state => {
+        state.hints.push(hint-label)
+        state
+      })
     }
+  }
 
-    let titlefmt = nemo-make-titlefmt(level, clock)
+  let titlefmt = nemo-make-titlefmt(level, clock)
 
-    let header = context {
-      let hint-labels = nemo-state.get().hints
-      grid(
-        columns: (1fr, auto),
-        grid.cell(titlefmt(head + " " + number) + if title != none { h(1em) + strong(title, delta: 200) }),
-        grid.cell(move(dy: 1.25pt, tags.join() + for (i, hint) in hint-labels.enumerate() { tag(fill: teal.darken(10%), link(hint, "Hinweis " + str(i + 1))) }))
-      )
-    }
-
-    let footer = context {
-      let (footnotes,) = nemo-state.get()
-      if footnotes.len() > 0 or extra != none and extra.fields().children.len() > 0 {
-        text(0.8em, {
-          line(length: 100%, stroke: stroke)
-          for (i, footnote) in footnotes.enumerate() {
-            super(str(i + 1)) + footnote + linebreak()
-          }
-
-          if extra != none and extra.fields().children.len() > 0 { block(extra) }
-        })
-      }
-    }
-
-    block(
-      inset: 1em,
-      radius: 1pt,
-      stroke: stroke,
-      breakable: breakable,
-      header + body + footer
+  let header = context {
+    let hint-labels = nemo-state.get().hints
+    grid(
+      columns: (1fr, auto),
+      grid.cell(
+        titlefmt(head + " " + number)
+          + if title != none { h(1em) + strong(title, delta: 200) },
+      ),
+      grid.cell(move(
+        dy: 1.25pt,
+        tags.join()
+          + for (i, hint) in hint-labels.enumerate() {
+            tag(fill: teal.darken(10%), link(hint, "Hinweis " + str(i + 1)))
+          },
+      )),
     )
   }
+
+  let footer = context {
+    let (footnotes,) = nemo-state.get()
+    if (
+      footnotes.len() > 0 or extra != none and extra.fields().children.len() > 0
+    ) {
+      text(0.8em, {
+        line(length: 100%, stroke: stroke)
+        for (i, footnote) in footnotes.enumerate() {
+          super(str(i + 1)) + footnote + linebreak()
+        }
+
+        if extra != none and extra.fields().children.len() > 0 { block(extra) }
+      })
+    }
+  }
+
+  block(
+    inset: 1em,
+    radius: 1pt,
+    stroke: stroke,
+    breakable: breakable,
+    header + body + footer,
+  )
 }
+
 
 #let nemo-env(identifier, head) = thmenv(
   identifier,
@@ -199,7 +215,7 @@
   nemo-boxfmt.with(head),
 ).with(supplement: head)
 
-#let args-to-dict(env) = (..args) => {
+#let args-to-named(env) = (..args) => {
   let body = args.at(0)
   let extra = if args.pos().len() >= 2 { args.at(1) } else { none }
   let hints = if args.pos().len() >= 3 { args.pos().slice(2) } else { () }
@@ -207,8 +223,8 @@
 }
 
 #let remark = nemo-env("remark", "Bemerkung").with(breakable: true)
-#let test = args-to-dict(nemo-env("test", "Test"))
-#let challenge = args-to-dict(nemo-env("challenge", "Challenge"))
+#let test = args-to-named(nemo-env("test", "Test"))
+#let challenge = args-to-named(nemo-env("challenge", "Challenge"))
 
 
 // boxes for references and self-evaluation
