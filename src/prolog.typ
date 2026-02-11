@@ -841,6 +841,18 @@ atomare Ausdrücke -- wenn nicht anders im Test oder in der Challenge eingeführ
 ]
 
 #test(level: 1)[
+  Wie ist Unifizierbarkeit definiert?
+]
+
+#test(level: 1)[
+  Wir haben eine Substitution als eine Abbildung $cal(X) -> cal(T)(cal(X))$
+  definiert, wobei $cal(X)$ eine Menge von Variablen und $cal(T)(cal(X))$ die
+  Menge aller Terme über $cal(X)$ sind. Angenommen eine Substitution sei eine
+  Abbildung $cal(T)(cal(X)) -> cal(T)(cal(X))$. Wieso ist dann der Begriff
+  der Unifizierbarkeit weniger brauchbar?
+]
+
+#test(level: 1)[
   Beim Durchführen des Unifikationsalgorithmus treten in zwei verschiedenen
   Iterationen $i, j$ mit $i < j$ die Substitutionen
   $ sigma_i = { X |-> f(Y) } "und" sigma_j = { X |-> a } $
