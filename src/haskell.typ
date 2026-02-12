@@ -2529,6 +2529,7 @@ verallgemeinern kannst.
   - ```hs f xss = [x | xs <- xss, length xs > 2, x <- xs, even x]```
   - ```hs f xs = [(x, y) | x <- xs, y <- [1..x], even (x + y)]```
   - ```hs f xs = [(x, y) | x <- xs, let y = x * x, y `mod` 3 == 0]```
+  Versuche diese Aufgabe mit und ohne Listenmonade zu lösen.
 ]
 
 #check[
