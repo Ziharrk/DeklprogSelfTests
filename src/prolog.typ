@@ -959,6 +959,13 @@ atomare Ausdrücke -- wenn nicht anders im Test oder in der Challenge eingeführ
 ]
 
 #test(level: 1)[
+  Wie können wir überprüfen, ob eine von uns berechnete Substitution
+  (z.B. als Ergebnis des Unifikationsalgorithmus) ein Unifikator ist? Wie
+  können wir Evidenz gewinnen, dass die Substitution wahrscheinlich keinen
+  Fehler enthält?
+]
+
+#test(level: 1)[
   Aus welcher Eigenschaft des Unifikationsalgorithmus folgt, dass ein
   berechneter Unifikator ein allgemeinster Unifikator ist?
 ]
