@@ -896,6 +896,14 @@
 ]
 
 #test(level: 1)[
+  Sectioning ist das Erstellen einer neuen Funktion durch teilweises Anwenden
+  eines Operators. Zum Beispiel entspricht ```hs (+ 1)``` der Inkrementfunktion
+  und ```hs (* 2)``` der Verdopplungsfunktion. Warum ist aber ```hs (- 1)```
+  keine gültige section? Welche Rolle spielt ```hs subtract``` in diesem
+  Kontext?
+]
+
+#test(level: 1)[
   Was ist partielle Applikation?
 ]
 
