@@ -2470,6 +2470,12 @@ verallgemeinern kannst.
 ]
 
 #test(level: 1)[
+  Um eine ```hs Enum```-Instanz anzugeben, benötigen wir mindestens Definitionen
+  für ```hs fromEnum :: a -> Int``` und ```hs toEnum :: Int -> a```. Wie können
+  wir aus denen, Definitionen für die übrigen Funktionen der Typklasse gewinnen?
+]
+
+#test(level: 1)[
   Gegeben sei der Datentyp
   #align(center)[```hs data Direction = North | East | South | West```.]
 
