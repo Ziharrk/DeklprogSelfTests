@@ -255,7 +255,7 @@
 #test(level: 1)[
   Beim Programmieren in Haskell vernachlässigen wir redundante Syntax.
   Gibt es in Haskell einen Unterschied zwischen ```hs f 1 2``` und
-  ```hs f(1, 2)```.
+  ```hs f(1, 2)```?
 ]
 
 #test(level: 1)[
