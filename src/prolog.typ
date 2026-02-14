@@ -1867,5 +1867,67 @@ Lerneffekt ist voraussichtlich sehr gering.
 //   albert_statement2(Month).
 // ```
 
+#line()
+
+Diese Aufgaben haben noch keinen Platz gefunden.
+
+#challenge(level: 2)[
+  Psst! Ja, du! Möchtest du ein Werkzeug zum Generieren von SLD-Bäumen?
+
+  Erweitere den Prolog-Interpreter um eine Funktion
+  ```hs graphviz :: SLDTree -> String```, die einen SLD-Baum nimmt und ihn z.B.
+  mithilfe von #link("https://graphviz.com/")[Graphviz] visualisiert.
+
+  Das Erzeugen des folgenden DOT-Codes ist vergleichsweise unkompliziert aus
+  dem Projekt-Code heraus möglich. Wenn du dir mehr anzeigen lassen möchtest,
+  musst du ein paar Stellen anpassen. Der ```hs SLDTree``` speichert nicht,
+  welche Regel verwendet wurde, bzw. die umbenannte Regel, die für die
+  Unifikation verwendet wurde. Dafür müsste der Typ entsprechend angepasst
+  werden. Je mehr du dir anzeigen lassen möchtest, desto zeitaufwendiger oder
+  schwieriger wird diese Challenge. Eine prototypische Implementierung, die das
+  untere Beispiel umsetzt, ist zügig möglich.
+
+  Folgender DOT-Code erzeugt den folgenden SLD-Baum. Graphviz unterstütz von
+  Haus aus nicht das Setzen von mathmatischen Formeln. Entweder du verzichtest
+  darauf oder du schaust dir z.B. #link("https://dot2tex.readthedocs.io/en/latest/")[dot2tex]
+  oder #link("https://github.com/Robotechnic/diagraph")[diagraph] an, je nach
+  dem ob du #link("https://www.latex-project.org/")[LaTeX] oder
+  #link("https://typst.app/")[Typst] nutzt bzw. nutzen möchtest. Wenn du keinen
+  DOT-Compiler hast, kannst du zum Debuggen deines generierten DOT-Codes
+  #link("https://dreampuf.github.io/GraphvizOnline/")[diese Seite] nutzen.
+
+  #grid(
+    columns: (1fr, 1fr),
+    [
+      #linebreak()
+      ```dot
+      digraph {
+        node [shape=none];
+        1 [label="?- =(X, 1)."];
+        2 [label="?- ."];
+
+        1 -> 2 [label="{X1 |-> 1, X |-> 1}"];
+      }
+      ```
+    ],
+    [
+      #align(center)[
+        #diagraph.raw-render(
+          ```dot
+            digraph {
+              node [shape=none];
+              1 -> 2 [label="{X_1 |-> 1, X |-> 1}"]
+            }
+          ```,
+          labels: (
+            "1": [$qq =(X, 1).$],
+            "2": [$qq .$]
+          )
+        )
+      ]
+    ],
+  )
+]
+
 #pagebreak(weak: true)
 
