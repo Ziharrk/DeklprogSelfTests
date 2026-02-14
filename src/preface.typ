@@ -11,21 +11,14 @@
 #context {
   let (test: (test,), challenge: (challenge,)) = thmcounters.final().counters
   [
-    Dieses Dokument enthält #test Fragen und #challenge kleinere bis
-    größere Aufgaben und andere Ressourcen zum Thema Deklarative Programmierung.
-    Die Inhalte dieses Dokuments sollen dir helfen, dein Verständnis über
-    Haskell und Prolog zu prüfen und zu stärken.
+    Dieses Dokument enthält #(test + challenge) Fragen und Aufgaben
+    unterschiedlicher Größe und andere Ressourcen zum Thema Deklarative
+    Programmierung. Die Inhalte dieses Dokuments sollen dir helfen, dein
+    Verständnis über Haskell und Prolog zu prüfen und zu stärken.
   ]
 }
 
-Größere Aufgaben haben wir als Challenges markiert. Diese Aufgaben benötigen
-öfter mehrere Konzepte und führen zusätzlich Konzepte ein, die nur für das
-Lösen der Aufgabe wichtig sind. Wenn die zusätzlichen Konzepte, dir zu sehr
-Schwierigkeiten bereiten, überspringe die entsprechende Frage oder Aufgabe.
-Die Nomenklatur der Aufgaben ist aktuell vielleicht noch etwas willkürlich,
-da es Tests gibt, die wie Challenges wirken -- und möglicherweise sogar
-andersherum. Als zusätzliche Hilfestellung ist die Schwierigkeit jeder Aufgabe
-grob in drei Stufen aufgeteilt, die sich wie folgt auszeichnen sollen.
+Die Aufgaben sind grob in drei Schwierigkeitsstufen eingeteilt:
 - #nemo-make-titlefmt(1, false)("Stufe 1") #h(0.3em) Aufgaben zur Überprüfung
   grundlegender Kenntnisse. Die Lösung erfolgt durch direktes Anwenden
   bekannter Regeln oder Verfahren und erfordert kein vertieftes Nachdenken.
@@ -36,8 +29,12 @@ grob in drei Stufen aufgeteilt, die sich wie folgt auszeichnen sollen.
   vertieftes Verständnis voraussetzen. Die Lösung erfordert mehrere
   Gedankenschritte, das Verknüpfen verschiedener Inhalte sowie eigenständigen
   Lösungsstrategien.
-Tests, von denen wir erwarten, dass sie euch länger als 10min beschäftigen,
-sind mit #hi("clock", solid: false) markiert, Challenges bei 30min.
+
+Herausforderndere Aufgaben sind als Challenges gekennzeichet. Sie erfordern
+häufig das Verständnis mehrere Konzepte und führen teilweise zusätzliche Inhalte
+ein, die speziell für deren Bearbeitung relevant sind. Tests, deren Bearbeitung
+voraussichtlich mehr als 10 Minuten dauern, sind mit #hi("clock", solid: false)
+markiert, Challenges bei 30min.
 
 Für die Selbsttests wird es absehbar keine Lösungen geben. Stattdessen möchten
 wir dich ermutigen, deine Lösungen mit anderen Mitstudierenden oder
