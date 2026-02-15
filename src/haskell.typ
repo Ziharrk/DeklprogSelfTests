@@ -1155,6 +1155,15 @@
   replace x = foldTree Empty (const . flip Node x)
   ```
   Zeige, dass ```hs const . flip Node x = \l y r -> Node l x r``` ist.
+][
+  Es gibt Programmierende, die einen sogenannten
+  #link("https://wiki.haskell.org/Pointfree")[punktfreien Stil] bevorzugen.
+  Weil es teilweise unterhaltsam sein kann, sich darüber Gedanken zu machen,
+  was eine äquivalente punktfreie Funktion zu einem Lambda-Ausdruck sein könnte,
+  steht hier eben ```hs const . flip Node x``` statt
+  ```hs \l _ r -> Node l x r```. Falls du damit herumspielen möchtest, findest
+  du hier #link("https://pointfree.io/")[eine Seite], auf der du Haskell-Code in
+  punktfreien Haskell-Code übersetzen kannst.
 ]
 
 // ```hs
