@@ -2662,6 +2662,15 @@ verallgemeinern kannst.
   Implementiere eine Funktion ```hs readInt :: IO Int```, die genau dies tut.
 ]
 
+#test(level: 1)[
+  Implementiere ein Haskell-Programm, dass eine Eingabe wörterweise liest.
+  Dabei soll gezählt werden, wie viele abwechselnde Vorkommen es der Wörter
+  "Liebe" und "Harry" als Teilfolge in der Eingabe gibt. Jedes der Wörter soll
+  einzeln gezählt werden. Zum Beispiel soll das Programm für folgende Eingabe
+  #align(center)[Liebe Harry Liebe Liebe Voldemort]
+  3 ausgeben.
+]
+
 #test(level: 2)[
   Implementiere ein Programm, das Zahlen aus einer Datei aufsummiert, bzw.
   implementiere eine Funktion ```hs sumFile :: FilePath -> IO Int```.
@@ -3886,9 +3895,9 @@ nähern uns dennoch der tatsächlichen Implementierung von QuickCheck stark an.
   #link("https://en.wikipedia.org/wiki/Xorshift")[Xorshift] erzeugt
   Pseudozufallszahlen nach dem folgenden Schema:
   $
-  x &<- x plus.o (x << 13) \
-  x &<- x plus.o (x >> 7) \
-  x &<- x plus.o (x << 17) \
+  x &<- x plus.circle (x << 13) \
+  x &<- x plus.circle (x >> 7) \
+  x &<- x plus.circle (x << 17) \
   $
   wobei $x$ eine 64-Bit Ganzzahl ist.
 
