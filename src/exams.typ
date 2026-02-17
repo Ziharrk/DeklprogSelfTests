@@ -9,9 +9,9 @@
   - Partiell definierte Funktionen häufig nicht erkannt.
     Welche Eingabe könnte zu keinem Ergebnis führen?
   - Korrekte Substitutionen können mithilfe einer Probe identifiziert werden.
-    Wenn Zweifel besteht, können diese schnell auf einem Schmierzettel 
+    Wenn Zweifel besteht, können diese schnell auf einem Schmierzettel
     durchgeführt werden.
-  - ```SWI-Prolog ?- X = Y, Y = X``` ist im Vergleich zu 
+  - ```SWI-Prolog ?- X = Y, Y = X``` ist im Vergleich zu
     ```SWI-Prolog ?- X >= Y, Y >= X``` beweisbar. In der ersten Anfrage geht
     es um die Unifizierbarkeit von Variablen, im zweiten zuerst darum, dass
     ```SWI-Prolog X``` und ```SWI-Prolog Y``` berechnet werden können. Zum
@@ -23,7 +23,7 @@
     kannst du als Parameter einer Hilfsfunktion mitführen (siehe @clz_popcnt).
     So etwas wie ```hs count = count + 1``` gibt es in Haskell nicht.
   - ```hs getLine``` entfernt den Zeilenumbruch am Ende einer Zeile.
-  - ADT: siehe @timer_adt_solution
+  - ADT: siehe @timer_adt_solution (bzw. zuerst @timer_adt)
 - *Aufgabe 3*
   - In ```hs fmap f (Fake fx) = Fake (fmap f fx)``` wurde häufiger entweder
     der Konstruktor ```hs Fake``` oder ```hs fmap``` vergessen.
@@ -32,7 +32,7 @@
     ```hs fmap id = id``` und ```hs m >>= return = m```. So sieht man, ob z.B.
     in ```hs Fake mx >>= f = mx >>= f``` ein Konstruktor fehlt oder nicht.
   - Mit korrekter ```hs (>>=)```-Implementierung sieht man dann auch, dass
-    das innerste ```hs Real 42``` mit dem Ausdruck rechts im Lambda ersetzt 
+    das innerste ```hs Real 42``` mit dem Ausdruck rechts im Lambda ersetzt
     wird, und ```hs Fake (Fake (Real 73))``` herauskommt. Hier ist häufiger ein
     ```hs Fake```-Konstruktor verloren gegangen.
 - *Aufgabe 4*
