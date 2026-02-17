@@ -1452,6 +1452,31 @@
   Gesetze erfüllen, damit sie eine sinnvolle Semantik beschreiben?
 ]
 
+#test(level: 1)[
+  Die #link("https://de.wikipedia.org/wiki/Pomodoro-Technik")[Pomodoro-Technik]
+  ist eine Zeitmanagement-Methode, die einen Kurzzeitwecker nutzt, um Arbeits-
+  und Pauseabschnite einzuteilen. Um ein Informatik-Studierenden-Klischee zu
+  bedienen, entscheidest dich den Timer selber zu bauen. Da du nicht planlos
+  in die Implementierung stürzen möchtest, formulierst du zuerst einen ADT.
+
+  Der ADT soll folgende Operationen unterstützen. Es soll möglich sein, ...
+  - ... einen Timer mit einer Zeiteingabe zu starten -- die Zeiteingabe soll aus
+    Stunden und Minuten bestehen,
+  - die verbleibende Zeit auf dem Timer abzufragen, und
+  - zu prüfen, ob der Alarm bereits ausgelöst wurde. Der Alarm wird gelöst,
+    sobald die verbleibende Zeit vorüber ist.
+  - Um das Vergehen von Zeit zu modellieren, soll der ADT weiter eine Funktion
+    bereitstellen, die eine Sekunde vergehen lässt. Wenn keine Zeit mehr
+    verblieben ist, dann hat diese Operation keine Auswirkung.
+
+  Gebe für jede Funktion mindestens ein Gesetz an.
+][
+  Einen Lösungsvorschlag für diese Aufgabe findest du im Anhang dieses Dokument
+  als @timer_adt_solution. Weiter findest du dort auch Anmerkungen zu Fehlern,
+  die in der Klausur des 1. Prüfungszeitraums WS25/26 übertragen auf diese
+  Aufgabe gemacht wurden.
+] <timer_adt>
+
 #challenge(level: none, clock: true)[
   Gebe folgende abstrakte Datentypen an: Paar, Menge, stack, queue,
   double-ended queue, knotenbeschrifteter Binärbaum, priority queue.
