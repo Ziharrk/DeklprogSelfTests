@@ -50,6 +50,10 @@
   - Schaut insbesondere nochmal nach, wie sich die Signatur der Faltungsfunktion
     aus dem Datentypen ergibt.
 - *Aufgabe 5*
-  - ...
+  - Arithmetik nicht in richtiger Reihenfolge (auf der rechten Seite muss
+    alles hinreichend instanziiert zum Rechnen sein)
+  - ```SWI-Prolog f(X + 1, Y div 2)``` gibt Terme an das Prädikat
+    ```SWI-Prolog f```, und nicht die ausgerechneten Ergebnisse. Diese müssen
+    immer mit ```SWI-Prolog is/2``` berechnet werden.
 - *Aufgabe 6*
   - ...
