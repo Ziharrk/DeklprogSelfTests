@@ -38,7 +38,7 @@
   set raw(syntaxes: "../syntaxes/prolog.sublime-syntax")
 
   show link: underline
-  show heading.where(level: 1): set block(below: 1.25em)
+  show heading: set block(above: 1.4em, below: 1em)
   show math.equation.where(block: false): box
 
   show: thmrules
