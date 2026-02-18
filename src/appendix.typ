@@ -59,11 +59,12 @@ verpasst nichts.
   - ```hs s > 0            <=> display (tick (new h s)) == (h, s - 1)```
   - ```hs s == 0 && h > 0  <=> display (tick (new h s)) == (h - 1, 59)```
   - ```hs s == 0 && h == 0 ==> display (tick (new h s)) == (0, 0)```
+] <timer_adt_solution>
 
-  #line(stroke: 0.25pt)
-
-  Zu häufig gemachten Fehlern in der Klausur des 1. Prüfungszeitraums WS25/26
-  gehörten unter anderem:
+#remark[
+  In der Klausur des 1. Prüfungszeitraums WS25/26 gab es eine ADT-Aufgabe, in
+  der eine Uhr modelliert werden sollte. Die häufigsten Fehler sind hier auf
+  @timer_adt bzw. @timer_adt_solution übertragen.
   - Die Definition von Konstruktoren als Teil ```hs data```-Deklaration des ADT.
     ```hs data Timer = Timer Int Int``` ist bereits eine Implementierung. Eine
     wesentliche Eigenschaft eines ADTs ist, sich über Implementierungsdetails
@@ -82,5 +83,5 @@ verpasst nichts.
     das Gesetz ```hs t1 == t2 <=> display t1 == display t2```. Es gilt zwar,
     wann zwei Timer gleich sind, aber sagt nichts darüber aus, wie ein Timer
     funktionieren soll.
-] <timer_adt_solution>
+] <timer_adt_mistakes>
 

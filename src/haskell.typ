@@ -1301,6 +1301,9 @@
     ```hs foldr (+) 0 ((Leaf 1 :+: Leaf 2) :+: Leaf 3) = 1 + (2 + (3 + 0))```
   ]
   gelten.
+][
+  Das ```hs foldr``` für ```hs Tree a``` entspricht nicht der natürlichen
+  Faltung auf diesem Typen.
 ]
 
 #test(level: 2, breakable: true)[
@@ -1473,9 +1476,9 @@
   Gebe für jede Funktion mindestens ein Gesetz an.
 ][
   Einen Lösungsvorschlag für diese Aufgabe findest du im Anhang dieses Dokument
-  als @timer_adt_solution. Weiter findest du dort auch Anmerkungen zu Fehlern,
-  die in der Klausur des 1. Prüfungszeitraums WS25/26 übertragen auf diese
-  Aufgabe gemacht wurden.
+  als @timer_adt_solution. Weiter findest du in @timer_adt_mistakes auch
+  Anmerkungen zu Fehlern, die in der Klausur des 1. Prüfungszeitraums WS25/26
+  übertragen auf diese Aufgabe gemacht wurden.
 ] <timer_adt>
 
 #challenge(level: none, clock: true)[
