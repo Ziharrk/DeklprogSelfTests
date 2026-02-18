@@ -1456,8 +1456,9 @@
   Die #link("https://de.wikipedia.org/wiki/Pomodoro-Technik")[Pomodoro-Technik]
   ist eine Zeitmanagement-Methode, die einen Kurzzeitwecker nutzt, um Arbeits-
   und Pauseabschnite einzuteilen. Um ein Informatik-Studierenden-Klischee zu
-  bedienen, entscheidest dich den Timer selber zu bauen. Da du nicht planlos
-  in die Implementierung stürzen möchtest, formulierst du zuerst einen ADT.
+  bedienen, entscheidest dich den Timer selber zu bauen. Da du dich nicht
+  planlos in die Implementierung stürzen möchtest, formulierst du zuerst einen
+  ADT.
 
   Der ADT soll folgende Operationen unterstützen. Es soll möglich sein, ...
   - ... einen Timer mit einer Zeiteingabe zu starten -- die Zeiteingabe soll aus
