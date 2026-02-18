@@ -2846,6 +2846,13 @@ verallgemeinern kannst.
 ]
 
 #test(level: 1)[
+  Gegeben sei der Datentyp
+  #align(center)[```hs data NonEmpty a = a :| [a]```.]
+  Gebe ```hs Functor```-, ```hs Applicative```- und ```hs Monad```-Instanzen
+  für diesen Typen an.
+]
+
+#test(level: 1)[
   Um zu verifizieren, dass die ```hs Functor```-Gesetze für z.B. den Typ
   ```hs Maybe a``` gelten, müssen wir
   - das Identitätsgesetz ```hs fmap id = id``` und
