@@ -625,6 +625,25 @@
   wollen.
 ]
 
+#test(level: 1)[
+  Manche Funktionen lassen sich nur partiell sinnvoll definieren. Implementiere
+  die Funktionen
+  - ```hs head, last :: [a] -> a```, die das erste und letzte Element einer
+    Liste zurückgeben,
+  - ```hs init, tail :: [a] -> [a]```, die die ersten und letzten $n - 1$
+    Elemente einer $n$-elementigen Liste zurückgeben,
+  - ```hs (!!) :: [a] -> Int -> a```, das ein Element an einer bestimmten
+    Position in einer Liste zurückgibt,
+  - ```hs minimum, maximum :: Ord a => [a] -> a```, die das Minimum bzw. Maximum
+    in einer Liste zurückgeben,
+  - ```hs fromJust :: Maybe a -> a```, dass das Element aus einem
+    ```hs Just```-Wert herausholt,
+  und überlege dir, für welche Elemente des Definitionsbereichs du keine
+  sinnvolle Regel angeben kannst. Überlege es dir ebenso für die Funktionen
+  ```hs div, mod :: Int -> Int -> Int``` und
+  ```hs read :: Read a => String -> a```, die du nicht implementieren musst.
+] <test_partial_functions>
+
 #check[
   Ich bin in der Lage, ...
   - (parametrischen) Polymorphismus zu erklären,
