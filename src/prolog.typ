@@ -749,7 +749,7 @@
 ]
 
 
-== Rechnen in der Logikprogrammierung
+== Rechnen in der Logikprogrammierung <how_prolog>
 
 #refs[
   - Skript: Logische Programmierung, Rechnen in der Logikprogrammierung

@@ -72,4 +72,12 @@
     ```SWI-Prolog f```, und nicht die ausgerechneten Ergebnisse. Diese müssen
     immer mit ```SWI-Prolog is/2``` berechnet werden.
 - *Aufgabe 6*
-  - ...
+  - $sigma_1 = {X |-> Y, Y |-> 1} != {X |-> 1, Y |-> 1} = sigma_2$, denn
+    $sigma_1((X, Y)) = (Y, 1) != (1, 1) = sigma_2((X, Y))$.
+  - Insbesondere kann ${X |-> Y} compose {Y |-> 1}$ nicht während der
+    Durchführung des Unifikationsalgorithmus auftreten.
+  - Andersherum, ${Y |-> 1} compose {X |-> Y} = {Y |-> 1, X |-> 1}$ und nicht
+    ${Y |-> 1, X |-> Y}$.
+  - Im Kapitel #link(<how_prolog>)[Rechnen in der Logikprogrammierung] findest
+    du ganz viele Selbsttests, die dich für diese Fehler sensibilisieren können,
+    sodass du sie reichtzeitig erkennst.
