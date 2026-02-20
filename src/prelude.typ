@@ -3,6 +3,7 @@
 #import "@preview/diagraph:0.3.6"
 #import "@preview/finite:0.5.0"
 #import "@preview/heroic:0.1.0": *
+#import "@preview/suiji:0.5.1"
 
 #let meta = (
   title: "Verständnisfragen zum Modul Deklarative Programmierung",
@@ -75,6 +76,44 @@
     ),
   )
 }
+
+// https://github.com/typst/typst/issues/1988#issuecomment-2466619917
+#let get-now() = {
+  let now-str = if "now" in sys.inputs {
+    sys.inputs.now
+  } else {
+    datetime.today().display("[year] [month] [day]") + " 00 00 00"
+  }
+  let (year, month, day, hour, minute, second) = now-str.split(" ").map(int)
+  datetime(year: year, month: month, day: day, hour: hour, minute: minute, second: second)
+}
+
+#let epoch = datetime(year: 1970, month: 01, day: 01, hour: 0, minute: 0, second: 0)
+#let rng = state("rng", suiji.gen-rng(int((get-now() - epoch).seconds())))
+
+#let hl() = {
+  let animals = (
+    emoji.dog,
+    emoji.bird,
+    emoji.mammoth,
+    emoji.otter,
+    emoji.owl,
+    emoji.panda,
+    emoji.parrot,
+    emoji.penguin,
+    emoji.seal,
+    emoji.sloth,
+    emoji.bear,
+    emoji.turtle,
+    emoji.whale.spout
+  )
+  context {
+    let (nrng, k) = suiji.integers(rng.get(), low: 0, high: animals.len() - 1)
+    rng.update(_ => nrng)
+    box(inset: (left: .6em - 0.25pt), scale(x: 150%, y: 150%, animals.at(k)))
+  }
+}
+
 
 #let nemo-level-colors = (
   "1": blue,

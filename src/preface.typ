@@ -36,6 +36,11 @@ ein, die speziell für deren Bearbeitung relevant sind. Tests, deren Bearbeitung
 voraussichtlich mehr als 10 Minuten dauern, sind mit #hi("clock", solid: false)
 markiert, Challenges bei 30min.
 
+In dieses Dokument haben es bereits sehr viele Selbsttests geschafft. Das kann
+überwältigend wirken. Um dem etwas entgegenzuwirken und um dir einen ersten
+Lernpfad zu zeigen, haben wir eine Auswahl von diesen mit Tier-Emojis
+hervorgehoben.
+
 Für die Selbsttests wird es absehbar keine Lösungen geben. Stattdessen möchten
 wir dich ermutigen, deine Lösungen mit anderen Mitstudierenden oder
 Mitarbeitenden zu diskutieren, solltest du offene Fragen haben -- oder du

@@ -44,7 +44,7 @@
   Welche Vorteile und Nachteile haben streng getypte Programmiersprachen?
 ]
 
-#test(level: 1)[
+#test(level: 1, tags: (hl(),))[
   In imperativen Programmiersprachen sind Variablen Namen für Speicherzellen,
   deren Werte zum Beispiel in Schleifen verändert werden können. Als Beispiel
   betrachte die Funktionen ```py clz``` und ```py popcnt```.
@@ -105,7 +105,7 @@
   Mithilfe welcher Konstrukte kannst du diese lokal definieren?
 ]
 
-#test(level: 1)[
+#test(level: 1, tags: (hl(),))[
   Das Potenzieren einer Zahl $x$ (oder eines Elements einer Halbgruppe) mit
   einem natürlich-zahligen Exponenten $n$ ist mit $cal(O)(log n)$
   Multiplikationen möglich. Dafür betrachten wir
@@ -345,7 +345,7 @@
 // gcd a b = product (pf a `intersection` pf b)
 // ```
 
-#challenge(level: 1)[
+#challenge(level: 1, tags: (hl(),))[
   Die Ableitung einer Funktion $f : RR -> RR$ kann mithilfe des
   Differenzenquotienten $(f(x+h)-f(x))/h$ für kleines $h$ approximiert werden.
   Ein andere Methode zur Berechnung der Ableitung ist symbolisches Differenzen
@@ -598,7 +598,7 @@
   sein?
 ]
 
-#test(level: 1)[
+#test(level: 1, tags: (hl(),))[
   Da viele von euch Neulinge sind, wenn es um das Programmieren in Haskell geht,
   brauchen wir eine neue Sammlung von Phrasen, die wir nutzen können, um
   natürlich-sprachliche Anweisungen in Haskell zu formulieren. Finde
@@ -1474,7 +1474,7 @@
   Gesetze erfüllen, damit sie eine sinnvolle Semantik beschreiben?
 ]
 
-#test(level: 1)[
+#test(level: 1, tags: (hl(),))[
   Die #link("https://de.wikipedia.org/wiki/Pomodoro-Technik")[Pomodoro-Technik]
   ist eine Zeitmanagement-Methode, die einen Kurzzeitwecker nutzt, um Arbeits-
   und Pauseabschnite einzuteilen. Um ein Informatik-Studierenden-Klischee zu
@@ -1807,7 +1807,7 @@ verallgemeinern kannst.
   ```hs Eq```-Instanz erfüllen?
 ]
 
-#test(level: 2, clock: true)[
+#test(level: 2, clock: true, tags: (hl(),))[
   Gegeben sei der Typ
   #align(center)[```hs data Tree a b c = Empty | Leaf a | Node (Tree a b c) Int c (Tree a b c)```.]
   Implementiere eine ```hs Eq```-Instanz für diesen Typen. Die Gleichheit soll
@@ -1830,7 +1830,7 @@ verallgemeinern kannst.
   ```hs Ord```-Instanz erfüllen?
 ]
 
-#test(level: 2, clock: true)[
+#test(level: 2, clock: true, tags: (hl(),))[
   Gegeben sei der Typ
   #align(center)[```hs data Tree a b c = Empty | Leaf a | Node (Tree a b c) Int c (Tree a b c)```.]
   Implementiere eine ```hs Ord```-Instanz für diesen Typen. Die Ordnung soll
