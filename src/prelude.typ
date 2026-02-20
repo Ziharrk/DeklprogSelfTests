@@ -108,10 +108,13 @@
     emoji.whale.spout
   )
   context {
-    let (nrng, k) = suiji.integers(rng.get(), low: 0, high: animals.len() - 1)
-    rng.update(_ => nrng)
+    let (_, k) = suiji.integers(rng.get(), low: 0, high: animals.len() - 1)
     box(inset: (left: .6em - 0.25pt), scale(x: 150%, y: 150%, animals.at(k)))
   }
+
+  // does not trigger layout iteration
+  // TODO better way to advance rng?
+  rng.update(_rng => suiji.integers(_rng, low: 0, high: animals.len() - 1).at(0))
 }
 
 
