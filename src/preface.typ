@@ -38,7 +38,7 @@ markiert, Challenges bei 30min.
 
 In dieses Dokument haben es bereits sehr viele Selbsttests geschafft. Das kann
 überwältigend wirken. Um dem etwas entgegenzuwirken und um dir einen ersten
-Lernpfad zu zeigen, haben wir eine Auswahl von diesen mit Tier-Emojis
+Lernpfad zu zeigen, haben wir eine Auswahl von Aufgaben mit Tier-Emojis
 hervorgehoben.
 
 Für die Selbsttests wird es absehbar keine Lösungen geben. Stattdessen möchten
