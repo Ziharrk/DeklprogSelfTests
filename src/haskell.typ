@@ -73,6 +73,21 @@
   im Allgemeinen der Zustand hin?
 ] <clz_popcnt>
 
+#test(level: 2, tags: (hl(),))[
+  Um ein weiteres Glücksspiel neben Blackjack in diesem Modul vorzustellen,
+  implementieren wir in diesem Test einen einarmigen Banditen. Diese soll einen
+  initialen Zustand haben und als Ergebnis ein Tripel und einen neuen Zustand
+  liefern. Sowohl der Zustand als auch das Tripel soll aus Ganzzahlen bestehen.
+
+  - Überlege dir welche Signatur die Funktion haben muss. Dafür kannst du die
+    Überlegungen aus @clz_popcnt fortführen.
+  - Sei $s$ der initiale Zustand, dann soll das Tripel
+    $ ((s + 5) mod 3, (s + 7) mod 3, (s + 11) mod 3) $
+    sein und der neue Zustand $s + 11$. Implementiere eine Funktion
+    ```hs slotMachine``` mit deinem überlegten Typ.
+
+]
+
 #test(level: 1)[
   Auf was müssen wir achten, wenn wir eine rekursive Funktion definieren?
   Die Antwort ist abhängig von dem, was die Funktion berechnen soll. Denke über
