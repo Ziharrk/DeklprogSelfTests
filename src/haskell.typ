@@ -85,7 +85,6 @@
     $ ((s + 5) mod 3, (s + 7) mod 3, (s + 11) mod 3) $
     sein und der neue Zustand $s + 11$. Implementiere eine Funktion
     ```hs slotMachine``` mit deinem überlegten Typ.
-
 ]
 
 #test(level: 1)[
