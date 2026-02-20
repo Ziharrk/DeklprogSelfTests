@@ -3,7 +3,7 @@
 #import "@preview/diagraph:0.3.6"
 #import "@preview/finite:0.5.0"
 #import "@preview/heroic:0.1.0": *
-#import "@preview/suiji:0.5.1"
+#import "@preview/suiji:0.4.0"
 
 #let meta = (
   title: "Verständnisfragen zum Modul Deklarative Programmierung",
