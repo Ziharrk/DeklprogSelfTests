@@ -84,7 +84,10 @@
   - Sei $s$ der initiale Zustand, dann soll das Tripel
     $ ((s + 5) mod 3, (s + 7) mod 3, (s + 11) mod 3) $
     sein und der neue Zustand $s + 11$. Implementiere eine Funktion
-    ```hs slotMachine``` mit deinem überlegten Typ.
+    ```hs slotMachine``` mit deinem überlegten Typ. Du hast gewonnen, wenn
+    alle Zahlen des Tripels gleich sind.
+][
+  Casinos lieben diesen Spiel-Automaten.
 ]
 
 #test(level: 1)[
@@ -217,6 +220,8 @@
 
 #test(level: 1)[
   Wie definieren wir Funktionen?
+][
+  Frank ist traurig, wenn du insbesondere diese Frage nicht beantworten kannst.
 ]
 
 #test(level: 1)[
