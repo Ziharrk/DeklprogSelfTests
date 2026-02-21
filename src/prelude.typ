@@ -77,6 +77,9 @@
   )
 }
 
+#let tag-level-up = tag(fill: blue, "Level Up")
+#let tag-deep-dive = tag(fill: purple, "Deep Dive")
+
 // https://github.com/typst/typst/issues/1988#issuecomment-2466619917
 #let get-now() = {
   let now-str = if "now" in sys.inputs {

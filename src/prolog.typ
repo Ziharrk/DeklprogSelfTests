@@ -1594,7 +1594,7 @@ Seite gefunden haben.
   Wann nennen wir ein Prädikat relational, multimodal bzw. multidirektional?
 ]
 
-#test(level: 1)[
+#test(level: 1, tags: (tag-level-up,))[
   Du hast Prolog lieben gelernt und liest die Dokumentation von SWI-Prolog
   gerne vor dem Schlafen gehen. Du entdeckst sonderliche Sonderzeichen vor den
   Variablen eines Prädikats und fragst dich, wofür diese stehen. Das sind
@@ -1871,7 +1871,7 @@ Lerneffekt ist voraussichtlich sehr gering.
 
 Diese Aufgaben haben noch keinen Platz gefunden.
 
-#challenge(level: 2)[
+#challenge(level: 2, tags: (tag-deep-dive,))[
   Psst! Ja, du! Möchtest du ein Werkzeug zum Generieren von SLD-Bäumen?
 
   Erweitere den Prolog-Interpreter um eine Funktion

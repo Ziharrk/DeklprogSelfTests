@@ -444,7 +444,7 @@
 //                     in derive h :*: (E :^: h)
 // ```
 
-#challenge(level: 1)[
+#challenge(level: 1, tags: (tag-deep-dive,))[
   In Franks Einführung in die Algorithmik hast du verschiedene Varianten des
   `mergesort`-Algorithmus kennengelernt. Eine davon hat ausgenutzt, dass in
   einer Eingabeliste bereits nicht-absteigend sortierte Teillisten vorkommen
@@ -768,7 +768,7 @@
 // dequeue (Q (_:xs) ys) = invariant (Q xs ys)
 // ```
 
-#challenge(level: 1)[
+#challenge(level: 1, tags: (tag-level-up,))[
   In den Übungsaufgaben hast du einen Suchbaum ohne Höhenbalancierung
   implementiert. Die Rotationen für einen AVL-Baum lassen sich durch das
   pattern matching in Haskell vergleichsweise elegant implementieren - erinnere
@@ -978,7 +978,7 @@
   ```hs map``` als auch ```hs filter```.
 ]
 
-#test(level: 2)[
+#test(level: 2, tags: (tag-level-up,))[
   Mit Funktionen höherer Ordnung können wir Kontrollstrukturen aus der
   imperativen Programmierung definieren. Hier ist eine mögliche Definition einer
   bedingten Wiederholung.
@@ -1098,7 +1098,7 @@
   - Implementiere das Prädikat ```hs isSorted``` mithilfe von ```hs zipWith```.
 ]
 
-#test(level: 3, clock: true)[
+#test(level: 3, clock: true, tags: (tag-deep-dive,))[
   Das Pendant zum Falten #strike[ist das Bügeln] mit ```hs foldr``` ist
   ```hs unfoldr``` (aus ```hs Data.List```). Anstatt eine Liste von Werten zu
   falten, können wir mit ```hs unfoldr``` aus einem Wert eine Liste erzeugen.
@@ -1114,7 +1114,7 @@
   - Implementiere ```hs map``` mithilfe von ```hs unfoldr```.
 ]
 
-#test(level: 3)[
+#test(level: 3, tags: (tag-deep-dive,))[
   In diesem Test wollen wir einen beliebigen Wert zu einen Baum entfalten.
   Implementiere eine Funktion ```hs unfoldTree :: (b -> Maybe (b, a, b)) -> b -> Tree a```,
   die eine Funktion nimmt, die ein Wert von Typ ```hs b``` nimmt und in eine
@@ -1330,7 +1330,7 @@
   Die ```hs Map``` ist wie folgt repräsentiert ```hs type Map k v = k -> v```.
 ]
 
-#test(level: 3)[
+#test(level: 3, tags: (tag-level-up,))[
   Wir haben ```hs foldr :: (a -> b -> b) -> b -> [a] -> b``` als natürliche
   Faltungsfunktion kennengelernt, die einen Ausdruck erzeugt, der rechts
   geklammert ist. Zum Beispiel gilt
@@ -1726,7 +1726,7 @@
 // fromInteger (42 :: Integer) :: Num a => a
 // fromRational (3.1415 :: Rational) :: Fractional a => a
 
-#challenge(level: 2, clock: true)[
+#challenge(level: 2, clock: true, tags: (tag-deep-dive,))[
   In dieser Challenge sollst du automatisches Differenzieren im Rückwärtsmodus
   mithilfe von (Operator-)Überladung implementieren. Dieser Ansatz des
   Differenzierens führt dabei das Differenzieren komplizierter Funktionen auf
@@ -2390,7 +2390,7 @@ verallgemeinern kannst.
 //                   | otherwise          = prec (y:ys)
 // ```
 
-#challenge(level: 1)[
+#challenge(level: 1, tags: (tag-deep-dive,))[
   Eine Editierdistanz zwischen zwei Wörtern $u in Sigma^m, v in Sigma^n$ können
   wir mithilfe der folgenden Rekurrenz bestimmen:
   $
@@ -2446,7 +2446,7 @@ verallgemeinern kannst.
 //                                 ]
 // ```
 
-#challenge(level: 2, clock: true)[
+#challenge(level: 2, clock: true, tags: (tag-deep-dive,))[
   Bevor du dich dieser Challenge stellst, bietet es sich an, sich @editdist
   anzunehmen, da in dieser der technische Teil der Lösungsidee vorgestellt
   wird.
@@ -2718,7 +2718,7 @@ verallgemeinern kannst.
   kombinieren?
 ]
 
-#test(level: 3)[
+#test(level: 3, tags: (tag-level-up,))[
   Betrachte die ```hs IO```-Aktion ```hs act1 >> act2```.
   - Welche der beiden Aktionen wird zuerst ausgeführt?
   - Warum erscheint das bei Lazy Evaluation kontraintuitiv?
@@ -2783,7 +2783,7 @@ verallgemeinern kannst.
 ]
 
 
-== Funktoren, Applicatives, Monaden
+== Funktoren, Applicatives und Monaden
 
 #refs[
   - Skript: Funktionale Programmierung, Funktoren und Monaden
@@ -3001,7 +3001,7 @@ verallgemeinern kannst.
   Weiterführung mit ```hs k``` und dem Ergebnis ```hs r``` stattfindet?
 ] <reader_monad>
 
-#test(level: 3, clock: true)[
+#test(level: 3, clock: true, tags: (tag-level-up,))[
   Das Pendant zur ```hs Reader```-Monade aus @reader_monad ist die
   ```hs Writer```-Monade. Eine Spezialisierung der Monade soll hier die
   ```hs ListWriter```-Monade sein. Diese Monade kann genutzt werden, um
@@ -3038,7 +3038,7 @@ verallgemeinern kannst.
   ```
 ]
 
-#test(level: 2, clock: true)[
+#test(level: 2, clock: true, tags: (tag-level-up,))[
   Das Verwenden von monadischen Funktionen kommt einem zum Anfang möglicherweise
   als erbitterter Kampf gegen das Typsystem vor. Diese Situationen ergeben sich
   bereits aus den scheinbar unschuldigsten Absichten. Oft fehlt dann die
@@ -3090,7 +3090,7 @@ verallgemeinern kannst.
     - ```hs join (Left (Right True))```?
 ]
 
-#challenge(level: 2, clock: true)[
+#challenge(level: 2, clock: true, tags: (tag-level-up,))[
   Gegeben sei der Datentyp
   #align(center)[
     ```hs newtype ZipList a = ZipList { getZipList :: [a] }```.
@@ -3115,6 +3115,8 @@ verallgemeinern kannst.
   Das Umwickeln eines Typen mit ```hs newtype```, für den wir bereits
   Typklasseninstanzen haben, ist ein gängiger Trick, um alternative Instanzen
   für diese Typklassen bereitzustellen.
+
+  ```hs ZipList``` hat keine Monaden-Instanz.
 ][
   Das Identitätsgesetz wäre verletzt, wenn man ```hs pure``` wie gegeben
   definieren würde. Betrachte folgendes Gegenbeispiel.
@@ -3208,7 +3210,7 @@ verallgemeinern kannst.
 // -- = pure ($ y) <*> ZipList fs
 // ```
 
-#test(level: 3, clock: true)[
+#test(level: 3, clock: true, tags: (tag-level-up,))[
   ```hs guard :: MonadZero m => Bool -> m ()``` kann genutzt werden, um eine
   Berechnung bedingt fehlschlagen zu lassen.
   Zum Beispiel können wir mithilfe von ```hs guard``` eine sichere Division
@@ -3274,7 +3276,7 @@ verallgemeinern kannst.
   sich wie ```hs (>>)``` für applikative Funktoren verhält.
 ]
 
-#test(level: 3, clock: true)[
+#test(level: 3, clock: true, tags: (tag-level-up,))[
   Als motivierendes Beispiel für Monaden hast du die Auswertung eines
   arithmetischen Ausdrucks, gegeben als Termstruktur, kennengelernt. Dort haben
   wir die ```hs Maybe```-Monade verwendet, um fehlschlagende Berechnung
@@ -3562,7 +3564,7 @@ verallgemeinern kannst.
 //   where fold = foldDeep fdeep
 // ```
 
-#test(level: 3, clock: true)[
+#test(level: 3, clock: true, tags: (tag-level-up,))[
   Oft kommt es vor, dass Berechnungen zustandabhängig verschiedene Ergebnisse
   liefern. Zum Beispiel merken wir uns in einer Tiefensuche durch einen
   Graph, welche Knoten bereits besucht wurden, damit die Tiefensuche sich nicht
@@ -3890,7 +3892,7 @@ Die folgenden zwei Challenges steigen tiefer in die Funktionsweise von
 QuickCheck ein. Dabei werden zwar weiter viele Vereinfachungen gemacht, wir
 nähern uns dennoch der tatsächlichen Implementierung von QuickCheck stark an.
 
-#challenge(level: 3, clock: true)[
+#challenge(level: 3, clock: true, tags: (tag-deep-dive,))[
   Eigenschaften lassen sich mit QuickCheck z.B. mithilfe der Funktion
   ```hs quickCheck``` prüfen.
 
@@ -3967,7 +3969,7 @@ nähern uns dennoch der tatsächlichen Implementierung von QuickCheck stark an.
 // quickCheck p = unProperty (property p)
 // ```
 
-#challenge(level: 3, clock: true, breakable: true)[
+#challenge(level: 3, clock: true, breakable: true, tags: (tag-deep-dive,))[
   Bevor du diese Challenge bestreitest, sage @quickcheck_noprng den Kampf an!
 
   Während QuickCheck #link("https://dl.acm.org/doi/10.1145/2660193.2660195")[SplitMix64]
@@ -4190,7 +4192,7 @@ Diese Aufgaben haben noch keinen Platz gefunden.
 //     return Array(self.size, data)
 // ```
 
-#challenge(level: 3, clock: true)[
+#challenge(level: 3, clock: true, tags: (tag-deep-dive,))[
   Du hörst parallel zu diesem Modul "Berechnung und Logik" und möchtest
   die Automaten-Konstruktionen für reguläre Sprachen in Haskell implementieren?
   Dann schaue nicht weiter. Du hast die korrekte Challenge gefunden. Dieser Weg

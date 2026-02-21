@@ -39,7 +39,12 @@ markiert, Challenges bei 30min.
 In dieses Dokument haben es bereits sehr viele Selbsttests geschafft. Das kann
 überwältigend wirken. Um dem etwas entgegenzuwirken und um dir einen ersten
 Lernpfad zu zeigen, haben wir eine Auswahl von Aufgaben mit Tier-Emojis
-hervorgehoben.
+hervorgehoben. Weiter sind Aufgaben mit den #tag-level-up und #tag-deep-dive
+markiert. Erstere gehen über die Lerninhalte der Vorlesung hinaus -- könnten
+dir aber helfen, die eigentlichen Lerninhalte der Vorlesung nochmal besser zu
+verstehen. Letztere solltest du, je nachdem wie viel Zeit du bereit zu
+investieren, nur dann machen, wenn du bereits mit gutem Verständnis dabei bist.
+Wir hoffen, das hilft dir bei deiner Orientierung in diesem Dokument.
 
 Für die Selbsttests wird es absehbar keine Lösungen geben. Stattdessen möchten
 wir dich ermutigen, deine Lösungen mit anderen Mitstudierenden oder
