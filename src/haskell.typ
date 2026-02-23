@@ -2745,6 +2745,30 @@ verallgemeinern kannst.
   3 ausgeben.
 ]
 
+#test(level: 1)[
+  Wir betrachten die Dyck-Sprache, die durch die folgende kontextfreie Grammatik
+  erzeugt wird:
+  $ S -> S S, quad S -> (S), quad S -> epsilon $
+  Implementiere eine Funktion ```hs dyck :: IO ()```, die die Standardeingabe
+  liest und jedes Mal, wenn der aktuell gelesene Präfix der Standardeingabe ein
+  Dyck-Wort ist, den String ```hs "DYCK!"``` ausgibt (auf der Standardausgabe).
+  Du kannst davon ausgehen, dass die Eingabe immer ein Dyck-Wort ist.
+
+  Folgende Funktion testet, ob ein String ein Dyck-Wort der obigen Dyck-Sprache
+  ist.
+  ```hs
+  isDyck :: String -> Bool
+  isDyck = go 0
+    where
+      go _ ""        = True
+      go k ('(' : s) = go (k + 1) s
+      go 0 (')' : _) = False
+      go k (')' : s) = go (k - 1) s
+  ```
+  Eine Abwandlung dieser Funktion kannst du für deine Implementierung von
+  ```hs dyck``` verwenden.
+]
+
 #test(level: 2)[
   Implementiere ein Programm, das Zahlen aus einer Datei aufsummiert, bzw.
   implementiere eine Funktion ```hs sumFile :: FilePath -> IO Int```.
