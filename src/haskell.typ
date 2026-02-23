@@ -1718,6 +1718,17 @@
 ]
 
 #test(level: 1)[
+  Das Hamming-Gewicht lässt sich effizienter als in @clz_popcnt implementieren.
+  Betrachte dafür folgende Haskell-Funktion.
+  ```hs
+  popcnt :: Int -> Int
+  popcnt 0 = 0
+  popcnt w = 1 + popcnt (w .&. (w - 1))
+  ```
+  Wieso sind ```hs (.&.)``` oder ```hs (-)``` auf ```hs Int```-Werte anwendbar?
+]
+
+#test(level: 1)[
   Wieso gilt sowohl #link("https://www.youtube.com/watch?v=ZCPN9SfdH7c&t=108s")[```hs 14000605 :: Int```]
   als auch ```hs 14000605 :: Float```?
 ]
