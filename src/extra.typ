@@ -9,6 +9,10 @@ Programmierkenntnisse in Prolog verbessern möchtest, bietet sich die Liste
 #link("https://www.ic.unicamp.br/~meidanis/courses/mc336/2009s2/prolog/problemas/")[P-99: Ninety-Nine Prolog Problems]
 an. Lösungen sind ebenso auf der Seite verfügbar. Für Haskell gibt es eine
 ähnliche Seite #link("https://wiki.haskell.org/H-99:_Ninety-Nine_Haskell_Problems")[H-99: Ninety-Nine Haskell Problems].
+Je nachdem wie fortgeschritten das Modul ist, kannst du versuchen, die ersten
+Probleme des vergangenen oder diesjährigen #link("https://adventofcode.com/")[Advent of Code]
+zu lösen -- sehe diesen Verweis allerdings mehr als Herausforderung und nicht
+als Empfehlung zum Aufarbeiten von Grundkenntnissen.
 
 Weitere Links:
 - #link("https://www.haskell.org/onlinereport/haskell2010/")[Haskell 2010 Language Report]:
