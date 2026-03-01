@@ -24,7 +24,7 @@
   Was bedeutet es, wenn eine Funktion keine Seiteneffekte hat? Warum ist die
   Abwesenheit von Seiteneffekten wünschenwert, sofern es möglich ist?
 ][
-  #link("https://xkcd.com/1312/")[xkbd: Haskell]
+  #link("https://xkcd.com/1312/")[xkcd: Haskell]
 ]
 
 #test(level: 1)[
