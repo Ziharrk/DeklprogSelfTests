@@ -3599,6 +3599,19 @@ verallgemeinern kannst.
 //   where fold = foldDeep fdeep
 // ```
 
+#test(level: 1)[
+  Gegeben seien die Datentypen
+  ```hs
+  data T1 a = A | B [T1 a]
+  data T2 a = A | B (Maybe a)
+  ```
+  Gebe Faltungsfunktionen an, die bis auf Umbenennung der Funktionsbezeichner
+  und Datentypen in der Signatur identisch sind.
+][
+  Könntest du sogar eine für den Typ ```hs data TX f a = A | B (f (TX f a))```
+  angeben?
+]
+
 #test(level: 3, clock: true, tags: (tag-level-up,))[
   Oft kommt es vor, dass Berechnungen zustandabhängig verschiedene Ergebnisse
   liefern. Zum Beispiel merken wir uns in einer Tiefensuche durch einen

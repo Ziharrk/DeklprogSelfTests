@@ -1685,7 +1685,7 @@ Seite gefunden haben.
   darüber hinaus das Prädikat ```SWI-Prolog all/2```, dass genau dann erfüllt
   ist, wenn das ein übergegebenes Prädikat für alle Elemente einer Liste
   erfüllt ist.
-]
+] <map_filter_foldr_prolog>
 
 // ```SWI-Prolog
 // map(_, [], []).
@@ -1698,6 +1698,15 @@ Seite gefunden haben.
 // foldr(_, E, [], E).
 // foldr(F, E, [X|Xs], R) :- foldr(F, E, Xs, S), call(F, X, S, R).
 // ```
+
+#test(level: 1)[
+  Du möchstest die Faltungsfunktion aus @map_filter_foldr_prolog in Aktion
+  sehen und betrachtest die folgende Anfrage
+  ```SWI-Prolog ?- foldr(+, 0, [1, 2, 3], X)```.
+  - Was ist das Ergebnis bzw. wie ist ```SWI-Prolog X``` belegt?
+  - Wieso funktioniert die Anfrage, sowie sie angegeben ist, nicht? Wie könntest
+    du es ermöglichen, dass diese Anfrage im "Term-Sinne" beweisbar wird?
+]
 
 #check[
   Ich bin in der Lage, ```SWI-Prolog call``` zu nutzen.
