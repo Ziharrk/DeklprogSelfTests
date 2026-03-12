@@ -215,8 +215,8 @@
     ein Element mindestens zweimal vorkommt.
   - ```SWI-Prolog sublist/2``` soll erfüllbar sein, wenn eine Liste in einer
     anderen ohne Lücken enthalten ist.
-  - ```SWI-Prolog subsequence/2``` soll erfüllbar sein, wenn eine Liste in einer
-    anderen mit möglichen Lücken enthalten ist.
+  // - ```SWI-Prolog subsequence/2``` soll erfüllbar sein, wenn eine Liste in einer
+  //   anderen mit möglichen Lücken enthalten ist.
 
   Warum ist ```SWI-Prolog member/2``` hier zweistellig?
 ]
