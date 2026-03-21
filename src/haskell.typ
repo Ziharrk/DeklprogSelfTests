@@ -1737,6 +1737,19 @@
 // fromInteger (42 :: Integer) :: Num a => a
 // fromRational (3.1415 :: Rational) :: Fractional a => a
 
+#test(level: 1)[
+  Was ist der Unterschied zwischen den folgenden Ausdrücken?
+  ```hs
+  -- Ausdruck 1
+  case x of
+    0 -> a
+    _ -> b
+
+  -- Ausdruck 2
+  if x == 0 then a else b
+  ```
+]
+
 #challenge(level: 2, clock: true, tags: (tag-deep-dive,))[
   In dieser Challenge sollst du automatisches Differenzieren im Rückwärtsmodus
   mithilfe von (Operator-)Überladung implementieren. Dieser Ansatz des
