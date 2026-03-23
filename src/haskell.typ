@@ -1751,7 +1751,7 @@
 ]
 
 #challenge(level: 2, clock: true, tags: (tag-deep-dive,))[
-  In dieser Challenge sollst du automatisches Differenzieren im Rückwärtsmodus
+  In dieser Challenge sollst du automatisches Differenzieren im Vorwärtsmodus
   mithilfe von (Operator-)Überladung implementieren. Dieser Ansatz des
   Differenzierens führt dabei das Differenzieren komplizierter Funktionen auf
   einfache, elementare Funktionen zurück.
