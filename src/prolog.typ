@@ -1222,8 +1222,7 @@ Seite gefunden haben.
   - Sei $G = (V, E)$ ein gerichteter Graph mit
     $ V = union.big_(k=1)^4 D(phi_k) "und" E = {(V, W) | k in {1,...,4}, V |-> T in phi_k, W in "Vars"(T) }. $
     Stelle diesen Graph dar.
-  - Wieso ist $G$ azyklisch? Wieso haben die freien Variablen der
-    Anfrage keine eingehenden Kanten in dem Graphen?
+  - Wieso ist $G$ azyklisch?
   - Betrachte die Knoten $X$, $Y$ und $italic("Xs")$. Wie hängen ihre Nachfolger
     mit ihnen zusammen?
   - Wie erhalten wir $italic("Xs") |-> [a, a]$ aus dem Teilgraphen von $G$, der
@@ -1234,6 +1233,9 @@ Seite gefunden haben.
     erreichbaren Knoten. Welche Bedeutung haben diese bei der Berechnung der
     Lösung
     $sigma_1 = (phi_4 compose phi_3 compose phi_2 compose phi_1)|_{{X,Y,italic("Xs")}}$?
+  - Wieso funktioniert dieses Verfahren für Kompositionen, die sich nicht
+    aus dem Unifikationsalgorithmus oder der SLD-Resolution ergeben, nicht?
+    Betrachte ${"Y" -> "X"} compose {"X" -> "Z"}$.
 ]
 
 #test(level: 1)[
