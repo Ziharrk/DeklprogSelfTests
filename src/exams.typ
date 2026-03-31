@@ -29,7 +29,7 @@
   - ADT: siehe @timer_adt_mistakes bzw. zuerst @timer_adt
 - *Aufgabe 3*
   - In ```hs instance Functor Fiction where``` wurde häufig noch eine Typvariable ```a``` ergänzt,
-    obwohl in den Typkonstruktorklassen der letzte Parameter eines Typs eben nicht appliziert werden darf. 
+    obwohl in den Typkonstruktorklassen der letzte Parameter eines Typs eben nicht appliziert werden darf.
   - Dasselbe gilt auch für die ```hs Monad```-Instanz.
   - In ```hs fmap f (Fake fx) = Fake (fmap f fx)``` wurde häufiger entweder
     der Konstruktor ```hs Fake``` oder ```hs fmap``` vergessen.
@@ -84,3 +84,58 @@
   - Im Kapitel #link(<how_prolog>)[Rechnen in der Logikprogrammierung] findest
     du ganz viele Selbsttests, die dich für diese Fehler sensibilisieren können,
     sodass du sie reichtzeitig erkennst.
+
+
+== Klausur 2.PZ WS25/26
+
+- *Aufgabe 1*
+  - In 1.2 ist ```SWI-Prolog ?- call(length([1, 2], X)).``` oft nicht angekreut
+    worden.
+  - In 1.3 lassen sich Fehler vermeiden, indem man die Funktionsgleichheit
+    rigoros überprüft. Das heißt, man über für jedes Element der
+    Definitionsbereiche, ob auf beiden Seiten das gleiche herauskommt. Zum
+    Beispiel: In 3b) sind die Definitionsbereiche für beide Funktionen ${X,Z}$.
+    $ ({X |-> Y} compose {Z |-> Y})(X) = {X |-> Y}(X) = Y = {X |-> Y, Z |-> Y}(X) $
+    Dasselbe machen wir für $Z$. In 4d) sehen wir z.B., dass die linke Funktion
+    $Y$ nach $Y$ abbildet. Auf der rechten Seite wird $Y$ aber nach $X$ abgebildet.
+  - In 1.4 können genauso nachrechnen. Unifizierbarkeit ist definiert als die
+    Gleichheit zweier Terme $t_1, t_2$ unter einer Substitution $sigma$, d.h.,
+    falls $sigma(t_1) = sigma(t_2)$ gilt. Zum Beispiel sei $sigma$ die erste
+    Substitution, dann gilt
+    $ sigma(f(g(X),Y)) = f(sigma(g(X)), sigma(Y)) = f(sigma(g(X)), g(a)) = f(g(sigma(X)), g(a)) = f(g(a), g(a)) $
+    und für den anderen Term (direkter)
+    $ sigma(f(Y,Z)) =  f(g(a), g(a)). $
+    Damit ist $sigma$ ein Unifikator.
+- *Aufgabe 2*
+  - In 2.1 ist man aufgeschmissen, wenn man nicht weiß, wie
+    ```hs const, (>>=), (>>)``` abbilden. Hier sind häufige falsche Bindungen
+    für die jeweiligen Terme, die wir gesehen haben.
+    - Zu a) ```hs [3, 2, 1]```
+    - Zu b) beliebige Zahlen, ```hs id```, ```hs [1, 2, 3]```
+    - Zu c) ```hs 73```
+    - Zu d) ```hs []```
+  - In 2.2 sind die Stunden die sich aus den Minuten ergeben oft nicht
+    berücksichtigt worden.
+- *Aufgabe 3*
+  - Die Aufgabe hat viele kalt erwischt.
+  - Hier ist eine Typklasse, die alle Fehler irgendwie zusammenfässt
+    ```hs
+    type Hashable :: a -> Int
+    data Hashable a b where
+      hash :: Hashable a b -> Int -> a
+    ```
+  - Als ```hs Hashable```-Instanz für Listen haben wir dann häufiger sinngemäß
+    ```hs
+    instance Functor Hashable where
+      fmap xor []     = 0
+      fmap xor (x:xs) = hash x : fmap xor xs
+    ```
+    gesehen.
+- *Aufgabe 4*
+  - Wenn in ```hs getNumbers``` ein Akkumulator verwendet, der die neue Zahl
+    immer vorne anhängt, dann ist die Ergebnisliste bereits umgekehrt, sodass
+    kein ```hs reverse``` später mehr notwendig gewesen ist.
+  - Beim ```hs foldr``` wurden ```hs f``` und ```hs g``` häufig vertauscht.
+- *Aufgabe 5*
+- *Aufgabe 6*
+
