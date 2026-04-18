@@ -4,7 +4,7 @@
 #text(0.8em)[
   Dieses Dokument ist vom #datetime.today().display("[day].[month].[year]"). Die
   aktuelle Version des Dokuments kannst du im moodle oder
-  #link(git("raw/refs/heads/main/main.pdf"))[direkt von GitHub herunterladen].
+  #link(git("releases/download/latest/main.pdf"))[direkt von GitHub herunterladen].
   Dieses Dokument wird ständig aktualisiert.
 ]
 
