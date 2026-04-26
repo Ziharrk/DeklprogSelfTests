@@ -6,9 +6,9 @@
 #import "@preview/suiji:0.4.0"
 
 #let meta = (
-  title: "Verständnisfragen zum Modul Deklarative Programmierung",
+  title: "Lern- und Vertiefungsaufgaben zum Modul Deklarative Programmierung",
   author: ("Melf Kammholz",),
-  description: "Verständnisfragen zum Modul Deklarative Programmierung",
+  description: "Eine Sammlung ergänzender Aufgaben zur Erarbeitung, Festigung und Vertiefung der Modulinhalte",
   keywords: (
     "Deklarative Programmierung",
     "Funktionale Programmierung",
