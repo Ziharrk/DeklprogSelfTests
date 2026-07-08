@@ -1715,7 +1715,7 @@
     Da du eine ```hs Num```-Instanz auf ```hs Mat22``` definiert hast, kannst
     du den ```hs (^)```-Operator zur binären Exponentiation nutzen.
   ]
-]
+] <logfib>
 
 #test(level: 1)[
   Das Hamming-Gewicht lässt sich effizienter als in @clz_popcnt implementieren.
@@ -1840,6 +1840,158 @@
 //   asinh (D x d) = D (asinh x) (d / sqrt (1 + x * x))
 //   acosh (D x d) = D (acosh x) (d / sqrt (x * x - 1))
 //   atanh (D x d) = D (atanh x) (d / (1 - x * x))
+// ```
+
+#challenge(level: 2, clock: true, tags: (tag-deep-dive,))[
+  In Einführung in die Algorithmik hast du den Floyd-Warshall Algorithmus
+  kennengelernt, um die Distanzen der kürzesten Wege zwischen allen Knoten in
+  einem kanten-gewichteten Digraph zu berechnen. Hier ist der Algorithmus erneut
+  in Python.
+  ```py
+  def floyd_warshall(W):
+    n = len(W)
+    for v in range(n):
+      for u in range(n):
+        for w in range(n):
+          W[u][w] = min(W[u][w], W[u][v] + W[v][w])
+  ```
+  Wenn wir nun einmal kräftig auf diesen Algorithmus schielen, sieht dieser
+  Algorithmus stark nach einer Matrix-Multiplikation aus, wobei die Addition
+  die Rolle der Multiplikation und das Minimum die Rolle der Addition einnimmt
+  -- auch wenn wir mehrere Matrix-Multiplikationen benötigen werden.
+  Tatsächlich steckt dahinter der sogenannte tropische Semiring
+  $(RR union {oo}, min, +)$. Da es nichts besseres gibt, als algebraische
+  Strukturen in Haskell zu implementieren, wollen wir uns dieses Vergnügen
+  natürlich nicht nehmen lassen.
+
+  - Erweitere zuerst einen beliebigen Typen (der eine ```hs Num```-Instanz hat)
+    und $oo$. Definiere dafür einen Typen ```hs WithInf a``` mit
+    entsprechenden Konstrukturen. Implementiere ebenso ```hs Show```-,
+    ```hs Eq```-, ```hs Ord```- und ```hs Num```-Instanzen für diesen Typen.
+    Zur Orientierung, wie die Arithmetik mit $oo$ umgesetzt werden kann, kannst
+    du #link("https://de.wikipedia.org/wiki/Erweiterte_reelle_Zahlen")[Erweiterte reelle Zahlen]
+    konsultieren. Du kannst jede undefinierte Operation auf ```hs undefined```
+    setzen.
+  - Als Nächstes wollen wir $min$ und $+$ als ```hs (+)``` und ```hs (*)```
+    umsetzen. Dafür verwenden wir einen Hilfstypen, der uns erlaubt, eine
+    entsprechende ```hs Num```-Instanz anzugeben.
+    ```hs
+    newtype Tropical a = Tropical { getTropical :: a }
+      deriving (Eq, Ord)
+
+    instance Show a => Show (Tropical a) where
+      show (Tropical x) = show x
+    ```
+    Implementiere dann für ```hs Tropical``` eine ```hs Num```-Instanz. Welche
+    Welche Typeinschränkungen benötigen wir für ```hs a``` in ```hs Tropical a```?
+  - Implementiere eine ```hs Num```-Instanz für den Typen
+    ```hs data Mat a = Mat [[a]]```. Für die Multiplikation bietet sich unter
+    Umständen ```hs transpose``` aus ```hs Data.List``` an. ```hs signum```,
+    ```hs abs``` und ```hs fromInteger``` kannst du auf ```hs undefined```
+    setzen.
+  - Nun haben wir alle Zutaten, um einen alternativen kürzeste Wege
+    Algorithmus zu implementieren. Sei $W = (w_(i j)) in (RR union {oo})^(n times n)$
+    dafür eine Matrix, die alle Kantengewichte für einen Digraph
+    $G = (V, E)$ mit $V = {1, ..., n}$ enthält. $W$ erfüllt hier $(u, v) in E <=> w_(u v) < oo.$
+
+    Wenn wir nun z.B. $W^k$ im Sinne des tropischen Semirings berechnen, dann
+    besteht diese Matrix aus den Distanzen der kürzesten Wege, die über maximal
+    $k$ Knoten gehen -- das kann man sich an einem kleinen Beispiel klarmachen.
+    Berechnen wir also $W^n$ erhalten wir die Distanzmatrix für $G$.
+    Implementiere eine Funktion
+    ```hs shortestPaths :: (Num a, Ord a) => Mat (WithInf a) -> Mat (WithInf a)```,
+    die die Distanzmatrix berechnet.
+][
+  Diese Aufgabe verallgemeinert @binexp, @matmath und @logfib bzgl. der
+  Arithmetik mit Matrizen.
+
+  Während der Name des vorgestellten Semirings bereits äußerst belustigend ist,
+  möchte der Autor dieser Aufgabe an dieser Stelle zusätzlich anmerken, dass
+  es auch den arktischen Semiring $(RR union {-oo}, max, +)$ gibt, und große
+  Anerkennung an den- oder diejenige ausprechen, der oder die diesen Semiring
+  benannt hat.
+]
+
+// ```hs
+// import Data.List (transpose)
+//
+//
+// data WithInf a = Number a | Inf
+//   deriving Eq
+//
+// instance Show a => Show (WithInf a) where
+//   show (Number a) = show a
+//   show Inf        = "∞"
+//
+// instance Ord a => Ord (WithInf a) where
+//   Number a <= Number b = a <= b
+//   _        <= Inf      = True
+//   _        <= _        = False
+//
+// instance (Num a, Ord a) => Num (WithInf a) where
+//   Number a + Number b = Number (a + b)
+//   Number _ + Inf      = Inf
+//   Inf      + Number _ = Inf
+//   Inf      + Inf      = Inf
+//
+//   -- (-) omitted for readability, implicitly given via (+) and negate
+//
+//   Number a * Number b            = Number (a * b)
+//   Inf      * Number b | b > 0     = Inf
+//                       | otherwise = undefined
+//   Number a * Inf      | a > 0     = Inf
+//                       | otherwise = undefined
+//   Inf      * Inf                  = Inf
+//
+//   negate (Number a) = Number (negate a)
+//   negate Inf        = undefined
+//
+//   signum (Number a) = Number (signum a)
+//   signum Inf        = Number 1
+//
+//   abs (Number a) = Number (abs a)
+//   abs Inf        = Inf
+//
+//   fromInteger n = Number (fromInteger n)
+//
+//
+// newtype Tropical a = Tropical { getTropical :: a }
+//   deriving (Eq, Ord)
+//
+// instance Show a => Show (Tropical a) where
+//   show (Tropical x) = show x
+//
+// instance (Num a, Ord a) => Num (Tropical a) where
+//   Tropical a + Tropical b = Tropical (min a b)
+//   Tropical a - Tropical b = undefined
+//   Tropical a * Tropical b = Tropical (a + b)
+//
+//   abs (Tropical a) = Tropical (abs a)
+//   signum (Tropical a) = Tropical (signum a)
+//   fromInteger n = Tropical (fromInteger n)
+//
+//
+// data Mat a = Mat [[a]]
+//   deriving Show
+//
+// dot :: Num a => [a] -> [a] -> a
+// dot a b = foldl1 (+) (zipWith (*) a b)
+//
+// instance Num a => Num (Mat a) where
+//   Mat a + Mat b = Mat (zipWith (zipWith (+)) a b)
+//   Mat a - Mat b = Mat (zipWith (zipWith (-)) a b)
+//   Mat a * Mat b = Mat [map (dot r) (transpose b) | r <- a]
+//
+//   abs = undefined
+//   signum = undefined
+//   fromInteger = undefined
+//
+// instance Functor Mat where
+//   fmap f (Mat a) = Mat (fmap (fmap f) a)
+//
+//
+// shortestPaths :: (Num a, Ord a) => Mat (WithInf a) -> Mat (WithInf a)
+// shortestPaths m@(Mat a) = fmap getTropical ((fmap Tropical m) ^ (length a))
 // ```
 
 An vielen Stellen in den bisherigen Selbsttests haben wir oft einen konkreten
