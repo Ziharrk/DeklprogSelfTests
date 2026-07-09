@@ -3,6 +3,10 @@
 
 = Häufige Bearbeitungsfehler in Klausuren
 
+In diesem Abschnitt findest du aktuell Bearbeitungsfehler, die wir während der
+Korrektur von Klausuren häufiger gesehen haben. Mit der Zeit sollen diese in
+Selbsttests überführt werden.
+
 == Klausur 1.PZ WS25/26
 
 - *Aufgabe 1*
