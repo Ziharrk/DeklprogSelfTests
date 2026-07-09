@@ -1843,7 +1843,7 @@
 //   atanh (D x d) = D (atanh x) (d / (1 - x * x))
 // ```
 
-#challenge(level: 2, clock: true, tags: (tag-deep-dive,))[
+#challenge(level: 2, clock: true, breakable: true, tags: (tag-deep-dive,))[
   In Einführung in die Algorithmik hast du den Floyd-Warshall Algorithmus
   kennengelernt, um die Distanzen der kürzesten Wege zwischen allen Knoten in
   einem kanten-gewichteten Digraph zu berechnen. Hier ist der Algorithmus erneut
@@ -1877,7 +1877,7 @@
     umsetzen. Dafür verwenden wir einen Hilfstypen, der uns erlaubt, eine
     entsprechende ```hs Num```-Instanz anzugeben.
     ```hs
-    newtype Tropical a = Tropical { getTropical :: a }
+    newtype Tropical a = Tropical { getTropical :: WithInf a }
       deriving (Eq, Ord)
 
     instance Show a => Show (Tropical a) where
@@ -1891,6 +1891,16 @@
     ```hs Data.List``` an -- oder du implementierst es die Funktion selber.
     ```hs signum```, ```hs abs``` und ```hs fromInteger``` kannst du auf
     ```hs undefined``` setzen.
+  - In den vorherigen zwei Teilaufgaben sind die Definitionen für
+    ```hs fromInteger``` nicht unmittelbar korrekt definierbar.
+    - Welche Ergebnisse sollten ```hs sum []``` und ```hs product []``` haben
+      und welche Rolle spiele ```hs fromInteger 0``` und ```hs fromInteger 1```
+      dabei? Wieso stellt das für uns kein Problem dar, wenn wir die
+      Skalarprodukte der Zeilen und Spalten der (nicht-leeren) Matrizen im Zuge
+      der Matrix-Multiplikation berechnen?
+    - Jenseits des Problems, dass wir die Dimensionen einer Matrix nicht kennen,
+      um ```hs fromInteger``` für Matrizen zielführend nutzen zu können, wie
+      würde sich dieses auf $W^0$ auswirken?
   - Nun haben wir alle Zutaten, um einen alternativen kürzeste Wege
     Algorithmus zu implementieren. Sei $W = (w_(i j)) in (RR union {oo})^(n times n)$
     dafür eine Matrix, die alle Kantengewichte für einen Digraph
@@ -1912,7 +1922,10 @@
   es auch den arktischen Semiring $(RR union {-oo}, max, +)$ gibt, und große
   Anerkennung an den- oder diejenige ausprechen, der oder die diesen Semiring
   benannt hat.
-]
+
+  In @minplus_remark wird auf die offenen Probleme dieser Aufgabe genauer
+  eingegangen.
+] <minplus>
 
 // ```hs
 // import Data.List (transpose)
@@ -1957,7 +1970,7 @@
 //   fromInteger n = Number (fromInteger n)
 //
 //
-// newtype Tropical a = Tropical { getTropical :: a }
+// newtype Tropical a = Tropical { getTropical :: WithInf a }
 //   deriving (Eq, Ord)
 //
 // instance Show a => Show (Tropical a) where

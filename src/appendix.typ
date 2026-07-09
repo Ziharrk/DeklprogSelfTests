@@ -22,6 +22,29 @@ verpasst nichts.
 ] <reverse_mode_ad_remark>
 
 #remark[
+  Diese Bemerkung gehört zu @minplus.
+
+  Wie auch bei anderen Typklassen muss eine ```hs Num```-Typklasseninstanz
+  Gesetze erfüllen. Zu diesen gehören unter anderem, dass
+  ```hs fromInteger 0``` das neutrale Element bzgl. der Addition und
+  ```hs fromInteger 1``` das neutrale Element bzgl. der Multiplikation sein
+  soll. Das steht im Konflikt damit, dass wir auch daran interessiert sind,
+  die Werte ```hs Tropical (Number 0)``` und ```hs Tropical (Number 1)```
+  mithilfe dieser Funktion zu erzeugen. Wenn wir die Gesetze erfüllen wollen,
+  dann müssen wir ```hs fromInteger 0 = Tropical Inf``` und
+  ```hs fromInteger 1 = Tropical (Number 0)``` setzen. Insbesondere in der
+  Absicht vordefinierte Funktionen wie ```hs sum```, ```hs product``` oder
+  ```hs (^)``` zu verwenden, stellt das über die Aufgabe hinweg ein Problem
+  dar.
+
+  Ein "saubereres" Vorgehen könnte es z.B. sein, Semigruppen mithilfe von
+  gesonderten Typklassen zu definieren, welche die neutralen Elemente
+  expliziter machen und die zwei Verwendungszwecke von ```hs fromInteger```
+  trennen. Siehe z.B. #link("https://hackage.haskell.org/package/semirings/docs/Data-Semiring.html")[Data.Semiring],
+  um zu sehen, wie die Typklasse implementiert werden könnte.
+] <minplus_remark>
+
+#remark[
   In @typeclasses_in_python haben wir gesehen, wie deklarative
   Programmierkonzepte aus Haskell in Python verwendet werden können. In Java
   haben diese über die letzten Jahre auch einen Platz gefunden. Hier ist das
