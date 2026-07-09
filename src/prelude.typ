@@ -297,3 +297,13 @@
 
 #let git(path) = "https://github.com/Ziharrk/DeklprogSelfTests/" + path
 
+#let oplus = symbol(
+  "\u{2295}",
+  ("big", "\u{2A01}")
+)
+
+#let otimes = symbol(
+  "\u{2297}",
+  ("big", "\u{2A02}")
+)
+

@@ -4229,9 +4229,9 @@ nähern uns dennoch der tatsächlichen Implementierung von QuickCheck stark an.
   #link("https://en.wikipedia.org/wiki/Xorshift")[Xorshift] erzeugt
   Pseudozufallszahlen nach dem folgenden Schema:
   $
-  x &<- x plus.circle (x << 13) \
-  x &<- x plus.circle (x >> 7) \
-  x &<- x plus.circle (x << 17) \
+  x &<- x oplus (x << 13) \
+  x &<- x oplus (x >> 7) \
+  x &<- x oplus (x << 17) \
   $
   wobei $x$ eine 64-Bit Ganzzahl ist.
 
