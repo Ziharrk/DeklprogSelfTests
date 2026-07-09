@@ -28,7 +28,7 @@
     Detail, das man sich merken muss.
   - ADT: siehe @timer_adt_mistakes bzw. zuerst @timer_adt
 - *Aufgabe 3*
-  - In ```hs instance Functor Fiction where``` wurde häufig noch eine Typvariable ```a``` ergänzt,
+  - In ```hs instance Functor Fiction where``` wurde häufig noch eine Typvariable ```hs a``` ergänzt,
     obwohl in den Typkonstruktorklassen der letzte Parameter eines Typs eben nicht appliziert werden darf.
   - Dasselbe gilt auch für die ```hs Monad```-Instanz.
   - In ```hs fmap f (Fake fx) = Fake (fmap f fx)``` wurde häufiger entweder
