@@ -1321,6 +1321,7 @@
   - ```hs sum xs = foldr (+) 0 xs```,
   - ```hs add a b = a + b``` und
   - ```hs \x ys -> (:) x ys```.
+  - ```hs \x -> \ys -> (:) x ys```.
 ]
 
 #test(level: 1)[
@@ -1885,10 +1886,11 @@
     Implementiere dann für ```hs Tropical``` eine ```hs Num```-Instanz. Welche
     Welche Typeinschränkungen benötigen wir für ```hs a``` in ```hs Tropical a```?
   - Implementiere eine ```hs Num```-Instanz für den Typen
-    ```hs data Mat a = Mat [[a]]```. Für die Multiplikation bietet sich unter
-    Umständen ```hs transpose``` aus ```hs Data.List``` an. ```hs signum```,
-    ```hs abs``` und ```hs fromInteger``` kannst du auf ```hs undefined```
-    setzen.
+    ```hs data Mat a = Mat [[a]]```, ohne ```hs (!!)``` zu nutzen. Für die
+    Multiplikation bietet sich unter Umständen ```hs transpose``` aus
+    ```hs Data.List``` an -- oder du implementierst es die Funktion selber.
+    ```hs signum```, ```hs abs``` und ```hs fromInteger``` kannst du auf
+    ```hs undefined``` setzen.
   - Nun haben wir alle Zutaten, um einen alternativen kürzeste Wege
     Algorithmus zu implementieren. Sei $W = (w_(i j)) in (RR union {oo})^(n times n)$
     dafür eine Matrix, die alle Kantengewichte für einen Digraph
