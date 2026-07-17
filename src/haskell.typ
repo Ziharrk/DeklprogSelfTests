@@ -4693,5 +4693,96 @@ Diese Aufgaben haben noch keinen Platz gefunden.
     Übersetzerbau nutzt dieses Buch)
 ]
 
+#challenge(level: 2, clock: true, tags: (tag-deep-dive,))[
+  In dieser Challenge möchten wir Daten mithilfe der Huffman-Kodierung
+  komprimieren. Wir bekommen als Eingabe eine Folge von Symbolen und geben
+  einen kürzere Folge von Bits zurück. Die Kernidee ist es, Symbole nach der
+  Häufigkeit ihres Vorkommens in der Eingabe zu kodieren. Wenn ein Symbol
+  besonders häufig vorkommt, sollte es eine möglichst kurze Kodierung bekommen.
+
+  Mithilfe von sogenannten Huffman-Bäumen können wir diese Kodierung
+  konstruieren. Dabei starten wir mit Blättern, die das Symbol und dessen
+  Häufigkeit in der Eingabe speichern. Darauf nehmen wir uns zwei Blätter (oder
+  interne Knoten) mit den geringsten Häufigkeiten und verknüpfen diese, indem
+  wir ein internen Knoten einführen, der diese genommenen Knoten als Kindknoten
+  hat und mit der kumulierten Häufigkeit beschriftet ist. Den konstruierten
+  Knoten packen wir dann zu der Auswahl von anderen Knoten zurück. Wir
+  wiederholen das Ziehen der Knoten, solange bis eine nur noch ein Knoten übrig
+  geblieben ist. Durch dieses Verfahren entsteht ein Binärbaum, dessen Blätter
+  mit geringster Häufigkeit am tiefsten im Baum liegen. Wenn wir nun den
+  Huffman-Baum zu den Blättern ablaufen und verfolgen, welche Kanten wir dabei
+  ablaufen, können wir die Folge von Kanten in ein binäres Wort übersetzen.
+  Zum Beispiel können wir dann das Absteigen in einen linken Teilbaum mit Null
+  kodieren und das Absteigen in einen rechten mit Eins. Daraus ergibt sich eine
+  optimale Kodierung für die Eingabe.
+
+  - Implementiere eine Funktion ```hs frequencies :: Eq a => [a] -> [(a, Int)]```,
+    die die Anzahl der Vorkommen eines Elements in einer gegebenen Liste
+    zurückgibt. Die Ausgabe soll als Funktion aufgefasst werden können.
+  - Implementiere einen Datentypen ```hs data HuffmanTree a```, um Huffman-Bäume
+    darzustellen. Definiere weiter eine Ordnung auf diesen basierend auf den
+    in den Knoten abgelegten Häufigkeiten.
+  - Implementiere eine Funktion ```hs huffmanTree :: Ord a => [(a, Int)] -> HuffmanTree a```,
+    die einen Huffman-Baum wie oben beschrieben basierend auf einem Histogramm
+    konstruiert.
+  - Gegeben den Datentypen ```hs data Bit = Zero | One deriving (Eq, Show)```,
+    implementiere eine Funktion ```hs code :: HuffmanTree a -> [(a, [Bit])]```,
+    die eine Kodierung auf Basis eines Huffman-Baumes berechnet.
+  - Implementiere Funktionen ```hs encode :: Eq a => [a] -> [(a, [Bit])] -> [Bit]```
+    und ```hs decode :: [Bit] -> [(a, [Bit]) -> [a]```, die eine Eingabe
+    enkodieren kann und dekodieren können.
+][
+  Eine Kodierung muss bijektiv sein.
+]
+
+// ```hs
+// import Data.List
+// import Data.Maybe
+//
+// frequencies :: Ord a => [a] -> [(a, Int)]
+// frequencies xs = map (\g -> (head g, length g)) (group (sort xs))
+//
+// data HuffmanTree a = Leaf a Int | Node (HuffmanTree a) Int (HuffmanTree a)
+//   deriving (Eq, Show)
+//
+// frequency :: HuffmanTree a -> Int
+// frequency (Leaf _ n)   = n
+// frequency (Node _ n _) = n
+//
+// instance Ord a => Ord (HuffmanTree a) where
+//   Leaf _ x   <= Leaf _ y   = x <= y
+//   Leaf _ x   <= Node _ y _ = x <= y
+//   Node _ x _ <= Leaf _ y   = x <= y
+//   Node _ x _ <= Node _ y _ = x <= y
+//
+// htree :: Ord a => [(a, Int)] -> HuffmanTree a
+// htree p = go (sort (map (uncurry Leaf) p))
+//   where
+//     go [t1]           = t1
+//     go (t1 : t2 : ts) = go (insert (Node t1 (frequency t1 + frequency t2) t2) ts)
+//
+//
+// data Bit = Zero | One
+//   deriving (Eq, Ord, Show)
+//
+// code :: HuffmanTree a -> [(a, [Bit])]
+// code (Leaf c _)     = [(c, [])]
+// code (Node t1 _ t2) = map (\(c, bs) -> (c, Zero : bs)) (code t1) ++ map (\(c, bs) -> (c, One : bs)) (code t2)
+//
+//
+// encode :: Eq a => [a] -> [(a, [Bit])] -> [Bit]
+// encode xs code = concatMap (fromJust . flip lookup code) xs
+//
+// decode :: Eq a => [Bit] -> [(a, [Bit])] -> [a]
+// decode bs code = go bs
+//   where
+//     icode = map (uncurry (flip (,))) code
+//
+//     go [] = []
+//     go bs = let (Just p) = find (`elem` map fst icode) (inits bs)
+//                 (Just x) = lookup p icode
+//              in x : go (drop (length p) bs)
+// ```
+
 #pagebreak(weak: true)
 
