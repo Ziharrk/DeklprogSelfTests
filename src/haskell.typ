@@ -369,7 +369,7 @@
 // gcd a b = product (pf a `intersection` pf b)
 // ```
 
-#challenge(level: 2)[
+#challenge(level: 2, clock: true)[
   Diese Challenge baut auf @gcd_pf auf.
 
   Die Nullstellen eines eines ganzzahligen Polynoms $p = sum_(i=0)^d a_i t^i in ZZ[t]$
