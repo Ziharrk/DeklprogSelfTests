@@ -37,6 +37,5 @@
 #include "prolog.typ"
 #include "hints.typ"
 #include "extra.typ"
-#include "exams.typ"
 #include "appendix.typ"
 

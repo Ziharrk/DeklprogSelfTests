@@ -79,6 +79,7 @@
 
 #let tag-level-up = tag(fill: blue, "Level Up")
 #let tag-deep-dive = tag(fill: purple, "Deep Dive")
+#let tag-exam25-one = tag(fill: green.darken(20%), "Klausur 1. WS25/26")
 
 // https://github.com/typst/typst/issues/1988#issuecomment-2466619917
 #let get-now() = {

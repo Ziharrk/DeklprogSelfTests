@@ -44,7 +44,7 @@
   Welche Vorteile und Nachteile haben streng getypte Programmiersprachen?
 ]
 
-#test(level: 1, tags: (hl(),))[
+#test(level: 1, tags: (tag-exam25-one, hl(),))[
   In imperativen Programmiersprachen sind Variablen Namen für Speicherzellen,
   deren Werte zum Beispiel in Schleifen verändert werden können. Als Beispiel
   betrachte die Funktionen ```py clz``` und ```py popcnt```.
@@ -304,6 +304,13 @@
 #test(level: 1)[
   Was ist der Unterschied zwischen einem Typ, einem Datenkonstrukor und einem
   Typkonstruktor?
+]
+
+#test(level: 1, tags: (tag-exam25-one,))[
+  Welche der aufgezählten Funktionen ist partiell definiert?
+  #align(center)[
+    ```hs init, concat, head, (+), tail, div, mod, maximum, sum, zip```
+  ]
 ]
 
 #test(level: 1)[
@@ -689,7 +696,7 @@
   wollen.
 ]
 
-#test(level: 1)[
+#test(level: 1, tags: (tag-exam25-one,))[
   Manche Funktionen lassen sich nur partiell sinnvoll definieren. Implementiere
   die Funktionen
   - ```hs head, last :: [a] -> a```, die das erste und letzte Element einer
@@ -1539,7 +1546,7 @@
   Gesetze erfüllen, damit sie eine sinnvolle Semantik beschreiben?
 ]
 
-#test(level: 1, tags: (hl(),))[
+#test(level: 1, tags: (tag-exam25-one, hl(),))[
   Die #link("https://de.wikipedia.org/wiki/Pomodoro-Technik")[Pomodoro-Technik]
   ist eine Zeitmanagement-Methode, die einen Kurzzeitwecker nutzt, um Arbeits-
   und Pauseabschnite einzuteilen. Um ein Informatik-Studierenden-Klischee zu
@@ -2055,6 +2062,13 @@ Typklasseninstanzen gibt. Das ist meistens der Fall gewesen, wenn wir Gleichheit
 auf Werten oder eine Vergleichsoperation auf Werten brauchten. Schau dir die
 bisherigen Selbsttests gerne erneut an und überlege dir, wo du Typen
 verallgemeinern kannst.
+
+#test(level: 1)[
+  Um ein Schlüssel-Wert-Paar in einer Hash-Map abzulegen, müssen wir den
+  Schüssel auf eine Ganzzahl abbilden. Wieso bietet sich nicht diese Funktion
+  als Funktion mit Typen ```a -> Int``` zu implementieren? Wie liese sich so
+  eine Funktion besser angeben?
+]
 
 #test(level: 1)[
   Welche Funktionen musst du implementieren, damit eine ```hs Eq```-Instanz
@@ -3069,12 +3083,14 @@ verallgemeinern kannst.
   - Wieso können ```hs IO```-Berechnung in Haskell als "pure" betrachtet werden?
 ]
 
-#test(level: 1)[
+#test(level: 1, tags: (tag-exam25-one,))[
   Mit ```hs getLine :: IO String``` können Zeilen aus der Standardeingabe
   gelesen werden. Oft wollen wir den Wert haben, der durch die eingebene
   Zeichenkette repräsentiert wird. Wie können wir diesen Wert erhalten?
 
   Implementiere eine Funktion ```hs readInt :: IO Int```, die genau dies tut.
+  Endet die von ```hs getLine``` gelesene Zeile mit einen Zeilenumbruch oder
+  nicht? Stellt das ein Problem für dein Programm dar?
 ]
 
 #test(level: 1)[
@@ -3236,6 +3252,35 @@ verallgemeinern kannst.
 #test(level: 1)[
   Wie sind die ```hs Monad```-Instanzen für ```hs Identity```, ```hs Maybe```,
   ```hs Either e```, ```hs []``` und ```hs ((->) r)``` definiert?
+]
+
+#test(level: 1, tags: (tag-exam25-one,))[
+  Gegeben sei folgender Datentyp:
+  #align(center)[```hs data Fiction a = Real a | Fake (Fiction a)```.]
+
+  Korrigiere die Fehler in den folgenden Definitionen und Ausdrücken.
+  - ```hs
+    instance Functor (Fiction a) where
+      fmap f (Real x) = Real (f x)
+      fmap f (Fake x) = x
+    ```
+  - ```hs
+    instance Monad (Fiction a) where
+      return x = Fake (Real x)
+
+      Real x >>= f = Real (f x)
+      Fake x >>= f = f x
+    ```
+  - ```hs
+      Fake (Real 42) >>= \x -> Fake (Real (x + 31))
+    = Fake (Real 73)
+    ```
+
+  Prüfe für die oben angegebenen ```hs Functor```- und ```hs Monad```-Instanzen
+  die Identitätsgesetze, also ```hs fmap id = id``` und ```hs m >>= return = m```.
+][
+  In der Klausur kann es hilfreich sein, die definierenten ```hs Functor```- und
+  ```hs Monad```-Instanzen mithilfe Gesetze, die gelten sollen, zu prüfen.
 ]
 
 #test(level: 2, clock: true)[

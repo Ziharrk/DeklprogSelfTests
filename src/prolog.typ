@@ -799,6 +799,15 @@ atomare Ausdrücke -- wenn nicht anders im Test oder in der Challenge eingeführ
 ]
 
 #test(level: 1)[
+  Sei $t$ ein Term und $sigma$ eine Substitution, wieso gilt dann
+  $sigma(t) = sigma(sigma(t))$?
+][
+  Diese Eigenschaft kann ausgenutzt werden, um zu prüfen, ob der
+  Unifikationsalgorithmus korrekt angewendet wurde. Das ist insbesondere in
+  einer Klausur nützlich, wenn man das eigene Ergebnis prüfen möchte.
+]
+
+#test(level: 1)[
   Falls du @sat_solver gemeistert hast -- an welcher Stelle deines Programms
   führst du eine Substitution durch?
 ]
@@ -827,6 +836,10 @@ atomare Ausdrücke -- wenn nicht anders im Test oder in der Challenge eingeführ
 #test(level: 1)[
   Wende die Substitution $sigma = { X |-> 1, Y |-> f(X) }$ auf den Term
   $g(X, h(Y))$ an, ohne einen Zwischenschritt auszulassen.
+]
+
+#test(level: 1)[
+  Wieso ist ${X |-> Y, Y |-> 1} = {X |-> 1, Y |-> 1}$ falsch?
 ]
 
 #test(level: 1)[
@@ -1538,6 +1551,8 @@ Seite gefunden haben.
   - ```SWI-Prolog Y = 1, X is Y + 1```
   - ```SWI-Prolog 32 + 10 is X```
   - ```SWI-Prolog 42 is 40 + Y```
+  - ```SWI-Prolog X = Y, Y = X```
+  - ```SWI-Prolog X >= Y, Y >= X```
 ]
 
 #test(level: 1)[
@@ -1700,6 +1715,17 @@ Seite gefunden haben.
 // foldr(_, E, [], E).
 // foldr(F, E, [X|Xs], R) :- foldr(F, E, Xs, S), call(F, X, S, R).
 // ```
+
+#test(level: 1)[
+  Welche der folgenden Anfragen berechnen das gleiche Ergebnis, falls sie
+  valide sind?
+  - ```SWI-Prolog ?- append([1, 2], X, [1, 2, 3]).```
+  - ```SWI-Prolog ?- call(call(call(append, [1, 2]), X), [1, 2, 3]).```
+  - ```SWI-Prolog ?- append([1, 2])(X, [1, 2, 3]).```
+  - ```SWI-Prolog ?- call(append([1, 2], X), [1, 2, 3]).```
+  - ```SWI-Prolog ?- call(call(append([1, 2]), X), [1, 2, 3]).```
+  - ```SWI-Prolog ?- call(append, [1, 2], X, [1, 2, 3]).```
+]
 
 #test(level: 1)[
   Du möchstest die Faltungsfunktion aus @map_filter_foldr_prolog in Aktion

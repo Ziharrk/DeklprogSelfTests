@@ -84,7 +84,7 @@ verpasst nichts.
   - ```hs s == 0 && h == 0 ==> display (tick (new h s)) == (0, 0)```
 ] <timer_adt_solution>
 
-#remark[
+#remark(tags: (tag-exam25-one,))[
   In der Klausur des 1. Prüfungszeitraums WS25/26 gab es eine ADT-Aufgabe, in
   der eine Uhr modelliert werden sollte. Die häufigsten Fehler sind hier auf
   @timer_adt bzw. @timer_adt_solution übertragen.
