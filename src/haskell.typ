@@ -2209,37 +2209,68 @@ verallgemeinern kannst.
   - ```hs f = uncurry const```
 ]
 
-#challenge(level: 2, tags: (tag-deep-dive,))[
+#challenge(level: 2, breakable: true, tags: (tag-deep-dive,))[
   Diese Challenge baut auf @gcd_pf auf.
 
   Die Nullstellen eines eines ganzzahligen Polynoms $p = sum_(i=0)^d a_i t^i in ZZ[t]$
   mit $a_d = 1$ lässt sich mithilfe des Satzes über rationale Nullstellen
-  bestimmen. Dieser besagt, dass ein Teiler $x$ des Absolutglieds $a_0$ eine
-  Nullstelle von $p$ sein muss. Wenn wir $p$ also als Polynomfunktion
+  bestimmen. Dieser besagt, dass ein Teiler $x$ des Absolutglieds $a_0$ existiert, sodass
+  $x$ eine Nullstelle von $p$ sein muss. Wenn wir $p$ also als Polynomfunktion
   auffassen, dann erhalten wir
   $ p(x) = 0 ==> x "teilt" a_0. $
   Diese notwendige Bedingung an eine Nullstelle können für einen
   bruteforce-Algorithmus ausnutzen.
 
-  Wir repräsentieren ein ganzzahliges Polynom mit dem Typ ```hs type Poly = [Int]```,
-  wobei das $k$-te Elemente der Liste dem $k$-ten Koeffizienten des Polynoms
-  entspricht. Das heißt, an der ersten Stelle der Liste steht das Absolutglied
-  des Polynoms.
+  Wir repräsentieren ein ganzzahliges Polynom mit dem Typen
+  ```hs
+  data Poly a = Const a            -- c
+              | T                  -- T
+              | Poly a :+: Poly a  -- p1 + p2
+              | Poly a :-: Poly a  -- p1 - p2
+              | Poly a :*: Poly a  -- p1 * p2
+    deriving (Eq, Show)
 
-  - Um die folgenden Funktionen zu testen, möchten wir zuerst die
-    Polynommultiplikation (oder eine ```hs Num```-Instanz für den Polynomring
-    mit einem entsprechend angepassten Typen) implementieren. Weiter ist eine
-    Funktion hilfreich, um ein Polynomfunktion an einer bestimmten Stelle
-    auszuwerten. Dafür kannst z.B. das Horner-Schema implementieren.
+  infixl 6 :+:
+  infixl 6 :-:
+  infixr 7 :*:
+
+  instance Num a => Num (Poly a) where
+    (+) = (:+:)
+    (-) = (:-:)
+    (*) = (:*:)
+    abs p = undefined
+    signum p = undefined
+    fromInteger = Const . fromInteger
+  ```
+
+  Der angegebene Typ zusammen mit der Typklasseninstanz erlaubt es uns,
+  Polynome direkt aufzuschreiben. Zum Beispiel entspricht
+  $(t - 3) dot (t + 2)$ dem Wert ```hs (T - 3) * (T + 2)```. Diese Darstellung
+  ist für die weitere Verarbeitung allerdings ungeeignet -- besser eignet sich
+  eine normalisierte Darstellung. Hier wollen wir ein ganzzahliges Polynom
+  mit dem Typ ```hs [Int]``` repräsentieren, wobei das $i$-te Elemente der
+  Liste dem $i$-ten Koeffizienten des Polynoms entspricht, wenn das Polynom
+  die Form $sum_(i=0)^d a_i t^i$ hat. Das heißt, an der ersten Stelle der
+  Liste steht das Absolutglied des Polynoms.
+
+  - Implementiere zuerst die Polynomaddition, -subtraktion und -multiplikation
+    für Polynome in Normalform, also Funktion ```hs polyadd, polysub, polymul :: Num a => [a] -> [a] -> [a]``` .
+  - Implementiere als Nächstes eine Funktion ```nf :: Num a => Poly a -> [a]```,
+    die ein beliebiges Polynom in Normalform bringt. Für die rekursiven
+    Konstruktoren können zuvor definierten Funktionen hilfreich sein.
+  - Implementiere eine Funktion ```hs horner :: Num a => [a] -> a -> a```, die
+    ein Polynom in Normalform und einen Punkt nimmt, an dem das Polynom
+    ausgewertet wird. Nutze dafür das Horner-Schema.
   - Wir können die möglichen Nullstellen rekonstruieren, indem wir das Produkt
     jeder Teilmenge des Primfaktorzerlegung von $a_0$ betrachten -- und dessen
-    Negation. Implementiere eine Funktion ```hs subsets :: [a] -> [[a]]```, die
+    Negationen. Implementiere eine Funktion ```hs subsets :: [a] -> [[a]]```, die
     alle nicht notwendigerweise zusammenhängenden Teillisten (also die Teilmengen)
     einer Liste berechnet.
   - Implementiere zuletzt eine Funktion ```hs roots :: [Int] -> [Int]```, die
     die Nullstellen eines ganzzahligen normierten Polynomfunktion berechnet.
 
-  Beachte beim Testen, dass die Anzahl der Primfaktoren des Absolutglieds
+  Beachte beim Testen, dass die Anzahl der Primfaktoren des Absolutglieds nicht
+  zu groß ist, da sonst zu viele Teilmengen betrachtet werden.
 ][
   Der oben benannte Satz beruht auf der folgenden Beobachtung. Wenn wir gezielt
   ein Polynom mit gewissen Nullstellen konstruieren wollen, dann können wir dies
@@ -2258,21 +2289,40 @@ verallgemeinern kannst.
 // import Data.Complex
 // import Data.List (nub)
 //
-// type Poly = [Int]
-// type CPoly = [Complex Double]
+// data Poly a = Const a
+//             | Var
+//             | Poly a :+: Poly a
+//             | Poly a :-: Poly a
+//             | Poly a :*: Poly a
+//   deriving (Eq, Show)
 //
-// polymul :: Poly -> Poly -> Poly
+//
+// polyadd :: Num a => [a] -> [a] -> [a]
+// polyadd []     ys     = ys
+// polyadd xs     []     = xs
+// polyadd (x:xs) (y:ys) = x + y : polyadd xs ys
+//
+// polysub :: Num a => [a] -> [a] -> [a]
+// polysub []     ys     = ys
+// polysub xs     []     = xs
+// polysub (x:xs) (y:ys) = x - y : polyadd xs ys
+//
+// polymul :: Num a => [a] -> [a] -> [a]
 // polymul []     _  = []
 // polymul _      [] = []
-// polymul (a:as) bs = add (map (a *) bs) (0 : polymul as bs)
-//   where
-//     add []     ys     = ys
-//     add xs     []     = xs
-//     add (x:xs) (y:ys) = (x + y) : add xs ys
+// polymul (a:as) bs = polyadd (map (a *) bs) (0 : polymul as bs)
+//
+//
+// nf :: Num a => Poly a -> [a]
+// nf (Const c)   = [c]
+// nf Var         = [0, 1]
+// nf (p1 :+: p2) = polyadd (nf p1) (nf p2)
+// nf (p1 :-: p2) = polysub (nf p1) (nf p2)
+// nf (p1 :*: p2) = polymul (nf p1) (nf p2)
 //
 //
 // -- alternatively, with Cooley-Tukey FFT
-// fft :: CPoly -> CPoly
+// fft :: [Complex Double] -> [Complex Double]
 // fft [x] = [x]
 // fft xs = zipWith (+) evenPart twiddles ++ zipWith (-) evenPart twiddles
 //   where
@@ -2288,17 +2338,17 @@ verallgemeinern kannst.
 // split (x:y:xs) = let (xs1, xs2) = split xs
 //                   in (x : xs1, y : xs2)
 //
-// ifft :: CPoly -> CPoly
+// ifft :: [Complex Double] -> [Complex Double]
 // ifft xs = (map (/ fromIntegral n) . map conjugate . fft . map conjugate) xs
 //   where n = length xs
 //
 // nextPowerOfTwo :: Int -> Int
 // nextPowerOfTwo n = head (dropWhile (< n) (iterate (*2) 1))
 //
-// pad :: Int -> Poly -> CPoly
+// pad :: Int -> [Int] -> [Complex Double]
 // pad n xs = map ((:+ 0) . fromIntegral) xs ++ replicate (n - length xs) 0
 //
-// polymul :: Poly -> Poly -> Poly
+// polymul :: [Int] -> [Int] -> [Int]
 // polymul p q = take m (map (round . realPart) (ifft (zipWith (*) fp fq)))
 //   where
 //     m = length p + length q - 1
@@ -2314,7 +2364,7 @@ verallgemeinern kannst.
 // subsets []     = [[]]
 // subsets (x:xs) = subsets xs ++ map (x:) (subsets xs)
 //
-// roots :: Poly -> [Int]
+// roots :: [Int] -> [Int]
 // roots []     = undefined
 // roots (c:cs) = let xs = nub (map product (subsets (pf (abs c))))  -- pf other challenge
 //                    ys = map negate (reverse xs) ++ [0] ++ xs
