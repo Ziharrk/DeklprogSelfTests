@@ -2257,7 +2257,7 @@ verallgemeinern kannst.
     für Polynome in Normalform, also Funktion ```hs polyadd, polysub, polymul :: Num a => [a] -> [a] -> [a]``` .
   - Implementiere als Nächstes eine Funktion ```nf :: Num a => Poly a -> [a]```,
     die ein beliebiges Polynom in Normalform bringt. Für die rekursiven
-    Konstruktoren können zuvor definierten Funktionen hilfreich sein.
+    Konstruktoren können die zuvor definierten Funktionen hilfreich sein.
   - Implementiere eine Funktion ```hs horner :: Num a => [a] -> a -> a```, die
     ein Polynom in Normalform und einen Punkt nimmt, an dem das Polynom
     ausgewertet wird. Nutze dafür das Horner-Schema.
