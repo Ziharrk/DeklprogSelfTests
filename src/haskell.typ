@@ -376,46 +376,6 @@
 // gcd a b = product (pf a `intersection` pf b)
 // ```
 
-#challenge(level: 2, clock: true)[
-  Diese Challenge baut auf @gcd_pf auf.
-
-  Die Nullstellen eines eines ganzzahligen Polynoms $p = sum_(i=0)^d a_i t^i in ZZ[t]$
-  mit $a_d = 1$ lässt sich mithilfe des Satzes über rationale Nullstellen
-  bestimmen. Dieser besagt, dass ein Teiler $x$ des Absolutglieds $a_0$ eine
-  Nullstelle von $p$ sein muss. Wenn wir $p$ also als Polynomfunktion auffassen,
-  dann erhalten wir
-  $ p(x) = 0 ==> x "teilt" a_0. $
-
-  Wir repräsentieren ein ganzzahliges Polynom mit dem ```hs [Int]```, wobei
-  das $k$-te Elemente der Liste dem $k$-ten Koeffizienten des Polynoms
-  entspricht. Das heißt, an der ersten Stelle der Liste steht das Absolutglied
-  des Polynoms.
-
-  - Um die folgenden Funktionen zu testen, möchten wir zuerst die
-    Polynommultiplikation implementieren. Weiter ist eine Funktion hilfreich,
-    um ein Polynomfunktion an einer bestimmten Stelle auszuwerten. Dafür kannst
-    z.B. das Horner-Schema implementieren.
-  - Wir können die möglichen Nullstellen rekonstruieren, indem wir das Produkt
-    jeder Teilmenge des Primfaktorzerlegung von $a_0$ betrachten -- und dessen
-    Negation. Implementiere eine Funktion ```hs subsets :: [a] -> [[a]]```, die
-    alle nicht notwendigerweise zusammenhängenden Teillisten (also die Teilmengen)
-    einer Liste berechnet.
-  - Implementiere zuletzt eine Funktion ```hs roots :: [Int] -> [Int]```, die
-    die Nullstellen eines ganzzahligen normierten Polynomfunktion berechnet.
-][
-  Der oben benannte Satz beruht auf der folgenden Beobachtung. Wenn wir gezielt
-  ein Polynom mit gewissen Nullstellen konstruieren wollen, dann können wir dies
-  tun, indem wir die entsprechenden Linearfaktoren multiplizieren. Sind
-  $b_0, ..., b_d in ZZ$ die gewünschten Nullstellen, dann ist
-  $q = product_(i=0)^d (t - b_i) in ZZ[t]$ und es gilt $q(b_i) = 0$ für alle
-  $i in {0, 1, ..., d}$. Beim Berechnen des Produkts sehen wir, dass wir alle
-  Nullstellen miteinander multiplizieren. Die Idee ist es, daraus die Nullstellen
-  zu rekonstruieren.
-
-  Solltest aus irgendeinem Grund richtig langeweile haben, kannst du die
-  Polynommultiplikation über die schnelle Fourier-Transformation berechnen.
-]
-
 #challenge(level: 1, tags: (hl(),))[
   Die Ableitung einer Funktion $f : RR -> RR$ kann mithilfe des
   Differenzenquotienten $(f(x+h)-f(x))/h$ für kleines $h$ approximiert werden.
