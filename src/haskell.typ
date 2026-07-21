@@ -2213,8 +2213,8 @@ verallgemeinern kannst.
   - Implementiere als Nächstes eine Funktion ```hs fromPolyE :: Integral a => PolyE a -> Poly a```,
     die ein beliebiges Polynom in Normalform bringt. Für die rekursiven
     Konstruktoren können die zuvor definierten Funktionen hilfreich sein.
-  - Implementiere eine Funktion ```hs horner :: Num a => [a] -> a -> a```, die
-    ein Polynom in Normalform und einen Punkt nimmt, an dem das Polynom
+  - Implementiere eine Funktion ```hs horner :: Num a => Poly a -> a -> a```,
+    die ein Polynom in Normalform und einen Punkt nimmt, an dem das Polynom
     ausgewertet wird. Nutze dafür das Horner-Schema.
   - Implementiere eine Funktion ```hs divisors :: Integral a => a -> [a]```,
     alle Teiler einer gegebenen positiven Ganzzahl berechnet.
