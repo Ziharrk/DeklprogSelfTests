@@ -2169,7 +2169,7 @@ verallgemeinern kannst.
   - ```hs f = uncurry const```
 ]
 
-#challenge(level: 3, tags: (tag-deep-dive,))[
+#challenge(level: 2, tags: (tag-deep-dive,))[
   Die Nullstellen eines eines ganzzahligen Polynoms $p = sum_(i=0)^d a_i t^i in ZZ[t]$
   mit $a_d = 1$ lässt sich mithilfe des Satzes über rationale Nullstellen
   bestimmen. Dieser besagt, dass ein Teiler $x$ des Absolutglieds $a_0$ existiert, sodass
