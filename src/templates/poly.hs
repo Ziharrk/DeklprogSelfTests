@@ -1,6 +1,5 @@
 import Data.List
 
-
 data PolyE a = Const a
              | T
              | PolyE a :+: PolyE a
@@ -8,10 +7,13 @@ data PolyE a = Const a
              | PolyE a :*: PolyE a
   deriving (Eq, Show)
 
+-- The same precendences as (+), (-) and (*).
 infixl 6 :+:
 infixl 6 :-:
 infixr 7 :*:
 
+-- Lets you write (T - 3) * (T + 2) instead of 
+-- (T :-: Const 3) :*: (T :+: Const 2).
 instance Num a => Num (PolyE a) where
   (+) = (:+:)
   (-) = (:-:)
@@ -33,21 +35,28 @@ polymul :: Integral a => [a] -> [a] -> [a]
 polymul = undefined
 
 
+-- Only use `Poly` if you know the coefficients do not have any leading zeros.
+-- Use `poly` if you are not sure.
 newtype Poly a = Poly { coeffs :: [a] }
   deriving (Eq, Show)
 
+-- Turns a list of coefficients into a polynomial and drops any leading zeros
 poly :: Integral a => [a] -> Poly a
 poly = nf . Poly 
 
+-- Drops any leading zeros
 nf :: Integral a => Poly a -> Poly a
 nf p = Poly (dropWhileEnd (== 0) (coeffs p))
 
+-- Computes the degree of a polynomial.
 deg :: Integral a => Poly a -> Int
 deg p = length (coeffs p) - 1
 
+-- Retrieves the leading coefficient from a polynomial
 leading :: Poly a -> a
 leading = last . coeffs
 
+-- Retrieves the absolute term from a polynomial
 absolute :: Poly a -> a
 absolute = head . coeffs
 
