@@ -2184,11 +2184,11 @@ verallgemeinern kannst.
 
   Wir repräsentieren ein ganzzahliges Polynom mit dem Typen
   ```hs
-  data PolyE a = Const a              -- c
-               | T                    -- T
-               | PolyE a :+: PolyE a  -- p1 + p2
-               | PolyE a :-: PolyE a  -- p1 - p2
-               | PolyE a :*: PolyE a  -- p1 * p2
+  data PolyE a = Const a              -- Constant
+               | T                    -- Variable
+               | PolyE a :+: PolyE a  -- Polynomial addition
+               | PolyE a :-: PolyE a  -- Polynomial subtraction
+               | PolyE a :*: PolyE a  -- Polynomial multiplication
     deriving (Eq, Show)
   ```
   Der angegebene Typ zusammen mit einer ```hs Num```-Instanz (siehe Vorlage)
@@ -2203,14 +2203,14 @@ verallgemeinern kannst.
 
   - Implementiere zuerst die Polynomaddition, -subtraktion und -multiplikation
     für Polynome in Normalform, also Funktionen
-    ```hs polyadd, polysub, polymul :: Num a => [a] -> [a] -> [a]```.
+    ```hs polyadd, polysub, polymul :: Integral a => [a] -> [a] -> [a]```.
 
     Die Polynomdivision kann als Funktion
     ```hs polydiv :: Integral a => [a] -> [a] -> [a]``` implementiert werden.
     Diese benötigt im Vergleich zu den anderen Operationen etwas mehr arbeitet.
     Sie ist im Folgenden nicht wichtig, sofern du nicht einen alternativen
     Ansatz zur Berechnung der Nullstellen ausprobieren möchtest.
-  - Implementiere als Nächstes eine Funktion ```hs fromPolyE :: Num a => PolyE a -> Poly a```,
+  - Implementiere als Nächstes eine Funktion ```hs fromPolyE :: Integral a => PolyE a -> Poly a```,
     die ein beliebiges Polynom in Normalform bringt. Für die rekursiven
     Konstruktoren können die zuvor definierten Funktionen hilfreich sein.
   - Implementiere eine Funktion ```hs horner :: Num a => [a] -> a -> a```, die
@@ -2218,8 +2218,8 @@ verallgemeinern kannst.
     ausgewertet wird. Nutze dafür das Horner-Schema.
   - Implementiere eine Funktion ```hs divisors :: Integral a => a -> [a]```,
     alle Teiler einer gegebenen positiven Ganzzahl berechnet.
-  - Implementiere zuletzt eine Funktion ```hs roots :: [Int] -> [Int]```, die
-    die Nullstellen eines ganzzahligen normierten Polynomfunktion berechnet.
+  - Implementiere zuletzt eine Funktion ```hs roots :: Integral a => PolyE a -> [a]```,
+    die die Nullstellen eines ganzzahligen normierten Polynomfunktion berechnet.
 ][
   Wenn du aus irgendeinem Grund richtig Langeweile haben oder sehr viel Spaß
   solltest, kannst du versuchen, die Polynommultiplikation über die schnelle
