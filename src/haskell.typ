@@ -1867,7 +1867,7 @@
   Algorithmus stark nach einer Matrix-Multiplikation aus, wobei die Addition
   die Rolle der Multiplikation und das Minimum die Rolle der Addition einnimmt
   -- auch wenn wir mehrere Matrix-Multiplikationen benötigen werden.
-  Tatsächlich steckt dahinter der sogenannte tropische Semiring
+  Tatsächlich steckt dahinter der sogenannte tropische Halbring
   $(RR union {oo}, min, +)$. Da es nichts besseres gibt, als algebraische
   Strukturen in Haskell zu implementieren, wollen wir uns dieses Vergnügen
   natürlich nicht nehmen lassen.
@@ -1913,7 +1913,7 @@
     dafür eine Matrix, die alle Kantengewichte für einen Digraph
     $G = (V, E)$ mit $V = {1, ..., n}$ enthält. $W$ erfüllt hier $(u, v) in E <=> w_(u v) < oo.$
 
-    Wenn wir nun z.B. $W^k$ im Sinne des tropischen Semirings berechnen, dann
+    Wenn wir nun z.B. $W^k$ im Sinne des tropischen Halbrings berechnen, dann
     besteht diese Matrix aus den Distanzen der kürzesten Wege, die über maximal
     $k$ Knoten gehen -- das kann man sich an einem kleinen Beispiel klarmachen.
     Berechnen wir also $W^n$ erhalten wir die Distanzmatrix für $G$.
@@ -1924,10 +1924,10 @@
   Diese Aufgabe verallgemeinert @binexp, @matmath und @logfib bzgl. der
   Arithmetik mit Matrizen.
 
-  Während der Name des vorgestellten Semirings bereits äußerst belustigend ist,
+  Während der Name des vorgestellten Halbrings bereits äußerst belustigend ist,
   möchte der Autor dieser Aufgabe an dieser Stelle zusätzlich anmerken, dass
-  es auch den arktischen Semiring $(RR union {-oo}, max, +)$ gibt, und große
-  Anerkennung an den- oder diejenige ausprechen, der oder die diesen Semiring
+  es auch den arktischen Halbring $(RR union {-oo}, max, +)$ gibt, und große
+  Anerkennung an den- oder diejenige ausprechen, der oder die diesen Halbring
   benannt hat.
 
   In @minplus_remark wird auf die offenen Probleme dieser Aufgabe genauer
@@ -2079,13 +2079,13 @@
     und ```hs block :: (Mat a, Mat a, Mat a, Mat a) -> Mat a```, die eine Matrix
     $A$ oder Matrizen $(a_(1 1)), A_(1 *), A_(* 1), A_(* *)$ nehmen und
     entsprechend das berechnen (wie in @block_mat).
-  - Implementiere eine Funktion ```hs lu :: Mat a -> Maybe (Mat a, Mat a)```, die eine
+  - Implementiere eine Funktion ```hs lu :: (Eq a, Fractional a) => Mat a -> Maybe (Mat a, Mat a)```, die eine
     LR-Zerlegung berechnet, sofern die sie für die gegebene Matrix existiert.
     Diese existiert genau dann, wenn $a_(1 1) != 0$ in jedem Schritt ist.
   - Die Determinante einer Dreiecksmatrix ist das Produkt der Diagonaleinträge.
     Nach Determinantenmultiplikationssatz folgt dann
     $ det(A) = det(L R) = det(L) det(R) = det(R) = product_(i=1)^n r_(i i). $
-    Implementiere eine Funktion ```hs det :: Mat a -> a```, die die Determinante
+    Implementiere eine Funktion ```hs det :: (Eq a, Fractional a) => Mat a -> a```, die die Determinante
     einer gegebenen Matrix berechnet. Beachte, dass die LR-Zerlegung genau dann
     nicht existiert, wenn $A$ nicht regulär ist.
   - Weiter lassen sich lineare Gleichungssysteme besonders einfach lösen, wenn
@@ -2097,13 +2097,13 @@
     der triviale Fall erreicht ist. Analog können wir $R x = b$ lösen. Für $R$
     können wir das ```hs unblock``` nicht verwenden. Definiere zuerst eine
     weitere Funktion ```hs unblock'```, die $R$ in die entsprechenden
-    Blockmatrizen zerlegt. Implementiere dann Funktion ```hs forward :: Mat a -> Mat a -> Mat a```
-    und ```hs backward :: Mat a -> Mat a -> Mat a```, die jeweils $L x = b$
+    Blockmatrizen zerlegt. Implementiere dann Funktion ```hs forward :: Fractional a => Mat a -> Mat a -> Mat a```
+    und ```hs backward :: Fractional a => Mat a -> Mat a -> Mat a```, die jeweils $L x = b$
     und $R x = b$ lösen.
   - Jetzt können wir lineare Gleichungssysteme lösen, inden $A$ regulär ist.
     Dafür wollen wir folgende Beobachtung nutzen:
     $ A x = L R x = b quad <==> quad R x = y and L y = b. $
-    Implementiere eine Funktion ```hs solve :: Mat a -> Mat a -> Mat a```, die
+    Implementiere eine Funktion ```hs solve :: Fractional => Mat a -> Mat a -> Mat a```, die
     die Lösung eines lösbaren linearen Gleichungssystems findet.
   - Die Inverse einer Matrix kann durch das Lösen linearer Gleichungssysteme
     berechnet werden. Seien $tilde(a)^((1)), ..., tilde(a)^((n))$ die Spalten
@@ -4843,7 +4843,7 @@ Diese Aufgaben haben noch keinen Platz gefunden.
   - Definiere einen Datentypen ```hs RE```, um regulärere Ausdrücke
     darzustellen. Der reguläre Ausdruck $(mono(a b))^*|mono(c)$ könnte z.B.
     so dargestellt werden
-    #align(center)[```hs Kleene (Literal 'a' :*: Literal 'b') :|: Literal 'c'```.]
+    #align(center)[```hs Kleene (Let 'a' :*: Let 'b') :|: Let 'c'```.]
     Die leere Sprache und die Sprache, die nur das leere Wort enthält, sind über
     das Beispiel nicht abdeckt.
   - Bevor wir mit den Konstruktionen beginnen, müssen wir uns überlegen, wie wir
