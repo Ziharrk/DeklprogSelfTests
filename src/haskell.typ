@@ -3420,6 +3420,19 @@ verallgemeinern kannst.
   ```hs Either e```, ```hs []``` und ```hs ((->) r)``` definiert?
 ]
 
+#test(level: 2)[
+  Hin und wieder kommt es vor, dass wir Datentypen haben, die von mehreren
+  Typvariablen abhängen. Zum Beispiel haben wir den Datentyp ```hs Either a b```
+  (oder ```hs (,)```) kennengelernt. Weiter haben wir gesehen, dass es uns
+  nur möglich war, eine ```hs Functor```-Instanz für ```hs Either a```
+  anzugeben. Unter Umständen möchten wir aber sowohl das ```hs a``` als auch
+  ```hs b``` auf andere Typen abbilden.
+
+  Überlege dir, wie du die ```hs Functor```-Typkonstruktorklasse für solche
+  Typen verallgemeinern kannst. Gebe eine konkrete Typkonstruktorklasse und
+  Instanzen für ```hs Either a b``` und ```hs (,,)``` an.
+]
+
 #test(level: 1, tags: (tag-exam25-one,))[
   Gegeben sei folgender Datentyp:
   #align(center)[```hs data Fiction a = Real a | Fake (Fiction a)```.]
