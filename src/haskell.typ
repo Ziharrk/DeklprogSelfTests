@@ -2088,6 +2088,8 @@
     bL_(**) bR_(**) = bA_(**) - bL_(* 1) bR_(1 *).
     $
 
+  Nutze in keiner deiner Funktionsdefinitionen ```hs (!!)``` oder ```hs (!?)```
+  und versuche stattdessen, geschickt pattern matching zu nutzen, um auf die Einträge zuzugreifen.
   - Implementiere Funktionen ```hs unblock :: Mat a -> (Mat a, Mat a, Mat a, Mat a)```
     und ```hs block :: (Mat a, Mat a, Mat a, Mat a) -> Mat a```, die eine Matrix
     $bA$ oder Matrizen $(a_(1 1)), bA_(1 *), bA_(* 1), bA_(**)$ nehmen und
@@ -2131,12 +2133,13 @@
     ```hs inv :: (Eq a, Fractional a) => Mat a -> Mat a```, die die Inverse
     einer regulären Matrix berechnet.
 ][
-  Nehme am besten an, dass in der Verantwortung der Person liegt, die mit den
-  Funktionen arbeiten möchte, zu prüfen, dass Dimensionen der Matrizen passen.
+  Nehme am besten an, dass die Verantwortung bei der Person, die mit den
+  Funktionen arbeiten möchte, liegt zu prüfen, dass die Dimensionen der
+  Matrizen passen.
 
   Lösungsvorschläge für diese Challenge findest du unter
   #link(git("blob/main/src/solutions/linalg.hs"), raw("linalg.hs")).
-]
+] <linalg>
 
 #challenge(level: 3, tags: (tag-deep-dive,))[
   Ich möchte versuchen, deine Gedanken zu lesen. Das funktioniert allerdings
@@ -2178,12 +2181,12 @@
   $A = S^(-1) D S$ nutzen, wobei $D in ZZ^(n times n)$ eine Diagonalmatrix und
   $S in "GL"_n (ZZ)$ eine unimodulare Matrix sind. Die Inverse kannst du dir
   mit deiner Sammlung von Funktionen berechnen lassen.
+
+  Hier kannst du wieder ```hs (!!)``` und ähnliche Funktionen nutzen, falls du
+  die Einschränkung aus @linalg noch im Kopf hast.
 ]
 
 // ```hs
-// size :: Mat a -> (Int, Int)
-// size (Mat as) = (length as, length (head as))
-//
 // at :: Mat a -> (Int, Int) -> a
 // at (Mat as) (i, j) = as !! i !! j
 //
@@ -2199,11 +2202,6 @@
 //   where
 //     (n, _) = size a
 //     ps = permutations [0..n - 1]
-//
-// identity :: Num a => Int -> Mat a
-// identity 1 = Mat [[1]]
-// identity n = Mat ((1 : replicate (n - 1) 0) : map (0 :) i)
-//   where Mat i = identity (n - 1)
 //
 // eigen :: Integral a => Mat a -> [a]
 // eigen a = roots (det (fmap Const a - fmap (T *) (identity n)))
