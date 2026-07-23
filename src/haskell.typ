@@ -2137,7 +2137,7 @@
   Funktionen arbeiten möchte, liegt zu prüfen, dass die Dimensionen der
   Matrizen passen.
 
-  Lösungsvorschläge für diese Challenge findest du unter
+  Einen Lösungsvorschlag für diese Challenge findest du unter
   #link(git("blob/main/src/solutions/linalg.hs"), raw("linalg.hs")).
 ] <linalg>
 
