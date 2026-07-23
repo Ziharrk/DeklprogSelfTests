@@ -1850,7 +1850,7 @@
 //   atanh (D x d) = D (atanh x) (d / (1 - x * x))
 // ```
 
-#challenge(level: 2, clock: true, breakable: true, tags: (tag-deep-dive,))[
+#challenge(level: 3, clock: true, breakable: true, tags: (tag-deep-dive,))[
   In Einführung in die Algorithmik hast du den Floyd-Warshall Algorithmus
   kennengelernt, um die Distanzen der kürzesten Wege zwischen allen Knoten in
   einem kanten-gewichteten Digraph zu berechnen. Hier ist der Algorithmus erneut
@@ -2014,6 +2014,262 @@
 //
 // shortestPaths :: (Num a, Ord a) => Mat (WithInf a) -> Mat (WithInf a)
 // shortestPaths m@(Mat a) = fmap getTropical ((fmap Tropical m) ^ (length a))
+// ```
+
+#challenge(level: 3, breakable: true, tags: (tag-deep-dive,))[
+  Das Abenteuer geht weiter. In @minplus haben wir ganz nebenbei ein Matrixring
+  implementiert. Dabei haben wir Matrizen mithilfe des Typen
+  ```hs data Mat a = Mat [[a]]``` dargestellt. Ein wichtiger Algorithmus in der
+  numerischen Mathematik ist die LR-Zerlegung einer Matrix $A in RR^(n times n)$.
+  $A$ hat eine LR-Zerlegung, falls Matrizen $L, R in RR^(n times n)$ existieren,
+  sodass $A = L dot R$ gilt, und $L$ eine untere Dreiecksmatrix und $R$ eine obere
+  Dreiecksmatrix sind. Sie kann unter anderem genutzt werden, um die Regularität
+  dieser festzustellen, lineare Gleichungssysteme zu lösen oder die Determinante
+  dieser zu berechnen.
+
+  In dieser Challenge wollen wir die LR-Zerlegung berechnen. Sie lässt induktiv
+  berechnen.
+  - Die LR-Zerlegung einer Matrix $A in RR^(1 times 1)$ ist gegeben durch
+    $L = (l_(1 1)) = (1) in RR^(1 times 1)$ und $R = (r_(1 1)) = (a_(1 1)) in RR^(1 times 1)$.
+    Jeder Eintrag der Hauptdiagonale von $L$ wird per Konvention auf $1$ gesetzt.
+    Hier sehen wir leicht, dass $A = L dot R$ gilt.
+  - Wir betrachten nun $a_(1 1) in RR without {0}$, $A_(1 *) in RR^(1 times (n - 1))$,
+    $A_(* 1) in RR^((n - 1) times 1)$ und $A_(**) in RR^((n - 1) times (n - 1))$,
+    wobei für $A_(**)$ eine LR-Zerlegung $(L_(**), R_(**))$ existiere. Wir
+    betrachten dann
+    #math.equation(
+      block: true,
+      numbering: "(1)",
+      $A = mat(a_(1 1), A_(1 *); A_(* 1), A_(* *)).$
+    ) <block_mat>
+    Wir suchen nun
+    $
+    L = mat(l_(1 1), L_(1 *); L_(* 1), L_(* *))
+    quad "und" quad
+    R = mat(r_(1 1), R_(1 *); R_(* 1), R_(* *)),
+    $
+    wobei $l_(1 1), r_(1 1) in RR$, $L_(1 *), R_(1 *) in RR^((n - 1) times 1)$
+    und $L_(* 1), R_(* 1) in RR^(1 times (n - 1))$ sind, sodass $A = L dot R$
+    gilt. Die Matrix-Multiplikation funktioniert für diese Blockmatrizen
+    genauso wie für Zahlen. Das heißt, es soll
+    $
+    L dot R
+    =& mat(l_(1 1), L_(1 *); L_(* 1), L_(* *)) dot mat(r_(1 1), R_(1 *); R_(* 1), R_(* *)) \
+    =& mat(
+        l_(1 1) dot r_(1 1) + L_(* 1) dot R_(1 *), l_(1 1) dot R_(1 *) + L_(1 *) R_(* *);
+        L_(* 1) dot r_(1 1) + L_(* *) dot R_(1 *), L_(* 1) dot R_(1 *) + L_(* *) R_(* *);
+      ) \
+    =& mat(a_(1 1), A_(1 *); A_(* 1), A_(* *)) \
+    =& A
+    $
+    gelten. Nun wissen wir, dass $L_(1 *) = 0, R_(* 1) = 0$ und $l_(1 1) = 1$ sind,
+    da $L$ und $R$ entsprechende Dreiecksmatrizen seien sollen und durch die
+    festgelegte Konvention. Damit erhalten wir folgende Gleichungen:
+    $
+    r_(1 1) = a_(1 1),
+    quad
+    R_(1 *) = A_(1 *),
+    quad
+    L_(* 1) = 1/(a_(1 1)) A_(* 1)
+    quad "und" quad
+    L_(* *) R_(* *) = A_(* *) - L_(* 1) R_(* 1).
+    $
+
+  - Implementiere Funktionen ```hs unblock :: Mat a -> (Mat a, Mat a, Mat a, Mat a)```
+    und ```hs block :: (Mat a, Mat a, Mat a, Mat a) -> Mat a```, die eine Matrix
+    $A$ oder Matrizen $(a_(1 1)), A_(1 *), A_(* 1), A_(* *)$ nehmen und
+    entsprechend das berechnen (wie in @block_mat).
+  - Implementiere eine Funktion ```hs lu :: Mat a -> Maybe (Mat a, Mat a)```, die eine
+    LR-Zerlegung berechnet, sofern die sie für die gegebene Matrix existiert.
+    Diese existiert genau dann, wenn $a_(1 1) != 0$ in jedem Schritt ist.
+  - Die Determinante einer Dreiecksmatrix ist das Produkt der Diagonaleinträge.
+    Nach Determinantenmultiplikationssatz folgt dann
+    $ det(A) = det(L R) = det(L) det(R) = det(R) = product_(i=1)^n r_(i i). $
+    Implementiere eine Funktion ```hs det :: Mat a -> a```, die die Determinante
+    einer gegebenen Matrix berechnet. Beachte, dass die LR-Zerlegung genau dann
+    nicht existiert, wenn $A$ nicht regulär ist.
+  - Weiter lassen sich lineare Gleichungssysteme besonders einfach lösen, wenn
+    $A$ in $A x = b$ in unterer oder oberer Dreiecksgestalt ist. Auch hier
+    können wir ein rekursives Verfahren angeben. Betrachte
+    $ mat(l_(1 1), 0; L_(* 1), L_(* *)) vec(x_(1 1), x_*) = vec(b_1, b_*). $
+    Dann ist $x_(1 1) = b_1$, da $l_(1 1) = 1$ ist. Wir berechnen $x_*$ nun,
+    indem wir $L_(* *) = b_* - x_(1 1) L_(* 1)$ lösen. Das wiederholen wir, bis
+    der triviale Fall erreicht ist. Analog können wir $R x = b$ lösen. Für $R$
+    können wir das ```hs unblock``` nicht verwenden. Definiere zuerst eine
+    weitere Funktion ```hs unblock'```, die $R$ in die entsprechenden
+    Blockmatrizen zerlegt. Implementiere dann Funktion ```hs forward :: Mat a -> Mat a -> Mat a```
+    und ```hs backward :: Mat a -> Mat a -> Mat a```, die jeweils $L x = b$
+    und $R x = b$ lösen.
+  - Jetzt können wir lineare Gleichungssysteme lösen, inden $A$ regulär ist.
+    Dafür wollen wir folgende Beobachtung nutzen:
+    $ A x = L R x = b quad <==> quad R x = y and L y = b. $
+    Implementiere eine Funktion ```hs solve :: Mat a -> Mat a -> Mat a```, die
+    die Lösung eines lösbaren linearen Gleichungssystems findet.
+  - Die Inverse einer Matrix kann durch das Lösen linearer Gleichungssysteme
+    berechnet werden. Seien $tilde(a)^((1)), ..., tilde(a)^((n))$ die Spalten
+    von $A^(-1)$ und $e^((1)), ..., e^((n))$ die Einheitsvektoren des $R^n$.
+    Dann erhalten wir $tilde(a)^((i))$ durch das Lösen von
+    $A tilde(a)^((i)) = e^((i))$. Implementiere eine Funktion
+    ```hs inv :: (Eq a, Fractional a) => Mat a -> Mat a```, die die Inverse
+    einer regulären Matrix berechnet.
+]
+
+// ```hs
+// import Data.Bifunctor (bimap)
+//
+// size :: Mat a -> (Int, Int)
+// size (Mat as) = (length as, length (head as))
+//
+// vstack :: Mat a -> Mat a -> Mat a
+// vstack (Mat as) (Mat bs) = Mat (as ++ bs)
+//
+// trans :: Mat a -> Mat a
+// trans (Mat as) = Mat (transpose as)
+//
+// unblock :: Mat a -> (Mat a, Mat a, Mat a, Mat a)
+// unblock (Mat a) = (Mat a11, Mat a1x, Mat ax1, Mat axx)
+//   where
+//     a11 = [[head (head a)]]
+//     a1x = [tail (head a)]
+//     ax1 = map (singleton . head) (tail a)
+//     axx = map tail (tail a)
+//
+// unblock' :: Mat a -> (Mat a, Mat a, Mat a, Mat a)
+// unblock' (Mat a) = (Mat axx, Mat anx, Mat axn, Mat ann)
+//   where
+//     axx = map init (init a)
+//     anx = map (singleton . last) (init a)
+//     axn = [init (last a)]
+//     ann = [[last (last a)]]
+//
+// block :: (Mat a, Mat a, Mat a, Mat a) -> Mat a
+// block (Mat [[a11]], Mat a1x, Mat ax1, Mat axx) = Mat (b1 ++ bx)
+//   where
+//     b1 = map (a11 :) a1x
+//     bx = zipWith (++) ax1 axx
+//
+// lu :: (Eq a, Fractional a) => Mat a -> Maybe (Mat a, Mat a)
+// lu a@(Mat [[a11]])
+//   | a11 == 0  = Nothing
+//   | otherwise = Just (Mat [[1]], a)
+// lu a@(Mat as)
+//   | a11 == 0  = Nothing
+//   | otherwise = fmap (bimap (block . (l11, l1x, lx1,)) (block . (r11, r1x, rx1,)))
+//                      (lu (axx - lx1 * r1x))
+//   where
+//     (Mat [[a11]], a1x, ax1, axx) = unblock a
+//
+//     r11 = Mat [[a11]]
+//     r1x = a1x
+//     rx1 = fmap (const 0) ax1
+//
+//     l11 = Mat [[1]]
+//     lx1 = fmap (/ a11) ax1
+//     l1x = fmap (const 0) a1x
+//
+// diag :: Mat a -> [a]
+// diag (Mat []) = []
+// diag (Mat ((d:_):rs)) = d : diag (Mat (map tail rs))
+//
+// det :: (Eq a, Fractional a) => Mat a -> a
+// det = fromMaybe 0 . fmap (product . diag) . fmap snd . lu
+//
+// backward :: Fractional a => Mat a -> Mat a -> Mat a
+// backward _ (Mat []) = Mat []
+// backward r b        = Mat (xx ++ [[xn]])
+//   where
+//     (rxx, rxn, rnx, Mat [[rnn]]) = unblock' r
+//     (_, bx, _, Mat [[bn]]) = unblock' b
+//     xn = bn / rnn
+//     Mat xx = backward rxx (bx - fmap (xn *) rxn)
+//
+// forward :: Fractional a => Mat a -> Mat a -> Mat a
+// forward _ (Mat []) = Mat []
+// forward l b        = Mat ([x1] : xx)
+//   where
+//     (Mat [[l11]], l1x, lx1, lxx) = unblock l
+//     (Mat [[b11]], _, bx, _) = unblock b
+//     x1 = b11 / l11
+//     Mat xx = forward lxx (bx - fmap (x1 *) lx1)
+//
+// solve :: (Eq a, Fractional a) => Mat a -> Mat a -> Maybe (Mat a)
+// solve a b = fmap (\(l, r) -> backward r (forward l b)) (lu a)
+//
+// inv :: (Eq a, Fractional a) => Mat a -> Maybe (Mat a)
+// inv a = do
+//     xs <- mapM (\e -> solve a (Mat (transpose [e]))) es
+//     return (trans (foldr1 vstack (map trans xs)))
+//   where
+//     (n, _) = size a
+//     Mat es = identity n
+// ```
+
+#challenge(level: 3, tags: (tag-deep-dive,))[
+  Ich möchte versuchen, deine Gedanken zu lesen. Das funktioniert allerdings
+  nur, wenn du @minplus und @roots_of_polynomials erfolgreich gemeistert hast.
+  Ohh, du denkst auch häufiger über das römische Reich nach. Interessant. Was
+  sehe ich noch, hmm... ich nehme wahr, dass du so langsam daran zweifelst,
+  warum diese Challenges überhaupt machen solltest. Deren Inhalte sind jenseits
+  des Programmierens kein Inhalt der Vorlesung und die Inhalte sind teilweise
+  etwas schwierig. Ich kann dich beruhigen, in der Challenge wird es nicht
+  besser. Es ist aber schön, dass du dich trotzdem dazu entschieden hast
+  weiterzumachen.
+
+  Im Grunde hast du diese Challenge schon fertig. In dieser wollen wir
+  die Determinante einer Matrix mithilfe der Leibniz-Formel berechnen. Es gilt
+  $ det(A) = sum_(sigma in S_n) "sgn"(sigma) product_(i=1)^n a_(i,sigma(i)) $
+  für alle $A in R^(n times n)$, wobei $R$ ein Halbring ist. Falls du $S_n$ und
+  $"sgn"$ noch nie gesehen hast, kein Problem,
+  - $S_n = { sigma : {1, ..., n} -> {1, ..., n} | pi "bijektiv" }$
+    ist die Menge aller Permutationen von ${1, ..., n}$,
+  - $"sgn"(sigma) = (-1)^("inv"(sigma))$ für alle $sigma in S_n$ und
+  - $"inv"(sigma) = abs({(i, j) in {1, ..., n}^2 | i < j and sigma(i) > sigma(j) })$
+    für alle $sigma in S_n$. $"inv"$ gibt die Anzahl der Fehlstellungen in einer
+    Permutationen an.
+
+  Kommen wir nun zu unserem Vorhaben.
+  - Implementiere eine Funktion ```hs det :: Num a => Mat a -> a```, die die
+    Determinante einer Matrix mithilfe der Leibniz-Formel berechnet.
+    Dafür benötigst du die Funktionen ```hs inv :: (Num b, Ord a) => [a] -> b```
+    und ```hs sgn :: (Num b, Ord a) => [a] -> b```.
+  - Zuguterletzt, implementiere eine Funktion ```hs eigen :: Integral a => Mat a -> a```,
+    die die ganzzahligen Eigenwerte der gegebenen Matrix berechnet. Berechne dafür
+    die Nullstellen von $det(A - t dot I) in ZZ[t]$.
+
+  Die Eigenwerte der Matrix $mat(-4, 11, -5; -15, 30, -13; -27, 51, -22)$ sind
+  $-1$, $2$ und $3$.
+
+  Glückwunsch, du hast Eigenwerte berechnet! #emoji.face.party
+]
+
+// ```hs
+// size :: Mat a -> (Int, Int)
+// size (Mat as) = (length as, length (head as))
+//
+// at :: Mat a -> (Int, Int) -> a
+// at (Mat as) (i, j) = as !! i !! j
+//
+// inv :: (Num b, Ord a) => [a] -> b
+// inv []     = 0
+// inv (x:xs) = sum [1 | y <- xs, x > y] + inv xs
+//
+// sgn :: (Num b, Ord a) => [a] -> b
+// sgn p = (-1) ^ inv p
+//
+// det :: Num a => Mat a -> a
+// det a = sum [s * product (map (\i -> a `at` (i, p !! i)) [0..n - 1]) | p <- ps, let s = sgn p]
+//   where
+//     (n, _) = size a
+//     ps = permutations [0..n - 1]
+//
+// identity :: Num a => Int -> Mat a
+// identity 1 = Mat [[1]]
+// identity n = Mat ((1 : replicate (n - 1) 0) : map (0 :) i)
+//   where Mat i = identity (n - 1)
+//
+// eigen :: Integral a => Mat a -> [a]
+// eigen a = roots (det (fmap Const a - fmap (T *) (identity n)))
+//   where (n, _) = size a
 // ```
 
 An vielen Stellen in den bisherigen Selbsttests haben wir oft einen konkreten
