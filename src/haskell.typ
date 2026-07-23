@@ -2017,99 +2017,117 @@
 // ```
 
 #challenge(level: 3, breakable: true, tags: (tag-deep-dive,))[
+  #let bA = $bold(upright(A))$
+  #let bL = $bold(upright(L))$
+  #let bR = $bold(upright(R))$
+  #let ba = $bold(upright(a))$
+  #let bb = $bold(upright(b))$
+  #let be = $bold(upright(e))$
+  #let bx = $bold(upright(x))$
+  #let by = $bold(upright(y))$
+  #let b0 = $bold(upright(0))$
+
   Das Abenteuer geht weiter. In @minplus haben wir ganz nebenbei ein Matrixring
   implementiert. Dabei haben wir Matrizen mithilfe des Typen
   ```hs data Mat a = Mat [[a]]``` dargestellt. Ein wichtiger Algorithmus in der
-  numerischen Mathematik ist die LR-Zerlegung einer Matrix $A in RR^(n times n)$.
-  $A$ hat eine LR-Zerlegung, falls Matrizen $L, R in RR^(n times n)$ existieren,
-  sodass $A = L dot R$ gilt, und $L$ eine untere Dreiecksmatrix und $R$ eine obere
-  Dreiecksmatrix sind. Sie kann unter anderem genutzt werden, um die Regularität
-  dieser festzustellen, lineare Gleichungssysteme zu lösen oder die Determinante
-  dieser zu berechnen.
+  numerischen Mathematik ist die LR-Zerlegung einer Matrix $bA in K^(n times n)$,
+  wobei $K$ ein Körper ist.
+  $bA$ hat eine LR-Zerlegung, falls Matrizen $bL, bR in K^(n times n)$
+  existieren, sodass $bA = bL dot bR$ gilt, und $bL$ eine untere Dreiecksmatrix
+  und $bR$ eine obere Dreiecksmatrix sind. Sie kann unter anderem genutzt
+  werden, um die Regularität von $bA$ festzustellen, lineare Gleichungssysteme zu
+  lösen oder die Determinante von $bA$ zu berechnen.
 
   In dieser Challenge wollen wir die LR-Zerlegung berechnen. Sie lässt induktiv
-  berechnen.
-  - Die LR-Zerlegung einer Matrix $A in RR^(1 times 1)$ ist gegeben durch
-    $L = (l_(1 1)) = (1) in RR^(1 times 1)$ und $R = (r_(1 1)) = (a_(1 1)) in RR^(1 times 1)$.
-    Jeder Eintrag der Hauptdiagonale von $L$ wird per Konvention auf $1$ gesetzt.
-    Hier sehen wir leicht, dass $A = L dot R$ gilt.
-  - Wir betrachten nun $a_(1 1) in RR without {0}$, $A_(1 *) in RR^(1 times (n - 1))$,
-    $A_(* 1) in RR^((n - 1) times 1)$ und $A_(**) in RR^((n - 1) times (n - 1))$,
-    wobei für $A_(**)$ eine LR-Zerlegung $(L_(**), R_(**))$ existiere. Wir
+  wie folgt berechnen:
+  - Die LR-Zerlegung einer Matrix $bA in K^(1 times 1)$ ist gegeben durch
+    $bL = (l_(1 1)) = (1) in K^(1 times 1)$ und
+    $bR = (r_(1 1)) = (a_(1 1)) in K^(1 times 1)$.
+    Jeder Eintrag der Hauptdiagonale von $bL$ wird per Konvention auf $1$ gesetzt.
+    Hier sehen wir leicht, dass $bA = bL dot bR$ gilt.
+  - Seien nun $a_(1 1) in K without {0}$, $bA_(1 *) in K^(1 times (n - 1))$,
+    $bA_(* 1) in K^((n - 1) times 1)$ und $bA_(**) in K^((n - 1) times (n - 1))$,
+    wobei für $bA_(**)$ eine LR-Zerlegung $(bL_(**), bR_(**))$ existiere. Wir
     betrachten dann
     #math.equation(
       block: true,
       numbering: "(1)",
-      $A = mat(a_(1 1), A_(1 *); A_(* 1), A_(* *)).$
+      $bA = mat(a_(1 1), bA_(1 *); bA_(* 1), bA_(**)).$
     ) <block_mat>
-    Wir suchen nun
+    Wir suchen jetzt
     $
-    L = mat(l_(1 1), L_(1 *); L_(* 1), L_(* *))
+    bL = mat(l_(1 1), bL_(1 *); bL_(* 1), bL_(**))
     quad "und" quad
-    R = mat(r_(1 1), R_(1 *); R_(* 1), R_(* *)),
+    bR = mat(r_(1 1), bR_(1 *); bR_(* 1), bR_(**)),
     $
-    wobei $l_(1 1), r_(1 1) in RR$, $L_(1 *), R_(1 *) in RR^((n - 1) times 1)$
-    und $L_(* 1), R_(* 1) in RR^(1 times (n - 1))$ sind, sodass $A = L dot R$
+    wobei $l_(1 1), r_(1 1) in K$, $bL_(1 *), bR_(1 *) in K^((n - 1) times 1)$
+    und $bL_(* 1), bR_(* 1) in K^(1 times (n - 1))$ sind, sodass $bA = bL dot bR$
     gilt. Die Matrix-Multiplikation funktioniert für diese Blockmatrizen
     genauso wie für Zahlen. Das heißt, es soll
     $
-    L dot R
-    =& mat(l_(1 1), L_(1 *); L_(* 1), L_(* *)) dot mat(r_(1 1), R_(1 *); R_(* 1), R_(* *)) \
+    bL dot bR
+    =& mat(l_(1 1), bL_(1 *); bL_(* 1), bL_(**)) dot mat(r_(1 1), bR_(1 *); bR_(* 1), bR_(**)) \
     =& mat(
-        l_(1 1) dot r_(1 1) + L_(* 1) dot R_(1 *), l_(1 1) dot R_(1 *) + L_(1 *) R_(* *);
-        L_(* 1) dot r_(1 1) + L_(* *) dot R_(1 *), L_(* 1) dot R_(1 *) + L_(* *) R_(* *);
+        l_(1 1) dot r_(1 1) + bL_(* 1) dot bR_(1 *), l_(1 1) dot bR_(1 *) + bL_(1 *) bR_(**);
+        bL_(* 1) dot r_(1 1) + bL_(**) dot bR_(1 *), bL_(* 1) dot bR_(1 *) + bL_(**) bR_(**);
       ) \
-    =& mat(a_(1 1), A_(1 *); A_(* 1), A_(* *)) \
-    =& A
+    =& mat(a_(1 1), bA_(1 *); bA_(* 1), bA_(**)) \
+    =& bA
     $
-    gelten. Nun wissen wir, dass $L_(1 *) = 0, R_(* 1) = 0$ und $l_(1 1) = 1$ sind,
-    da $L$ und $R$ entsprechende Dreiecksmatrizen seien sollen und durch die
-    festgelegte Konvention. Damit erhalten wir folgende Gleichungen:
+    gelten. Nun wissen wir, dass $bL_(1 *) = b0, bR_(* 1) = b0$ und $l_(1 1) = 1$ sind,
+    da $bL$ und $bR$ untere und obere Dreiecksmatrizen sind und durch die
+    festgelegte Konvention, die Diagonalelement von $bL$ festgelegt sind.
+    Damit erhalten wir folgende Gleichungen:
     $
     r_(1 1) = a_(1 1),
     quad
-    R_(1 *) = A_(1 *),
+    bR_(1 *) = bA_(1 *),
     quad
-    L_(* 1) = 1/(a_(1 1)) A_(* 1)
+    bL_(* 1) = 1/(a_(1 1)) bA_(* 1)
     quad "und" quad
-    L_(* *) R_(* *) = A_(* *) - L_(* 1) R_(* 1).
+    bL_(**) bR_(**) = bA_(**) - bL_(* 1) bR_(1 *).
     $
 
   - Implementiere Funktionen ```hs unblock :: Mat a -> (Mat a, Mat a, Mat a, Mat a)```
     und ```hs block :: (Mat a, Mat a, Mat a, Mat a) -> Mat a```, die eine Matrix
-    $A$ oder Matrizen $(a_(1 1)), A_(1 *), A_(* 1), A_(* *)$ nehmen und
-    entsprechend das berechnen (wie in @block_mat).
-  - Implementiere eine Funktion ```hs lu :: (Eq a, Fractional a) => Mat a -> Maybe (Mat a, Mat a)```, die eine
-    LR-Zerlegung berechnet, sofern die sie für die gegebene Matrix existiert.
-    Diese existiert genau dann, wenn $a_(1 1) != 0$ in jedem Schritt ist.
+    $bA$ oder Matrizen $(a_(1 1)), bA_(1 *), bA_(* 1), bA_(**)$ nehmen und
+    diese entweder Zerlegen oder zu einer Matrix zusammenstellen (siehe @block_mat).
+  - Implementiere eine Funktion ```hs lu :: (Eq a, Fractional a) => Mat a -> Maybe (Mat a, Mat a)```,
+    die eine LR-Zerlegung berechnet, sofern die sie für die gegebene Matrix
+    existiert. Diese existiert genau dann, wenn $a_(1 1) != 0$ in jedem Schritt
+    ist.
   - Die Determinante einer Dreiecksmatrix ist das Produkt der Diagonaleinträge.
     Nach Determinantenmultiplikationssatz folgt dann
-    $ det(A) = det(L R) = det(L) det(R) = det(R) = product_(i=1)^n r_(i i). $
-    Implementiere eine Funktion ```hs det :: (Eq a, Fractional a) => Mat a -> a```, die die Determinante
-    einer gegebenen Matrix berechnet. Beachte, dass die LR-Zerlegung genau dann
-    nicht existiert, wenn $A$ nicht regulär ist.
+    $ det(bA) = det(bL bR) = det(bL) det(bR) = det(bR) = product_(i=1)^n r_(i i). $
+    Implementiere eine Funktion ```hs det :: (Eq a, Fractional a) => Mat a -> a```,
+    die die Determinante einer gegebenen Matrix berechnet. Beachte, dass die
+    LR-Zerlegung genau dann nicht existiert, wenn $bA$ nicht regulär ist -- was
+    bedeutet das für die Determinante?.
   - Weiter lassen sich lineare Gleichungssysteme besonders einfach lösen, wenn
-    $A$ in $A x = b$ in unterer oder oberer Dreiecksgestalt ist. Auch hier
+    $bA$ in $bA bx = bb$ in unterer oder oberer Dreiecksgestalt ist. Auch hier
     können wir ein rekursives Verfahren angeben. Betrachte
-    $ mat(l_(1 1), 0; L_(* 1), L_(* *)) vec(x_(1 1), x_*) = vec(b_1, b_*). $
-    Dann ist $x_(1 1) = b_1$, da $l_(1 1) = 1$ ist. Wir berechnen $x_*$ nun,
-    indem wir $L_(* *) = b_* - x_(1 1) L_(* 1)$ lösen. Das wiederholen wir, bis
-    der triviale Fall erreicht ist. Analog können wir $R x = b$ lösen. Für $R$
-    können wir das ```hs unblock``` nicht verwenden. Definiere zuerst eine
-    weitere Funktion ```hs unblock'```, die $R$ in die entsprechenden
+    $ mat(l_(1 1), 0; bL_(* 1), bL_(**)) vec(x_(1 1), bx_*) = vec(b_1, bb_*). $
+    Dann ist $x_(1 1) = b_1$, da $l_(1 1) = 1$ ist. Wir berechnen $bx_*$ nun,
+    indem wir $bL_(**) = bb_* - x_(1 1) bL_(* 1)$ lösen. Das wiederholen wir, bis
+    der triviale Fall erreicht ist. Analog können wir $bR bx = bb$ lösen. Für $bR$
+    können wir ```hs unblock``` nicht verwenden. Definiere zuerst eine
+    weitere Funktion ```hs unblock'```, die $bR$ in die entsprechenden
     Blockmatrizen zerlegt. Implementiere dann Funktion ```hs forward :: Fractional a => Mat a -> Mat a -> Mat a```
-    und ```hs backward :: Fractional a => Mat a -> Mat a -> Mat a```, die jeweils $L x = b$
-    und $R x = b$ lösen.
-  - Jetzt können wir lineare Gleichungssysteme lösen, inden $A$ regulär ist.
+    und ```hs backward :: Fractional a => Mat a -> Mat a -> Mat a```, die jeweils $bL bx = bb$
+    und $bR bx = bb$ lösen.
+  - Jetzt können wir lineare Gleichungssysteme lösen, in denen $bA$ regulär ist.
     Dafür wollen wir folgende Beobachtung nutzen:
-    $ A x = L R x = b quad <==> quad R x = y and L y = b. $
-    Implementiere eine Funktion ```hs solve :: Fractional => Mat a -> Mat a -> Mat a```, die
-    die Lösung eines lösbaren linearen Gleichungssystems findet.
+    $ bA bx = bL bR bx = bb quad <==> quad bR bx = by and bL by = bb. $
+    Implementiere eine Funktion ```hs solve :: Fractional a => Mat a -> Mat a -> Mat a```, die
+    die Lösung eines lösbaren linearen Gleichungssystems findet. Hier kannst du
+    annehmen, dass der zweite Parameter, also $bb$, die Form $(n times 1)$ hat.
+    Je nachdem wie du die folgende Teilaufgabe lösen möchtest, kann hier aber
+    auch $(n times m)$ annehmen.
   - Die Inverse einer Matrix kann durch das Lösen linearer Gleichungssysteme
-    berechnet werden. Seien $tilde(a)^((1)), ..., tilde(a)^((n))$ die Spalten
-    von $A^(-1)$ und $e^((1)), ..., e^((n))$ die Einheitsvektoren des $R^n$.
-    Dann erhalten wir $tilde(a)^((i))$ durch das Lösen von
-    $A tilde(a)^((i)) = e^((i))$. Implementiere eine Funktion
+    berechnet werden. Seien $tilde(ba)^((1)), ..., tilde(ba)^((n))$ die Spalten
+    von $bA^(-1)$ und $be^((1)), ..., be^((n))$ die Einheitsvektoren des $K^n$.
+    Dann erhalten wir $tilde(ba)^((i))$ durch das Lösen von
+    $bA tilde(ba)^((i)) = be^((i))$. Implementiere eine Funktion
     ```hs inv :: (Eq a, Fractional a) => Mat a -> Mat a```, die die Inverse
     einer regulären Matrix berechnet.
 ]
@@ -2234,12 +2252,16 @@
     und ```hs sgn :: (Num b, Ord a) => [a] -> b```.
   - Zuguterletzt, implementiere eine Funktion ```hs eigen :: Integral a => Mat a -> a```,
     die die ganzzahligen Eigenwerte der gegebenen Matrix berechnet. Berechne dafür
-    die Nullstellen von $det(A - t dot I) in ZZ[t]$.
-
-  Die Eigenwerte der Matrix $mat(-4, 11, -5; -15, 30, -13; -27, 51, -22)$ sind
-  $-1$, $2$ und $3$.
+    die Nullstellen von $det(A - t dot I) in ZZ[t]$. Zum Testen: Die
+    Eigenwerte der Matrix $mat(-4, 11, -5; -15, 30, -13; -27, 51, -22)$ sind
+    $-1$, $2$ und $3$.
 
   Glückwunsch, du hast Eigenwerte berechnet! #emoji.face.party
+][
+  Falls du weitere Matrizen zum Testen generieren möchtest, dann kann du
+  $A = S^(-1) D S$ nutzen, wobei $D in ZZ^(n times n)$ eine Diagonalmatrix und
+  $S in "GL"_n (ZZ)$ eine unimodulare Matrix sind. Die Inverse kannst du dir
+  mit deiner Sammlung von Funktionen berechnen lassen.
 ]
 
 // ```hs
