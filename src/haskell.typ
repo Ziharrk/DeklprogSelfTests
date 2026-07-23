@@ -3428,9 +3428,12 @@ verallgemeinern kannst.
   anzugeben. Unter Umständen möchten wir aber sowohl das ```hs a``` als auch
   ```hs b``` auf andere Typen abbilden.
 
-  Überlege dir, wie du die ```hs Functor```-Typkonstruktorklasse für solche
-  Typen verallgemeinern kannst. Gebe eine konkrete Typkonstruktorklasse und
-  Instanzen für ```hs Either a b``` und ```hs (,,)``` an.
+  - Überlege dir, wie du die ```hs Functor```-Typkonstruktorklasse für solche
+    Typen verallgemeinern kannst. Gebe eine konkrete Typkonstruktorklasse und
+    Instanzen für ```hs Either a b``` und ```hs (,,)``` an.
+  - Wie kannst du ```hs fmap``` aus deiner Definition zurückgewinnen?
+  - Kannst du nun auch eine Funktion ```hs bf a b -> (a -> c) -> bf c b```
+    angeben -- also quasi ein ```hs fmap``` für den anderen Typen?
 ]
 
 #test(level: 1, tags: (tag-exam25-one,))[
