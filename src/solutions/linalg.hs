@@ -3,7 +3,7 @@ import Data.List (singleton, transpose)
 import Data.Maybe (fromMaybe)
 
 
-data Mat a = Mat [[a]]
+newtype Mat a = Mat [[a]]
   deriving (Eq, Show)
 
 
