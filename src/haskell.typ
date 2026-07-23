@@ -2130,97 +2130,13 @@
     $bA tilde(ba)^((i)) = be^((i))$. Implementiere eine Funktion
     ```hs inv :: (Eq a, Fractional a) => Mat a -> Mat a```, die die Inverse
     einer regulären Matrix berechnet.
-]
+][
+  Nehme am besten an, dass in der Verantwortung der Person liegt, die mit den
+  Funktionen arbeiten möchte, zu prüfen, dass Dimensionen der Matrizen passen.
 
-// ```hs
-// import Data.Bifunctor (bimap)
-//
-// size :: Mat a -> (Int, Int)
-// size (Mat as) = (length as, length (head as))
-//
-// vstack :: Mat a -> Mat a -> Mat a
-// vstack (Mat as) (Mat bs) = Mat (as ++ bs)
-//
-// trans :: Mat a -> Mat a
-// trans (Mat as) = Mat (transpose as)
-//
-// unblock :: Mat a -> (Mat a, Mat a, Mat a, Mat a)
-// unblock (Mat a) = (Mat a11, Mat a1x, Mat ax1, Mat axx)
-//   where
-//     a11 = [[head (head a)]]
-//     a1x = [tail (head a)]
-//     ax1 = map (singleton . head) (tail a)
-//     axx = map tail (tail a)
-//
-// unblock' :: Mat a -> (Mat a, Mat a, Mat a, Mat a)
-// unblock' (Mat a) = (Mat axx, Mat anx, Mat axn, Mat ann)
-//   where
-//     axx = map init (init a)
-//     anx = map (singleton . last) (init a)
-//     axn = [init (last a)]
-//     ann = [[last (last a)]]
-//
-// block :: (Mat a, Mat a, Mat a, Mat a) -> Mat a
-// block (Mat [[a11]], Mat a1x, Mat ax1, Mat axx) = Mat (b1 ++ bx)
-//   where
-//     b1 = map (a11 :) a1x
-//     bx = zipWith (++) ax1 axx
-//
-// lu :: (Eq a, Fractional a) => Mat a -> Maybe (Mat a, Mat a)
-// lu a@(Mat [[a11]])
-//   | a11 == 0  = Nothing
-//   | otherwise = Just (Mat [[1]], a)
-// lu a@(Mat as)
-//   | a11 == 0  = Nothing
-//   | otherwise = fmap (bimap (block . (l11, l1x, lx1,)) (block . (r11, r1x, rx1,)))
-//                      (lu (axx - lx1 * r1x))
-//   where
-//     (Mat [[a11]], a1x, ax1, axx) = unblock a
-//
-//     r11 = Mat [[a11]]
-//     r1x = a1x
-//     rx1 = fmap (const 0) ax1
-//
-//     l11 = Mat [[1]]
-//     lx1 = fmap (/ a11) ax1
-//     l1x = fmap (const 0) a1x
-//
-// diag :: Mat a -> [a]
-// diag (Mat []) = []
-// diag (Mat ((d:_):rs)) = d : diag (Mat (map tail rs))
-//
-// det :: (Eq a, Fractional a) => Mat a -> a
-// det = fromMaybe 0 . fmap (product . diag) . fmap snd . lu
-//
-// backward :: Fractional a => Mat a -> Mat a -> Mat a
-// backward _ (Mat []) = Mat []
-// backward r b        = Mat (xx ++ [[xn]])
-//   where
-//     (rxx, rxn, rnx, Mat [[rnn]]) = unblock' r
-//     (_, bx, _, Mat [[bn]]) = unblock' b
-//     xn = bn / rnn
-//     Mat xx = backward rxx (bx - fmap (xn *) rxn)
-//
-// forward :: Fractional a => Mat a -> Mat a -> Mat a
-// forward _ (Mat []) = Mat []
-// forward l b        = Mat ([x1] : xx)
-//   where
-//     (Mat [[l11]], l1x, lx1, lxx) = unblock l
-//     (Mat [[b11]], _, bx, _) = unblock b
-//     x1 = b11 / l11
-//     Mat xx = forward lxx (bx - fmap (x1 *) lx1)
-//
-// solve :: (Eq a, Fractional a) => Mat a -> Mat a -> Maybe (Mat a)
-// solve a b = fmap (\(l, r) -> backward r (forward l b)) (lu a)
-//
-// inv :: (Eq a, Fractional a) => Mat a -> Maybe (Mat a)
-// inv a = do
-//     xs <- mapM (\e -> solve a (Mat (transpose [e]))) es
-//     return (trans (foldr1 vstack (map trans xs)))
-//   where
-//     (n, _) = size a
-//     Mat es = identity n
-// ```
+  Lösungsvorschläge für diese Challenge findest du unter
+  #link(git("blob/main/src/solutions/linalg.hs"), raw("linalg.hs")).
+]
 
 #challenge(level: 3, tags: (tag-deep-dive,))[
   Ich möchte versuchen, deine Gedanken zu lesen. Das funktioniert allerdings
