@@ -2068,8 +2068,8 @@
     bL dot bR
     =& mat(l_(1 1), bL_(1 *); bL_(* 1), bL_(**)) dot mat(r_(1 1), bR_(1 *); bR_(* 1), bR_(**)) \
     =& mat(
-        l_(1 1) dot r_(1 1) + bL_(* 1) dot bR_(1 *), l_(1 1) dot bR_(1 *) + bL_(1 *) bR_(**);
-        bL_(* 1) dot r_(1 1) + bL_(**) dot bR_(1 *), bL_(* 1) dot bR_(1 *) + bL_(**) bR_(**);
+        l_(1 1) dot r_(1 1) + bL_(* 1) dot bR_(1 *), l_(1 1) dot bR_(1 *) + bL_(1 *) dot bR_(**);
+        bL_(* 1) dot r_(1 1) + bL_(**) dot bR_(1 *), bL_(* 1) dot bR_(1 *) + bL_(**) dot bR_(**);
       ) \
     =& mat(a_(1 1), bA_(1 *); bA_(* 1), bA_(**)) \
     =& bA
