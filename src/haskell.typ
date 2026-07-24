@@ -2030,8 +2030,8 @@
   Das Abenteuer geht weiter. In @minplus haben wir ganz nebenbei ein Matrixring
   implementiert. Dabei haben wir Matrizen mithilfe des Typen
   ```hs data Mat a = Mat [[a]]``` dargestellt. Ein wichtiger Algorithmus in der
-  numerischen Mathematik ist die LR-Zerlegung einer Matrix $bA in K^(n times n)$,
-  wobei $K$ ein Körper ist.
+  numerischen Mathematik ist die #link("https://en.wikipedia.org/wiki/LU_decomposition")[LR-Zerlegung]
+  einer Matrix $bA in K^(n times n)$, wobei $K$ ein Körper ist.
   $bA$ hat eine LR-Zerlegung, falls Matrizen $bL, bR in K^(n times n)$
   existieren, sodass $bA = bL dot bR$ gilt, und $bL$ eine untere Dreiecksmatrix
   und $bR$ eine obere Dreiecksmatrix sind. Sie kann unter anderem genutzt
@@ -2175,7 +2175,7 @@
     Eigenwerte der Matrix $mat(-4, 11, -5; -15, 30, -13; -27, 51, -22)$ sind
     $-1$, $2$ und $3$.
 
-  Glückwunsch, du hast Eigenwerte berechnet! #emoji.face.party
+    Glückwunsch, du hast Eigenwerte berechnet! #emoji.face.party
 ][
   Falls du weitere Matrizen zum Testen generieren möchtest, dann kann du
   $A = S^(-1) D S$ nutzen, wobei $D in ZZ^(n times n)$ eine Diagonalmatrix und
