@@ -7,11 +7,19 @@ data PolyE a = Const a
              | PolyE a :+: PolyE a
              | PolyE a :-: PolyE a
              | PolyE a :*: PolyE a
-  deriving (Eq, Show)
+  deriving Eq
 
 infixl 6 :+:
 infixl 6 :-:
 infixr 7 :*:
+
+instance Show a => Show (PolyE a) where
+  showsPrec _ (Const c) = shows c
+  showsPrec _ T         = showChar 'T'
+  showsPrec p (p1 :+: p2) = showParen (p > 6) (showsPrec 6 p1 . showString " + " . showsPrec 6 p2)
+  showsPrec p (p1 :-: p2) = showParen (p > 6) (showsPrec 6 p1 . showString " - " . showsPrec 6 p2)
+  showsPrec p (p1 :*: p2) = showParen (p > 7) (showsPrec 7 p1 . showString " * " . showsPrec 7 p2)
+
 
 instance Num a => Num (PolyE a) where
   (+) = (:+:)
