@@ -1,5 +1,5 @@
 import Data.Complex
-import Data.List
+import Data.List (dropWhileEnd, singleton)
 
 
 data PolyE a = Const a
@@ -30,12 +30,12 @@ instance Num a => Num (PolyE a) where
   fromInteger = Const . fromInteger
 
 
-polyadd :: Integral a => [a] -> [a] -> [a]
+polyadd :: Num a => [a] -> [a] -> [a]
 polyadd []     ys     = ys
 polyadd xs     []     = xs
 polyadd (x:xs) (y:ys) = x + y : polyadd xs ys
 
-polysub :: Integral a => [a] -> [a] -> [a]
+polysub :: Num a => [a] -> [a] -> [a]
 polysub []     ys     = map negate ys
 polysub xs     []     = xs
 polysub (x:xs) (y:ys) = x - y : polysub xs ys
@@ -79,13 +79,13 @@ polymul p q = take (fromIntegral m) (map (round . realPart) (ifft (zipWith (*) f
 newtype Poly a = Poly { coeffs :: [a] }
   deriving (Eq, Show)
 
-poly :: Integral a => [a] -> Poly a
+poly :: (Eq a, Num a) => [a] -> Poly a
 poly = nf . Poly 
 
-nf :: Integral a => Poly a -> Poly a
+nf :: (Eq a, Num a) => Poly a -> Poly a
 nf p = Poly (dropWhileEnd (== 0) (coeffs p))
 
-deg :: Integral a => Poly a -> Int
+deg :: Poly a -> Int
 deg p = length (coeffs p) - 1
 
 leading :: Poly a -> a
@@ -115,7 +115,8 @@ instance Integral a => Num (Poly a) where
 
 
 polydiv :: Integral a => Poly a -> Poly a -> Poly a
-polydiv p q = go p
+polydiv p (Poly [0]) = error "division by zero polynomial"
+polydiv p q          = go p
   where
     b = leading q
     m = deg q
@@ -132,11 +133,12 @@ horner p x = foldr (\c r -> c + x * r) 0 (coeffs p)
 
 
 divisors :: Integral a => a -> [a]
-divisors a = let (xs, ys) = unzip [(p, q) | p <- takeWhile ((<= a) . (^ 2)) [1..]
-                                          , let (q, r) = a `quotRem` p
-                                          , r == 0
-                                          ]
-              in xs ++ reverse ys
+divisors a = 
+  let (xs, ys) = unzip [(p, q) | p <- takeWhile ((<= a) . (^ 2)) [1..]
+                               , let (q, r) = a `quotRem` p
+                               , r == 0
+                               ]
+   in xs ++ reverse ys
 
 
 roots :: Integral a => PolyE a -> [a]

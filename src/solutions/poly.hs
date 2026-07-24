@@ -28,17 +28,17 @@ instance Num a => Num (PolyE a) where
   fromInteger = Const . fromInteger
 
 
-polyadd :: Integral a => [a] -> [a] -> [a]
+polyadd :: Num a => [a] -> [a] -> [a]
 polyadd []     ys     = ys
 polyadd xs     []     = xs
 polyadd (x:xs) (y:ys) = x + y : polyadd xs ys
 
-polysub :: Integral a => [a] -> [a] -> [a]
+polysub :: Num a => [a] -> [a] -> [a]
 polysub []     ys     = map negate ys
 polysub xs     []     = xs
 polysub (x:xs) (y:ys) = x - y : polysub xs ys
 
-polymul :: Integral a => [a] -> [a] -> [a]
+polymul :: Num a => [a] -> [a] -> [a]
 polymul []     _  = []
 polymul _      [] = []
 polymul (a:as) bs = polyadd (map (a *) bs) (0 : polymul as bs)
@@ -47,11 +47,13 @@ polymul (a:as) bs = polyadd (map (a *) bs) (0 : polymul as bs)
 newtype Poly a = Poly { coeffs :: [a] }
   deriving (Eq, Show)
 
-poly :: Integral a => [a] -> Poly a
+poly :: (Eq a, Num a) => [a] -> Poly a
 poly = nf . Poly 
 
-nf :: Integral a => Poly a -> Poly a
-nf p = Poly (dropWhileEnd (== 0) (coeffs p))
+nf :: (Eq a, Num a) => Poly a -> Poly a
+nf p = case dropWhileEnd (== 0) (coeffs p) of
+         [] -> Poly [0]
+         cs -> Poly cs
 
 deg :: Integral a => Poly a -> Int
 deg p = length (coeffs p) - 1
@@ -63,7 +65,7 @@ absolute :: Poly a -> a
 absolute = head . coeffs
 
 
-fromPolyE :: Integral a => PolyE a -> Poly a
+fromPolyE :: (Eq a, Num a) => PolyE a -> Poly a
 fromPolyE p = nf (Poly (go p))
   where
     go (Const c)   = [c]
@@ -73,7 +75,7 @@ fromPolyE p = nf (Poly (go p))
     go (p1 :*: p2) = polymul (go p1) (go p2)
 
 
-instance Integral a => Num (Poly a) where
+instance (Eq a, Num a) => Num (Poly a) where
   p1 + p2 = nf (Poly (polyadd (coeffs p1) (coeffs p2)))
   p1 - p2 = nf (Poly (polysub (coeffs p1) (coeffs p2)))
   p1 * p2 = nf (Poly (polymul (coeffs p1) (coeffs p2)))
@@ -83,7 +85,8 @@ instance Integral a => Num (Poly a) where
 
 
 polydiv :: Integral a => Poly a -> Poly a -> Poly a
-polydiv p q = go p
+polydiv p (Poly [0]) = error "division by zero polynomial"
+polydiv p q          = go p
   where
     b = leading q
     m = deg q
@@ -100,11 +103,12 @@ horner p x = foldr (\c r -> c + x * r) 0 (coeffs p)
 
 
 divisors :: Integral a => a -> [a]
-divisors a = let (xs, ys) = unzip [(p, q) | p <- takeWhile ((<= a) . (^ 2)) [1..]
-                                          , let (q, r) = a `quotRem` p
-                                          , r == 0
-                                          ]
-              in xs ++ reverse ys
+divisors a = 
+  let (xs, ys) = unzip [(p, q) | p <- takeWhile ((<= a) . (^ 2)) [1..]
+                               , let (q, r) = a `quotRem` p
+                               , r == 0
+                               ]
+   in xs ++ reverse ys
 
 
 roots :: Integral a => PolyE a -> [a]
