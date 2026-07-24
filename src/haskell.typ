@@ -4383,7 +4383,7 @@ verallgemeinern kannst.
 //      this and pagebreak if that is the case.
 #pagebreak(weak: true)
 
-#test(level: 3, breakable: true, clock: true)[
+#challenge(level: 2, breakable: true, clock: true)[
   Ein gängiges Sprichwort ist,
   #quote(
     block: true,
@@ -4481,9 +4481,52 @@ verallgemeinern kannst.
 ][
   Die Funktionen basieren lose auf
   #link("https://github.com/devonhollowood/search-algorithms")[`search-algorithms`].
+  Die Suche entspricht auch der Vorlage, die du in Franks Einführung in die
+  Algorithmik für Backtracking-Algorithmen kennengelernt hast.
+
   Die hier definierten Funktionen eignen sich für @re-to-dfa. Dort treten
   Breitensuchen in verschiedenen Situationen auf.
 ] <search>
+
+#test(level: 2)[
+  Das #link("https://de.wikipedia.org/wiki/F%C3%A4rbung_(Graphentheorie)")[Graphfärbungsproblem]
+  fragt nach einer Färbung von Knoten, sodass benachbarte Knoten unterschiedlich
+  gefärbt sind, unter der Verwendung von so wenig Farben wie möglich.
+
+  Aufbauend auf @search, wollen wir ```hs dfsM``` verwenden, um eine solche
+  Färbung für einen Graphen zu finden. Implementiere eine Funktion
+  ```hs minColor :: [[Int]] -> [Int]```, die eine Färbung eines Graphen
+  mit so wenig Farben wie möglich bestimmt.
+
+  Hier ist ein Beispiel für einen Graphen mit einer 3-Färbung. Aufgrund der
+  Dreiecke kann dieser keine 2-Färbung haben.
+  #align(center)[
+    #diagraph.raw-render(
+      ```dot
+      graph {
+        node[shape=circle];
+
+        0 [color="#648fff"];
+        1 [color="#dc267f"];
+        2 [color="#648fff"];
+        3 [color="#ffdc00"];
+        4 [color="#ffdc00"];
+        5 [color="#648fff"];
+
+        0 -- 1;
+        0 -- 3;
+        1 -- 2;
+        1 -- 3;
+        1 -- 4;
+        2 -- 4;
+        3 -- 5;
+        4 -- 5;
+      }
+      ```,
+      engine: "neato"
+    )
+  ]
+]
 
 #check[
   Ich bin in der Lage, ...
