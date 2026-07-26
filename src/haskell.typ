@@ -821,6 +821,8 @@
 //     rotateL _                          = error "should not happen"
 // ```
 
+// TODO move matrix block and unblock here?
+
 #check[
   Ich bin in der Lage, ...
   - Pattern Matching zu nutzen.
@@ -1453,6 +1455,33 @@
   Dieses Programm gibt sieben Mal "Kakao!" aus. Erkläre wie dieses Verhalten
   zustande kommt? Wie kannst du den bug beheben? Kann der gleiche Fehler in
   Haskell passieren?
+]
+
+#test(level: 2)[
+  In Haskells Prelude gibt es die Funktion
+  ```hs lookup :: Eq a => a -> [(a, b)] -> Maybe b```, die einen Wert vom Typ
+  ```hs b``` aus einer Liste vom Typ ```hs [(a, b)]``` zu einem Schlüssel vom
+  Typ ```hs a``` findet, sofern das entsprechende Tupel in der Liste enthalten
+  ist. Es gibt allerdings keine Funktion zum Erzeugen, Bearbeiten oder Löschen.
+  Während man sich im ersten Fall oftmals damit genügt, ein neues Paar vorne
+  an die Liste zu packen, sieht es bei den anderen beiden Operationen schon
+  weniger rosig aus.
+
+  Implementiere eine Funktion
+  ```hs update :: a -> (Maybe b -> Maybe b) -> [(a, b)] -> [(a, b)]```, die
+  die drei Operationen ausführen kann. Das soll durch die Funktion
+  ```hs Maybe b -> Maybe b``` ermöglicht werden.
+  - Wenn die Funktion ein ```hs Nothing``` erhält, bedeutet das, zum gegebenen
+    Schlüssel kein Wert in der ursprünglichen Liste enthalten war.
+  - Wenn die Funktion dagegen ```hs Just x``` erhält, dann ist ```hs x``` der
+    Wert der unter dem gegebenen Schlüssel ablegt ist.
+  - Wenn die Funktion ein ```hs Nothing``` zurückgibt, dann wird der Wert zum
+    gegebenen Schlüssel gelöscht, sofern dieser existierte.
+  - Wenn die Funktion ein ```hs Just y``` zurückgibt, dann wird der Wert
+    ```hs y``` unter dem gegebenen Schlüssel abgelegt.
+
+  Nutze ```hs update```, um ```hs insert```, ```hs update``` und ```hs delete```
+  zu implementieren.
 ]
 
 #test(level: none)[
