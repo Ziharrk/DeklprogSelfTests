@@ -1747,11 +1747,22 @@
   binären Exponentiation (@binexp) und ```hs Mat22 Integer``` (@matmath) aus
   vorherigen Tests kannst du die $n$-te Fibonacci-Zahl in logarithmischer
   Laufzeit in $n$ berechnen. Implementiere das Verfahren.
+][
+  Da du eine ```hs Num```-Instanz auf ```hs Mat22``` definiert hast, kannst
+  du den ```hs (^)```-Operator zur binären Exponentiation nutzen.
 
-  #text(0.8em)[
-    Da du eine ```hs Num```-Instanz auf ```hs Mat22``` definiert hast, kannst
-    du den ```hs (^)```-Operator zur binären Exponentiation nutzen.
-  ]
+  Der Autor dieser Aufgabe lädt dich herzlich ein, dir auf der Zunge zergehen
+  zu lassen, wie schnell logarithmische Laufzeit ist. Betrachte dafür
+  ```hs Mat22 Int```, damit die 64-bit Ganzzahl-Arithmetik verwendet wird, und
+  berechne dann die $2^(100000) approx 10^#(calc.round(calc.log(2) * 100000))$-te
+  Fibonacci-Zahl. Es kommt zwar das Ergebnis modulo $2^63 - 1$ heraus, aber das
+  soll keine Rolle spielen. Der Witz an der Stelle ist, dass der teure Schritt
+  in der Division des ```hs Integer``` des Exponenten im ```hs (^)```-Operator.
+  Jetzt stelle dir zum Vergleich vor --- denn ausprobieren und ein Ergebnis
+  erhalten, kannst du nicht --- wie lange es mit einem linearen Algoritmus
+  dauern würde, dasselbe Ergebnis (modulo $2^63 - 1$) zu berechnen.
+
+  // TODO Finde lustigen zeitlichen Vergleich
 ] <logfib>
 
 #test(level: 1)[
