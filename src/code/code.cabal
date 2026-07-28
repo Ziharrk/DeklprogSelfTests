@@ -4,18 +4,19 @@ version:            0.1.0.0
 build-type:         Simple
 
 common warnings
-    ghc-options: -Wall -Wno-name-shadowing -Wno-type-defaults
+  ghc-options: -Wno-x-partial
 
 library
-    import:           warnings
-    exposed-modules:
-      FFT
-      Polynomial
-    build-depends:    base ^>=4.20.2.0
-    hs-source-dirs:   src
-    default-language: GHC2024
-    default-extensions:
-      CPP
-    cpp-options:
-      -UTEMPLATE
+  import:           warnings
+  exposed-modules:
+    FFT
+    LinearAlgebra
+    Polynomial
+  build-depends:    base ^>=4.20.2.0
+  hs-source-dirs:   src
+  default-language: GHC2024
+  default-extensions:
+    CPP
+  cpp-options:
+    -UTEMPLATE
 
