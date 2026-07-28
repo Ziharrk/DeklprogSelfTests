@@ -38,7 +38,13 @@
   show raw.where(block: false): box
   set raw(syntaxes: "../syntaxes/prolog.sublime-syntax")
 
-  show link: underline
+  show link: it => {
+    if type(it.dest) != location {
+      return underline(it)
+    }
+
+    it
+  }
   show heading: set block(above: 1.4em, below: 1em)
   show math.equation.where(block: false): box
 
@@ -65,19 +71,34 @@
 
 
 #let tag(fill: blue, content) = {
+  // box(
+  //   inset: (x: 0.8em),
+  //   box(
+  //     fill: fill.lighten(90%),
+  //     outset: (x: 0.6em - 0.25pt, y: 0.4em - 0.25pt),
+  //     stroke: 0.25pt + fill.lighten(10%),
+  //     radius: 1pt,
+  //     text(fill: fill.darken(5%), content),
+  //   ),
+  // )
+
+
+  let label = s => strong(smallcaps(s), delta: 200)
+
+  let y-outset = 3pt
+  let baseline = 0pt
+
   box(
-    inset: (x: 0.8em),
-    box(
-      fill: fill.lighten(90%),
-      outset: (x: 0.6em - 0.25pt, y: 0.4em - 0.25pt),
-      stroke: 0.25pt + fill.lighten(10%),
-      radius: 1pt,
-      text(fill: fill.darken(5%), content),
-    ),
+    radius: 1pt,
+    inset: (x: 0.5em, y: 3pt),
+    // outset: (x: 4pt, y: y-outset),
+    baseline: baseline,
+    fill: fill.lighten(90%),
+    text(fill: fill.darken(5%), label(content)),
   )
 }
 
-#let tag-level-up = tag(fill: blue, "Level Up")
+#let tag-level-up = tag(fill: eastern, "Level Up")
 #let tag-deep-dive = tag(fill: purple, "Deep Dive")
 #let tag-exam25-one = tag(fill: green.darken(20%), "Klausur 1. WS25/26")
 
@@ -97,19 +118,52 @@
 
 #let hl() = {
   let animals = (
-    emoji.dog,
+    emoji.badger,
+    emoji.bear,
+    emoji.bee,
     emoji.bird,
+    emoji.bison,
+    emoji.boar,
+    emoji.butterfly,
+    emoji.chipmunk,
+    emoji.crocodile,
+    emoji.dino.pod,
+    emoji.dog,
+    emoji.duck,
+    emoji.eagle,
+    emoji.elephant,
+    emoji.fish,
+    emoji.fox,
+    emoji.giraffe,
+    emoji.goat,
+    emoji.hedgehog,
+    emoji.hippo,
+    emoji.kangaroo,
+    emoji.leopard,
+    emoji.lion,
+    emoji.lizard,
     emoji.mammoth,
+    emoji.monkey,
+    emoji.moose,
+    emoji.orangutan,
+    emoji.orca,
     emoji.otter,
     emoji.owl,
     emoji.panda,
     emoji.parrot,
+    emoji.peacock,
     emoji.penguin,
+    emoji.pig,
+    emoji.ram,
+    emoji.rhino,
     emoji.seal,
     emoji.sloth,
-    emoji.bear,
+    emoji.snake,
+    emoji.tiger,
     emoji.turtle,
-    emoji.whale.spout
+    emoji.whale.spout,
+    emoji.wolf,
+    emoji.zebra,
   )
   context {
     let (_, k) = suiji.integers(rng.get(), low: 0, high: animals.len() - 1)
@@ -154,10 +208,48 @@
   )
 }
 
+#let deps-counter = counter("deps-counter")
+#context deps-counter.update(1)
+#let deps-labels = state("deps-labels", (:))
+#let deps-graph-forward = state("deps-graph-forward", (:))
+#let deps-graph-backward = state("deps-graph-backward", (:))
+
+#let deps-build-backward() = {
+  let graph = deps-graph-forward.get()
+  let transpose = (:)
+  for (from, tos) in graph {
+    for to in tos {
+      if not to in transpose {
+        transpose.insert(to, ())
+      }
+      transpose.at(to).push(from)
+    }
+  }
+  deps-graph-backward.update(transpose)
+}
+
+#let deps-goto(icon, tests) = context {
+  let locs = query(figure.where(kind: "thmenv")).map(fig => fig.location())
+
+  box(grid(
+    columns: 1 + tests.len(),
+    rows: auto,
+    align: horizon,
+    gutter: 0.25em,
+    move(dy: -2pt, text(1em, icon)),
+    ..tests.map(test => context {
+      let label = deps-labels.final().at(test)
+      link(locs.at(int(test)), label)
+    })
+  ))
+}
+
 #let nemo-state = state("test", none)
 
 #let nemo-new(title: none, tags: ()) = (
+  id: none,
   title: none,
+  level: none,
   tags: (),
   footnotes: (),
   hints: (),
@@ -180,6 +272,7 @@
   title: none,
   level: none,
   tags: (),
+  deps: (),
   clock: false,
   breakable: false,
   extra: none,
@@ -189,6 +282,38 @@
   let stroke = 0.25pt + fill.lighten(60%)
 
   nemo-state.update(_ => nemo-new())
+
+  let titlefmt = nemo-make-titlefmt(level, clock)
+  let titlefmt-noclock = nemo-make-titlefmt(level, false)
+
+  context {
+    let id = str(deps-counter.get().at(0))
+    deps-counter.step()
+    nemo-state.update(test => {
+      test.id = id
+      test
+    })
+
+    for dep in deps {
+      let did = str(deps-counter.at(dep).at(0))
+      deps-graph-forward.update(graph => {
+        let adj = graph.at(did, default: ())
+        adj.push(id)
+        graph.insert(did, adj)
+        graph
+      })
+    }
+
+
+    let counters = thmcounters.get().counters
+    if lower(head) in counters {
+      let num = thmcounters.get().counters.at(lower(head)).last()
+      deps-labels.update(labels => {
+        labels.insert(id, box(inset: 0.5em, titlefmt-noclock(head + " " + str(num))))
+        labels
+      })
+    }
+  }
 
   for (i, hint) in hints.enumerate() {
     context {
@@ -208,24 +333,61 @@
     }
   }
 
-  let titlefmt = nemo-make-titlefmt(level, clock)
 
   let header = context {
     let hint-labels = nemo-state.get().hints
+    let id = nemo-state.get().id
+    let backward = deps-graph-backward.final().at(id, default: ())
+
     grid(
-      columns: (1fr, auto),
+      columns: (1fr, auto, auto),
+      gutter: 0.5em,
+      align: (x, y) => horizon + if x > 0 { right } else { left },
       grid.cell(
         titlefmt(head + " " + number)
           + if title != none { h(1em) + strong(title, delta: 200) },
       ),
+      if backward.len() > 0 {
+        let sep = if tags.len() > 0 or hint-labels.len() > 0 {
+          (
+            stroke: (right: 0.5pt + gray.lighten(20%)),
+            inset: (right: 0.5em)
+          )
+        } else {
+          (:)
+        }
+
+        grid.cell(
+          ..sep,
+          deps-goto(emoji.seedling, backward)
+        )
+      } else {
+        []
+      },
       grid.cell(move(
         dy: 1.25pt,
-        tags.join()
+        tags.map(tag => box(inset: (left: 0.5em), tag)).join()
           + for (i, hint) in hint-labels.enumerate() {
-            tag(fill: teal.darken(10%), link(hint, "Hinweis " + str(i + 1)))
+            box(inset: (left: 0.5em), tag(fill: teal.darken(10%), link(hint, "Hinweis " + str(i + 1))))
           },
-      )),
+      ))
     )
+  }
+
+  let body = context {
+    let id = nemo-state.get().id
+    let forward = deps-graph-forward.final().at(id, default: ())
+
+    body
+    if forward.len() > 0 {
+      align(right, {
+        box(
+          stroke: (left: 0.5pt + gray.lighten(20%)),
+          inset: (left: 0.5em),
+          deps-goto(emoji.tree.deciduous, forward)
+        )
+      })
+    }
   }
 
   let footer = context {

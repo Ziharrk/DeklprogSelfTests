@@ -1627,7 +1627,7 @@
   constructors in diesem Zusammenhang?
 ]
 
-#test(level: 2, clock: true)[
+#test(level: 2, breakable: true, clock: true)[
   Kritisiere folgenden ADT für eine queue, so pingelig wie du kannst, und
   bessere ihn.
   ```hs
@@ -2181,7 +2181,7 @@
   #link(git("blob/main/src/solutions/linalg.hs"), raw("linalg.hs")).
 ] <linalg>
 
-#challenge(level: 3, tags: (tag-deep-dive,))[
+#challenge(level: 3, deps: (<minplus>, <roots_of_polynomials>), tags: (tag-deep-dive,))[
   Ich möchte versuchen, deine Gedanken zu lesen. Das funktioniert allerdings
   nur, wenn du @minplus und @roots_of_polynomials erfolgreich gemeistert hast.
   Ohh, du denkst auch häufiger über das römische Reich nach. Interessant. Was
