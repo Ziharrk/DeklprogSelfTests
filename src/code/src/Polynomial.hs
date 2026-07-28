@@ -2,7 +2,6 @@
 module Polynomial 
   ( PolyE
   , Poly(..)
-  , pattern Poly
   , degree 
   , leading
   , absolute
@@ -13,8 +12,10 @@ module Polynomial
   ) where
 
 
-import Data.List (dropWhileEnd, singleton)
-#if FFT
+import Prelude hiding (last, zipWith)
+import Data.List (dropWhileEnd)
+import Data.List.NonEmpty (last, toList, NonEmpty(..), singleton, zipWith)
+#ifdef FFT
 import Data.Complex
 #endif
 
@@ -53,14 +54,14 @@ instance Num a => Num (PolyE a) where
   (+) = (:+:)
   (-) = (:-:)
   (*) = (:*:)
-  abs p = undefined
-  signum p = undefined
+  abs = undefined
+  signum = undefined
   fromInteger = Const . fromInteger
 
 
 -- | Adds two polynomials (without normalization) given their coefficients.
 polyadd :: Num a => [a] -> [a] -> [a]
-#if TEMPLATE
+#ifdef TEMPLATE
 polyadd = error "not implemented"
 #else
 polyadd []     ys     = ys
@@ -70,7 +71,7 @@ polyadd (x:xs) (y:ys) = x + y : polyadd xs ys
 
 -- | Subtracts two polynomials (without normalization) given their coefficients.
 polysub :: Num a => [a] -> [a] -> [a]
-#if TEMPLATE
+#ifdef TEMPLATE
 polysub = error "not implemented"
 #else
 polysub []     ys     = map negate ys
@@ -79,7 +80,7 @@ polysub (x:xs) (y:ys) = x - y : polysub xs ys
 #endif
 
 
-#if FFT
+#ifdef FFT
 fft :: [Complex Double] -> [Complex Double]
 fft [x] = [x]
 fft xs = zipWith (+) evenPart twiddles ++ zipWith (-) evenPart twiddles
@@ -110,15 +111,15 @@ pad n xs = map ((:+ 0) . fromIntegral) xs ++ replicate (n - length xs) 0
 #endif
 -- | Multiplies two polynomials (without normalization) given their 
 -- coefficients.
-#if FFT
+#ifdef FFT
 polymul :: Integral a => [a] -> [a] -> [a]
 #else
 polymul :: Num a => [a] -> [a] -> [a]
 #endif
-#if TEMPLATE
+#ifdef TEMPLATE
 polymul = error "not implemented"
 #else
-#if FFT
+#ifdef FFT
 polymul p q = take (fromIntegral m) (map (round . realPart) (ifft (zipWith (*) fp fq)))
   where
     m = length p + length q - 1
@@ -140,27 +141,19 @@ polymul (a:as) bs = polyadd (map (a *) bs) (0 : polymul as bs)
 -- representation and stores only the coefficients [a_0, a_1, a_2, ..., a_n].
 --
 -- We assume that the coefficients do not have trailing zeros.
-newtype Poly a = MkPoly { coeffs :: [a] 
+newtype Poly a = MkPoly { coeffs :: NonEmpty a
                         -- ^ Retrieve the coefficients of a polynomial
                         }
   deriving (Eq, Show)
 
--- | This pattern allows you to use a constructor 
--- `Poly :: (Eq a, Num a) => [a] -> Poly a` that automatically removes trailing
--- zeros from the list of coefficients. If you are sure, your polynomial does
--- not have trailing zeros, use `MkPoly`.
---
--- TODO find out how to properly annotate patterns
-pattern Poly :: (Eq a, Num a) => [a] -> Poly a
-pattern Poly p <- MkPoly p where
+-- Smart constructor for polynomials
+poly :: (Eq a, Num a) => [a] -> Poly a
+poly []     = MkPoly (0 :| [])
+poly (c:cs) = nf (MkPoly (c :| cs))
 
-  -- | Constructs a polynomial from a list of coefficients. It removes trailing
-  -- zeros.
-  Poly [c] = MkPoly [c]
-  Poly cs  = case dropWhileEnd (== 0) cs of
-               [] -> MkPoly [0]
-               cs -> MkPoly cs
-
+-- Normalizes a polynomial
+nf :: (Eq a, Num a) => Poly a -> Poly a
+nf (MkPoly (c :| cs)) = MkPoly (c :| dropWhileEnd (== 0) cs)
 
 -- | Determines the degree of polynomial
 degree :: Integral a => Poly a -> Int
@@ -172,19 +165,19 @@ leading = last . coeffs
 
 -- | Retrieves the absolute term of a polynomial
 absolute :: Poly a -> a
-absolute = head . coeffs
+absolute (MkPoly (c :| _)) = c
 
 
 -- | Normalizes a polynomial.
-#if FFT
+#ifdef FFT
 fromPolyE :: Integral a => PolyE a -> Poly a
 #else
 fromPolyE :: (Eq a, Num a) => PolyE a -> Poly a
 #endif
-#if TEMPLATE
+#ifdef TEMPLATE
 fromPolyE = error "not implemented"
 #else
-fromPolyE p = Poly (go p)
+fromPolyE p = poly (go p)
   where
     go (Const c)   = [c]
     go T           = [0, 1]
@@ -195,17 +188,17 @@ fromPolyE p = Poly (go p)
 
 
 
-#if FFT
+#ifdef FFT
 instance Integral a => Num (Poly a) where
 #else
 instance (Eq a, Num a) => Num (Poly a) where
 #endif
-  p1 + p2 = Poly (polyadd (coeffs p1) (coeffs p2))
-  p1 - p2 = Poly (polysub (coeffs p1) (coeffs p2))
-  p1 * p2 = Poly (polymul (coeffs p1) (coeffs p2))
+  p1 + p2 = poly (polyadd (toList (coeffs p1)) (toList (coeffs p2)))
+  p1 - p2 = poly (polysub (toList (coeffs p1)) (toList (coeffs p2)))
+  p1 * p2 = poly (polymul (toList (coeffs p1)) (toList (coeffs p2)))
   abs = undefined
   signum = undefined
-  fromInteger = Poly . singleton . fromInteger
+  fromInteger = MkPoly . singleton . fromInteger
 
 
 -- | Divides two polynomials.
@@ -220,13 +213,13 @@ instance (Eq a, Num a) => Num (Poly a) where
 -- to define a lot of other typeclass instances. Here, we do not bother to
 -- implement them.
 polydiv :: Integral a => PolyE a -> PolyE a -> Maybe (PolyE a)
-#if TEMPLATE
+#ifdef TEMPLATE
 polydiv = error "not implemented"
 #else
 polydiv pe qe = 
   case q of 
-    Poly [0] -> Nothing
-    _        -> fmap toPolyE (go p)
+    MkPoly (0 :| []) -> Nothing
+    _                -> fmap toPolyE (go p)
   where
     p = fromPolyE pe
     q = fromPolyE qe
@@ -234,8 +227,7 @@ polydiv pe qe =
     b = leading q
     m = degree q
 
-    go (Poly [])  = Just (Poly [0])
-    go (Poly [0]) = Just (Poly [0])
+    go (MkPoly (0 :| [])) = Just 0
     go p = let a = leading p
                n = degree p
                u = fromPolyE (fromIntegral (a `div` b) * T ^ (n - m))
@@ -245,17 +237,17 @@ polydiv pe qe =
 
 infixl 7 `polydiv`
 
-#if TEMPLATE
+#ifdef TEMPLATE
 #else
 -- | Converts a normalized polynomial into a `PolyE`.
 toPolyE :: (Num a, Ord a) => Poly a -> PolyE a
-toPolyE (Poly []) = 0
-toPolyE (Poly cs) = 
+toPolyE (MkPoly (0 :| [])) = 0
+toPolyE (MkPoly cs) = 
   case pretty p of
     Nothing -> 0
     Just q  -> q
   where
-    p = foldr1 (+) (zipWith (\c tp -> Const c * tp) cs (1 : iterate (* T) T))
+    p = foldr1 (+) (zipWith (\c tp -> Const c * tp) cs (1 :| iterate (* T) T))
 
     -- Removes 0 * t^k and turns ... + (-c) * t^k into ... - c * t^k
     pretty (Const c1 :*: Const c2) = 
@@ -272,12 +264,13 @@ toPolyE (Poly cs) =
                  | c > 0  -> Just (q + Const c * tp)
         Nothing  | c /= 0 -> Just (Const c * tp)
         _                 -> Nothing
+    pretty _ = error "should not happen"
 
 #endif
 
 -- | Evaluates a polynomial at a given point using Horner's method.
 horner :: Num a => Poly a -> a -> a
-#if TEMPLATE
+#ifdef TEMPLATE
 horner = error "not implemented"
 #else
 horner p x = foldr (\c r -> c + x * r) 0 (coeffs p)
@@ -285,21 +278,28 @@ horner p x = foldr (\c r -> c + x * r) 0 (coeffs p)
 
 -- | Computes all divisors of an integral values.
 divisors :: Integral a => a -> [a]
-#if TEMPLATE
+#ifdef TEMPLATE
 divisors = error "not implemented"
 #else
-divisors a = 
-  let (xs, ys) = unzip [(p, q) | p <- takeWhile ((<= a) . (^ 2)) [1..]
-                               , let (q, r) = a `quotRem` p
-                               , r == 0
-                               ]
-   in xs ++ reverse ys
+divisors a = nub' (xs ++ reverse ys)
+  where
+    (xs, ys) = unzip [(p, q) | p <- takeWhile ((<= a) . (^ 2)) [1..]
+                             , let (q, r) = a `quotRem` p
+                             , r == 0
+                             ]
+
+    -- Linear nub for sorted lists
+    nub' []  = []
+    nub' [x] = [x]
+    nub' (x:y:xs)
+      | x == y    = nub' (y:xs)
+      | otherwise = x : nub' (y:xs)
 #endif
 
 -- | Computes the roots of a polynomial by testing all divisors of the 
 -- polynomials absolute term.
 roots :: Integral a => PolyE a -> [a]
-#if TEMPLATE
+#ifdef TEMPLATE
 roots = error "not implemented"
 #else
 roots pe = let p   = fromPolyE pe
