@@ -14,9 +14,7 @@ module Polynomial
 import Prelude hiding (last, zipWith)
 import Data.List (dropWhileEnd)
 import Data.List.NonEmpty (last, toList, NonEmpty(..), singleton, zipWith)
-#ifdef FFT
-import Data.Complex
-#endif
+
 
 
 -- | Represents a polynomial.
@@ -79,57 +77,15 @@ polysub (x:xs) (y:ys) = x - y : polysub xs ys
 #endif
 
 
-#ifdef FFT
-fft :: [Complex Double] -> [Complex Double]
-fft [x] = [x]
-fft xs = zipWith (+) evenPart twiddles ++ zipWith (-) evenPart twiddles
-  where
-    n = length xs
-    (evens, odds) = split xs
-    evenPart = fft evens
-    oddPart = fft odds
-    twiddles = zipWith (*) oddPart [cis (-2 * pi * fromIntegral k / fromIntegral n) | k <- [0..n `div` 2 - 1]]
-
-split :: [a] -> ([a], [a])
-split []       = ([], [])
-split [x]      = ([x], [])
-split (x:y:xs) = let (xs1, xs2) = split xs
-                  in (x : xs1, y : xs2)
-
-ifft :: [Complex Double] -> [Complex Double]
-ifft xs = (map (/ fromIntegral n) . map conjugate . fft . map conjugate) xs
-  where n = length xs
-
-nextPowerOfTwo :: Int -> Int
-nextPowerOfTwo n = head (dropWhile (< n) (iterate (* 2) 1))
-
-pad :: Integral a => Int -> [a] -> [Complex Double]
-pad n xs = map ((:+ 0) . fromIntegral) xs ++ replicate (n - length xs) 0
-
-
-#endif
 -- | Multiplies two polynomials (without normalization) given their 
 -- coefficients.
-#ifdef FFT
-polymul :: Integral a => [a] -> [a] -> [a]
-#else
 polymul :: Num a => [a] -> [a] -> [a]
-#endif
 #ifdef TEMPLATE
 polymul = error "not implemented"
-#else
-#ifdef FFT
-polymul p q = take (fromIntegral m) (map (round . realPart) (ifft (zipWith (*) fp fq)))
-  where
-    m = length p + length q - 1
-    n = nextPowerOfTwo m
-    fp = fft (pad n p)
-    fq = fft (pad n q)
 #else
 polymul []     _  = []
 polymul _      [] = []
 polymul (a:as) bs = polyadd (map (a *) bs) (0 : polymul as bs)
-#endif
 #endif
 
 
@@ -168,11 +124,7 @@ absolute (MkPoly (c :| _)) = c
 
 
 -- | Normalizes a polynomial.
-#ifdef FFT
-fromPolyE :: Integral a => PolyE a -> Poly a
-#else
 fromPolyE :: (Eq a, Num a) => PolyE a -> Poly a
-#endif
 #ifdef TEMPLATE
 fromPolyE = error "not implemented"
 #else
@@ -186,12 +138,7 @@ fromPolyE p = poly (go p)
 #endif
 
 
-
-#ifdef FFT
-instance Integral a => Num (Poly a) where
-#else
 instance (Eq a, Num a) => Num (Poly a) where
-#endif
   p1 + p2 = poly (polyadd (toList (coeffs p1)) (toList (coeffs p2)))
   p1 - p2 = poly (polysub (toList (coeffs p1)) (toList (coeffs p2)))
   p1 * p2 = poly (polymul (toList (coeffs p1)) (toList (coeffs p2)))
