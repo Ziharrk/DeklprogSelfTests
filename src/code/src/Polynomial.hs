@@ -1,4 +1,3 @@
-{-# LANGUAGE PatternSynonyms #-}
 module Polynomial 
   ( PolyE
   , Poly(..)
