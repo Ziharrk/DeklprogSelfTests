@@ -9,8 +9,12 @@ common warnings
 library
   import:           warnings
   exposed-modules:
+    Algorithms
     FFT
     LinearAlgebra
+    NumberTheory
+    Rational
+    SymbolicDifferentiation
     Polynomial
   build-depends:    base ^>=4.20.2.0
   hs-source-dirs:   src

@@ -169,6 +169,8 @@
     - streng getypte Programmiersprachen.
 ]
 
+#pagebreak(weak: true)
+
 
 == Datentypen
 
@@ -238,6 +240,8 @@
   - Funktionen induktiv über den Datentypen zu definieren und
   - Listen zu verwenden und kenne wichtige Funktionen auf Listen.
 ]
+
+#pagebreak(weak: true)
 
 
 == Polymorphismus
@@ -349,7 +353,7 @@
   ```
 ]
 
-#challenge(level: 1)[
+#challenge(level: 1, title: "Größter gemeinsamer Teiler & Primfaktorzerlegung")[
   - Der größte gemeinsamen Teiler (ggT) zweier Ganzzahlen kann mithilfe des
     euklidschen Algorithmus berechnet werden. Implementiere das Verfahren.
     $
@@ -372,36 +376,15 @@
     überspringen wir das jeweils kleinere Element der beiden.
 ] <gcd_pf>
 
-// ```hs
-// gcd :: Int -> Int -> Int
-// gcd a 0 = a
-// gcd a b = gcd b (a `mod` b)
-//
-//
-// pf :: Int -> [Int]
-// pf a = go a [2..a]
-//   where
-//     go :: Int -> [Int] -> [Int]
-//     go 1 _      = []
-//     go a (p:xs) | a < p * p = [a]  -- optimization
-//                 | r == 0    = p : go q (p:xs)
-//                 | otherwise = go a xs
-//       where (q, r) = quotRem a p  -- same as (a `div` p, a `mod` p)
-//
-// -- assumes both lists are sorted
-// intersect :: [Int] -> [Int] -> [Int]
-// intersect []     _      = []
-// intersect _      []     = []
-// intersect (x:xs) (y:ys)
-//   | x == y    = x : intersect xs ys
-//   | x < y     = intersect xs (y:ys)
-//   | otherwise = intersect (x:xs) ys
-//
-// gcd :: Int -> Int -> Int
-// gcd a b = product (pf a `intersection` pf b)
-// ```
+#draft-note[
+  *Symbolisches Differenzieren* baut auf der Auswertung eines arithmetischen
+  Ausdrucks auf. Diese wird oft als Beispiel genutzt, um die ```hs Maybe```-
+  Monade heranzuführen. Diese soll dort die Division durch Null auffangen.
+  Hier ignorieren wir dies. Hier geht es im Wesentlichen um das Absteigen einer
+  baum-artigen Datentypens mithilfe einer induktiv definierten Funktion.
+]
 
-#challenge(level: 1, tags: (hl(),))[
+#challenge(level: 1, breakable: true, tags: (hl(),), title: "Symbolisches Differenzieren")[
   Die Ableitung einer Funktion $f : RR -> RR$ kann mithilfe des
   Differenzenquotienten $(f(x+h)-f(x))/h$ für kleines $h$ approximiert werden.
   Ein andere Methode zur Berechnung der Ableitung ist symbolisches Differenzen
@@ -442,41 +425,7 @@
   #link("https://de.wikipedia.org/wiki/Differentialrechnung#Zusammenfassung")[Zusammenfassung der Ableitungsregeln].
 ] <symbolic_diff>
 
-// ```hs
-// ($$) :: Fun -> Double -> Double
-// X         $$ x = x
-// E         $$ _ = exp 1
-// (Ln f)    $$ x = log (f $$ x)
-// (Num x)   $$ _ = x
-// (f :+: g) $$ x = f $$ x + g $$ x
-// (f :*: g) $$ x = f $$ x * g $$ x
-// (f :-: g) $$ x = f $$ x - g $$ x
-// (f :/: g) $$ x = f $$ x / g $$ x
-// (f :<: g) $$ x = f $$ (g $$ x)
-// (f :^: g) $$ x = (f $$ x) ** (g $$ x)
-//
-//
-// derive :: Fun -> Fun
-// derive X         = Num 1.0
-// derive E         = Num 0.0
-// derive (Num _)   = Num 0.0
-// derive (Ln f)    = derive f :/: f
-// derive (f :+: g) = derive f :+: derive g
-// derive (f :-: g) = derive f :-: derive g
-// derive (f :*: g) = let f' = derive f
-//                        g' = derive g
-//                     in (f' :*: g) :+: (f :*: g')
-// derive (f :/: g) = let f' = derive f
-//                        g' = derive g
-//                     in ((f' :*: g) :+: (f :*: g')) :/: (g :*: g)
-// derive (f :<: g) = let f' = derive f
-//                        g' = derive g
-//                     in g' :*: (f' :<: g)
-// derive (f :^: g) = let h = Ln f :*: g
-//                     in derive h :*: (E :^: h)
-// ```
-
-#challenge(level: 1, tags: (tag-deep-dive,))[
+#challenge(level: 1, tags: (tag-deep-dive,), title: "Mergesort")[
   In Franks Einführung in die Algorithmik hast du verschiedene Varianten des
   `mergesort`-Algorithmus kennengelernt. Eine davon hat ausgenutzt, dass in
   einer Eingabeliste bereits nicht-absteigend sortierte Teillisten vorkommen
@@ -493,57 +442,18 @@
   #link("https://hackage.haskell.org/package/ghc-internal-9.1201.0/docs/src/GHC.Internal.Data.OldList.html#sort")[Data.List.sort].
 ]
 
-// ```hs
-// mergesort :: [Int] -> [Int]
-// mergesort xs = mergeAll (runs xs)
-//   where
-//     runs :: [Int] -> [[Int]]
-//     runs []     = [[]]
-//     runs [x]    = [[x]]
-//     runs (x:xs)
-//       | x < head r = (x:r) : rs
-//       | otherwise  = [x] : (r:rs)
-//       where (r:rs) = runs xs
-//
-//     merge2 :: [Int] -> [Int] -> [Int]
-//     merge2 xs     []                 = xs
-//     merge2 []     ys                 = ys
-//     merge2 (x:xs) (y:ys) | x < y     = x : merge2 xs (y:ys)
-//                          | otherwise = y : merge2 (x:xs) ys
-//
-//     reduce :: [[Int]] -> [[Int]]
-//     reduce []       = []
-//     reduce [x]      = [x]
-//     reduce (x:y:xs) = merge2 x y : reduce xs
-//
-//     mergeAll :: [[Int]] -> [Int]
-//     mergeAll [x]      = x
-//     mergeAll xs = mergeAll (reduce xs)
-// ```
-
-#challenge(level: 1)[
+#challenge(level: 1, deps: (<gcd_pf>,), title: "Rationale Zahlen")[
   Entwickle einen Datentyp ```hs Ratio```, um rationale Zahlen
   $ p/q in QQ, quad p in ZZ, q in NN, p "und" q "teilerfremd" $
   darzustellen. Implementiere die Operationen: Addition, Subtraktion,
-  Multiplikation, Divison. Implementiere weiter eine Funktion, die die
+  Multiplikation, Divison. Stelle dabei sicher, dass die interne Darstellung
+  immer normalisiert ist. Implementiere weiter eine Funktion, die die
   rationale Zahl als reelle Zahl mit einer festen Anzahl von Nachkommastellen
   darstellt.
 
   Später kannst du auch hier die jeweiligen Typklassen verwenden, um die
   arithmetischen Operationen zu überladen.
 ]
-
-// ```hs
-// real :: Int -> Ratio Int -> String
-// real k x = go 1 p ++ "." ++ go k (10 * (p `mod` q))
-//   where
-//     p = numerator x
-//     q = denominator x
-//
-//     go 0 _ = ""
-//     go _ 0 = ""
-//     go k a = show (a `div` q) ++ go (k - 1) (10 * (a `mod` q))
-// ```
 
 #test(level: 2)[
   Wie können wir es hinkriegen, dass die invalide Liste
@@ -706,6 +616,8 @@
   - polymorphe Datentypen zu definieren, und
   - polymorphe Funktionen zu definieren.
 ]
+
+#pagebreak(weak: true)
 
 
 == Pattern Matching

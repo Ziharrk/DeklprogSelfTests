@@ -5,8 +5,8 @@ template() {
 
 mkdir -p solutions templates
 
-template -DTEMPLATE Polynomial.hs templates/Polynomial.hs
-template -UTEMPLATE Polynomial.hs solutions/Polynomial.hs
+template -DTEMPLATE src/Polynomial.hs templates/Polynomial.hs
+template -UTEMPLATE src/Polynomial.hs solutions/Polynomial.hs
+template -DTEMPLATE src/Rational.hs templates/Rational.hs
+template -UTEMPLATE src/Rational.hs solutions/Rational.hs
 
-# template -DTEMPLATE Polynomial.hs templates/Polynomial.hs
-# template -UTEMPLATE Polynomial.hs solutions/Polynomial.hs
