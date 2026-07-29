@@ -1,7 +1,7 @@
 #import "prelude.typ": *
 #show: config
 
-= Vorwort
+#heading(numbering: none, outlined: false, [Vorwort])
 
 // #text(0.8em)[
 //   Dieses Dokument ist vom #datetime.today().display("[day].[month].[year]"). Die

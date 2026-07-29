@@ -53,6 +53,9 @@
     }
   }
 
+  set heading(
+    numbering: (..args) => numbering("1.1", ..args) + h(0.5em)
+  )
   show heading: set block(above: 1.4em, below: 1em)
   show math.equation.where(block: false): box
 
@@ -79,30 +82,11 @@
 
 
 #let tag(fill: blue, content) = {
-  // box(
-  //   inset: (x: 0.8em),
-  //   box(
-  //     fill: fill.lighten(90%),
-  //     outset: (x: 0.6em - 0.25pt, y: 0.4em - 0.25pt),
-  //     stroke: 0.25pt + fill.lighten(10%),
-  //     radius: 1pt,
-  //     text(fill: fill.darken(5%), content),
-  //   ),
-  // )
-
-
-  let label = s => strong(smallcaps(s), delta: 200)
-
-  let y-outset = 3pt
-  let baseline = 0pt
-
   box(
     radius: 1pt,
     inset: (x: 0.5em, y: 3pt),
-    // outset: (x: 4pt, y: y-outset),
-    baseline: baseline,
     fill: fill.lighten(90%),
-    text(fill: fill.darken(5%), label(content)),
+    text(fill: fill.darken(5%), strong(smallcaps(content), delta: 200)),
   )
 }
 
@@ -124,7 +108,7 @@
 #let epoch = datetime(year: 1970, month: 01, day: 01, hour: 0, minute: 0, second: 0)
 #let rng = state("rng", suiji.gen-rng(int((get-now() - epoch).seconds())))
 
-#let hl() = {
+#let random-animal() = {
   let animals = (
     emoji.badger,
     emoji.bear,
@@ -175,7 +159,7 @@
   )
   context {
     let (_, k) = suiji.integers(rng.get(), low: 0, high: animals.len() - 1)
-    box(inset: (left: .6em - 0.25pt), scale(x: 150%, y: 150%, animals.at(k)))
+    animals.at(k)
   }
 
   // does not trigger layout iteration
@@ -219,11 +203,12 @@
 #let deps-counter = counter("deps-counter")
 #context deps-counter.update(1)
 #let deps-labels = state("deps-labels", (:))
+// #let deps-depths = state("deps-depths", (:))
 #let deps-graph-forward = state("deps-graph-forward", (:))
 #let deps-graph-backward = state("deps-graph-backward", (:))
 
 #let deps-build-backward() = {
-  let graph = deps-graph-forward.get()
+  let graph = deps-graph-forward.final()
   let transpose = (:)
   for (from, tos) in graph {
     for to in tos {
@@ -236,19 +221,70 @@
   deps-graph-backward.update(transpose)
 }
 
-#let deps-goto(icon, tests) = context {
+// #let deps-compute-depths() = {
+//   let forward-graph = deps-graph-forward.final()
+//   let backward-graph = deps-graph-backward.final()
+//
+//   let depths = (:)
+//   let q = ()
+//   for v in forward-graph.keys() {
+//     if not v in backward-graph or backward-graph.at(v).len() == 0 {
+//       depths.insert(v, 0)
+//       q.push(v)
+//     }
+//   }
+//
+//   let i = 0
+//   let deg = (:)
+//   while i < q.len() {
+//     let v = q.at(i)
+//     for w in forward-graph.at(v, default: ()) {
+//       if not w in deg {
+//         deg.insert(w, 0)
+//       }
+//       deg.at(w) += 1
+//       if backward-graph.at(w, default: ()).len() == deg.at(w) {
+//         if not w in depths or depths.at(w) < depths.at(v) + 1 {
+//           depths.insert(w, depths.at(v) + 1)
+//           q.push(w)
+//         }
+//       }
+//     }
+//     i += 1
+//   }
+//   for v in q.rev() {
+//     for w in backward-graph.at(v, default: ()) {
+//       depths.at(w) = calc.max(depths.at(v), depths.at(w))
+//     }
+//   }
+//
+//   deps-depths.update(depths)
+// }
+
+#let deps-goto(icon, tests, swap: false) = context {
   let locs = query(figure.where(kind: "thmenv")).map(fig => fig.location())
+
+  let cols = (
+    move(dy: -2pt, text(1em, icon)),
+    ..tests.map(test => context {
+      let label = deps-labels.final().at(test, default: none)
+      link(locs.at(int(test)), label)
+    })
+  )
+
+  if swap {
+    let a = cols.at(0)
+    let b = cols.at(1)
+    cols.at(0) = b
+    cols.at(1) = a
+  }
 
   box(grid(
     columns: 1 + tests.len(),
     rows: auto,
     align: horizon,
     gutter: 0.25em,
-    move(dy: -2pt, text(1em, icon)),
-    ..tests.map(test => context {
-      let label = deps-labels.final().at(test)
-      link(locs.at(int(test)), label)
-    })
+    ..cols
   ))
 }
 
@@ -283,6 +319,7 @@
   deps: (),
   clock: false,
   breakable: false,
+  animal: none,
   extra: none,
   hints: (),
 ) = {
@@ -345,62 +382,73 @@
   let header = context {
     let hint-labels = nemo-state.get().hints
     let id = nemo-state.get().id
-    let backward = deps-graph-backward.final().at(id, default: ())
+    // let depths = deps-depths.final()
 
+    // [Test/Challenge] [Title] [Tags] [Animal]
     grid(
-      columns: (1fr, auto, auto),
+      columns: (auto, 1fr, auto, auto),
+      // stroke: 1pt + black,
       gutter: 0.5em,
-      align: (x, y) => horizon + if x > 0 { right } else { left },
-      grid.cell(
-        titlefmt(head + " " + number)
-          + if title != none { h(1em) + strong(title, delta: 200) },
-      ),
-      if backward.len() > 0 {
-        let sep = if tags.len() > 0 or hint-labels.len() > 0 {
-          (
-            stroke: (right: 0.5pt + gray.lighten(20%)),
-            inset: (right: 0.5em)
-          )
-        } else {
-          (:)
-        }
-
-        grid.cell(
-          ..sep,
-          deps-goto(emoji.seedling, backward)
-        )
-      } else {
-        []
-      },
-      grid.cell(move(
-        dy: 1.25pt,
-        tags.map(tag => box(inset: (left: 0.5em), tag)).join()
-          + for (i, hint) in hint-labels.enumerate() {
-            box(
-              inset: (left: 0.5em),
-              tag(
-                fill: gray.darken(40%),
-                link(hint, "Hinweis " + str(i + 1))
-              )
+      align: (x, y) => horizon + ("2": right).at(str(x), default: left),
+      grid.cell(titlefmt(head + " " + number)),
+      grid.cell(rowspan: 2, inset: (left: 0.75em), if title != none { move(dy: -3pt, strong(title, delta: 200)) } else { [] }),
+      grid.cell({
+        // TODO move these hints elsewhere, their current position is no longer
+        //      fitting
+        for (i, hint) in hint-labels.enumerate() {
+          box(
+            inset: (left: 0.5em),
+            tag(
+              fill: gray.darken(40%),
+              link(hint, "Hinweis " + str(i + 1))
             )
-          },
-      ))
+          )
+        }
+        tags.map(tag => box(inset: (left: 0.5em), tag)).join()
+        // if depths.at(id, default: 0) > 0 {
+        //   box(
+        //     radius: 1pt,
+        //     inset: (x: 0.5em, y: 4pt),
+        //     fill: gradient.linear(..color.map.flare, angle: 45deg),
+        //     text(fill: white, strong(smallcaps("Adventure"), delta: 200)),
+        //   )
+        // } else {
+        //   []
+        // }
+      }),
+      if animal == none {
+        []
+      } else {
+        if animal == true {
+          grid.cell(text(1.5em, baseline: -3.2pt, random-animal()))
+        } else {
+          grid.cell(text(1.5em, baseline: -3.2pt, animal))
+        }
+      }
     )
   }
 
   let body = context {
     let id = nemo-state.get().id
     let forward = deps-graph-forward.final().at(id, default: ())
+    let backward = deps-graph-backward.final().at(id, default: ())
 
     body
-    if forward.len() > 0 {
-      align(right, {
-        box(
-          stroke: (left: 0.5pt + gray.lighten(20%)),
-          inset: (left: 0.5em),
-          deps-goto(emoji.tree.deciduous, forward)
-        )
-      })
+    if backward.len() > 0 or forward.len() > 0 {
+      grid(
+        columns: (auto, 1fr),
+        align: (left, right),
+        if backward.len() > 0 {
+          deps-goto(emoji.seedling, backward)
+        } else {
+          []
+        },
+        if forward.len() > 0 {
+          deps-goto(emoji.tree.deciduous, forward, swap: true)
+        } else {
+          []
+        }
+      )
     }
   }
 
@@ -490,8 +538,9 @@
     block(
       width: 100%,
       fill: red.lighten(75%),
-      inset: 1em,
+      inset: (y: 1em),
       outset: (x: 2in),
+      breakable: false,
       {
         set text(fill: red.darken(30%))
         content

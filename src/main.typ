@@ -32,6 +32,7 @@
 
 #outline()
 #pagebreak(weak: true)
+#context counter(heading).update(0)
 
 #include "haskell.typ"
 #include "prolog.typ"
@@ -39,4 +40,29 @@
 #include "extra.typ"
 #include "appendix.typ"
 
-#context deps-build-backward()
+#context {
+  deps-build-backward()
+  // deps-compute-depths()
+}
+
+// #pagebreak(weak: true)
+
+// #context {
+//   let forward-graph = deps-graph-forward.final()
+//   let backward-graph = deps-graph-backward.final()
+//   let labels = deps-labels.final()
+//
+//   let nodes = forward-graph.keys() + backward-graph.keys()
+//   let edges = backward-graph.pairs().map(((v, ws)) => ws.map(w => v + " -> " + w).join(";\n")).join(";\n") + ";"
+//
+//   diagraph.render(
+//     engine: "neato",
+//     "digraph {"
+//     + "node[shape=none];"
+//     + "edge[arrowsize=0.5,len=2];"
+//     + edges
+//     + "}",
+//     labels: labels
+//   )
+// }
+//

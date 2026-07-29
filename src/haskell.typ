@@ -44,7 +44,12 @@
   Welche Vorteile und Nachteile haben streng getypte Programmiersprachen?
 ]
 
-#test(level: 1, tags: (tag-exam25-one, hl(),))[
+#test(
+  level: 1,
+  tags: (tag-exam25-one,),
+  animal: true,
+  title: "Imperative Variablen in funktionalen Programmiersprachen"
+)[
   In imperativen Programmiersprachen sind Variablen Namen für Speicherzellen,
   deren Werte zum Beispiel in Schleifen verändert werden können. Als Beispiel
   betrachte die Funktionen ```py clz``` und ```py popcnt```.
@@ -73,7 +78,10 @@
   im Allgemeinen der Zustand hin?
 ] <clz_popcnt>
 
-#test(level: 2, tags: (hl(),))[
+#test(
+  level: 2,
+  animal: true
+)[
   Um ein weiteres Glücksspiel neben Blackjack in diesem Modul vorzustellen,
   implementieren wir in diesem Test einen einarmigen Banditen. Diese soll einen
   initialen Zustand haben und als Ergebnis ein Tripel und einen neuen Zustand
@@ -122,7 +130,11 @@
   Mithilfe welcher Konstrukte kannst du diese lokal definieren?
 ]
 
-#test(level: 1, tags: (hl(),))[
+#test(
+  level: 1,
+  animal: true,
+  title: "Binäre Exponentiation"
+)[
   Das Potenzieren einer Zahl $x$ (oder eines Elements einer Halbgruppe) mit
   einem natürlich-zahligen Exponenten $n$ ist mit $cal(O)(log n)$
   Multiplikationen möglich. Dafür betrachten wir
@@ -131,8 +143,7 @@
   $
   Implementiere eine Funktion, die diese Variante des Potenzierens umsetzt.
 ][
-  Das Verfahren ist als #link("https://de.wikipedia.org/wiki/Bin%C3%A4re_Exponentiation")[Binäre Exponentiation]
-  bekannt. ```hs (^)``` ist so in Haskell implementiert (siehe
+  ```hs (^)``` ist so in Haskell implementiert (siehe
   #link("https://hackage-content.haskell.org/package/ghc-internal/docs/src/GHC.Internal.Real.html#powImpl")[```hs powImpl```]).
 ] <binexp>
 
@@ -384,7 +395,12 @@
   baum-artigen Datentypens mithilfe einer induktiv definierten Funktion.
 ]
 
-#challenge(level: 1, breakable: true, tags: (hl(),), title: "Symbolisches Differenzieren")[
+#challenge(
+  level: 1,
+  breakable: true,
+  animal: true,
+  title: "Symbolisches Differenzieren"
+)[
   Die Ableitung einer Funktion $f : RR -> RR$ kann mithilfe des
   Differenzenquotienten $(f(x+h)-f(x))/h$ für kleines $h$ approximiert werden.
   Ein andere Methode zur Berechnung der Ableitung ist symbolisches Differenzen
@@ -564,7 +580,10 @@
   sein?
 ]
 
-#test(level: 1, tags: (hl(),))[
+#test(
+  level: 1,
+  animal: true,
+)[
   Da viele von euch Neulinge sind, wenn es um das Programmieren in Haskell geht,
   brauchen wir eine neue Sammlung von Phrasen, die wir nutzen können, um
   natürlich-sprachliche Anweisungen in Haskell zu formulieren. Finde
@@ -633,7 +652,7 @@
   Wie greifen wir auf Daten in Haskell zu?
 ]
 
-#challenge(level: 2)[
+#challenge(level: 2, title: "Queue")[
   In Haskell sind Listen als einfach-verkettete Listen implementiert. Das macht
   sie ungeeignet für Operationen, die wahlfreien Zugriff in konstanter Laufzeit
   benötigen. Darüber hinaus sind Listen auch nicht mutierbar. Das führt dazu,
@@ -712,7 +731,7 @@
 // dequeue (Q (_:xs) ys) = invariant (Q xs ys)
 // ```
 
-#challenge(level: 1, tags: (tag-level-up,))[
+#challenge(level: 1, tags: (tag-level-up,), title: "AVL-Bäume")[
   In den Übungsaufgaben hast du einen Suchbaum ohne Höhenbalancierung
   implementiert. Die Rotationen für einen AVL-Baum lassen sich durch das
   pattern matching in Haskell vergleichsweise elegant implementieren - erinnere
@@ -1476,7 +1495,11 @@
   Gesetze erfüllen, damit sie eine sinnvolle Semantik beschreiben?
 ]
 
-#test(level: 1, tags: (tag-exam25-one, hl(),))[
+#test(
+  level: 1,
+  tags: (tag-exam25-one,),
+  animal: true
+)[
   Die #link("https://de.wikipedia.org/wiki/Pomodoro-Technik")[Pomodoro-Technik]
   ist eine Zeitmanagement-Methode, die einen Kurzzeitwecker nutzt, um Arbeits-
   und Pauseabschnite einzuteilen. Um ein Informatik-Studierenden-Klischee zu
@@ -2125,10 +2148,6 @@
   #link(git("blob/main/src/solutions/linalg.hs"), raw("linalg.hs")).
 ] <linalg>
 
-#draft-note[
-  Die Zurück-Referenzen nehmen zu viel Platz ein #emoji.face.sad.
-]
-
 #challenge(
   level: 3,
   deps: (<minplus>, <roots_of_polynomials>),
@@ -2221,7 +2240,11 @@ verallgemeinern kannst.
   ```hs Eq```-Instanz erfüllen?
 ]
 
-#test(level: 2, clock: true, tags: (hl(),))[
+#test(
+  level: 2,
+  clock: true,
+  animal: true
+)[
   Gegeben sei der Typ
   #align(center)[```hs data Tree a b c = Empty | Leaf a | Node (Tree a b c) Int c (Tree a b c)```.]
   Implementiere eine ```hs Eq```-Instanz für diesen Typen. Die Gleichheit soll
@@ -2244,7 +2267,11 @@ verallgemeinern kannst.
   ```hs Ord```-Instanz erfüllen?
 ]
 
-#test(level: 2, clock: true, tags: (hl(),))[
+#test(
+  level: 2,
+  clock: true,
+  animal: true
+)[
   Gegeben sei der Typ
   #align(center)[```hs data Tree a b c = Empty | Leaf a | Node (Tree a b c) Int c (Tree a b c)```.]
   Implementiere eine ```hs Ord```-Instanz für diesen Typen. Die Ordnung soll

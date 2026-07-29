@@ -4,6 +4,11 @@
 
 = Appendix
 
+#draft-note[
+  Dieses Kapitel enthält Inhalte, die etwas out-of-place wirken. Zu denen
+  gehören unter anderem die Bemerkungen zu Klausuren.
+]
+
 Bisher findest du hier im Anhang des Dokuments Bemerkungen zu verschiedenen
 Tests oder Challenges. Sie sind aus unserer Neugier entstanden und stecken dich
 möglicherweise an. Du kannst aber auch alles ignorieren, was hier steht, und

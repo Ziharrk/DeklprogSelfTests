@@ -60,7 +60,10 @@
   #align(center)[```hs data Tree a = Empty | Node (Tree a) a (Tree a)```.]
 ]
 
-#test(level: 1, tags: (hl(),))[
+#test(
+  level: 1,
+  animal: true
+)[
   Wie viele Ergebnisse liefern die folgenden Anfragen?
   - ```SWI-Prolog ?- append(_, [X|_], [1, 2, 3, 4]).```
   - ```SWI-Prolog ?- append(_, [_,X|_], [1, 2, 3, 4]).```
@@ -1559,7 +1562,10 @@ Seite gefunden haben.
   Wofür wird das Prädikat ```SWI-Prolog is/2``` verwendet?
 ]
 
-#test(level: 1, tags: (hl(),))[
+#test(
+  level: 1,
+  animal: true
+)[
   Welche Anfragen sind valide?
   - ```SWI-Prolog X is 42 - 3```
   - ```SWI-Prolog X is Y + 1```
@@ -1654,7 +1660,11 @@ Seite gefunden haben.
   ```SWI-Prolog is/2``` beweisbar ist.
 ]
 
-#test(level: 2, clock: true, tags: (hl(),))[
+#test(
+  level: 2,
+  clock: true,
+  animal: true
+)[
   Gegeben sei das Prädikat
   ```SWI-Prolog
   f(X, Y) :- Y is 2 * X + 1.
@@ -1714,7 +1724,7 @@ Seite gefunden haben.
   Stelligkeit hat ```SWI-Prolog call```?
 ]
 
-#test(level: 2, tags: (hl(),))[
+#test(level: 2, animal: true)[
   Implementiere die Prädikate ```SWI-Prolog map/3```, ```SWI-Prolog filter/3```,
   ```SWI-Prolog foldr/4```, so wie du sie erwarten würdest. Implementiere
   darüber hinaus das Prädikat ```SWI-Prolog all/2```, dass genau dann erfüllt
