@@ -1741,7 +1741,7 @@
   ```
 ]
 
-#challenge(level: 2, clock: true, tags: (tag-deep-dive,))[
+#challenge(level: 2, clock: true, tags: (tag-deep-dive,), title: "Automatisches Differenzieren")[
   In dieser Challenge sollst du automatisches Differenzieren im Vorwärtsmodus
   mithilfe von (Operator-)Überladung implementieren. Dieser Ansatz des
   Differenzierens führt dabei das Differenzieren komplizierter Funktionen auf
@@ -1833,7 +1833,7 @@
 //   atanh (D x d) = D (atanh x) (d / (1 - x * x))
 // ```
 
-#challenge(level: 3, clock: true, breakable: true, tags: (tag-deep-dive,))[
+#challenge(level: 3, clock: true, breakable: true, tags: (tag-deep-dive,), title: "Kürzeste Wege mit tropischen Zahlen")[
   In Einführung in die Algorithmik hast du den Floyd-Warshall Algorithmus
   kennengelernt, um die Distanzen der kürzesten Wege zwischen allen Knoten in
   einem kanten-gewichteten Digraph zu berechnen. Hier ist der Algorithmus erneut
@@ -1999,7 +1999,7 @@
 // shortestPaths m@(Mat a) = fmap getTropical ((fmap Tropical m) ^ (length a))
 // ```
 
-#challenge(level: 3, breakable: true, tags: (tag-deep-dive,))[
+#challenge(level: 3, breakable: true, tags: (tag-deep-dive,), title: "LR-Zerlegung")[
   #let bA = $bold(upright(A))$
   #let bL = $bold(upright(L))$
   #let bR = $bold(upright(R))$
@@ -2124,7 +2124,16 @@
   #link(git("blob/main/src/solutions/linalg.hs"), raw("linalg.hs")).
 ] <linalg>
 
-#challenge(level: 3, deps: (<minplus>, <roots_of_polynomials>), tags: (tag-deep-dive,))[
+#draft-note[
+  Die Zurück-Referenzen nehmen zu viel Platz ein #emoji.face.sad.
+]
+
+#challenge(
+  level: 3,
+  deps: (<minplus>, <roots_of_polynomials>),
+  tags: (tag-deep-dive,),
+  title: "Eigenwerte unimodularer Matrizen"
+)[
   Ich möchte versuchen, deine Gedanken zu lesen. Das funktioniert allerdings
   nur, wenn du @minplus und @roots_of_polynomials erfolgreich gemeistert hast.
   Ohh, du denkst auch häufiger über das römische Reich nach. Interessant. Was
@@ -2344,7 +2353,12 @@ verallgemeinern kannst.
   - ```hs f = uncurry const```
 ]
 
-#challenge(level: 2, breakable: true, tags: (tag-deep-dive,))[
+#challenge(
+  level: 2,
+  breakable: true,
+  tags: (tag-deep-dive,),
+  title: "Nullstellen ganzzahliger Polynome"
+)[
   Die Nullstellen eines ganzzahligen Polynoms $p = sum_(i=0)^d a_i t^i in ZZ[t]$
   mit $a_d = 1$ lässt sich mithilfe des Satzes über rationale Nullstellen
   bestimmen. Dieser besagt, dass ein Teiler $x$ des Absolutglieds $a_0$ existiert, sodass
@@ -2493,7 +2507,7 @@ verallgemeinern kannst.
   bekannt.
 ]
 
-#challenge(level: 2, clock: true)[
+#challenge(level: 2, clock: true, title: "Sieb von Sundaram")[
   Gegeben sei der Datentyp
   #align(center)[```hs data Tree a = Empty | Node (Tree a) a (Tree a)```.]
 
@@ -2579,7 +2593,7 @@ verallgemeinern kannst.
   ```
 ]
 
-#challenge(level: 2)[
+#challenge(level: 2, breakable: true, title: "Endliche Automaten als unendliche Bäume")[
   Wir können endliche Automaten als unendliche Bäume darstellen.
   Betrachte z.B. den endlichen Automaten für die reguläre Sprache $mono(a)^* mono(b)^*$.
   #align(center)[
@@ -2755,7 +2769,7 @@ verallgemeinern kannst.
     von einer der beiden Funktionen.)
 ]
 
-#challenge(level: 1, clock: true)[
+#challenge(level: 1, clock: true, title: "Fixpunktverfahren")[
   Fixpunktverfahren sind iterative Methoden, bei denen eine Funktion wiederholt
   auf einen Wert angewendet wird, bis sich ein stabiler Punkt (ein sogenannter
   Fixpunkt) ergibt, der sich durch weitere Anwendungen der Funktion nicht mehr
@@ -2834,7 +2848,7 @@ verallgemeinern kannst.
 //                   | otherwise          = prec (y:ys)
 // ```
 
-#challenge(level: 1, tags: (tag-deep-dive,))[
+#challenge(level: 1, tags: (tag-deep-dive,), title: "Editierdistanz")[
   Eine Editierdistanz zwischen zwei Wörtern $u in Sigma^m, v in Sigma^n$ können
   wir mithilfe der folgenden Rekurrenz bestimmen:
   $
@@ -2890,7 +2904,7 @@ verallgemeinern kannst.
 //                                 ]
 // ```
 
-#challenge(level: 2, clock: true, tags: (tag-deep-dive,))[
+#challenge(level: 2, clock: true, tags: (tag-deep-dive,), title: "Minimaler Pfad in einem ganzzahligen Gitter")[
   Bevor du dich dieser Challenge stellst, bietet es sich an, sich @editdist
   anzunehmen, da in dieser der technische Teil der Lösungsidee vorgestellt
   wird.
@@ -3584,7 +3598,7 @@ verallgemeinern kannst.
   ```
 ]
 
-#test(level: 2, clock: true, tags: (tag-level-up,))[
+#test(level: 2, clock: true, tags: (tag-level-up,), breakable: true, title: "Programmieren mit beliebigen Monaden")[
   Das Verwenden von monadischen Funktionen kommt einem zum Anfang möglicherweise
   als erbitterter Kampf gegen das Typsystem vor. Diese Situationen ergeben sich
   bereits aus den scheinbar unschuldigsten Absichten. Oft fehlt dann die
@@ -3756,7 +3770,7 @@ verallgemeinern kannst.
 // -- = pure ($ y) <*> ZipList fs
 // ```
 
-#test(level: 3, clock: true, tags: (tag-level-up,))[
+#test(level: 3, clock: true, tags: (tag-level-up,), title: "guard")[
   ```hs guard :: MonadZero m => Bool -> m ()``` kann genutzt werden, um eine
   Berechnung bedingt fehlschlagen zu lassen.
   Zum Beispiel können wir mithilfe von ```hs guard``` eine sichere Division
@@ -3822,7 +3836,7 @@ verallgemeinern kannst.
   sich wie ```hs (>>)``` für applikative Funktoren verhält.
 ]
 
-#test(level: 3, clock: true, tags: (tag-level-up,))[
+#test(level: 3, clock: true, tags: (tag-level-up,), title: "Fehlerbehandlung mit Monaden")[
   Als motivierendes Beispiel für Monaden hast du die Auswertung eines
   arithmetischen Ausdrucks, gegeben als Termstruktur, kennengelernt. Dort haben
   wir die ```hs Maybe```-Monade verwendet, um fehlschlagende Berechnung
@@ -4123,7 +4137,7 @@ verallgemeinern kannst.
   angeben?
 ]
 
-#test(level: 3, clock: true, tags: (tag-level-up,))[
+#test(level: 3, clock: true, tags: (tag-level-up,), title: "Sequenzierung monadischer Aktionen")[
   Oft kommt es vor, dass Berechnungen zustandabhängig verschiedene Ergebnisse
   liefern. Zum Beispiel merken wir uns in einer Tiefensuche durch einen
   Graph, welche Knoten bereits besucht wurden, damit die Tiefensuche sich nicht
@@ -4376,7 +4390,7 @@ verallgemeinern kannst.
 //      this and pagebreak if that is the case.
 #pagebreak(weak: true)
 
-#challenge(level: 2, breakable: true, clock: true)[
+#challenge(level: 2, breakable: true, clock: true, title: "Suchen")[
   Ein gängiges Sprichwort ist,
   #quote(
     block: true,
@@ -4481,7 +4495,7 @@ verallgemeinern kannst.
   Breitensuchen in verschiedenen Situationen auf.
 ] <search>
 
-#test(level: 2)[
+#test(level: 2, deps: (<search>,))[
   Das #link("https://de.wikipedia.org/wiki/F%C3%A4rbung_(Graphentheorie)")[Graphfärbungsproblem]
   fragt nach einer Färbung von Knoten, sodass benachbarte Knoten unterschiedlich
   gefärbt sind, unter der Verwendung von so wenig Farben wie möglich.
@@ -4603,7 +4617,12 @@ Die folgenden zwei Challenges steigen tiefer in die Funktionsweise von
 QuickCheck ein. Dabei werden zwar weiter viele Vereinfachungen gemacht, wir
 nähern uns dennoch der tatsächlichen Implementierung von QuickCheck stark an.
 
-#challenge(level: 3, clock: true, tags: (tag-deep-dive,))[
+#challenge(
+  level: 3,
+  clock: true,
+  tags: (tag-deep-dive,),
+  title: [Funktionen mit variabler Argumentanzahl am Beispiel ```hs quickCheck```]
+)[
   Eigenschaften lassen sich mit QuickCheck z.B. mithilfe der Funktion
   ```hs quickCheck``` prüfen.
 
@@ -4680,7 +4699,14 @@ nähern uns dennoch der tatsächlichen Implementierung von QuickCheck stark an.
 // quickCheck p = unProperty (property p)
 // ```
 
-#challenge(level: 3, clock: true, breakable: true, tags: (tag-deep-dive,))[
+#challenge(
+  level: 3,
+  clock: true,
+  breakable: true,
+  tags: (tag-deep-dive,),
+  deps: (<quickcheck_noprng>,),
+  title: [Zufällige Parameter in QuickCheck]
+)[
   Bevor du diese Challenge bestreitest, sage @quickcheck_noprng den Kampf an!
 
   Während QuickCheck #link("https://dl.acm.org/doi/10.1145/2660193.2660195")[SplitMix64]
@@ -4903,7 +4929,13 @@ Diese Aufgaben haben noch keinen Platz gefunden.
 //     return Array(self.size, data)
 // ```
 
-#challenge(level: 3, clock: true, tags: (tag-deep-dive,))[
+#challenge(
+  level: 3,
+  clock: true,
+  tags: (tag-deep-dive,),
+  deps: (<search>,),
+  title: [Von regulären Ausdrücken zu deterministischen endlichen Automaten]
+)[
   Du hörst parallel zu diesem Modul "Berechnung und Logik" und möchtest
   die Automaten-Konstruktionen für reguläre Sprachen in Haskell implementieren?
   Dann schaue nicht weiter. Du hast die korrekte Challenge gefunden. Dieser Weg
@@ -5003,7 +5035,13 @@ Diese Aufgaben haben noch keinen Platz gefunden.
     Übersetzerbau nutzt dieses Buch)
 ]
 
-#challenge(level: 2, clock: true, tags: (tag-deep-dive,))[
+#challenge(
+  level: 2,
+  clock: true,
+  tags: (tag-deep-dive,),
+  breakable: true,
+  title: [Komprimierung mit Huffman-Kodierung]
+)[
   In dieser Challenge möchten wir Daten mithilfe der Huffman-Kodierung
   komprimieren. Wir bekommen als Eingabe eine Folge von Symbolen und geben
   einen kürzere Folge von Bits zurück. Die Kernidee ist es, Symbole nach der
