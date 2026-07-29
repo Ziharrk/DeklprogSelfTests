@@ -1685,11 +1685,12 @@
   von ```hs abs``` und ```hs signum``` nicht erfüllt.
 ] <matmath>
 
-#test(level: 1)[
+#test(level: 1, deps: (<binexp>, <matmath>), title: [$n$-te. Fibonacci-Zahl in $Theta(log(n))$])[
   Mit $ mat(f_(n+1), f_n; f_n, f_(n-1))^n = mat(1, 1; 1, 0)^n $ und der
   binären Exponentiation (@binexp) und ```hs Mat22 Integer``` (@matmath) aus
   vorherigen Tests kannst du die $n$-te Fibonacci-Zahl in logarithmischer
-  Laufzeit in $n$ berechnen. Implementiere das Verfahren.
+  Laufzeit in $n$ berechnen -- zumindest wenn wir auf beliebige genaue
+  Arithmetik verzichten. Implementiere das Verfahren.
 ][
   Da du eine ```hs Num```-Instanz auf ```hs Mat22``` definiert hast, kannst
   du den ```hs (^)```-Operator zur binären Exponentiation nutzen.
