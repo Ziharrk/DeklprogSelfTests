@@ -64,7 +64,7 @@ instance Floating Fun where
 
 ($$) :: Fun -> Double -> Double
 #ifdef TEMPLATE
-($$) = undefined
+($$) = error "not implemented"
 #else
 X         $$ x = x
 E         $$ _ = exp 1
@@ -81,7 +81,7 @@ E         $$ _ = exp 1
 
 derive :: Fun -> Fun
 #ifdef TEMPLATE
-derive = undefined
+derive = error "not implemented"
 #else
 derive X         = Const 1.0
 derive E         = Const 0.0

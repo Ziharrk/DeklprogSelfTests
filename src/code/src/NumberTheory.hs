@@ -12,7 +12,7 @@ import Prelude hiding (gcd)
 -- ad-hoc polymorphism in the lectures yet. However, you can treat 'gcd' as a
 -- function @Int -> Int -> Int@.
 gcd :: Integral a => a -> a -> a 
-#if TEMPLATE
+#ifdef TEMPLATE
 gcd = undefined
 #else
 gcd x 0 = x

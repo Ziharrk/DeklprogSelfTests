@@ -5,7 +5,7 @@ module Algorithms
 -- |Mergesort a list.
 mergesort :: Ord a => [a] -> [a]
 #ifdef TEMPLATE
-mergesort = undefined
+mergesort = error "not implemented"
 #else
 mergesort xs = mergeAll (runs xs)
   where
