@@ -4,7 +4,12 @@
 
 = Logische Programmierung
 
-== Prolog, Prolog!
+#let arbeit = footnote[
+  Vorzugsweise so gelesen wie diese
+  #link("https://www.youtube.com/watch?v=i5iDji-VuY0")[voice line].
+]
+
+#box(inset: (top: 0.4em), heading(level: 2, [Prolog, Prolog!])) #arbeit
 
 #refs[
   - Skript: Einführung in die Logikprogrammierung, Motivation
