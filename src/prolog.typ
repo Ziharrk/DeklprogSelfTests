@@ -484,6 +484,8 @@
     Verhalten bei verschiedenen Anfrageformen,
 ]
 
+#pagebreak(weak: true)
+
 
 == Elementare Programmiertechniken
 
@@ -747,6 +749,8 @@
   - und währenddessen (große) Teile des Suchraums, die keine Lösung enthalten
     können, kategorisch auszuschließen.
 ]
+
+#pagebreak(weak: true)
 
 
 == Rechnen in der Logikprogrammierung <how_prolog>
@@ -1383,6 +1387,8 @@ Seite gefunden haben.
     zu berechnen (SLD-Bäume mit cuts).
 ]
 
+#pagebreak(weak: true)
+
 
 == Negation
 
@@ -1437,6 +1443,8 @@ Seite gefunden haben.
   - die Negation zu nutzen,
   - Fallstricke der Negation zu erklären.
 ]
+
+#pagebreak(weak: true)
 
 
 == Der Cut-Operator
@@ -1530,6 +1538,8 @@ Seite gefunden haben.
   - den Cut gezielt einzusetzen, um unnötiges Backtracking zu vermeiden, ohne
     die logische Bedeutung eines Programms zu verändern.
 ]
+
+#pagebreak(weak: true)
 
 
 == Prolog-Arithmetik und nicht-relationale Prädikate
@@ -1684,6 +1694,9 @@ Seite gefunden haben.
     relational sind.
 ]
 
+#pagebreak(weak: true)
+
+
 == Prädikate höherer Ordnung
 
 #refs[
@@ -1739,6 +1752,8 @@ Seite gefunden haben.
 #check[
   Ich bin in der Lage, ```SWI-Prolog call``` zu nutzen.
 ]
+
+#pagebreak(weak: true)
 
 
 == Kapselung des Nichtdeterminismus
@@ -1813,6 +1828,8 @@ Seite gefunden haben.
 ]
 
 // Difference lists wurden für die Klausur ausgeschlossen.
+
+#pagebreak(weak: true)
 
 
 == Logik-Puzzles

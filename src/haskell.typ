@@ -765,6 +765,8 @@
   - Pattern Matching zu nutzen.
 ]
 
+#pagebreak(weak: true)
+
 
 == Automatisches Testen
 
@@ -1438,6 +1440,8 @@
     Fallstricke zu erklären.
 ]
 
+#pagebreak(weak: true)
+
 
 == Abstrakte Datentypen
 
@@ -1624,6 +1628,8 @@
   - keine Implementierung für einen ADT anzugeben, wenn nicht explizit danach
     gefragt ist.
 ]
+
+#pagebreak(weak: true)
 
 
 == Typklassen und Überladung
@@ -2408,6 +2414,8 @@ verallgemeinern kannst.
     Polymorphismus unterscheidet.
 ]
 
+#pagebreak(weak: true)
+
 
 == Lazy Evaluation
 
@@ -2977,6 +2985,8 @@ verallgemeinern kannst.
   - unendliche Datenstrukturen mithilfe von Funktionen zu erzeugen.
 ]
 
+#pagebreak(weak: true)
+
 
 == Sequenzen
 
@@ -3028,6 +3038,8 @@ verallgemeinern kannst.
   - zu erklären, wie die Typklassen ```hs Enum``` und ```hs Bounded``` und
     list comprehensions zusammenhängen.
 ]
+
+#pagebreak(weak: true)
 
 
 == List Comprehensions
@@ -3131,6 +3143,8 @@ verallgemeinern kannst.
   - Listenverarbeitungen mit List Comprehensions auszudrücken und äquivalent
     umzuformen, auch bei komplexeren Konstruktionen.
 ]
+
+#pagebreak(weak: true)
 
 
 == Ein- und Ausgabe
@@ -3266,6 +3280,8 @@ verallgemeinern kannst.
     die Ein-/Ausgabe, Dateizugriff, Verarbeitung von Eingaben und kontrollierte
     Interaktion enthalten.
 ]
+
+#pagebreak(weak: true)
 
 
 == Funktoren, Applicatives und Monaden
@@ -4517,6 +4533,8 @@ verallgemeinern kannst.
   - ```hs do```-Notation zu nutzen, und
   - zwischen ```hs (>>=), (>>)``` und ```hs do```-Notation zu übersetzen.
 ]
+
+#pagebreak(weak: true)
 
 
 == Automatisches Testdatengenerierung
