@@ -39,12 +39,20 @@
   set raw(syntaxes: "../syntaxes/prolog.sublime-syntax")
 
   show link: it => {
-    if type(it.dest) != location {
-      return underline(it)
+    let no-hl = type(it.dest) == location or type(it.dest) == label and str(it.dest).starts-with("hint")
+    if no-hl {
+      it
+    } else {
+      underline(
+        stroke: (thickness: 0.035em, cap: "round"),
+        evade: true,
+        offset: 2pt,
+        extent: 1pt,
+        it
+      )
     }
-
-    it
   }
+
   show heading: set block(above: 1.4em, below: 1em)
   show math.equation.where(block: false): box
 
@@ -146,7 +154,7 @@
     emoji.monkey,
     emoji.moose,
     emoji.orangutan,
-    emoji.orca,
+    // emoji.orca,
     emoji.otter,
     emoji.owl,
     emoji.panda,
@@ -368,7 +376,13 @@
         dy: 1.25pt,
         tags.map(tag => box(inset: (left: 0.5em), tag)).join()
           + for (i, hint) in hint-labels.enumerate() {
-            box(inset: (left: 0.5em), tag(fill: teal.darken(10%), link(hint, "Hinweis " + str(i + 1))))
+            box(
+              inset: (left: 0.5em),
+              tag(
+                fill: gray.darken(40%),
+                link(hint, "Hinweis " + str(i + 1))
+              )
+            )
           },
       ))
     )
