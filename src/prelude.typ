@@ -484,3 +484,19 @@
   ("big", "\u{2A02}")
 )
 
+// draft notes are hidden if `--input draft=1` is not provided
+#let draft-note(content) = {
+  if sys.inputs.at("draft", default: none) == "1" {
+    block(
+      width: 100%,
+      fill: red.lighten(75%),
+      inset: 1em,
+      outset: (x: 2in),
+      {
+        set text(fill: red.darken(30%))
+        content
+      }
+    )
+  }
+}
+
