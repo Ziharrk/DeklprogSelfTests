@@ -1121,7 +1121,7 @@
   Gegeben sei die Faltungsfunktion
   ```hs foldTree :: (r -> a -> r -> r) -> r -> Tree a -> r```
   für einen knotenbeschrifteten Binärbaum gegeben durch
-  ```hs data Tree a = Empty | Node (Tree a) a (Tree a)```.
+  #align(center)[```hs data Tree a = Empty | Node (Tree a) a (Tree a)```.]
 
   Eine Reihe von Funktionen, die du bereits für Listen kennengelernt
   hast, lassen sich auch auf Bäume übertragen.
