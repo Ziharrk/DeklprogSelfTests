@@ -652,6 +652,35 @@
   Wie greifen wir auf Daten in Haskell zu?
 ]
 
+#test(level: 2, clock: true, title: "Blockmatrizen")[
+  #let mA = $bold(upright(A))$
+  In der numerischen Mathematik gibt es Algorithmen, die über Blockmatrizen
+  ausgedrückt werden. Dabei wird eine Matrix $mA in K^(n times n)$ als
+  $ mA = mat(a_(1 1), mA_(1 *); mA_(* 1), mA_(**)) quad "oder" quad mA = mat(mA_(**), mA_(* n); mA_(n *), a_(n n)). $
+  aufgefasst, wobei $a_11, a_(n n) in K, mA_(1 *), mA_(n *) in K^(1 times (n - 1))$,
+  $mA_(* 1), mA_(* n) in K^((n - 1) times 1)$ und $mA_(**) in K^((n - 1) times (n - 1))$
+  sind.
+
+  Implementiere sowohl ```hs unblock :: Mat a -> (Mat a, Mat a, Mat a, Mat a)```
+  als auch ```hs block :: (Mat a, Mat a, Mat a, Mat a)``` für beide
+  Darstellungen in #raw("LinearAlgebra.hs"). Der Datentyp ```hs Mat a``` sei
+  hier wie folgt definiert ```hs newtype Mat a = Mat [[a]]```.
+
+  Hier sind ein paar Beispiele.
+  ```hs
+  > unblock (Mat [[1, 2, 3], [3, 4, 5])
+  (Mat [[1]], Mat [[2, 3]], Mat [[3]], Mat [[4, 5]])
+  > unblock' (Mat [[1, 2, 3], [3, 4, 5])
+  (Mat [[1, 2]], Mat [[3]], Mat [[3, 4]], Mat [[5]])
+  > block (Mat [[1]], Mat [[2, 3]], Mat [[4], [7]], Mat [[5, 6], [8, 9]])
+  Mat [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+  ```
+
+  In der Vorlage findest du auch andere unimplementiere Funktionen
+  ```hs vstack, hstack, vsplitn, hsplit1, hsplitn```, als Hilfsfunktionen
+  für ```hs block, unblock, unblock'``` gedacht sind.
+] <block-matrices>
+
 #challenge(level: 2, title: "Queue")[
   In Haskell sind Listen als einfach-verkettete Listen implementiert. Das macht
   sie ungeeignet für Operationen, die wahlfreien Zugriff in konstanter Laufzeit
@@ -2023,7 +2052,13 @@
 // shortestPaths m@(Mat a) = fmap getTropical ((fmap Tropical m) ^ (length a))
 // ```
 
-#challenge(level: 3, breakable: true, tags: (tag-deep-dive,), title: "LR-Zerlegung")[
+#challenge(
+  level: 3,
+  breakable: true,
+  tags: (tag-deep-dive,),
+  title: "LR-Zerlegung",
+  deps: (<block-matrices>,)
+)[
   #let bA = $bold(upright(A))$
   #let bL = $bold(upright(L))$
   #let bR = $bold(upright(R))$
@@ -2097,10 +2132,6 @@
 
   Nutze in keiner deiner Funktionsdefinitionen ```hs (!!)``` oder ```hs (!?)```
   und versuche stattdessen, geschickt pattern matching zu nutzen, um auf die Einträge zuzugreifen.
-  - Implementiere Funktionen ```hs unblock :: Mat a -> (Mat a, Mat a, Mat a, Mat a)```
-    und ```hs block :: (Mat a, Mat a, Mat a, Mat a) -> Mat a```, die eine Matrix
-    $bA$ oder Matrizen $(a_(1 1)), bA_(1 *), bA_(* 1), bA_(**)$ nehmen und
-    diese entweder Zerlegen oder zu einer Matrix zusammenstellen (siehe @block_mat).
   - Implementiere eine Funktion ```hs lu :: (Eq a, Fractional a) => Mat a -> Maybe (Mat a, Mat a)```,
     die eine LR-Zerlegung berechnet, sofern die sie für die gegebene Matrix
     existiert. Diese existiert genau dann, wenn $a_(1 1) != 0$ in jedem Schritt
@@ -2118,10 +2149,8 @@
     $ mat(l_(1 1), 0; bL_(* 1), bL_(**)) vec(x_(1 1), bx_*) = vec(b_1, bb_*). $
     Dann ist $x_(1 1) = b_1$, da $l_(1 1) = 1$ ist. Wir berechnen $bx_*$ nun,
     indem wir $bL_(**) = bb_* - x_(1 1) bL_(* 1)$ lösen. Das wiederholen wir, bis
-    der triviale Fall erreicht ist. Analog können wir $bR bx = bb$ lösen. Für $bR$
-    können wir ```hs unblock``` nicht verwenden. Definiere zuerst eine
-    weitere Funktion ```hs unblock'```, die $bR$ in die entsprechenden
-    Blockmatrizen zerlegt. Implementiere dann Funktion ```hs forward :: Fractional a => Mat a -> Mat a -> Mat a```
+    der triviale Fall erreicht ist. Analog können wir $bR bx = bb$ lösen.
+    Implementiere dann Funktion ```hs forward :: Fractional a => Mat a -> Mat a -> Mat a```
     und ```hs backward :: Fractional a => Mat a -> Mat a -> Mat a```, die jeweils $bL bx = bb$
     und $bR bx = bb$ lösen.
   - Jetzt können wir lineare Gleichungssysteme lösen, in denen $bA$ regulär ist.

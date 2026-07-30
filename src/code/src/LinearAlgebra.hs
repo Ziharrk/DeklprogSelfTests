@@ -9,37 +9,136 @@ import Data.Maybe (fromMaybe)
 newtype Mat a = Mat [[a]]
   deriving (Eq, Show)
 
-
 instance Functor Mat where
   -- Applies f to each component of A
   fmap f (Mat a) = Mat (fmap (fmap f) a)
-
 
 -- Computes all columns of A
 cols :: Mat a -> [Mat a]
 cols (Mat as) = map (Mat . transpose . singleton) (transpose as)
 
-
 -- Computes size of A
 size :: Mat a -> (Int, Int)
 size (Mat as) = (length as, length (head as))
 
-
--- Horizontally stacks two matrices A, B to |A B|
-hstack :: Mat a -> Mat a -> Mat a
-hstack (Mat as) (Mat bs) = Mat (zipWith (++) as bs)
-
-
 -- Transposes A
 trans :: Mat a -> Mat a
 trans (Mat as) = Mat (transpose as)
-
 
 -- Computes identity of size n x n
 identity :: Num a => Int -> Mat a 
 identity 1 = Mat [[1]]
 identity n = Mat ((1 : replicate (n - 1) 0) : map (0 :) i)
   where Mat i = identity (n - 1)
+
+
+-- |Vertically stacks two matrices.
+vstack :: Mat a -> Mat a -> Mat a
+#ifdef TEMPLATE
+vstack = error "not implemented"
+#else
+vstack (Mat as) (Mat bs) = Mat (as ++ bs)
+#endif
+
+-- |Horizontally stacks two matrices A, B to |A B|
+hstack :: Mat a -> Mat a -> Mat a
+#ifdef TEMPLATE
+hstack = error "not implemented"
+#else
+hstack (Mat [])       (Mat [])       = Mat []
+hstack (Mat (a : as)) (Mat (b : bs)) = vstack (Mat [a ++ b]) (hstack (Mat as) (Mat bs))
+
+-- or later: hstack (Mat as) (Mat bs) = Mat (zipWith (++) as bs)
+#endif
+
+-- |Computes
+-- ```
+-- A = |a B|
+-- ```
+-- where a is the first column of A and B the remaining submatrix.
+hsplit1 :: Mat a -> (Mat a, Mat a)
+#if TEMPLATE
+hsplit1 = undefined
+#else
+hsplit1 (Mat [])                = (Mat [], Mat [])
+hsplit1 (Mat ((a11 : a1x) : a)) = (Mat ([a11] : ax1), Mat (a1x : axx))
+  where (Mat ax1, Mat axx) = hsplit1 (Mat a)
+#endif
+
+-- |Computes
+-- ```
+-- A = |B a|
+-- ```
+-- where a is the last column of A and B the remaining submatrix.
+hsplitn :: Mat a -> (Mat a, Mat a)
+#if TEMPLATE
+hsplitn = error "not implemented"
+#else
+hsplitn (Mat [])       = (Mat [], Mat [])
+hsplitn (Mat (a1 : a)) = (Mat (ax1 : axx), Mat ([an1] : axn))
+  where
+    ax1 = init a1
+    an1 = last a1
+    (Mat axx, Mat axn) = hsplitn (Mat a)
+#endif
+ 
+-- |Computes
+-- ```
+-- A = |B|
+--     |a|
+-- ```
+-- where a is the last row of A and B the remaining submatrix.
+vsplitn :: Mat a -> (Mat a, Mat a)
+#ifdef TEMPLATE
+vsplitn = error "not implemented"
+#else
+vsplitn (Mat [])        = (Mat [], Mat [])
+vsplitn (Mat [a])       = (Mat [], Mat [a])
+vsplitn (Mat (a1x : a)) = (Mat (a1x : axx), manx)
+  where (Mat axx, manx) = vsplitn (Mat a)
+#endif
+
+-- |Computes 
+-- ```
+-- A = |a11 a1x|
+--     |ax1 axx| 
+-- ```
+unblock :: Mat a -> (Mat a, Mat a, Mat a, Mat a)
+#if TEMPLATE
+unblock = error "not implemented"
+#else
+unblock (Mat ((a11 : a1x) : axx)) = (Mat [[a11]], Mat [a1x], max1, maxx)
+  where (max1, maxx) = hsplit1 (Mat axx)
+#endif
+
+-- |Computes 
+-- ```
+-- A = |axx anx|
+--     |axn ann| 
+-- ```
+unblock' :: Mat a -> (Mat a, Mat a, Mat a, Mat a)
+#ifdef TEMPLATE
+unblock' = error "not implemented"
+#else
+unblock' a = (maxx, manx, maxn, mann)
+  where 
+    (ma, man) = hsplitn a
+    (maxx, manx) = vsplitn ma
+    (maxn, mann) = vsplitn man
+#endif
+    
+-- |Computes 
+-- ```
+-- |A B| 
+-- |C D|
+-- ```
+-- given A, B, C, D.
+block :: (Mat a, Mat a, Mat a, Mat a) -> Mat a
+#ifdef TEMPLATE
+block = error "not implemented"
+#else
+block (a, b, c, d) = vstack (hstack a b) (hstack c d)
+#endif
 
 
 -- Computes dot product of two lists 
@@ -56,35 +155,6 @@ instance Num a => Num (Mat a) where
   fromInteger = undefined
 
 
--- Computes A = |a11 a1x|
---              |ax1 axx| 
-unblock :: Mat a -> (Mat a, Mat a, Mat a, Mat a)
-unblock (Mat a) = (Mat a11, Mat a1x, Mat ax1, Mat axx)
-  where
-    a11 = [[head (head a)]]
-    a1x = [tail (head a)]
-    ax1 = map (singleton . head) (tail a)
-    axx = map tail (tail a)
-
-
--- Computes A = |axx anx|
---              |axn ann| 
-unblock' :: Mat a -> (Mat a, Mat a, Mat a, Mat a)
-unblock' (Mat a) = (Mat axx, Mat anx, Mat axn, Mat ann)
-  where
-    axx = map init (init a)
-    anx = map (singleton . last) (init a)
-    axn = [init (last a)]
-    ann = [[last (last a)]]
-
-    
--- Computes |a11 a1x| = A
---          |ax1 axx| 
-block :: (Mat a, Mat a, Mat a, Mat a) -> Mat a 
-block (Mat [[a11]], Mat a1x, Mat ax1, Mat axx) = Mat (b1 ++ bx)
-  where
-    b1 = map (a11 :) a1x
-    bx = zipWith (++) ax1 axx
 
 
 -- Computes LU decomposition of A
