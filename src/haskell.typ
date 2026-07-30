@@ -1838,6 +1838,10 @@
 ][
   Hier ist eine #link("https://de.wikipedia.org/wiki/Differentialrechnung#Zusammenfassung")[Zusammenfassung der Ableitungsregeln].
 
+  Ein vergleichbares Verfahren zum Berechnen von Ableitung basiert auf den
+  #link("https://en.wikipedia.org/wiki/Dual_number#Automatic_differentiation")[dualen Zahlen].
+  Alternativ kannst du diesen Ansatz implementieren.
+
   In @reverse_mode_ad_remark kannst du eine allgemeinere Funktion zum
   Berechnen der Ableitung sehen.
 ][
