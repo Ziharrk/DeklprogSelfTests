@@ -542,7 +542,7 @@
       outset: (x: 2in),
       breakable: false,
       {
-        set text(fill: red.darken(30%))
+        set text(fill: red.darken(40%))
         content
       }
     )
