@@ -8,6 +8,7 @@ SYNTAXES_DIR = syntaxes
 all: main.pdf
 
 main.pdf: src/* $(FONTS_DIR)/.fonts-extracted syntaxes/prolog.sublime-syntax
+	python src/index.py
 	typst compile --root . --font-path $(FONTS_DIR) --input "now=$(shell date '+%Y %m %d %H %M %S')" src/main.typ main.pdf
 
 syntaxes/prolog.sublime-syntax:

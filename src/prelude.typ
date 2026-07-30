@@ -19,6 +19,22 @@
   ),
 )
 
+#let template-state = state("template-state", (funs: ()))
+#let template-index = json("index.json")
+#let template-hs-pattern = regex("^([^\s]*)?\s*::")
+
+#let template-get-files() = {
+  let state = template-state.get()
+  let files = ()
+  for name in state.funs {
+    let file = template-index.at(name).file
+    if not file in files {
+      files.push(file)
+    }
+  }
+  files
+}
+
 #let config(
   paper: "a4",
   lang: "de",
@@ -50,6 +66,26 @@
         extent: 1pt,
         it
       )
+    }
+  }
+
+  show raw: it => {
+    if it.lang == "hs" {
+      let match = it.text.match(template-hs-pattern)
+      if match == none or match.captures.len() == 0 {
+        it
+      } else {
+        let name = match.captures.at(0)
+        if name in template-index {
+          template-state.update(state => {
+            state.funs.push(name)
+            state
+          })
+        }
+        it
+      }
+    } else {
+      it
     }
   }
 
@@ -327,6 +363,7 @@
   let stroke = 0.25pt + fill.lighten(60%)
 
   nemo-state.update(_ => nemo-new())
+  template-state.update((funs: ()))
 
   let titlefmt = nemo-make-titlefmt(level, clock)
   let titlefmt-noclock = nemo-make-titlefmt(level, false)
@@ -452,10 +489,12 @@
     }
   }
 
+
   let footer = context {
     let (footnotes,) = nemo-state.get()
+    let templates = template-get-files()
     if (
-      footnotes.len() > 0 or extra != none and extra.fields().children.len() > 0
+      footnotes.len() > 0 or extra != none and extra.fields().children.len() > 0 or templates.len() > 0
     ) {
       text(0.8em, {
         line(length: 100%, stroke: stroke)
@@ -464,6 +503,13 @@
         }
 
         if extra != none and extra.fields().children.len() > 0 { block(extra) }
+
+
+        if templates.len() == 1 {
+          [Dieser Test hat eine Vorlage: #raw(templates.at(0)).]
+        } else if templates.len() > 1 {
+          [Dieser Test hat Vorlagen: #templates.map(raw).join(", ", last: " und ").]
+        }
       })
     }
   }
@@ -473,7 +519,7 @@
     radius: 1pt,
     stroke: stroke,
     breakable: breakable,
-    header + body + footer,
+    header + body + footer
   )
 }
 
@@ -548,4 +594,5 @@
     )
   }
 }
+
 
