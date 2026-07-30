@@ -16,7 +16,7 @@
   - #link("https://en.wikipedia.org/wiki/Pure_function")[Pure function -- Wikipedia]
 ]
 
-#test(level: 2)[
+#test(level: 1)[
   Beziehe Stellung zu der Aussage "Alles ist ein Ausdruck" in Haskell?
 ]
 
@@ -895,6 +895,8 @@
   - Vor- und Nachteile des eigenschaftsbasierten Testens zu diskutieren.
 ]
 
+#pagebreak(weak: true)
+
 
 == Funktionen höherer Ordnung
 
@@ -974,7 +976,7 @@
   ```hs map``` als auch ```hs filter```.
 ]
 
-#test(level: 2, tags: (tag-level-up,))[
+#test(level: 2, breakable: true, tags: (tag-level-up,))[
   Mit Funktionen höherer Ordnung können wir Kontrollstrukturen aus der
   imperativen Programmierung definieren. Hier ist eine mögliche Definition einer
   bedingten Wiederholung.
