@@ -370,9 +370,9 @@
     $
     "gcd"(x, y) = cases(
       abs(x) & quad "falls" y = 0\,,
-      gcd(y, x "mod" y) & quad "sonst."
+      gcd(y, x "mod" y) & quad "sonst,"
     )
-    $
+    $ als Funktion ```hs gcd :: Integral a => a -> a -> a```.
   - Alternativ kann der ggT auch berechnet werden, indem wir das Produkt des
     Schnittes der Primfaktorzerlegung der beiden Zahlen betrachten, also
     $ product ("PF"(x) inter "PF"(y)), $
@@ -443,10 +443,10 @@
 
 #challenge(level: 1, tags: (tag-deep-dive,), title: "Mergesort")[
   In Franks Einführung in die Algorithmik hast du verschiedene Varianten des
-  `mergesort`-Algorithmus kennengelernt. Eine davon hat ausgenutzt, dass in
+  Mergesort-Algorithmus kennengelernt. Eine davon hat ausgenutzt, dass in
   einer Eingabeliste bereits nicht-absteigend sortierte Teillisten vorkommen
-  können, um den Algorithmus zu beschleunigen. Implementiere diese Variante in
-  Haskell.
+  können, um den Algorithmus zu beschleunigen. Implementiere diese Variante
+  als Funktion ```hs mergesort :: [Int] -> Int```.
 
   Für den Anfang kannst du annehmen, dass die Eingabelisten vom Typ
   ```hs [Int]``` sind. Wenn wir Typklassen behandelt haben, kannst du
@@ -734,33 +734,7 @@
   durchführen.
 ]
 
-// ```hs
-// data Queue a = Q [a] [a]
-//
-// empty :: Queue a
-// empty = Q [] []
-//
-// isEmpty :: Queue a -> Bool
-// isEmpty (Q [] _) = True
-// isEmpty _        = False
-//
-// front :: Queue a -> a
-// front (Q (x:_) _) = x
-// front _           = error "empty queue"
-//
-// invariant :: Queue a -> Queue a
-// invariant (Q [] ys) = Q (reverse ys) []
-// invariant q         = q
-//
-// enqueue :: a -> Queue a -> Queue a
-// enqueue x (Q xs ys) = invariant (Q xs (x:ys))
-//
-// dequeue :: Queue a -> Queue a
-// dequeue (Q []     _)  = error "empty queue"
-// dequeue (Q (_:xs) ys) = invariant (Q xs ys)
-// ```
-
-#challenge(level: 1, tags: (tag-level-up,), title: "AVL-Bäume")[
+#challenge(level: 2, tags: (tag-level-up,), title: "AVL-Bäume")[
   In den Übungsaufgaben hast du einen Suchbaum ohne Höhenbalancierung
   implementiert. Die Rotationen für einen AVL-Baum lassen sich durch das
   pattern matching in Haskell vergleichsweise elegant implementieren - erinnere

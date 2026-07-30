@@ -27,9 +27,11 @@
   let state = template-state.get()
   let files = ()
   for name in state.funs {
-    let file = template-index.at(name).file
-    if not file in files {
-      files.push(file)
+    if name in template-index {
+      let file = template-index.at(name).file
+      if not file in files {
+        files.push(file)
+      }
     }
   }
   files
@@ -76,12 +78,10 @@
         it
       } else {
         let name = match.captures.at(0)
-        if name in template-index {
-          template-state.update(state => {
-            state.funs.push(name)
-            state
-          })
-        }
+        template-state.update(state => {
+          state.funs.push(name)
+          state
+        })
         it
       }
     } else {
@@ -114,6 +114,23 @@
     .map(res => res.value)
     .filter(is-type(type))
     .map(res => res.value)
+}
+
+// draft notes are hidden if `--input draft=1` is not provided
+#let draft-note(content) = {
+  if sys.inputs.at("draft", default: none) == "1" {
+    block(
+      width: 100%,
+      fill: red.lighten(75%),
+      inset: (y: 1em),
+      outset: (x: 2in),
+      breakable: false,
+      {
+        set text(fill: red.darken(40%))
+        content
+      }
+    )
+  }
 }
 
 
@@ -504,13 +521,27 @@
 
         if extra != none and extra.fields().children.len() > 0 { block(extra) }
 
-
+        let what = if lower(head) == "challenge" { "Diese Challenge" } else { "Dieser Test" }
         if templates.len() == 1 {
-          [Dieser Test hat eine Vorlage: #raw(templates.at(0)).]
+          [#what hat eine Vorlage: #raw(templates.at(0)).]
         } else if templates.len() > 1 {
-          [Dieser Test hat Vorlagen: #templates.map(raw).join(", ", last: " und ").]
+          [#what hat Vorlagen: #templates.map(raw).join(", ", last: " und ").]
         }
       })
+    }
+  }
+
+  let template-notice = context {
+    let funs = template-state.get().funs
+    let templates = template-get-files()
+
+    let a = lower(head) == "challenge"
+    let b = lower(head) == "test" and level != none and level > 2
+    let c = funs.len() > 0 and templates.len() ==  0
+    if (a or b) and c {
+      draft-note[
+        #head *#title* hat keine Vorlage.
+      ]
     }
   }
 
@@ -520,7 +551,7 @@
     stroke: stroke,
     breakable: breakable,
     header + body + footer
-  )
+  ) + template-notice
 }
 
 
@@ -577,22 +608,5 @@
   "\u{2297}",
   ("big", "\u{2A02}")
 )
-
-// draft notes are hidden if `--input draft=1` is not provided
-#let draft-note(content) = {
-  if sys.inputs.at("draft", default: none) == "1" {
-    block(
-      width: 100%,
-      fill: red.lighten(75%),
-      inset: (y: 1em),
-      outset: (x: 2in),
-      breakable: false,
-      {
-        set text(fill: red.darken(40%))
-        content
-      }
-    )
-  }
-}
 
 
