@@ -2179,8 +2179,8 @@
   Funktionen arbeiten möchte, liegt zu prüfen, dass die Dimensionen der
   Matrizen passen.
 
-  Einen Lösungsvorschlag für diese Challenge findest du unter
-  #link(git("blob/main/src/solutions/linalg.hs"), raw("linalg.hs")).
+  // Einen Lösungsvorschlag für diese Challenge findest du unter
+  // #link(git("blob/main/src/solutions/linalg.hs"), raw("linalg.hs")).
 ] <linalg>
 
 #challenge(
@@ -2424,15 +2424,15 @@ verallgemeinern kannst.
 )[
   Die Nullstellen eines ganzzahligen Polynoms $p = sum_(i=0)^d a_i t^i in ZZ[t]$
   mit $a_d = 1$ lässt sich mithilfe des Satzes über rationale Nullstellen
-  bestimmen. Dieser besagt, dass ein Teiler $x$ des Absolutglieds $a_0$ existiert, sodass
-  $x$ eine Nullstelle von $p$ ist. Wenn wir $p$ also als Polynomfunktion
-  auffassen, dann erhalten wir also
+  bestimmen. Dieser besagt, dass ein Teiler $x$ des Absolutglieds $a_0$
+  existiert, sodass $x$ eine Nullstelle von $p$ ist. Wenn wir $p$ also als
+  Polynomfunktion auffassen, dann erhalten wir also
   $ p(x) = 0 ==> x "teilt" a_0. $
   Diese notwendige Bedingung an eine Nullstelle können für einen
   bruteforce-Algorithmus ausnutzen.
 
-  Wir haben euch eine Vorlage #link(git("blob/main/src/templates/poly.hs"), raw("poly.hs"))
-  für diese Challenge mit zusätzlichen Hilfsfunktionen bereitgestellt.
+  In der Vorlage zur Challenge findest du zusätzliche Hilfsfunktionen, die du
+  gerne verwenden darfst.
 
   Wir repräsentieren ein ganzzahliges Polynom mit dem Typen
   ```hs
@@ -2444,12 +2444,12 @@ verallgemeinern kannst.
     deriving (Eq, Show)
   ```
   Der angegebene Typ zusammen mit einer ```hs Num```-Instanz (siehe Vorlage)
-  erlaubt es uns, Polynome in Haskell hübsch aufzuschreiben. Zum Beispiel entspricht
-  $(t - 3) dot (t + 2)$ dem Wert ```hs (T - 3) * (T + 2)```. Diese Darstellung
-  ist für die weitere Verarbeitung allerdings ungeeignet -- besser eignet sich
-  eine normalisierte Darstellung. Hier wollen wir ein ganzzahliges Polynom
-  mit dem Typ ```hs [Int]``` repräsentieren, wobei das $i$-te Elemente der
-  Liste dem $i$-ten Koeffizienten des Polynoms entspricht, wenn das Polynom
+  erlaubt es uns, Polynome in Haskell hübsch aufzuschreiben. Zum Beispiel
+  entspricht $(t - 3) dot (t + 2)$ dem Wert ```hs (T - 3) * (T + 2)```. Diese
+  Darstellung ist für die weitere Verarbeitung allerdings ungeeignet -- besser
+  eignet sich eine normalisierte Darstellung. Hier wollen wir ein ganzzahliges
+  Polynom mit dem Typ ```hs [Int]``` repräsentieren, wobei das $i$-te Elemente
+  der Liste dem $i$-ten Koeffizienten des Polynoms entspricht, wenn das Polynom
   die Form $sum_(i=0)^d a_i t^i$ hat. Zum Beispiel entspricht $2t^2 + 2t - 4$
   der Liste ```hs [-4, 2, 2]```.
 
@@ -2477,9 +2477,9 @@ verallgemeinern kannst.
   solltest, kannst du versuchen, die Polynommultiplikation über die schnelle
   Fourier-Transformation zu berechnen.
 
-  Lösungsvorschläge für diese Challenge findest du unter
-  #link(git("blob/main/src/solutions/poly.hs"), raw("poly.hs")) und
-  #link(git("blob/main/src/solutions/poly-fft.hs"), raw("poly-fft.hs")).
+  // Lösungsvorschläge für diese Challenge findest du unter
+  // #link(git("blob/main/src/solutions/poly.hs"), raw("poly.hs")) und
+  // #link(git("blob/main/src/solutions/poly-fft.hs"), raw("poly-fft.hs")).
 ] <roots_of_polynomials>
 
 

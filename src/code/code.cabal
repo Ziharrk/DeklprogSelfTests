@@ -13,6 +13,7 @@ library
     FFT
     LinearAlgebra
     NumberTheory
+    Queue
     Rational
     SymbolicDifferentiation
     Polynomial
