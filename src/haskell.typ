@@ -900,7 +900,7 @@
 
 // TODO möglicherweise gibt es coolere Funktionen, die auch noch ohne folds
 //      auskommen - für folds wollte ich einen Test extra haben
-#test(level: 2)[
+#test(level: 2, templates: ())[
   Zu welchen partiell applizierten Funktionen verhalten sich folgende
   Funktionen identisch?
   - ```hs succ :: Int -> Int``` (die Inkrementfunktion)
@@ -1013,7 +1013,7 @@
   Wo benötigen wir rekursive Aufrufe der jeweiligen Faltungsfunktionen?
 ]
 
-#test(level: 2)[
+#test(level: 2, templates: ())[
   Betrachte die Funktion
   ```hs
   f :: [a] -> b
@@ -1159,7 +1159,7 @@
   Komposition -- unifiziert?
 ]
 
-#test(level: 2)[
+#test(level: 2, templates: ())[
   Gegeben sei der Datentyp ```hs data Tree a = Empty | Node (Tree a) a (Tree a)```
   und die Faltungsfunktion ```hs foldTree :: r -> (r -> a -> r -> r) -> Tree a -> r```.
 
@@ -1296,7 +1296,7 @@
   - ```hs \x -> \ys -> (:) x ys```.
 ]
 
-#test(level: 1)[
+#test(level: 1, templates: ())[
   Implementiere die Funktion
   ```hs insert :: Int -> a -> Map Int a -> Map Int a```,
   die ein Schlüssel-Wert-Paar in eine ```hs Map Int a``` einfügt.
@@ -4427,7 +4427,13 @@ verallgemeinern kannst.
 //      this and pagebreak if that is the case.
 #pagebreak(weak: true)
 
-#challenge(level: 2, breakable: true, clock: true, title: "Suchen")[
+#challenge(
+  level: 2,
+  breakable: true,
+  clock: true,
+  templates: (),
+  title: "Suchen"
+)[
   Ein gängiges Sprichwort ist,
   #quote(
     block: true,
@@ -4969,7 +4975,9 @@ Diese Aufgaben haben noch keinen Platz gefunden.
 #challenge(
   level: 3,
   clock: true,
+  breakable: true,
   tags: (tag-deep-dive,),
+  templates: (),
   deps: (<search>,),
   title: [Von regulären Ausdrücken zu deterministischen endlichen Automaten]
 )[
