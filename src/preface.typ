@@ -48,13 +48,15 @@ verstehen. Letztere solltest du, je nachdem wie viel Zeit du bereit zu
 investieren, nur dann machen, wenn du bereits mit gutem Verständnis dabei bist.
 Wir hoffen, das hilft dir bei deiner Orientierung in diesem Dokument.
 
-Für die Selbsttests wird es absehbar keine Lösungen geben. Stattdessen möchten
-wir dich ermutigen, deine Lösungen mit anderen Mitstudierenden oder
+Für die meisten Selbsttests wird es absehbar keine Lösungen geben. Stattdessen
+möchten wir dich ermutigen, deine Lösungen mit anderen Mitstudierenden oder
 Mitarbeitenden zu diskutieren, solltest du offene Fragen haben -- oder du
 promptest verantwortungsvoll das LLM deiner Wahl. An jeden Abschnitt ist eine
 Checkliste zur Selbstevaluation angehängt. Wenn du auf einer geeigneten
 Bewertungsskala (z.B. Schulnoten) für dich feststellst, dass du weiterhin
 Schwierigkeiten hast, melde dich gerne, damit wir dir helfen können.
+Für manche aufwendigere Selbsttests haben wir #link(git("releases/tag/latest"))[Vorlagen und Lösungsvorschläge]
+auf GitHub bereitgestellt.
 
 Die Inhalte dieses Dokuments sind nicht vollständig und nicht fehlerfrei. Wir
 machen Fehler! Es kann sein, dass Modulinhalte nicht durch Selbsttests,
@@ -65,7 +67,6 @@ andere Quellen zum Lernen heran.
 
 Wenn du Anmerkungen oder weitere Ideen oder Quellen für Inhalte für dieses
 Dokument hast, dann schreibe uns gerne über z.B. mattermost an -- oder
-#link(git(""))[erstellt ein issue oder
-stellt eine PR auf GitHub].
+#link(git(""))[erstellt ein issue oder stellt eine PR] auf GitHub.
 
 #pagebreak(weak: true)
