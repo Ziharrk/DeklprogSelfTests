@@ -7,10 +7,7 @@ SYNTAXES_DIR = syntaxes
 
 .PHONY: src/index.json templates.zip solutions.zip
 
-all: main.pdf
-
-src/index.json:
-	python src/index.py
+all: main.pdf templates.zip solutions.zip
 
 main.pdf: src/* $(FONTS_DIR)/.fonts-extracted syntaxes/prolog.sublime-syntax
 	typst compile --root . --font-path $(FONTS_DIR) --input "now=$(shell date '+%Y %m %d %H %M %S')" src/main.typ main.pdf
@@ -29,6 +26,9 @@ $(FONTS_DIR)/.fonts-extracted: $(CODE_FONT_ZIP)
 $(CODE_FONT_ZIP):
 	mkdir -p $(FONTS_DIR)
 	wget -O $(CODE_FONT_ZIP) $(CODE_FONT_URL)
+
+src/index.json:
+	python src/index.py
 
 templates.zip solutions.zip:
 	python src/archive.py
