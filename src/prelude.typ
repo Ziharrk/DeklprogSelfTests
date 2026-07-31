@@ -340,9 +340,9 @@
 
   if swap {
     let a = cols.at(0)
-    let b = cols.at(1)
+    let b = cols.at(-1)
     cols.at(0) = b
-    cols.at(1) = a
+    cols.at(-1) = a
   }
 
   box(grid(
