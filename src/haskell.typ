@@ -245,6 +245,49 @@
   #link("https://hackage-content.haskell.org/package/base/docs/Data-List-NonEmpty.html")[```hs Data.List.NonEmpty```].
 ]
 
+#test(level: 1, deps: (<clz_popcnt>,))[
+  Gegeben sei folgendes Python-Programm.
+  ```py
+  class TodoList:
+    def __init__(self):
+      self.todos = []
+      self.completed = 0
+
+    def add(self, todo):
+      self.todos = [todo] + self.todos
+
+    def remove(self, index):
+      self.todos.pop(index)
+      self.completed += 1
+  ```
+  In @clz_popcnt haben wir gesehen, wie das Konzept der imperativen Variablen
+  bzw. mutierbaren Zustands vergleichbar mit dem Einführen weiterer
+  Funktionsparameter ist. Da wir nun Datentypen kennengelernt haben, wollen wir
+  das Konzept der Klassen aufgreifen. Entwickle einen Datentypen
+  ```hs TodoList```, der Todos und die Anzahl der fertigen Todos hält (vgl.
+  obiges Programm). Zur Vereinfachung kannst du annehmen, dass ein Todo durch
+  eine Zahl dargestellt wird. Implementiere danach die Funktionen, die sich
+  wie die Methoden ```hs __init__```, ```py add``` and ```py remove``` verhalten.
+
+  Du kannst davon ausgehen, dass nur valide Indizes zum Löschen von Todos
+  verwendet werden.
+]
+
+// ```hs
+// data TodoList = TodoList [Int] Int
+//   deriving Show
+//
+// empty :: TodoList
+// empty = TodoList [] 0
+//
+// add :: TodoList -> Int -> TodoList
+// add (TodoList xs n) x = TodoList (x : xs) n
+//
+// remove :: TodoList -> Int -> TodoList
+// remove (TodoList (x : xs) n) 0 = TodoList xs (n + 1)
+// remove (TodoList (x : xs) n) i = add (remove (TodoList xs) (i - 1)) x
+// ```
+
 #check[
   Ich bin in der Lage, ...
   - (monomorphe) algebraische Datentypen zu definieren,
