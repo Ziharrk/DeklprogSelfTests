@@ -1596,7 +1596,7 @@
   constructors in diesem Zusammenhang?
 ]
 
-#test(level: 2, breakable: true, clock: true)[
+#test(level: 2, breakable: true, clock: true, templates: ())[
   Kritisiere folgenden ADT für eine queue, so pingelig wie du kannst, und
   bessere ihn.
   ```hs

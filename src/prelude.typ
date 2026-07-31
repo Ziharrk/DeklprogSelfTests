@@ -25,15 +25,23 @@
 
 #let template-get-files() = {
   let state = template-state.get()
+  let funs = state.funs.dedup()
+
   let files = ()
-  for name in state.funs {
-    if name in template-index {
-      let file = template-index.at(name).file
-      if not file in files {
-        files.push(file)
+
+  let agree = (:)
+  for fun in funs {
+    if fun in template-index {
+      for loc in template-index.at(fun) {
+        agree.insert(loc.file, agree.at(loc.file, default: 0) + 1)
       }
     }
   }
+  for (file, count) in agree {
+    let prob = float(count) / float(funs.len())
+    files.push((file, prob))
+  }
+
   files
 }
 
@@ -535,6 +543,7 @@
     if type(templates) == list and templates.len() > 0 or templates-from-index.len() > 0 {
       let what = if lower(head) == "challenge" { "Diese Challenge" } else { "Dieser Test" }
       let templates = if templates == none { templates-from-index } else { templates }
+      let templates = templates.filter(((file, prob)) => prob >= 0.8).map(((file, _)) => file)
       let block = {
         if templates.len() == 1 {
             [#what hat eine Vorlage: #raw(templates.at(0)).]
@@ -548,7 +557,7 @@
     if templates != none {
       blocks.push(draft[
         Für diesen Tests sind die Vorlagen manuell überschrieben worden. Im
-        Index wurden #templates-from-index.map(raw).join(", ", last: " und ") gefunden.
+        Index wurden #templates-from-index.map(((file, prob)) => file + " (" + str(prob) + ")").map(raw).join(", ", last: " und ") gefunden.
       ])
     }
 
