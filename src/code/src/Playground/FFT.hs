@@ -1,8 +1,12 @@
-module FFT
+#ifdef TEMPLATE
+module Playground.FFT (polymul) where
+#else
+module Playground.FFT
   ( fft
   , ifft
   , polymul
   ) where
+#endif
 
 import Data.Complex
 

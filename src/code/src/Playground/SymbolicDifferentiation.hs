@@ -1,5 +1,5 @@
 {-# OPTIONS_GHC -Wno-missing-methods #-}
-module SymbolicDifferentiation 
+module Playground.SymbolicDifferentiation 
   ( Fun(..)
   , ($$)
   , derive

@@ -3,25 +3,54 @@ name:               code
 version:            0.1.0.0
 build-type:         Simple
 
-common warnings
+common base
   ghc-options: -Wno-x-partial
-
-library
-  import:           warnings
-  exposed-modules:
-    Algorithms
-    FFT
-    LinearAlgebra
-    NumberTheory
-    Queue
-    Rational
-    SymbolicDifferentiation
-    Polynomial
-  build-depends:    base ^>=4.20.2.0
-  hs-source-dirs:   src
   default-language: GHC2024
   default-extensions:
     CPP
-  cpp-options:
-    -UTEMPLATE
+
+flag dev
+  default: False
+
+library
+  import:           base
+  exposed-modules:
+    Playground.Algorithms
+    Playground.FFT
+    Playground.Foldable
+    Playground.LinearAlgebra
+    Playground.NumberTheory
+    Playground.Queue
+    Playground.Rational
+    Playground.SearchTree
+    Playground.SymbolicDifferentiation
+    Playground.Polynomial
+  build-depends:    base ^>=4.20.2.0
+  hs-source-dirs:   src
+  default-language: GHC2024
+  if flag(dev)
+    cpp-options:
+      -UTEMPLATE
+  else
+    cpp-options:
+      -DTEMPLATE
+
+
+test-suite test
+  import:           base
+  default-extensions:
+    TemplateHaskell
+  type:             exitcode-stdio-1.0
+  main-is:          Main.hs
+  hs-source-dirs:   test
+  build-depends:
+    , base ^>=4.20.2.0
+    , code
+    , QuickCheck
+  if flag(dev)
+    cpp-options:
+      -UTEMPLATE
+  else
+    cpp-options:
+      -DTEMPLATE
 

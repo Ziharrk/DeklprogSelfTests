@@ -1,4 +1,4 @@
-module LinearAlgebra where
+module Playground.LinearAlgebra where
 
 import Data.Bifunctor (bimap)
 import Data.List (singleton, transpose)

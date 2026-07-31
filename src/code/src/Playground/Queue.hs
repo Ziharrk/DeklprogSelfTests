@@ -1,4 +1,4 @@
-module Queue 
+module Playground.Queue 
   ( Queue
   , empty
   , isEmpty

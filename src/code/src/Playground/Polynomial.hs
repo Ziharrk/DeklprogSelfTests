@@ -1,4 +1,4 @@
-module Polynomial 
+module Playground.Polynomial 
   ( PolyE
   , Poly(..)
   , degree 

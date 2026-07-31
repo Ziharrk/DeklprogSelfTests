@@ -1,4 +1,4 @@
-module Rational 
+module Playground.Rational 
   ( Ratio
   , (%)
   , numerator

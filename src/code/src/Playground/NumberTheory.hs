@@ -1,4 +1,4 @@
-module NumberTheory
+module Playground.NumberTheory
   ( gcd 
   , pf
   ) where

@@ -1,4 +1,4 @@
-module Algorithms 
+module Playground.Algorithms 
   ( mergesort
   ) where
 

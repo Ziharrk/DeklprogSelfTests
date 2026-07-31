@@ -1,4 +1,4 @@
-module Foldable where
+module Playground.Foldable where
 
 
 import Prelude hiding (all, any)

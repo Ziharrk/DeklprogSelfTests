@@ -1,6 +1,7 @@
-module SearchTree 
+module Playground.SearchTree 
   ( SearchTree
   , empty
+  , member
   , insert
   , delete
   ) where
@@ -16,6 +17,14 @@ data SearchTree a = Empty
 -- |Empty search tree.
 empty :: SearchTree a
 empty = Empty
+
+-- |Lookup an element in a search tree.
+member :: Ord a => a -> SearchTree a -> Bool
+member x Empty        = False 
+member x (Node l y r)
+  | x < y     = member x l
+  | x > y     = member x r
+  | otherwise = True
 
 -- |Inserts an element into a search tree.
 insert :: Ord a => a -> SearchTree a -> SearchTree a
@@ -72,6 +81,14 @@ fixHeight :: SearchTree a -> SearchTree a
 fixHeight Empty          = Empty
 fixHeight (Node l x h r) = Node l x (max (height l) (height r) + 1) r
 
+-- |Lookup an element in a search tree.
+member :: Ord a => a -> SearchTree a -> Bool
+member x Empty          = False 
+member x (Node l y _ r)
+  | x < y     = member x l
+  | x > y     = member x r
+  | otherwise = True
+
 -- |Inserts an element into a search tree.
 insert :: Ord a => a -> SearchTree a -> SearchTree a
 insert x Empty          = Node Empty x 0 Empty
@@ -97,14 +114,15 @@ delete x (Node l y h r)
                   _     -> avl (Node l m h r')
   where (m, r') = extractMin r
 
--- |Rotates a node if the AVL property is violated
+-- |Rotates a node if the AVL property is violated.
+-- The zeros are placeholders. They are reset during rotation.
 rotate :: SearchTree a -> SearchTree a
 rotate Empty               = Empty
 rotate node@(Node l x h r) =
   case (balance l, balance node, balance r) of
-    (_, 2, -1) -> rotateL (Node l x h (rotateR r))
+    (_, 2, -1) -> rotateL (Node l x 0 (rotateR r))
     (_, 2, _)  -> rotateL node
-    (_, -2, 1) -> rotateR (Node (rotateL l) x h r)
+    (1, -2, _) -> rotateR (Node (rotateL l) x 0 r)
     (_, -2, _) -> rotateR node
     _          -> node
   where
