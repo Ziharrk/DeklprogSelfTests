@@ -116,22 +116,27 @@
     .map(res => res.value)
 }
 
-// draft notes are hidden if `--input draft=1` is not provided
-#let draft-note(content) = {
+#let draft(content) = {
   if sys.inputs.at("draft", default: none) == "1" {
-    block(
-      width: 100%,
-      fill: red.lighten(75%),
-      inset: (y: 1em),
-      outset: (x: 2in),
-      breakable: false,
-      {
-        set text(fill: red.darken(40%))
-        content
-      }
-    )
+    set text(fill: red.darken(10%))
+    content
   }
 }
+
+// draft notes are hidden if `--input draft=1` is not provided
+#let draft-note(content) = draft(
+  block(
+    width: 100%,
+    fill: red.lighten(75%),
+    inset: (y: 1em),
+    outset: (x: 2in),
+    breakable: false,
+    {
+      set text(fill: red.darken(40%))
+      content
+    }
+  )
+)
 
 
 #let tag(fill: blue, content) = {
@@ -375,6 +380,7 @@
   animal: none,
   extra: none,
   hints: (),
+  templates: none
 ) = {
   let fill = nemo-get-level-color(level)
   let stroke = 0.25pt + fill.lighten(60%)
@@ -509,26 +515,70 @@
 
   let footer = context {
     let (footnotes,) = nemo-state.get()
-    let templates = template-get-files()
-    if (
-      footnotes.len() > 0 or extra != none and extra.fields().children.len() > 0 or templates.len() > 0
-    ) {
-      text(0.8em, {
-        line(length: 100%, stroke: stroke)
+    let templates-from-index = template-get-files()
+
+    let blocks = ()
+
+    if footnotes.len() > 0 {
+      let block = {
         for (i, footnote) in footnotes.enumerate() {
           super(str(i + 1)) + footnote + linebreak()
         }
+      }
+      blocks.push(block)
+    }
 
-        if extra != none and extra.fields().children.len() > 0 { block(extra) }
+    if extra != none and extra.fields().children.len() > 0 {
+      blocks.push(block(extra))
+    }
 
-        let what = if lower(head) == "challenge" { "Diese Challenge" } else { "Dieser Test" }
+    if type(templates) == list and templates.len() > 0 or templates-from-index.len() > 0 {
+      let what = if lower(head) == "challenge" { "Diese Challenge" } else { "Dieser Test" }
+      let templates = if templates == none { templates-from-index } else { templates }
+      let block = {
         if templates.len() == 1 {
-          [#what hat eine Vorlage: #raw(templates.at(0)).]
+            [#what hat eine Vorlage: #raw(templates.at(0)).]
         } else if templates.len() > 1 {
           [#what hat Vorlagen: #templates.map(raw).join(", ", last: " und ").]
         }
-      })
+      }
+      blocks.push(block)
     }
+
+    if templates != none {
+      blocks.push(draft[
+        Für diesen Tests sind die Vorlagen manuell überschrieben worden. Im
+        Index wurden #templates-from-index.map(raw).join(", ", last: " und ") gefunden.
+      ])
+    }
+
+    if blocks.len() > 0 {
+      line(length: 100%, stroke: stroke)
+      {
+        set text(0.8em)
+        blocks.join()
+      }
+    }
+
+    // if (
+    //   footnotes.len() > 0 or extra != none and extra.fields().children.len() > 0 or (templates != none and templates.len() > 0) or templates-from-index.len() > 0
+    // ) {
+    //   text(0.8em, {
+    //     line(length: 100%, stroke: stroke)
+    //     for (i, footnote) in footnotes.enumerate() {
+    //       super(str(i + 1)) + footnote + linebreak()
+    //     }
+    //
+    //
+    //     let what = if lower(head) == "challenge" { "Diese Challenge" } else { "Dieser Test" }
+    //     let templates = if templates == none { templates-from-index } else { templates }
+    //     if templates.len() == 1 {
+    //       [#what hat eine Vorlage: #raw(templates.at(0)).]
+    //     } else if templates.len() > 1 {
+    //       [#what hat Vorlagen: #templates.map(raw).join(", ", last: " und ").]
+    //     }
+    //   })
+    // }
   }
 
   let template-notice = context {

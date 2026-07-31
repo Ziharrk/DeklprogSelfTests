@@ -796,7 +796,7 @@
   - Skript: Funktionale Programmierung, Automatisches Testen
 ]
 
-#test(level: 2)[
+#test(level: 2, templates: ())[
   Formuliere QuickCheck-Eigenschaften, die die Funktionen
   - ```hs isElem :: Int -> SearchTree Int -> Bool```,
   - ```hs toList :: SearchTree Int -> [Int]```,
