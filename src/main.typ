@@ -5,6 +5,7 @@
 #show: config
 
 #set document(..meta)
+#metadata((typst-preview: (title: meta.title)))
 
 #[
   #set align(horizon)
