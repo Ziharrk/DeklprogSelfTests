@@ -9,7 +9,7 @@ SYNTAXES_DIR = syntaxes
 
 all: main.pdf templates.zip solutions.zip
 
-main.pdf: src/* $(FONTS_DIR)/.fonts-extracted syntaxes/prolog.sublime-syntax
+main.pdf: src/* src/index.json $(FONTS_DIR)/.fonts-extracted syntaxes/prolog.sublime-syntax
 	typst compile --root . --font-path $(FONTS_DIR) --input "now=$(shell date '+%Y %m %d %H %M %S')" src/main.typ main.pdf
 
 syntaxes/prolog.sublime-syntax:
