@@ -39,7 +39,7 @@ def make_archive(func, archive_name):
     project_dir = Path(project_dir)
 
     for item in items:
-      item = Path(__file__).parent / item
+      item = Path(__file__).parent / 'code' / item
       target = project_dir / item.name
 
       if item.is_dir():

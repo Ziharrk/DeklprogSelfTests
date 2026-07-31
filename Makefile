@@ -5,7 +5,7 @@ CODE_FONTS = $(FONTS_DIR)/CaskaydiaCoveNerdFont*.ttf
 
 SYNTAXES_DIR = syntaxes
 
-.PHONY: src/index.json
+.PHONY: src/index.json templates.zip solutions.zip
 
 all: main.pdf
 
@@ -22,7 +22,6 @@ syntaxes/prolog.sublime-syntax:
 	mv syntaxes/swi-prolog-sublime-syntax/Prolog/SWI-Prolog.sublime-syntax syntaxes/prolog.sublime-syntax
 	rm -rf syntaxes/swi-prolog-sublime-syntax
 
-
 $(FONTS_DIR)/.fonts-extracted: $(CODE_FONT_ZIP)
 	unzip $(CODE_FONT_ZIP) "*.ttf" -d $(FONTS_DIR)
 	touch $@
@@ -31,6 +30,10 @@ $(CODE_FONT_ZIP):
 	mkdir -p $(FONTS_DIR)
 	wget -O $(CODE_FONT_ZIP) $(CODE_FONT_URL)
 
+templates.zip solutions.zip:
+	python src/archive.py
+
 clean:
 	rm -rf main.pdf $(FONTS_DIR)
+	rm -rf src/index.json
 
