@@ -543,7 +543,7 @@
     if type(templates) == list and templates.len() > 0 or templates-from-index.len() > 0 {
       let what = if lower(head) == "challenge" { "Diese Challenge" } else { "Dieser Test" }
       let templates = if templates == none { templates-from-index } else { templates }
-      let templates = templates.filter(((file, prob)) => prob >= 0.8).map(((file, _)) => file)
+      let templates = templates.filter(((file, prob)) => prob >= 0.79).map(((file, _)) => file)
       let block = {
         if templates.len() == 1 {
             [#what hat eine Vorlage: #raw(templates.at(0)).]

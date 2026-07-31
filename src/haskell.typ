@@ -4474,7 +4474,6 @@ verallgemeinern kannst.
   level: 2,
   breakable: true,
   clock: true,
-  templates: (),
   title: "Suchen"
 )[
   Ein gängiges Sprichwort ist,
@@ -4546,7 +4545,8 @@ verallgemeinern kannst.
     oben in `next` oder `found` passen würde. Implementiere eine Funktion
     ```hs search```, die den gleichen Typ wie ```hs searchM``` ohne die Monade.
   - Definiere auf Basis von ```hs search``` die Funktion
-    ```hs elem :: Eq a => a -> [a] -> Bool```.
+    ```hs elem :: Eq a => a -> [a] -> Bool```. (Diese muss nicht effizient
+    sein. Es geht mehr um das Verständnis von ```hs search```.)
   - Implementiere auf Basis von ```hs searchM``` eine Tiefensuche ```hs dfsM```
     und eine ```hs bfsM```. Welche Funktionen spielen dafür eine Rolle?
   - Gegeben sei der folgende kanten-gewichtete Graph, dargestellt durch
@@ -4561,19 +4561,27 @@ verallgemeinern kannst.
     Passe den folgenden Code so an, dass immer mithilfe von ```hs print```
     ausgegeben wird, welcher Knoten gerade besucht wird.
     ```hs
-    shortestPath :: [(Int, [(Int, Int)])] -> Int -> Int -> Maybe [Int]
-    shortestPath graph from to = fst (search push pop next stop (0, from))
+    shortestPath :: [[(Int, Int)]] -> Int -> Int -> Maybe Int
+    shortestPath graph from to =
+      let result = search push pop next stop (0, from)
+       in case result of
+            (Nothing,   _) -> Nothing
+            (Just path, _) -> Just (fst (last path))
       where
         push (d, v) pq
           | v `notElem` map snd pq = insert (d, v) pq
           | otherwise = map (\(d', w) -> if v == w then (min d d', v) else (d', w)) pq
         pop = uncons
-        next (_, v) = graph !! v
+        next (d, v) = map (\(w, u) -> (d + w, u)) (graph !! v)
         stop (_, v) = v == to
     ```
+    (Warum besucht dieses Verfahren Knoten mehrfach?)
 ][
   Die Funktionen basieren lose auf
   #link("https://github.com/devonhollowood/search-algorithms")[`search-algorithms`].
+  Dort kannst unter anderem sehen, wie mit assoziierten Datentypen einer Typklasse
+  die Datenstruktur für das Suchen allgemein gehalten werden.
+
   Die Suche entspricht auch der Vorlage, die du in Franks Einführung in die
   Algorithmik für Backtracking-Algorithmen kennengelernt hast.
 

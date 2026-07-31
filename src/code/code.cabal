@@ -22,6 +22,7 @@ library
     Playground.NumberTheory
     Playground.Queue
     Playground.Rational
+    Playground.Search
     Playground.SearchTree
     Playground.SymbolicDifferentiation
     Playground.Polynomial
