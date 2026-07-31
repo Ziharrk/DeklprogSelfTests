@@ -21,7 +21,7 @@ index = {}
 # modules. In the document, templates are picked based on the functions that
 # are cited in a test or challenge. If ambiguous declaration are removed and
 # there is at least one unique declaration, the problem does not occur.
-bad_funs = []
+bad_funs = set()
 
 for file in CODE_SOURCE_DIR.rglob('*'):
   if file.is_file() and file.name.endswith('.hs') and file not in EXCLUDE_FILES:
@@ -37,7 +37,7 @@ for file in CODE_SOURCE_DIR.rglob('*'):
               f'Previously defined at {index[fun]['file']}:{index[fun]['line']}. '
               f'Redefined at {file}:{i}.'
             )
-            bad_funs.append(fun)
+            bad_funs.add(fun)
           else:
             index[fun] = {
               'file': file,
