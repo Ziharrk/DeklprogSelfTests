@@ -23,8 +23,9 @@ index = {}
 # there is at least one unique declaration, the problem does not occur.
 bad_funs = []
 
-for file in CODE_SOURCE_DIR.iterdir():
+for file in CODE_SOURCE_DIR.rglob('*'):
   if file.is_file() and file.name.endswith('.hs') and file not in EXCLUDE_FILES:
+    print(file)
     with open(file, encoding='utf-8') as handle:
       file = str(file.relative_to(CODE_SOURCE_DIR))
       for i, line in zip(range(1, maxsize), handle.readlines()):
@@ -32,9 +33,9 @@ for file in CODE_SOURCE_DIR.iterdir():
           fun = matches.group(1)
           if fun in index and index[fun]['file'] != file:
             print(
-              f"Duplicate declaration of function or datatype '{fun}'. "
-              f"Previously defined at {index[fun]['file']}:{index[fun]['line']}. "
-              f"Redefined at {file}:{i}."
+              f'Duplicate declaration of function or datatype "{fun}". '
+              f'Previously defined at {index[fun]['file']}:{index[fun]['line']}. '
+              f'Redefined at {file}:{i}.'
             )
             bad_funs.append(fun)
           else:
