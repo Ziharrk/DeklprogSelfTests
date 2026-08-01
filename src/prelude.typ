@@ -150,7 +150,8 @@
 #let tag(fill: blue, content) = {
   box(
     radius: 1pt,
-    inset: (x: 0.5em, y: 3pt),
+    inset: (x: 4pt, y: 3pt),
+    // inset: (x: 0.5em, y: 3pt),
     fill: fill.lighten(90%),
     text(fill: fill.darken(5%), strong(smallcaps(content), delta: 200)),
   )
@@ -159,6 +160,7 @@
 #let tag-level-up = tag(fill: eastern, "Level Up")
 #let tag-deep-dive = tag(fill: purple, "Deep Dive")
 #let tag-exam25-one = tag(fill: green.darken(20%), "Klausur 1. WS25/26")
+#let tag-bul = tag(fill: olive, "Berechnungen & Logik")
 
 // https://github.com/typst/typst/issues/1988#issuecomment-2466619917
 #let get-now() = {
@@ -259,7 +261,7 @@
 
   s => box(
     radius: 1pt,
-    outset: (x: 4pt, y: y-outset),
+    inset: (x: 4pt, y: y-outset),
     baseline: baseline,
     fill: color.lighten(90%),
     text(fill: color.darken(5%), label(s)),
@@ -456,23 +458,21 @@
     grid(
       columns: (auto, 1fr, auto, auto),
       // stroke: 1pt + black,
-      gutter: 0.5em,
-      align: (x, y) => horizon + ("2": right).at(str(x), default: left),
+      column-gutter: 0.5em,
+      align: (x, y) => top + ("2": right).at(str(x), default: left),
       grid.cell(titlefmt(head + " " + number)),
-      grid.cell(rowspan: 2, inset: (left: 0.75em), if title != none { move(dy: -3pt, strong(title, delta: 200)) } else { [] }),
-      grid.cell({
-        // TODO move these hints elsewhere, their current position is no longer
-        //      fitting
-        for (i, hint) in hint-labels.enumerate() {
-          box(
-            inset: (left: 0.5em),
+      grid.cell(inset: (left: 0.5em, top: 3pt - if clock { 1pt } else { 0pt }), if title != none { strong(title, delta: 200) } else { [] }),
+      grid.cell(rowspan: 2, {
+        stack(
+          spacing: 0.5em,
+          ..tags,
+          for (i, hint) in hint-labels.enumerate() {
             tag(
               fill: gray.darken(40%),
               link(hint, "Hinweis " + str(i + 1))
             )
-          )
-        }
-        tags.map(tag => box(inset: (left: 0.5em), tag)).join()
+          }
+        )
         // if depths.at(id, default: 0) > 0 {
         //   box(
         //     radius: 1pt,
@@ -536,9 +536,12 @@
       blocks.push(block)
     }
 
-    if extra != none and extra.fields().children.len() > 0 {
+    if extra != none {
       blocks.push(block(extra))
     }
+    // if extra != none and extra.fields().children.len() > 0 {
+    //   blocks.push(block(extra))
+    // }
 
     if type(templates) == list and templates.len() > 0 or templates-from-index.len() > 0 {
       let what = if lower(head) == "challenge" { "Diese Challenge" } else { "Dieser Test" }

@@ -4652,6 +4652,38 @@ verallgemeinern kannst.
   - #link("https://dl.acm.org/doi/10.1145/351240.351266")[QuickCheck: a lightweight tool for random testing of Haskell programs]
 ]
 
+#test(level: 2, clock: true, tags: (tag-bul,))[
+  Gegeben sei folgender Datentyp für reguläre Ausdrücke.
+  ```hs
+  data RE = Epsilon
+          | Let Char
+          | RE :|: RE
+          | RE :*: RE
+          | Kleene RE
+
+  infixl 6 :|:
+  infixl 7 :*:
+  ```
+
+  - Gebe eine ```hs Arbitrary```-Instanz für reguläre Ausdrücke an.
+  - Implementiere eine Funktion ```hs randomWord :: RE -> Gen String```, die
+    ein Wort generiert, das in der Sprache des regulären Ausdrucks liegt.
+  - Implementiere mithilfe des Typen
+    #align(center)[```hs newtype WithPositiveSample = WithPositiveSample (RE, String)```]
+    eine ```hs Arbitary```-Instanz, dass ein positives Beispiel mit einem
+    regulären Ausdruck kombiniert.
+  - (Wieso ist rejection sampling mit einem Prädikat
+    ```hs String -> Bool```#note[Um zu testen, ob ein Wort $w in Sigma^*$ in
+    der Sprache $L(R)$ eines regulären Ausdrucks $R$ liegt, kann man z.B.
+    $epsilon in w^(-1) L(R)$ testen. Siehe
+    #link("https://en.wikipedia.org/wiki/Brzozowski_derivative")[Brzozowski
+    derivative].] nicht die beste Idee, um ein negatives Beispiel zu
+    generieren? Angenommen du hast den DEA zum regulären Ausdruck, wie könntest
+    du dann ein negatives Beispiel finden?)
+][
+
+]
+
 #test(level: 2)[
   Es kommt häufiger vor, dass zufällig generierte Werte bestimmte Eigenschaften
   erfüllen sollen. QuickCheck bietet auf Generatoren-Ebene z.B. die Funktion
@@ -5027,7 +5059,7 @@ Diese Aufgaben haben noch keinen Platz gefunden.
   level: 3,
   clock: true,
   breakable: true,
-  tags: (tag-deep-dive,),
+  tags: (tag-bul, tag-deep-dive),
   templates: (),
   deps: (<search>,),
   title: [Von regulären Ausdrücken zu deterministischen endlichen Automaten]
