@@ -1,9 +1,10 @@
-module Playground.Search (pruningM, searchM, dfsM, bfsM) where
+module Playground.Search (pruningM, searchM, dfsM, bfsM, bfs, never, neverM, reachable, statefulBfs) where
 
+import Control.Monad.State.Lazy (State, runState)
 import Control.Monad (filterM)
 import Data.Functor.Identity
 import Data.List (insert, singleton, uncons)
-import Data.Maybe (fromJust)
+import Data.Maybe (fromJust, isJust)
 
 
 -- |Reconstructs a path from a leaf node and parent map.
@@ -18,6 +19,13 @@ trace start end parent = start : reverse (takeWhile (/= start) (iterate parent e
 -- |Takes a 'next' function and removes all next states that satisfy a predicate
 pruningM :: Monad m => (a -> m [a]) -> (a -> m Bool) -> a -> m [a]
 pruningM next pred curr = filterM (fmap not . pred) =<< next curr
+
+-- |Search never stops until there is no state left to explore.
+neverM :: Monad m => a -> m Bool
+neverM = const (return False)
+
+never :: a -> Bool
+never = const False
 
 -- |An abstract search algorithm.
 searchM :: (Eq a, Monad m)
@@ -94,6 +102,15 @@ bfsM = error "not implemented"
 #else
 bfsM = searchM (\x xs -> xs ++ [x]) uncons
 #endif
+
+bfs :: Eq a => (a -> [a]) -> (a -> Bool) -> a -> (Maybe [a], [a])
+bfs = search (\x xs -> xs ++ [x]) uncons
+
+statefulBfs :: Eq a => (a -> State s [a]) -> (a -> State s Bool) -> a -> s -> ((Maybe [a], [a]), s)
+statefulBfs next stop start = runState (bfsM next stop start)
+
+reachable :: Eq a => (a -> [a]) -> (a -> Bool) -> a -> Bool 
+reachable next stop start = isJust (fst (bfs next stop start))
 
 -- Example from challenge
 g :: [[(Int, Int)]]

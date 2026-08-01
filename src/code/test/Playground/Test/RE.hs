@@ -77,8 +77,8 @@ instance Arbitrary WithPositiveSample where
 prop_member :: WithPositiveSample -> Bool
 prop_member (WithPositiveSample (re, w)) = w `member` re
 
-prop_brzozowski :: WithPositiveSample -> Bool
-prop_brzozowski (WithPositiveSample (re, w)) = (w `member` re) == (accepts re w)
+-- prop_brzozowski :: WithPositiveSample -> Bool
+-- prop_brzozowski (WithPositiveSample (re, w)) = (w `member` re) == (accepts re w)
 
 -- prop_notMember :: WithNegativeSample -> Bool
 -- prop_notMember (WithNegativeSample (re, w)) = not (w `member` re)

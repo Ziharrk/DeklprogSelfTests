@@ -9,7 +9,7 @@ import Data.Map.Lazy (Map)
 import qualified Data.Map.Lazy as Map
 import Data.Maybe (fromMaybe, isJust, fromJust)
 
-import Playground.Search (bfsM)
+import Playground.Search (bfs, bfsM, never, neverM, reachable, statefulBfs)
 
 -- Regular expression
 data RE = Epsilon
@@ -41,6 +41,7 @@ re2 = Kleene (Kleene (Let 'a') :*: Kleene (Let 'b' :*: Let 'c')) :|: Let 'd'
 type TransitionMap s c = Map s (Map c [s])
 
 
+
 -- Finite automaton
 data FA s c = FA { states :: [s]
                  , transitions :: TransitionMap s c
@@ -52,7 +53,6 @@ data FA s c = FA { states :: [s]
 mapState :: Ord s2 => (s1 -> s2) -> FA s1 c -> FA s2 c
 mapState f (FA qs delta s fs) = 
   FA (map f qs)
-     -- (fmap (fmap (fmap f)) (Map.mapKeys f delta))
      (Map.mapKeys f (fmap (fmap (fmap f)) delta))
      (f s)
      (map f fs)
@@ -71,23 +71,13 @@ type PDFA = FA [Int] Char
 type DFA = FA Int Char
 
 
-tm1 :: TransitionMap Int Char
-tm1 = [(1, [('a', [2])])]
-
-tm2 :: TransitionMap Int Char
-tm2 = [(1, [('a', [3]), ('b', [])])]
-
 -- Checks if a state is a final state
 isFinal :: Eq s => FA s c -> s -> Bool
 isFinal fa q = q `elem` finals fa
 
 -- Lookups if any targets can be reached from a state via a letter
 lookupT :: (Ord c, Ord s) => s -> c -> TransitionMap s c -> [s]
-lookupT s c tm = fromMaybe [] $ do
-  m <- Map.lookup s tm
-  ts <- Map.lookup c m
-  return ts
-
+lookupT s c tm = Map.findWithDefault [] c (Map.findWithDefault Map.empty s tm)
 
 unionT :: (Ord c, Ord s) => TransitionMap s c -> TransitionMap s c -> TransitionMap s c
 unionT = Map.unionWith (Map.unionWith union)
@@ -148,39 +138,13 @@ thompson r = evalState (go r) [0..]
                  [q1, q2])
 
 
-bfs :: Eq a
-  => (a -> [a]) 
-  -> (a -> Bool) 
-  -> a 
-  -> (Maybe [a], [a])
-bfs next stop start = runIdentity (bfsM (Identity . next) (Identity . stop) start)
-
--- -- Checks if a node is reachable from (possibly multiple) starting points
-bfsElem :: Eq a => (a -> [a]) -> (a -> Bool) -> a -> Bool 
-bfsElem next stop start = 
-  case bfs next stop start of
-    (Just _, _) -> True
-    _           -> False
-
-
--- Runs a BFS and returns a value if the BFS was interrupted 
-evalBfs :: Eq a => (a -> State s [a]) -> (a -> State s Bool) -> a -> s -> (Maybe [a], [a])
-evalBfs next stop start = evalState (bfsM next stop start)
-
--- Runs a BFS and returns the internal state
-execBfs :: Eq a => (a -> State s [a]) -> (a -> State s Bool) -> a -> s -> s
-execBfs next stop start = execState (bfsM next stop start)
-
-runBfs :: Eq a => (a -> State s [a]) -> (a -> State s Bool) -> a -> s -> ((Maybe [a], [a]), s)
-runBfs next stop start = runState (bfsM next stop start)
-
 
 -- Compute epsilon closure from a set of states in an epsilon NFA
 --
 -- A BFS that traverses the epsilon NFA while keeping track of all visited
 -- states that were reachable via epsilon transitions.
 epsilonClosure :: EpsNFA -> Int -> [Int]
-epsilonClosure enfa q = execBfs next (const (return False)) q []
+epsilonClosure enfa q = snd (statefulBfs next neverM q [])
   where
     next q = do 
       modify (q:)
@@ -206,7 +170,7 @@ epsilonElim enfa = FA newStates newTransitions (start enfa) newFinals
     -- with the same letter.
     newTransitions = 
       unionsT [[(q, m')] | q <- states enfa
-                         , let Just ec = Map.lookup q epsilonClosures
+                         , let ec = epsilonClosures Map.! q
                          , (v, m) <- Map.toList (transitions enfa)
                          , let m' = Map.mapKeysMonotonic fromJust (Map.filterKeys isJust m)
                          , v `elem` ec
@@ -215,7 +179,7 @@ epsilonElim enfa = FA newStates newTransitions (start enfa) newFinals
     -- Final states are all original states that have a final state in their
     -- epsilon closure
     newFinals = [q | q <- states enfa 
-                   , let Just ec = Map.lookup q epsilonClosures
+                   , let ec = epsilonClosures Map.! q
                    , any (isFinal enfa) ec
                    ]
 
@@ -228,30 +192,24 @@ powerset :: NFA -> PDFA
 powerset nfa = FA newStates'
                   newTransitions
                   [start nfa]
-                  (filter (\q -> any (`elem` (finals nfa)) q) newStates)
+                  (filter (any (`elem` finals nfa)) newStates)
   where
-    ((_, newStates), newTransitions) = runBfs next (const (return False)) [start nfa] []
+    ((_, newStates), newTransitions) = statefulBfs next neverM [start nfa] []
 
-    hasSink = Map.member [-1] newTransitions
-    newStates' = if hasSink then [-1] : newStates else newStates
+    -- add sink if it was not introduced during the search
+    newStates' = [[-1] | any (== [-1]) newStates] ++ newStates
 
     -- We assume that all letters of the alphabet occured as a label of
     -- transition.
-    alph :: [Char]
     alph =  nub [c | m <- Map.elems (transitions nfa), c <- Map.keys m]
 
-    targets :: [Int] -> Char -> TransitionMap [Int] Char
-    targets qs c =
-        sink (trans (sort qs) c [nub . sort . concatMap (\q -> lookupT q c (transitions nfa)) $ qs])
+    succs qs c = 
+      case nub . sort . concatMap (\q -> lookupT q c (transitions nfa)) $ qs of
+        [] -> [-1]  -- sink
+        ts -> ts
 
-    -- Inserts sink if transition leads nowhere. Notice that the BFS 
-    -- automatically explores the sink this way and also adds the transitions.
-    sink :: TransitionMap [Int] Char -> TransitionMap [Int] Char
-    sink = Map.map (Map.map (\s -> if null s then [[-1]] else s))
-
-    next :: [Int] -> State (TransitionMap [Int] Char) [[Int]]
-    next q = do 
-      let tm = unionsT (map (targets q) alph)
+    next qs = do 
+      let tm = unionsT [trans (sort qs) c [succs qs c] | c <- alph]
       modify (tm `unionT`)
       return [t | m <- Map.elems tm, ts <- Map.elems m, t <- ts]
 
@@ -259,7 +217,7 @@ powerset nfa = FA newStates'
 -- Converts an intermediate DFA into a DFA
 relabel :: PDFA -> DFA 
 relabel pdfa = mapState label pdfa
-  where label = fromJust . flip lookup (zip (states pdfa) [0..])
+  where label = (Map.fromList (zip (states pdfa) [0..]) Map.!)
 
 -- Constructs a DFA from a regular expression
 compile :: RE -> DFA
@@ -268,15 +226,15 @@ compile = relabel . powerset . epsilonElim . thompson
 
 -- Checks is a word is a member of the language of an regular expression
 member :: String -> RE -> Bool
-member w r = bfsElem next stop (w, start a)
+member w r = reachable next stop (w, start a)
   where 
     a = compile r
     
     stop ("", q) = isFinal a q
     stop _       = False
 
-    next ([], q)     = []
-    next ((c:cs), q) = map (cs,) (lookupT q c (transitions a))
+    next ([], q)   = []
+    next (c:cs, q) = map (cs,) (lookupT q c (transitions a))
 
 
 graphviz :: (Eq s, Show c, Show s) => FA s c -> String
