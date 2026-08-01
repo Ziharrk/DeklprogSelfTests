@@ -1,4 +1,4 @@
-module Playground.Search where
+module Playground.Search (pruningM, searchM, dfsM, bfsM) where
 
 import Control.Monad (filterM)
 import Data.Functor.Identity
@@ -89,7 +89,7 @@ dfsM = searchM (:) uncons
 
 -- |BFS
 bfsM :: (Eq a, Monad m) => (a -> m [a]) -> (a -> m Bool) -> a -> m (Maybe [a], [a])
-#ifdef
+#ifdef TEMPLATE
 bfsM = error "not implemented"
 #else
 bfsM = searchM (\x xs -> xs ++ [x]) uncons
