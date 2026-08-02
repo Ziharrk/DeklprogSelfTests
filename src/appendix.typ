@@ -4,15 +4,8 @@
 
 = Appendix
 
-#draft-note[
-  Dieses Kapitel enthält Inhalte, die etwas out-of-place wirken. Zu denen
-  gehören unter anderem die Bemerkungen zu Klausuren.
-]
-
-Bisher findest du hier im Anhang des Dokuments Bemerkungen zu verschiedenen
-Tests oder Challenges. Sie sind aus unserer Neugier entstanden und stecken dich
-möglicherweise an. Du kannst aber auch alles ignorieren, was hier steht, und
-verpasst nichts.
+Hier findest du Bemerkungen zu Tests und Challenges, die weiteren (interesanten)
+Kontext geben.
 
 #remark(templates: ())[
   Mithilfe des
@@ -20,7 +13,7 @@ verpasst nichts.
   lässt sich das Wortproblem auf Basis von Brzozowski-Ableitungen für Wörter
   elegant lösen.
   ```hs
-  member :: RE -> String -> (String -> Bool) -> Bool
+  member :: RegExp -> String -> (String -> Bool) -> Bool
   member Empty          _      _ = False
   member Epsilon        s      k = k s
   member (Let c)        (x:xs) k = x == c && k xs

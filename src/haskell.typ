@@ -320,7 +320,7 @@
 
   - Betrachte das obige Problem erneut. Für welches $u in Sigma^*$ gilt
     #block(width: 100%)[$ w in L(R) <=> u in w^(-1) L(R)? $]
-  - Implementiere eine Funktion ```hs nullable :: RE -> Bool```, die bestimmt,
+  - Implementiere eine Funktion ```hs nullable :: RegExp -> Bool```, die bestimmt,
     ob $L(R)$ bzgl. der Konkatenation ein Monoid ist, also ob $epsilon in L(R)$
     gilt.
   - Die Brzozowski-Ableitung für einen Buchstaben $a in Sigma$ wird wie folgt
@@ -336,11 +336,11 @@
       - $a^(-1) (R S) = (a^(-1) R) S | a^(-1) S$, falls $epsilon in L(R)$, und
       - $a^(-1) (R^*) = a^(-1) R R^*$.
     ]
-    Implementiere eine Funktion ```hs brzozowski :: Char -> RE -> RE```, die die
+    Implementiere eine Funktion ```hs brzozowski :: Char -> RegExp -> RegExp```, die die
     Brzozowski-Ableitung bzgl. eines Buchstaben berechnet.
-  - Implementiere eine Funktion ```hs derivative :: String -> RE -> RE```, die
+  - Implementiere eine Funktion ```hs derivative :: String -> RegExp -> RegExp```, die
     Brzozowski-Ableitung bzgl. eines Wortes berechnet.
-  - Implementiere eine Funktion ```hs member :: String -> RE -> Bool```, das
+  - Implementiere eine Funktion ```hs member :: String -> RegExp-> Bool```, das
     Wortproblem für reguläre Ausdrücke löst.
 ][
   In @remark-brzozowski gehen wir darauf ein, wie man ```hs member``` direkter
@@ -4715,22 +4715,22 @@ verallgemeinern kannst.
 #test(level: 2, clock: true, tags: (tag-bul,))[
   Gegeben sei folgender Datentyp für reguläre Ausdrücke.
   ```hs
-  data RE = Empty
-          | Epsilon
-          | Let Char
-          | RE :|: RE
-          | RE :*: RE
-          | Kleene RE
+  data RegExp = Empty
+              | Epsilon
+              | Let Char
+              | RegExp :|: RegExp
+              | RegExp :*: RegExp
+              | Kleene RegExp
 
   infixl 6 :|:
   infixl 7 :*:
   ```
 
   - Gebe eine ```hs Arbitrary```-Instanz für reguläre Ausdrücke an.
-  - Implementiere eine Funktion ```hs randomWord :: RE -> Gen String```, die
+  - Implementiere eine Funktion ```hs randomWord :: RegExp -> Gen String```, die
     ein Wort generiert, das in der Sprache des regulären Ausdrucks liegt.
   - Implementiere mithilfe des Typen
-    #align(center)[```hs newtype WithPositiveSample = WithPositiveSample (RE, String)```]
+    #align(center)[```hs newtype WithPositiveSample = WithPositiveSample (RegExp, String)```]
     eine ```hs Arbitary```-Instanz, dass ein positives Beispiel mit einem
     regulären Ausdruck kombiniert.
   - (Wieso ist rejection sampling mit einem Prädikat
