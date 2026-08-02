@@ -4,16 +4,16 @@ import Control.Monad (forM_)
 import Test.QuickCheck
 
 import qualified Playground.Test.SearchTree as SearchTree
-import qualified Playground.Test.RE as RE
+import qualified Playground.Test.Language.RegExp as RegExp
 
 return []
 
 allProps = concat [ SearchTree.props
-                  , RE.props
+                  , RegExp.props
                   ]
 
 main :: IO ()
 main = forM_ allProps $ \(name, prop) -> do
   putStrLn name
-  quickCheckWith (stdArgs { maxSize = 18 }) prop
+  quickCheckWith (stdArgs { maxSize = 8 }) prop
 

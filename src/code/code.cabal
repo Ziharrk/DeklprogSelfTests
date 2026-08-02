@@ -26,7 +26,8 @@ library
     Playground.NumberTheory
     Playground.Queue
     Playground.Rational
-    Playground.RE
+    Playground.Language.RegExp
+    Playground.Language.FA
     Playground.Search
     Playground.SearchTree
     Playground.SymbolicDifferentiation

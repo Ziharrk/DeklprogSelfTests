@@ -1,18 +1,18 @@
-module Playground.Test.RE where
+module Playground.Test.Language.RegExp where
 
 import Data.List (nub, singleton)
 import Test.QuickCheck
 
-import Playground.RE
+import Playground.Language.RegExp
 
 
-instance Arbitrary RE where
+instance Arbitrary RegExp where
   arbitrary = sized $ \n -> do
     -- the weights are arbitrarily chosen to prevent the generation of
     -- random words from exploding
     f <- frequency [(1, return Kleene), (9, return id)]
     case n of
-      0 -> frequency [(1, return Empty), (9, return Epsilon)]
+      0 -> return Epsilon
       1 -> fmap (f . Let) (elements ['a'..'z'])
       _ -> do
         k <- chooseInt (1, n)
@@ -21,31 +21,15 @@ instance Arbitrary RE where
         op <- elements [(:|:), (:*:)]
         return (f (op l r))
 
-randomWord :: RE -> Gen String
+randomWord :: RegExp -> Gen String
+randomWord  Empty         = error "language is empty"
 randomWord  Epsilon       = return ""
 randomWord  (Let c)       = return (singleton c)
 randomWord  (re1 :|: re2) = elements [re1, re2] >>= randomWord
 randomWord  (re1 :*: re2) = (++) <$> randomWord re1 <*> randomWord re2
 randomWord  (Kleene re)   = fmap concat (listOf (randomWord re))
 
--- matches :: RE -> String -> (String -> Bool) -> Bool
--- matches Epsilon        s      k = k s
--- matches (Let c)        (x:xs) k = x == c && k xs
--- matches (Let _)        []     _ = False
--- matches (re1 :|: re2)  s      k = matches re1 s k || matches re2 s k
--- matches (re1 :*: re2)  s      k = matches re1 s (\s' -> matches re2 s' k)
--- matches (Kleene re)    s      k = k s || matches re s (\s' -> s' /= s && matches (Kleene re) s' k)
---
--- accepts :: RE -> String -> Bool
--- accepts re s = matches re s null
---
--- alphabet :: RE -> [Char]
--- alphabet Epsilon       = []
--- alphabet (Let c)       = [c]
--- alphabet (re1 :|: re2) = nub (alphabet re1 ++ alphabet re2)
--- alphabet (re1 :*: re2) = nub (alphabet re1 ++ alphabet re2)
--- alphabet (Kleene re)   = alphabet re
---
+
 -- -- Rejection sampling takes too long
 -- -- Alternatively, construct complement DFA and search for words
 -- randomNonWord :: RE -> Gen String
@@ -57,7 +41,7 @@ randomWord  (Kleene re)   = fmap concat (listOf (randomWord re))
 --       s <- vectorOf n (elements alph)
 --       if accepts re s then go else return s
 
-newtype WithPositiveSample = WithPositiveSample (RE, String)
+newtype WithPositiveSample = WithPositiveSample (RegExp, String)
   deriving Show
 
 instance Arbitrary WithPositiveSample where
@@ -79,11 +63,11 @@ instance Arbitrary WithPositiveSample where
 prop_member :: WithPositiveSample -> Bool
 prop_member (WithPositiveSample (re, w)) = w `member` re
 
--- prop_brzozowski :: WithPositiveSample -> Bool
--- prop_brzozowski (WithPositiveSample (re, w)) = (w `member` re) == (accepts re w)
-
 -- prop_notMember :: WithNegativeSample -> Bool
 -- prop_notMember (WithNegativeSample (re, w)) = not (w `member` re)
+
+-- prop_inverse :: WithPositiveSample -> Bool
+-- prop_inverse (WithPositiveSample (re, w)) = member w (stateElim (compile re))
 
 return []
 

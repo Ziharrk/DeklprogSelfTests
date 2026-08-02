@@ -1,5 +1,5 @@
 {-# LANGUAGE OverloadedLists #-}
-module Playground.RE where
+module Playground.Language.FA where
 
 import Control.Monad.State.Lazy (State, execState, modify, runState, evalState, state)
 import Data.Bifunctor (bimap, first, second)
@@ -7,37 +7,10 @@ import Data.Functor.Identity
 import Data.List (union, nub, sort, singleton, intercalate)
 import Data.Map.Lazy (Map)
 import qualified Data.Map.Lazy as Map
-import Data.Maybe (fromMaybe, isJust, fromJust)
+import Data.Maybe (fromMaybe, isJust, fromJust, listToMaybe)
 
+import Playground.Language.RegExp (RegExp(..))
 import Playground.Search (bfs, bfsM, never, neverM, reachable, statefulBfs)
-
--- Regular expression
-data RE = Empty
-        | Epsilon
-        | Let Char
-        | RE :|: RE
-        | RE :*: RE
-        | Kleene RE
-
-infixl 6 :|: 
-infixl 7 :*: 
-
--- Pretty printing for regular expressions
-instance Show RE where
-  showsPrec _ Empty       = showString "\x2205"
-  showsPrec _ Epsilon     = showString "\x03b5"
-  showsPrec _ (Let c)     = showChar c
-  showsPrec p (r1 :*: r2) = showParen (p > 7) (showsPrec 7 r1 . showsPrec 7 r2)
-  showsPrec p (r1 :|: r2) = showParen (p > 6) (showsPrec 6 r1 . showChar '|' . showsPrec 7 r2)
-  showsPrec p (Kleene r)  = showsPrec 9 r . showChar '*'
-
--- 'ab|c*'
-re1 :: RE
-re1 = Let 'a' :*: Let 'b' :|: Kleene (Let 'c')
-
--- (a*(bc)*)|d
-re2 :: RE
-re2 = Kleene (Kleene (Let 'a') :*: Kleene (Let 'b' :*: Let 'c')) :|: Let 'd'
 
 
 type TransitionMap s c = Map s (Map c [s])
@@ -58,6 +31,8 @@ mapState f (FA qs delta s fs) =
      (f s)
      (map f fs)
 
+mapTrans :: Ord c2 => (c1 -> c2) -> FA s c1 -> FA s c2
+mapTrans f fa = fa { transitions = Map.map (\m -> Map.mapKeys f m) (transitions fa) }
 
 -- Epsilon NFA
 type EpsNFA = FA Int (Maybe Char)
@@ -97,7 +72,7 @@ newState :: State [Int] Int
 newState = state (\(q : qs) -> (q, qs)) 
 
 -- Construct an epsilon NFA from a regular expression
-thompson :: RE -> EpsNFA
+thompson :: RegExp -> EpsNFA
 thompson r = evalState (go r) [0..]
   where
     go Empty       = do 
@@ -224,12 +199,12 @@ relabel pdfa = mapState label pdfa
   where label = (Map.fromList (zip (states pdfa) [0..]) Map.!)
 
 -- Constructs a DFA from a regular expression
-compile :: RE -> DFA
+compile :: RegExp -> DFA
 compile = relabel . powerset . epsilonElim . thompson
 
 
 -- Checks is a word is a member of the language of an regular expression
-member :: String -> RE -> Bool
+member :: String -> RegExp -> Bool
 member w r = reachable next stop (w, start a)
   where 
     a = compile r
@@ -259,33 +234,57 @@ graphviz (FA qs delta s fs) =
     edges = ["  " ++ show s ++ " -> " ++ show t ++ " [label=\"" ++ show c ++ "\"];" | (s, m) <- Map.assocs delta, (c, ts) <- Map.assocs m, t <- ts]
 
 
--- | Checks if the language of a given regular expression is 'nullable'. A
--- language is called nullable, if it contains the empty word.
-nullable :: RE -> Bool
-nullable Empty         = False
-nullable Epsilon       = True
-nullable (Kleene _)    = True
-nullable (re1 :|: re2) = nullable re1 || nullable re2
-nullable (re1 :*: re2) = nullable re1 && nullable re2
-nullable _             = False
 
--- | Computes the Brzozowski derivative w.r.t. a letter.
-brzozowski :: Char -> RE -> RE
-brzozowski a Empty = Empty
-brzozowski a Epsilon = Empty
-brzozowski a (Let b)
-  | a == b    = Epsilon
-  | otherwise = Empty
-brzozowski a (re1 :|: re2) = brzozowski a re1 :|: brzozowski a re2
-brzozowski a (re1 :*: re2)
-  | nullable re1 = re1' :*: re2 :|: re2'
-  | otherwise    = re1' :*: re2
-  where 
-    re1' = brzozowski a re1
-    re2' = brzozowski a re2
-brzozowski a (Kleene re) = brzozowski a re :*: Kleene re
 
--- | Computes the Brzozowski derivative w.r.t. a word.
-derivative :: String -> RE -> RE
-derivative w re = foldl (flip brzozowski) re w
+-- stateElim :: DFA -> RegExp
+-- stateElim dfa@(FA qs delta s fs) = Map.keys (Map.elems (transitions (foldr elim gnfa qs)) !! 0) !! 0
+--   where
+--     s' = maximum qs + 1
+--     f' = maximum qs + 2
+--
+--     elim q gnfa = gnfa { states = newStates, transitions = mergeParallel (oldTransitions `unionT` newTransitions) }
+--       where
+--         newStates = filter (/= q) (states gnfa)
+--
+--         selfLoop = 
+--           listToMaybe [ c | (c, ts') <- Map.assocs (Map.findWithDefault Map.empty q (transitions gnfa))
+--                           , t <- ts'
+--                           , t == q
+--                           ]
+--
+--         connect re1 Nothing        re3 = re1 :*: re3
+--         connect re1 (Just re2)     re3 = re1 :*: Kleene re2 :*: re3
+--
+--         newTransitions =
+--           unionsT [ trans s (connect re1 selfLoop re2)  [t] 
+--                     | (s, m) <- Map.assocs (transitions gnfa)
+--                     , s /= q
+--                     , (re1, ts) <- Map.assocs m
+--                     , q `elem` ts
+--                     , (re2, ts') <- Map.assocs (Map.findWithDefault Map.empty q (transitions gnfa))
+--                     , t <- ts'
+--                     , t /= q  -- no self loop
+--                     ]
+--         oldTransitions =
+--           Map.map (Map.map (filter (/= q))) (Map.delete q (transitions gnfa))
+--
+--         mergeParallel tm =
+--           unionsT [ trans s (foldr1 (:|:) res) [t]
+--                   | ((s, t), res) <- Map.assocs grouped
+--                   ]
+--           where
+--             grouped = Map.fromListWith (++)
+--                         [ ((s, t), [re])
+--                         | (s, m)  <- Map.assocs tm
+--                         , (re, ts) <- Map.assocs m
+--                         , t <- ts
+--                         ]
+--
+--     gnfa = FA { states = s' : f' : qs
+--               , transitions = trans s' Epsilon [s]
+--                   `unionT` unionsT [trans f Epsilon [f'] | f <- fs]
+--                   `unionT` transitions (mapTrans Let dfa)
+--               , start = s'
+--               , finals = [f']
+--               }
 
