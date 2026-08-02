@@ -140,7 +140,9 @@ Aktuell kannst du aus den folgenden Abenteuern wählen.
 - *Lineare Gleichungssysteme* #h(1em) Das gaußsche Eliminationsverfahren kennst
   du voraussichtlich bereits aus der Schule. In diese Abenteuer schauen wir uns
   die LR-Zerlegung regulärer Matrizen an und ergründen, wie sie uns hilft,
-  verschiedene Probleme der linearen Algebra zu lösen.
+  verschiedene Probleme der linearen Algebra zu lösen. Die Werkzeuge, die du
+  dir dabei erarbeitest, wirst du unterwegs immer wieder auch für andere Zwecke
+  einsetzen können.
 - *Satz über rationale Nullstellen* #h(1em) Dieses Abenteuer schickt dich auf
   eine Reise von ganzzahligen Polynomen über unimodularen Matrizen zu bis hinzu
   Eigenwerten. Dabei treiben wir den Erkenntnisgewinn des Satzes über rationale

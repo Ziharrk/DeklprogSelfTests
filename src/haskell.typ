@@ -104,7 +104,7 @@
   die verschiedenen Möglichkeiten nach und gebe Beispiele an.
 ]
 
-#test(level: 1)[
+#test(level: 1, title: "Gegenseitige Rekursion")[
   Gegeben sei das folgende Haskell-Programm.
   ```hs
   even :: Int -> Bool
@@ -291,7 +291,7 @@
 #test(
   level: 1,
   title: "Algebraischer Datentypen für reguläre Ausrücke",
-  tags: (tag-bul,)
+  tags: (tag-reg,)
 )[
   Gebe einen Datentypen an, der genutzt werden kann, um reguläre Ausdrücke
   darzustellen. Zum Beispiel soll möglich sein, die folgenden regulären
@@ -305,8 +305,9 @@
 #test(
   level: 1,
   clock: true,
-  tags: (tag-bul,),
-  deps: (<re-definition>,)
+  tags: (tag-reg,),
+  deps: (<re-definition>,),
+  title: "Brzozowski-Ableitung formaler Sprachen"
 )[
   Das Wortproblem für reguläre Ausdrücke kann mithilfe der Brzozowski-Ableitung
   entschieden werden, also $w in L(R)$ für ein Wort $w in Sigma^*$ und einen
@@ -502,7 +503,8 @@
   level: 1,
   breakable: true,
   animal: true,
-  title: "Symbolisches Differenzieren"
+  title: "Symbolisches Differenzieren",
+  tags: (tag-diff,)
 )[
   Die Ableitung einer Funktion $f : RR -> RR$ kann mithilfe des
   Differenzenquotienten $(f(x+h)-f(x))/h$ für kleines $h$ approximiert werden.
@@ -755,7 +757,7 @@
   Wie greifen wir auf Daten in Haskell zu?
 ]
 
-#test(level: 2, clock: true, title: "Blockmatrizen")[
+#test(level: 2, clock: true, tags: (tag-lse,), title: "Blockmatrizen")[
   #let mA = $bold(upright(A))$
   In der numerischen Mathematik gibt es Algorithmen, die über Blockmatrizen
   ausgedrückt werden. Dabei wird eine Matrix $mA in K^(n times n)$ als
@@ -1606,6 +1608,7 @@
 #test(
   level: 1,
   tags: (tag-exam25-one,),
+  breakable: true,
   animal: true
 )[
   Die #link("https://de.wikipedia.org/wiki/Pomodoro-Technik")[Pomodoro-Technik]
@@ -1805,7 +1808,7 @@
   Laufzeiten?
 ]
 
-#test(level: 1)[
+#test(level: 1, tags: (tag-lse,))[
   Überlade die Operationen ```hs (+), (-), (*), abs, signum, fromInteger```
   für den Datentypen ```hs data Mat22 a = Mat22 a a a a```, der
   $(2 times 2)$-Matrizen repräsentieren soll -- ```hs abs, signum, fromInteger```
@@ -1816,7 +1819,12 @@
   von ```hs abs``` und ```hs signum``` nicht erfüllt.
 ] <matmath>
 
-#test(level: 1, deps: (<binexp>, <matmath>), title: [$n$-te. Fibonacci-Zahl in $Theta(log(n))$])[
+#test(
+  level: 1,
+  deps: (<binexp>, <matmath>),
+  tags: (tag-lse,),
+  title: [$n$-te. Fibonacci-Zahl in $Theta(log(n))$]
+)[
   Mit $ mat(f_(n+1), f_n; f_n, f_(n-1))^n = mat(1, 1; 1, 0)^n $ und der
   binären Exponentiation (@binexp) und ```hs Mat22 Integer``` (@matmath) aus
   vorherigen Tests kannst du die $n$-te Fibonacci-Zahl in logarithmischer
@@ -1873,7 +1881,12 @@
   ```
 ]
 
-#challenge(level: 2, clock: true, tags: (tag-deep-dive,), title: "Automatisches Differenzieren")[
+#challenge(
+  level: 2,
+  clock: true,
+  tags: (tag-deep-dive, tag-diff),
+  title: "Automatisches Differenzieren"
+)[
   In dieser Challenge sollst du automatisches Differenzieren im Vorwärtsmodus
   mithilfe von (Operator-)Überladung implementieren. Dieser Ansatz des
   Differenzierens führt dabei das Differenzieren komplizierter Funktionen auf
@@ -1969,7 +1982,13 @@
 //   atanh (D x d) = D (atanh x) (d / (1 - x * x))
 // ```
 
-#challenge(level: 3, clock: true, breakable: true, tags: (tag-deep-dive,), title: "Kürzeste Wege mit tropischen Zahlen")[
+#challenge(
+  level: 3,
+  clock: true,
+  breakable: true,
+  tags: (tag-deep-dive, tag-lse),
+  title: "Kürzeste Wege mit tropischen Zahlen"
+)[
   In Einführung in die Algorithmik hast du den Floyd-Warshall Algorithmus
   kennengelernt, um die Distanzen der kürzesten Wege zwischen allen Knoten in
   einem kanten-gewichteten Digraph zu berechnen. Hier ist der Algorithmus erneut
@@ -2138,7 +2157,7 @@
 #challenge(
   level: 3,
   breakable: true,
-  tags: (tag-deep-dive,),
+  tags: (tag-deep-dive, tag-lse),
   title: "LR-Zerlegung",
   deps: (<block-matrices>,)
 )[
@@ -2263,7 +2282,8 @@
 #challenge(
   level: 3,
   deps: (<minplus>, <roots_of_polynomials>),
-  tags: (tag-deep-dive,),
+  breakable: true,
+  tags: (tag-deep-dive, tag-polynomial),
   title: "Eigenwerte unimodularer Matrizen"
 )[
   Ich möchte versuchen, deine Gedanken zu lesen. Das funktioniert allerdings
@@ -2496,7 +2516,7 @@ verallgemeinern kannst.
 #challenge(
   level: 2,
   breakable: true,
-  tags: (tag-deep-dive,),
+  tags: (tag-deep-dive, tag-polynomial),
   title: "Nullstellen ganzzahliger Polynome"
 )[
   Die Nullstellen eines ganzzahligen Polynoms $p = sum_(i=0)^d a_i t^i in ZZ[t]$
@@ -2733,7 +2753,12 @@ verallgemeinern kannst.
   ```
 ]
 
-#challenge(level: 2, breakable: true, title: "Endliche Automaten als unendliche Bäume")[
+#challenge(
+  level: 2,
+  breakable: true,
+  title: "Endliche Automaten als unendliche Bäume",
+  tags: (tag-reg,)
+)[
   Wir können endliche Automaten als unendliche Bäume darstellen.
   Betrachte z.B. den endlichen Automaten für die reguläre Sprache $mono(a)^* mono(b)^*$.
   #align(center)[
@@ -2909,7 +2934,7 @@ verallgemeinern kannst.
     von einer der beiden Funktionen.)
 ]
 
-#challenge(level: 1, clock: true, title: "Fixpunktverfahren")[
+#challenge(level: 1, clock: true, title: "Fixpunktverfahren", breakable: true)[
   Fixpunktverfahren sind iterative Methoden, bei denen eine Funktion wiederholt
   auf einen Wert angewendet wird, bis sich ein stabiler Punkt (ein sogenannter
   Fixpunkt) ergibt, der sich durch weitere Anwendungen der Funktion nicht mehr
@@ -4649,7 +4674,7 @@ verallgemeinern kannst.
   Breitensuchen in verschiedenen Situationen auf.
 ] <search>
 
-#test(level: 2, deps: (<search>,))[
+#test(level: 2, deps: (<search>,), title: "Graphfärbungsproblem")[
   Das #link("https://de.wikipedia.org/wiki/F%C3%A4rbung_(Graphentheorie)")[Graphfärbungsproblem]
   fragt nach einer Färbung von Knoten, sodass benachbarte Knoten unterschiedlich
   gefärbt sind, unter der Verwendung von so wenig Farben wie möglich.
@@ -4712,7 +4737,7 @@ verallgemeinern kannst.
   - #link("https://dl.acm.org/doi/10.1145/351240.351266")[QuickCheck: a lightweight tool for random testing of Haskell programs]
 ]
 
-#test(level: 2, clock: true, tags: (tag-bul,))[
+#test(level: 2, clock: true, tags: (tag-reg,))[
   Gegeben sei folgender Datentyp für reguläre Ausdrücke.
   ```hs
   data RegExp = Empty
@@ -5127,7 +5152,7 @@ Diese Aufgaben haben noch keinen Platz gefunden.
   level: 3,
   clock: true,
   breakable: true,
-  tags: (tag-bul, tag-deep-dive),
+  tags: (tag-reg, tag-deep-dive),
   templates: (),
   deps: (<re-definition>, <brzozowski>, <search>,),
   title: [Von regulären Ausdrücken zu deterministischen endlichen Automaten]

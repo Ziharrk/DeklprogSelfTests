@@ -148,19 +148,32 @@
 
 
 #let tag(fill: blue, content) = {
-  box(
-    radius: 1pt,
-    inset: (x: 4pt, y: 3pt),
-    // inset: (x: 0.5em, y: 3pt),
-    fill: fill.lighten(90%),
-    text(fill: fill.darken(5%), strong(smallcaps(content), delta: 200)),
-  )
+  if type(fill) == gradient {
+    box(
+      radius: 1pt,
+      inset: (x: 4pt, y: 3pt),
+      // inset: (x: 0.5em, y: 3pt),
+      fill: fill,
+      text(fill: white, strong(smallcaps(content), delta: 200)),
+    )
+  } else {
+    box(
+      radius: 1pt,
+      inset: (x: 4pt, y: 3pt),
+      // inset: (x: 0.5em, y: 3pt),
+      fill: fill.lighten(90%),
+      text(fill: fill.darken(5%), strong(smallcaps(content), delta: 200)),
+    )
+  }
 }
 
 #let tag-level-up = tag(fill: eastern, "Level Up")
 #let tag-deep-dive = tag(fill: purple, "Deep Dive")
 #let tag-exam25-one = tag(fill: green.darken(20%), "Klausur 1. WS25/26")
-#let tag-bul = tag(fill: olive, "Berechnungen & Logik")
+#let tag-reg = tag(fill: olive, "Reguläre Sprachen")
+#let tag-diff = tag(fill: olive, "Numerisches Differenzieren")
+#let tag-lse = tag(fill: olive, "Lineare Gleichungssysteme")
+#let tag-polynomial = tag(fill: olive, "Satz über rationale Nullstellen")
 
 // https://github.com/typst/typst/issues/1988#issuecomment-2466619917
 #let get-now() = {
@@ -461,7 +474,7 @@
       column-gutter: 0.5em,
       align: (x, y) => top + ("2": right).at(str(x), default: left),
       grid.cell(titlefmt(head + " " + number)),
-      grid.cell(inset: (left: 0.5em, top: 3pt - if clock { 1pt } else { 0pt }), if title != none { strong(title, delta: 200) } else { [] }),
+      grid.cell(inset: (left: 0.5em, top: 3pt), if title != none { strong(title, delta: 200) } else { [] }),
       grid.cell(rowspan: 2, {
         stack(
           spacing: 0.5em,
