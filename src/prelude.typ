@@ -474,7 +474,7 @@
       column-gutter: 0.5em,
       align: (x, y) => top + ("2": right).at(str(x), default: left),
       grid.cell(titlefmt(head + " " + number)),
-      grid.cell(inset: (left: 0.5em, top: 3pt), if title != none { strong(title, delta: 200) } else { [] }),
+      grid.cell(inset: (x: 0.5em, top: 3pt), if title != none { strong(title, delta: 200) } else { [] }),
       grid.cell(rowspan: 2, {
         stack(
           spacing: 0.5em,

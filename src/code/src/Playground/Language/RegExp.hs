@@ -7,7 +7,7 @@ module Playground.Language.RegExp
   ) where
 
 -- | Regular expression
-#if TEMPLATE
+#ifdef TEMPLATE
 data RegExp
 #else
 data RegExp = Empty

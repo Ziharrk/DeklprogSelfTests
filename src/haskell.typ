@@ -4559,6 +4559,7 @@ verallgemeinern kannst.
   level: 2,
   breakable: true,
   clock: true,
+  tags: (tag-deep-dive,),
   title: "Suchen"
 )[
   Ein gängiges Sprichwort ist,
@@ -4674,7 +4675,12 @@ verallgemeinern kannst.
   Breitensuchen in verschiedenen Situationen auf.
 ] <search>
 
-#test(level: 2, deps: (<search>,), title: "Graphfärbungsproblem")[
+#test(
+  level: 2,
+  deps: (<search>,),
+  title: "Graphfärbungsproblem",
+  tags: (tag-deep-dive,),
+)[
   Das #link("https://de.wikipedia.org/wiki/F%C3%A4rbung_(Graphentheorie)")[Graphfärbungsproblem]
   fragt nach einer Färbung von Knoten, sodass benachbarte Knoten unterschiedlich
   gefärbt sind, unter der Verwendung von so wenig Farben wie möglich.
@@ -5153,7 +5159,6 @@ Diese Aufgaben haben noch keinen Platz gefunden.
   clock: true,
   breakable: true,
   tags: (tag-reg, tag-deep-dive),
-  templates: (),
   deps: (<re-definition>, <brzozowski>, <search>,),
   title: [Von regulären Ausdrücken zu deterministischen endlichen Automaten]
 )[
@@ -5173,30 +5178,25 @@ Diese Aufgaben haben noch keinen Platz gefunden.
   stretch(->)^"Potenzmengen-\nkonstruktion"
   "DFA"
   $
+  Wir nutzen @re-definition als Basis.
 
-  - Definiere einen Datentypen ```hs RE```, um regulärere Ausdrücke
-    darzustellen. Der reguläre Ausdruck $(mono(a b))^*|mono(c)$ könnte z.B.
-    so dargestellt werden
-    #align(center)[```hs Kleene (Let 'a' :*: Let 'b') :|: Let 'c'```.]
-    Die leere Sprache und die Sprache, die nur das leere Wort enthält, sind über
-    das Beispiel nicht abdeckt.
   - Bevor wir mit den Konstruktionen beginnen, müssen wir uns überlegen, wie wir
     die Automaten darstellen wollen. Überlege dir Typen für
     nichtdeterministische endliche Automaten mit und ohne $epsilon$-Transitionen
     und deterministische endliche Automaten. Einen Zustand kannst du z.B. als
     Ganzzahl darstellen.
-  - Implementiere die Thompson-Konstruktion als Funktion ```hs RE -> EpsNFA```.
+  - Implementiere die Thompson-Konstruktion als Funktion ```hs thompson :: RegExp -> EpsNFA```.
     Hier ist eine wesentliche Schwierigkeit, neue Zustände zu erzeugen, da die
     Bezeichnungen verschiedener Teilautomaten miteinander kollidieren können.
     Das Problem lässt sich z.B. mithilfe eines Zählers lösen, der durch die
     Konstruktion durchgeführt wird. Eine entsprechende Hilfsfunktion könnte
-    folgenden Typ haben: ```hs RE -> Int -> (EpsNFA, Int)```. Wenn du dich an
+    folgenden Typ haben: ```hs RegExp -> Int -> (EpsNFA, Int)```. Wenn du dich an
     die ```hs State```-Monade wagen möchtest, könnte dies an dieser Stelle auch
     nützlich sein, um den Zähler mitzuführen -- im Wesentlichen versteckst du
     damit das explizite Mitführen des Zählers.
   - Implementiere eine Funktion ```hs epsilonClosure :: EpsNFA -> [Int] -> [Int]```,
     die die $epsilon$-Hülle einer Menge von Zuständen berechnet.
-  - Implementiere eine Funktion ```hs removeEpsilon :: EpsNFA -> NFA```, die
+  - Implementiere eine Funktion ```hs epsilonElim :: EpsNFA -> NFA```, die
     alle $epsilon$-Transitionen des übergebenen nichtdeterministischen endlichen
     Automaten entfernt. Hier brauchst du dir keine Gedanken über neue Bezeichner
     für Zustände machen, da du die Zustände des alten Automaten wiederverwenden
@@ -5216,6 +5216,9 @@ Diese Aufgaben haben noch keinen Platz gefunden.
   Hopcrofts Algorithmus minimieren.
 ][
   ```hs bfsM``` aus @search könnte hier hilfreich sein.
+
+  Die Dokumentation von ```hs Map``` findest du
+  #link("https://hackage-content.haskell.org/package/containers-0.8/docs/Data-Map-Lazy.html")[hier].
 ] <re-to-dfa>
 
 #remark(breakable: false)[
