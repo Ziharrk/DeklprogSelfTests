@@ -7,6 +7,9 @@ module Playground.Language.RegExp
   ) where
 
 -- | Regular expression
+--
+-- (In a different challenges we want to use RegExp as keys for Map. Thus, we
+-- derive Ord here.)
 #ifdef TEMPLATE
 data RegExp
 #else
@@ -33,14 +36,6 @@ instance Show RegExp where
   showsPrec p (Kleene r)  = showsPrec 9 r . showChar '*'
 
 #endif
-
--- | @ab|c*@
-re1 :: RegExp
-re1 = Let 'a' :*: Let 'b' :|: Kleene (Let 'c')
-
--- | @(a*(bc)*)|d@
-re2 :: RegExp
-re2 = Kleene (Kleene (Let 'a') :*: Kleene (Let 'b' :*: Let 'c')) :|: Let 'd'
 
 
 -- | Checks if the language of a given regular expression is 'nullable'. A

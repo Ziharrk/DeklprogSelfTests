@@ -1,15 +1,19 @@
-module Playground.Test.Language.RegExp where
+module Playground.Test.Language.RegExpSpec where
 
-import Data.List (nub, singleton)
+import Data.List (singleton)
+import Test.Hspec
+import Test.Hspec.QuickCheck (modifyMaxSize, prop)
 import Test.QuickCheck
 
-import Playground.Language.RegExp
+import Playground.Language.RegExp (RegExp(..))
+import qualified Playground.Language.RegExp as RegExp
+import qualified Playground.Language.FA as FA
 
 
 instance Arbitrary RegExp where
   arbitrary = sized $ \n -> do
-    -- the weights are arbitrarily chosen to prevent the generation of
-    -- random words from exploding
+    -- We use Kleene sparingly since it allows random words to grow quickly
+    -- (see 'randomWord').
     f <- frequency [(1, return Kleene), (9, return id)]
     case n of
       0 -> return Epsilon
@@ -21,25 +25,18 @@ instance Arbitrary RegExp where
         op <- elements [(:|:), (:*:)]
         return (f (op l r))
 
+
+-- | Generates a random word.
 randomWord :: RegExp -> Gen String
 randomWord  Empty         = error "language is empty"
 randomWord  Epsilon       = return ""
 randomWord  (Let c)       = return (singleton c)
 randomWord  (re1 :|: re2) = elements [re1, re2] >>= randomWord
 randomWord  (re1 :*: re2) = (++) <$> randomWord re1 <*> randomWord re2
-randomWord  (Kleene re)   = fmap concat (listOf (randomWord re))
+randomWord  (Kleene re)   = do
+  k <- chooseInt (0, 3)
+  fmap concat (vectorOf k (randomWord re))  -- do not want these to explode
 
-
--- -- Rejection sampling takes too long
--- -- Alternatively, construct complement DFA and search for words
--- randomNonWord :: RE -> Gen String
--- randomNonWord re = go
---   where
---     alph = if null (alphabet re) then ['a'..'z'] else alphabet re
---     go = do
---       n <- choose (0, 10)
---       s <- vectorOf n (elements alph)
---       if accepts re s then go else return s
 
 newtype WithPositiveSample = WithPositiveSample (RegExp, String)
   deriving Show
@@ -49,6 +46,11 @@ instance Arbitrary WithPositiveSample where
     re <- arbitrary
     w <- randomWord re
     return (WithPositiveSample (re, w))
+
+
+-- TODO Rejection sampling with regular expressions is cumbersome. Once the
+--      complement of a DFA is implemented, we may traverse the DFA to find
+--      some words with random walks.
 
 -- newtype WithNegativeSample = WithNegativeSample (RE, String)
 --   deriving Show
@@ -60,18 +62,12 @@ instance Arbitrary WithPositiveSample where
 --     return (WithNegativeSample (re, w))
 
 
-prop_member :: WithPositiveSample -> Bool
-prop_member (WithPositiveSample (re, w)) = w `member` re
+spec :: Spec
+spec = do
+  describe "RegExp.member" $ do
+    prop "Positive samples" $
+      \(WithPositiveSample (re, w)) -> w `RegExp.member` re
 
--- prop_notMember :: WithNegativeSample -> Bool
--- prop_notMember (WithNegativeSample (re, w)) = not (w `member` re)
-
--- prop_inverse :: WithPositiveSample -> Bool
--- prop_inverse (WithPositiveSample (re, w)) = member w (stateElim (compile re))
-
-return []
-
-props :: [(String, Property)]
-props = $allProperties
-
+    prop "FA.member and RegExp.member are equal on random samples" $
+      \w re -> RegExp.member w re == FA.member w (FA.compile re)
 

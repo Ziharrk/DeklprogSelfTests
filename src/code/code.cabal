@@ -47,11 +47,16 @@ test-suite test
   default-extensions:
     TemplateHaskell
   type:             exitcode-stdio-1.0
-  main-is:          Main.hs
+  main-is:          Spec.hs
   hs-source-dirs:   test
   build-depends:
     , code
     , QuickCheck
+    , hspec ==2.*
+  build-tool-depends: hspec-discover:hspec-discover == 2.*
+  other-modules:
+    Playground.Test.SearchTreeSpec
+    Playground.Test.Language.RegExpSpec
   if flag(dev)
     cpp-options:
       -UTEMPLATE
