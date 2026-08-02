@@ -288,6 +288,66 @@
 // remove (TodoList (x : xs) n) i = add (remove (TodoList xs) (i - 1)) x
 // ```
 
+#test(
+  level: 1,
+  title: "Algebraischer Datentypen für reguläre Ausrücke",
+  tags: (tag-bul,)
+)[
+  Gebe einen Datentypen an, der genutzt werden kann, um reguläre Ausdrücke
+  darzustellen. Zum Beispiel soll möglich sein, die folgenden regulären
+  Ausdrücke mithilfe des Typs zu spezifizieren.
+  - $"Hold the door"|("Hodor")^*$
+  - $("Plankton"|"Krabs")^*"Spongebob"$
+  Mache ich dir auch über die Präzedenzen von $|$ und der Konkatenation von
+  regulären Ausdrücken Gedanken, und gebe sie ebenso an.
+] <re-definition>
+
+#test(
+  level: 1,
+  clock: true,
+  tags: (tag-bul,),
+  deps: (<re-definition>,)
+)[
+  Das Wortproblem für reguläre Ausdrücke kann mithilfe der Brzozowski-Ableitung
+  entschieden werden, also $w in L(R)$ für ein Wort $w in Sigma^*$ und einen
+  regulären Ausdrück $R$ über $Sigma$ gilt.
+
+  Die Brzozowski-Ableitung ist definiert als die Sprache
+  $ u^(-1) L = { v in Sigma^* | u v in L } $
+  für eine Sprache $L subset.eq Sigma^*$ und ein Wort $u in Sigma^*$. Die
+  Sprache $u^(-1) L$ ist also die Menge aller Wörter aus $L$ bei denen Präfix
+  $u$ entfernt wurde.
+
+  - Betrachte das obige Problem erneut. Für welches $u in Sigma^*$ gilt
+    #block(width: 100%)[$ w in L(R) <=> u in w^(-1) L(R)? $]
+  - Implementiere eine Funktion ```hs nullable :: RE -> Bool```, die bestimmt,
+    ob $L(R)$ bzgl. der Konkatenation ein Monoid ist, also ob $epsilon in L(R)$
+    gilt.
+  - Die Brzozowski-Ableitung für einen Buchstaben $a in Sigma$ wird wie folgt
+    gebildet.
+    #columns(2)[
+      - $a^(-1) a = epsilon$,
+      - $a^(-1) b = emptyset$, falls $a != b$,
+      - $a^(-1) epsilon = emptyset$,
+      - $a^(-1) emptyset = emptyset$
+      #colbreak()
+      - $a^(-1) (R | S) = a^(-1) R | a^(-1) S$,
+      - $a^(-1) (R S) = (a^(-1) R) S$, falls $epsilon in.not L(R)$,
+      - $a^(-1) (R S) = (a^(-1) R) S | a^(-1) S$, falls $epsilon in L(R)$, und
+      - $a^(-1) (R^*) = a^(-1) R R^*$.
+    ]
+    Implementiere eine Funktion ```hs brzozowski :: Char -> RE -> RE```, die die
+    Brzozowski-Ableitung bzgl. eines Buchstaben berechnet.
+  - Implementiere eine Funktion ```hs derivative :: String -> RE -> RE```, die
+    Brzozowski-Ableitung bzgl. eines Wortes berechnet.
+  - Implementiere eine Funktion ```hs member :: String -> RE -> Bool```, das
+    Wortproblem für reguläre Ausdrücke löst.
+][
+  In @remark-brzozowski gehen wir darauf ein, wie man ```hs member``` direkter
+  implementieren kann.
+] <brzozowski>
+
+
 #check[
   Ich bin in der Lage, ...
   - (monomorphe) algebraische Datentypen zu definieren,
@@ -4655,7 +4715,8 @@ verallgemeinern kannst.
 #test(level: 2, clock: true, tags: (tag-bul,))[
   Gegeben sei folgender Datentyp für reguläre Ausdrücke.
   ```hs
-  data RE = Epsilon
+  data RE = Empty
+          | Epsilon
           | Let Char
           | RE :|: RE
           | RE :*: RE
@@ -4680,9 +4741,7 @@ verallgemeinern kannst.
     derivative].] nicht die beste Idee, um ein negatives Beispiel zu
     generieren? Angenommen du hast den DEA zum regulären Ausdruck, wie könntest
     du dann ein negatives Beispiel finden?)
-][
-
-]
+] <re-arbitary>
 
 #test(level: 2)[
   Es kommt häufiger vor, dass zufällig generierte Werte bestimmte Eigenschaften
@@ -5055,13 +5114,22 @@ Diese Aufgaben haben noch keinen Platz gefunden.
 //     return Array(self.size, data)
 // ```
 
+#draft-note[
+  - Die Datentypen für reguläre Ausdrücke wird inzwischen in @re-definition
+    behandelt.
+  - Das Wortproblem für reguläre Ausdrücke wird in @brzozowski behandelt und
+    kann zum Testen verwendet werden.
+  - In @re-arbitary werden zufällige reguläre Ausdrücke generiert und
+    Positiv-Beispiele für einen solchen Ausdruck.
+]
+
 #challenge(
   level: 3,
   clock: true,
   breakable: true,
   tags: (tag-bul, tag-deep-dive),
   templates: (),
-  deps: (<search>,),
+  deps: (<re-definition>, <brzozowski>, <search>,),
   title: [Von regulären Ausdrücken zu deterministischen endlichen Automaten]
 )[
   Du hörst parallel zu diesem Modul "Berechnung und Logik" und möchtest

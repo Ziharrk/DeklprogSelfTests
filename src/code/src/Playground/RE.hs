@@ -12,7 +12,8 @@ import Data.Maybe (fromMaybe, isJust, fromJust)
 import Playground.Search (bfs, bfsM, never, neverM, reachable, statefulBfs)
 
 -- Regular expression
-data RE = Epsilon
+data RE = Empty
+        | Epsilon
         | Let Char
         | RE :|: RE
         | RE :*: RE
@@ -23,7 +24,8 @@ infixl 7 :*:
 
 -- Pretty printing for regular expressions
 instance Show RE where
-  showsPrec _ Epsilon     = showString ""
+  showsPrec _ Empty       = showString "\x2205"
+  showsPrec _ Epsilon     = showString "\x03b5"
   showsPrec _ (Let c)     = showChar c
   showsPrec p (r1 :*: r2) = showParen (p > 7) (showsPrec 7 r1 . showsPrec 7 r2)
   showsPrec p (r1 :|: r2) = showParen (p > 6) (showsPrec 6 r1 . showChar '|' . showsPrec 7 r2)
@@ -39,7 +41,6 @@ re2 = Kleene (Kleene (Let 'a') :*: Kleene (Let 'b' :*: Let 'c')) :|: Let 'd'
 
 
 type TransitionMap s c = Map s (Map c [s])
-
 
 
 -- Finite automaton
@@ -99,6 +100,9 @@ newState = state (\(q : qs) -> (q, qs))
 thompson :: RE -> EpsNFA
 thompson r = evalState (go r) [0..]
   where
+    go Empty       = do 
+      q <- newState
+      return (FA [q] [] q [])
     go Epsilon     = do 
       q <- newState
       return (FA [q] [] q [q])
@@ -253,4 +257,35 @@ graphviz (FA qs delta s fs) =
            | otherwise   = show q
           
     edges = ["  " ++ show s ++ " -> " ++ show t ++ " [label=\"" ++ show c ++ "\"];" | (s, m) <- Map.assocs delta, (c, ts) <- Map.assocs m, t <- ts]
+
+
+-- | Checks if the language of a given regular expression is 'nullable'. A
+-- language is called nullable, if it contains the empty word.
+nullable :: RE -> Bool
+nullable Empty         = False
+nullable Epsilon       = True
+nullable (Kleene _)    = True
+nullable (re1 :|: re2) = nullable re1 || nullable re2
+nullable (re1 :*: re2) = nullable re1 && nullable re2
+nullable _             = False
+
+-- | Computes the Brzozowski derivative w.r.t. a letter.
+brzozowski :: Char -> RE -> RE
+brzozowski a Empty = Empty
+brzozowski a Epsilon = Empty
+brzozowski a (Let b)
+  | a == b    = Epsilon
+  | otherwise = Empty
+brzozowski a (re1 :|: re2) = brzozowski a re1 :|: brzozowski a re2
+brzozowski a (re1 :*: re2)
+  | nullable re1 = re1' :*: re2 :|: re2'
+  | otherwise    = re1' :*: re2
+  where 
+    re1' = brzozowski a re1
+    re2' = brzozowski a re2
+brzozowski a (Kleene re) = brzozowski a re :*: Kleene re
+
+-- | Computes the Brzozowski derivative w.r.t. a word.
+derivative :: String -> RE -> RE
+derivative w re = foldl (flip brzozowski) re w
 

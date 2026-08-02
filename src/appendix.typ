@@ -14,6 +14,29 @@ Tests oder Challenges. Sie sind aus unserer Neugier entstanden und stecken dich
 möglicherweise an. Du kannst aber auch alles ignorieren, was hier steht, und
 verpasst nichts.
 
+#remark(templates: ())[
+  Mithilfe des
+  #link("https://en.wikipedia.org/wiki/Continuation-passing_style")[continuation-passing style]
+  lässt sich das Wortproblem auf Basis von Brzozowski-Ableitungen für Wörter
+  elegant lösen.
+  ```hs
+  member :: RE -> String -> (String -> Bool) -> Bool
+  member Empty          _      _ = False
+  member Epsilon        s      k = k s
+  member (Let c)        (x:xs) k = x == c && k xs
+  member (Let _)        []     _ = False
+  member (re1 :|: re2)  s      k = matches re1 s k || matches re2 s k
+  member (re1 :*: re2)  s      k = matches re1 s (\s' -> matches re2 s' k)
+  member (Kleene re)    s      k =
+    k s || matches re s (\s' -> s' /= s && matches (Kleene re) s' k)
+  ```
+  Kurz gesagt ist ```hs k``` eine continuation bzw. Funktion, das Wortproblem
+  für das Restwort testet. Sie wird während der Verfahrens konstruiert und
+  an den Stellen aufgerufen, wo wir Basisfälle oder die Alternative erreichen.
+
+  Im Modul "Funktionale Programmierung" behandelt Frank diesen Programmierstil.
+] <remark-brzozowski>
+
 #remark[
   In @reverse_mode_ad wurden Funktionen ```hs d1``` und ```hs d2``` definiert.
   Diese ver- und entschachteln ```hs D```-Werte unterschiedlich tief, um die

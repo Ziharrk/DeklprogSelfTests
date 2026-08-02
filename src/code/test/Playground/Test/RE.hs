@@ -8,9 +8,11 @@ import Playground.RE
 
 instance Arbitrary RE where
   arbitrary = sized $ \n -> do
+    -- the weights are arbitrarily chosen to prevent the generation of
+    -- random words from exploding
     f <- frequency [(1, return Kleene), (9, return id)]
     case n of
-      0 -> return Epsilon
+      0 -> frequency [(1, return Empty), (9, return Epsilon)]
       1 -> fmap (f . Let) (elements ['a'..'z'])
       _ -> do
         k <- chooseInt (1, n)
