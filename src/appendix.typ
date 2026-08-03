@@ -18,10 +18,10 @@ Kontext geben.
   member Epsilon        s      k = k s
   member (Let c)        (x:xs) k = x == c && k xs
   member (Let _)        []     _ = False
-  member (re1 :|: re2)  s      k = matches re1 s k || matches re2 s k
-  member (re1 :*: re2)  s      k = matches re1 s (\s' -> matches re2 s' k)
+  member (re1 :|: re2)  s      k = member re1 s k || member re2 s k
+  member (re1 :*: re2)  s      k = member re1 s (\s' -> member re2 s' k)
   member (Kleene re)    s      k =
-    k s || matches re s (\s' -> s' /= s && matches (Kleene re) s' k)
+    k s || member re s (\s' -> s' /= s && member (Kleene re) s' k)
   ```
   Kurz gesagt ist ```hs k``` eine continuation bzw. Funktion, das Wortproblem
   für das Restwort testet. Sie wird während der Verfahrens konstruiert und
