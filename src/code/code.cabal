@@ -58,6 +58,7 @@ test-suite test
     Playground.Test.NumberTheorySpec
     Playground.Test.SearchTreeSpec
     Playground.Test.Language.RegExpSpec
+    Playground.Test.Language.FASpec
   if flag(dev)
     cpp-options:
       -UTEMPLATE

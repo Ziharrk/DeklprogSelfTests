@@ -276,57 +276,59 @@ member w a = reachable next stop (w, start a)
 #endif
 
 
-#ifndef TEMPLATE
--- stateElim :: DFA -> RegExp
--- stateElim dfa@(FA qs delta s fs) = Map.keys (Map.elems (transitions (foldr elim gnfa qs)) !! 0) !! 0
---   where
---     s' = maximum qs + 1
---     f' = maximum qs + 2
---
---     elim q gnfa = gnfa { states = newStates, transitions = mergeParallel (oldTransitions `unionT` newTransitions) }
---       where
---         newStates = filter (/= q) (states gnfa)
---
---         selfLoop = 
---           listToMaybe [ c | (c, ts') <- Map.assocs (Map.findWithDefault Map.empty q (transitions gnfa))
---                           , t <- ts'
---                           , t == q
---                           ]
---
---         connect re1 Nothing        re3 = re1 :*: re3
---         connect re1 (Just re2)     re3 = re1 :*: Kleene re2 :*: re3
---
---         newTransitions =
---           unionsT [ trans s (connect re1 selfLoop re2)  [t] 
---                     | (s, m) <- Map.assocs (transitions gnfa)
---                     , s /= q
---                     , (re1, ts) <- Map.assocs m
---                     , q `elem` ts
---                     , (re2, ts') <- Map.assocs (Map.findWithDefault Map.empty q (transitions gnfa))
---                     , t <- ts'
---                     , t /= q  -- no self loop
---                     ]
---         oldTransitions =
---           Map.map (Map.map (filter (/= q))) (Map.delete q (transitions gnfa))
---
---         mergeParallel tm =
---           unionsT [ trans s (foldr1 (:|:) res) [t]
---                   | ((s, t), res) <- Map.assocs grouped
---                   ]
---           where
---             grouped = Map.fromListWith (++)
---                         [ ((s, t), [re])
---                         | (s, m)  <- Map.assocs tm
---                         , (re, ts) <- Map.assocs m
---                         , t <- ts
---                         ]
---
---     gnfa = FA { states = s' : f' : qs
---               , transitions = trans s' Epsilon [s]
---                   `unionT` unionsT [trans f Epsilon [f'] | f <- fs]
---                   `unionT` transitions (mapTrans Let dfa)
---               , start = s'
---               , finals = [f']
---               }
+stateElim :: DFA -> RegExp
+#ifdef TEMPLATE
+stateElim = error "not implemented"
+#else
+stateElim dfa@(FA qs delta s fs) = Map.keys (Map.elems (transitions (foldr elim gnfa qs)) !! 0) !! 0
+  where
+    s' = maximum qs + 1
+    f' = maximum qs + 2
+
+    elim q gnfa = gnfa { states = newStates, transitions = mergeParallel (oldTransitions `unionT` newTransitions) }
+      where
+        newStates = filter (/= q) (states gnfa)
+
+        selfLoop = 
+          listToMaybe [ c | (c, ts') <- Map.assocs (Map.findWithDefault Map.empty q (transitions gnfa))
+                          , t <- ts'
+                          , t == q
+                          ]
+
+        connect re1 Nothing        re3 = re1 :*: re3
+        connect re1 (Just re2)     re3 = re1 :*: Kleene re2 :*: re3
+
+        newTransitions =
+          unionsT [ trans s (connect re1 selfLoop re2)  [t] 
+                    | (s, m) <- Map.assocs (transitions gnfa)
+                    , s /= q
+                    , (re1, ts) <- Map.assocs m
+                    , q `elem` ts
+                    , (re2, ts') <- Map.assocs (Map.findWithDefault Map.empty q (transitions gnfa))
+                    , t <- ts'
+                    , t /= q  -- no self loop
+                    ]
+        oldTransitions =
+          Map.map (Map.map (filter (/= q))) (Map.delete q (transitions gnfa))
+
+        mergeParallel tm =
+          unionsT [ trans s (foldr1 (:|:) res) [t]
+                  | ((s, t), res) <- Map.assocs grouped
+                  ]
+          where
+            grouped = Map.fromListWith (++)
+                        [ ((s, t), [re])
+                        | (s, m)  <- Map.assocs tm
+                        , (re, ts) <- Map.assocs m
+                        , t <- ts
+                        ]
+
+    gnfa = FA { states = s' : f' : qs
+              , transitions = trans s' Epsilon [s]
+                  `unionT` unionsT [trans f Epsilon [f'] | f <- fs]
+                  `unionT` transitions (mapTrans Let dfa)
+              , start = s'
+              , finals = [f']
+              }
 #endif
 
