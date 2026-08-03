@@ -341,7 +341,7 @@
     Brzozowski-Ableitung bzgl. eines Buchstaben berechnet.
   - Implementiere eine Funktion ```hs derivative :: String -> RegExp -> RegExp```, die
     Brzozowski-Ableitung bzgl. eines Wortes berechnet.
-  - Implementiere eine Funktion ```hs member :: String -> RegExp-> Bool```, das
+  - Implementiere eine Funktion ```hs member :: String -> RegExp -> Bool```, das
     Wortproblem für reguläre Ausdrücke löst.
 ][
   In @remark-brzozowski gehen wir darauf ein, wie man ```hs member``` direkter

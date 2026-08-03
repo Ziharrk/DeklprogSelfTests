@@ -55,6 +55,7 @@ test-suite test
     , hspec ==2.*
   build-tool-depends: hspec-discover:hspec-discover == 2.*
   other-modules:
+    Playground.Test.NumberTheorySpec
     Playground.Test.SearchTreeSpec
     Playground.Test.Language.RegExpSpec
   if flag(dev)

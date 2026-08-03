@@ -70,9 +70,13 @@ brzozowski a (re1 :*: re2)
     re1' = brzozowski a re1
     re2' = brzozowski a re2
 brzozowski a (Kleene re) = brzozowski a re :*: Kleene re
+#endif
 
 -- | Computes the Brzozowski derivative w.r.t. a word.
 derivative :: String -> RegExp -> RegExp
+#ifdef TEMPLATE
+derivative = error "not implemented"
+#else
 derivative w re = foldl (flip brzozowski) re w
 #endif
 

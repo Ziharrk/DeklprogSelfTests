@@ -15,8 +15,8 @@ gcd :: Integral a => a -> a -> a
 #ifdef TEMPLATE
 gcd = undefined
 #else
-gcd x 0 = x
-gcd x y = gcd x (x `mod` y)
+gcd x 0 = abs x
+gcd x y = gcd y (x `mod` y)
 #endif
 
 
@@ -27,7 +27,7 @@ pf = undefined
 #else
 pf a = go a [2..a]
   where
-    go 1 _      = []
+    go 1 _                  = [1]
     go a (p:xs) | a < p * p = [a]  -- optimization
                 | r == 0    = p : go q (p:xs)
                 | otherwise = go a xs
@@ -44,6 +44,8 @@ intersect (x:xs) (y:ys)
   | otherwise = intersect (x:xs) ys
 
 -- gcd :: Int -> Int -> Int
--- gcd a b = product (pf a `intersection` pf b)
+-- gcd a 0 = abs a 
+-- gcd 0 b = abs b
+-- gcd a b = product (pf (abs a) `intersect` pf (abs b))
 #endif
 
