@@ -6,6 +6,10 @@ module Playground.Language.RegExp
   , member
   ) where
 
+#ifndef TEMPLATE
+import Data.String (IsString(..))
+#endif
+
 -- | Regular expression
 --
 -- (In a different challenges we want to use RegExp as keys for Map. Thus, we
@@ -23,6 +27,19 @@ data RegExp = Empty
 
 infixl 6 :|: 
 infixl 7 :*: 
+
+-- "'IsString' is used in combination with the language extension 
+-- 'OverloadedStrings' language extension to convert the literals to different 
+-- string types."
+--
+-- See https://hackage-content.haskell.org/package/base/docs/Data-String.html#t:IsString
+--
+-- In our case, this allows us to @"abc"@ instead of 
+-- @Let 'a' :*: Let 'b' :*: Let 'c'@. If we had a parser, we could have used it
+-- instead.
+instance IsString RegExp where
+  fromString "" = Epsilon
+  fromString cs = foldr1 (:*:) (map Let cs)
 #endif
 
 #ifndef TEMPLATE

@@ -11,7 +11,8 @@ common base
     , mtl
   default-language: GHC2024
   default-extensions:
-    CPP
+    , OverloadedStrings
+    , CPP
 
 flag dev
   default: False
