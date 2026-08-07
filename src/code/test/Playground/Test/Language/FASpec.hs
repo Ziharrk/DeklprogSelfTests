@@ -19,5 +19,5 @@ spec = do
   describe "FA.stateElim" $ do
     modifyMaxSize (const 20) $
       prop "Inverse of compile" $
-        \(WithPositiveSample (re, w)) -> w `RegExp.member` FA.stateElim (FA.compile re))
+        \(WithPositiveSample (re, w)) -> w `RegExp.member` FA.stateElim (FA.compile re)
 
