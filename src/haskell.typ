@@ -5356,5 +5356,69 @@ Diese Aufgaben haben noch keinen Platz gefunden.
 //              in x : go (drop (length p) bs)
 // ```
 
+#test(
+  level: 3,
+  breakable: true,
+  title: "Recursive Descent Parser",
+  clock: true,
+  tags: (tag-deep-dive,)
+)[
+  Ein nicht-deterministischer Parser ist eine Funktion, die eine Folge von
+  Tokens nimmt und versucht aus dieser Folge, einen Wert abzuleiten. Für uns
+  soll die Folge von Tokens ein ```hs String``` sein und das "versucht"
+  modellieren als ```hs [(a, String)]```. Letztere Wahl ermöglicht es uns,
+  keinen Wert, einen Werte oder sogar mehrere Werte als Ergebnisse zuzulassen.
+  Wir betrachten also folgenden den Typ
+  #align(center)[```hs type Parser a = String -> [(a, String)]```.]
+  Das Parsen gilt als erfolgreich, wenn ein Wert mit einem leeren
+  ```hs String``` zurückgegeben wird.
+
+  Zum Beispiel könnte ein Parser ```hs number :: Parser Int``` folgendes
+  Ergebnis liefern, wenn man ihn wie folgt anwendet.
+  ```hs
+  > number "19851026backintime"
+  [(19851026, "backintime")]
+  ```
+
+  - Implementiere eine Funktion
+    ```hs parse :: Parser a -> String -> Maybe a```, die einen Parser nimmt
+    und ihn auf einen gegebenen String anwendet. Falls ein Werte geparst werden
+    konnte, soll der erste solche zurückgegeben werden. Im anderen Fall soll
+    ```hs Nothing``` zurückgegeben werden. Beachte, dass der erste Wert nicht
+    an der ersten Stelle des Ausgabeliste eines Parsers stehen muss.
+  - Implementiere eine Funktion
+    ```hs satisfy :: (Char -> Bool) -> Parser Char```, die einen Parser liefert,
+    der einen Buchstaben nur dann parst, wenn das gegebene Prädikat erfüllt ist,
+    und diesen Buchstaben zusammen mit dem Reststring zurückgibt. Falls der
+    String leer ist oder das Prädikat verletzt ist, soll kein Ergebnis
+    zurückgegeben werden.
+  - Basierend ```hs satisfy```, implementiere die Parser
+    - ```hs anyChar :: Parser Char```, der einen beliebigen Buchstaben parst,
+    - ```hs char :: Char -> Parser Char```, der einen festgelegten Buchstaben parst, und
+    - ```hs digit :: Parser Int```, der eine Zahl parst.
+    Zum Umwandeln der geparsten Ziffer kannst du ```hs read :: String -> Int```
+    verwenden.
+  - Normalerweise möchte man Parser miteinander kombinieren, um mehr als einen
+    Buchstaben der Eingabe zu parsen.
+    - Implementiere einen Parserkombinator
+      ```hs andThen :: Parser a -> (a -> Parser b) -> Parser b```, die einen
+      Parser und eine Funktion nimmt, die das Ergebnis des vorherigen Parsers
+      nimmt und basierend darauf einen neuen Parser konstruiert. Für die
+      Implementierung dieses Kombinators kann die Funktion
+      ```hs concatMap :: (a -> [b]) -> [a] -> [b]``` hilfreich sein.
+      hilfreich sein.
+    - Implementiere einen Parserkombinator
+      ```hs many :: Parser a -> Parser [a]```, der einen Parser beliebig häufig
+      anwendet, bis er fehlschlägt. Zum Beispiel soll das Ergebnis von
+      ```hs many digit "20151021"``` dann ```hs [([2, 0, 1, 5, 1, 0, 2, 1], "")]```
+      sein.
+    - Implementiere einen Parserkombinator
+      ```hs (<*) :: Parser a -> Parser b -> Parser b```, der zwei Parser
+      hintereinander anwendet und die Ergebnisse des ersten Parser behändelt,
+      während die Ergebnisse des zweiten Parser verworfen werden.
+  - Implementiere einen Parser ```hs number :: Parser Int```, der eine
+    nicht-negative Zahl parst.
+]
+
 #pagebreak(weak: true)
 
