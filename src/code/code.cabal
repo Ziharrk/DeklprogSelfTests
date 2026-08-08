@@ -21,6 +21,7 @@ library
   import:           base
   exposed-modules:
     Playground.Algorithms
+    Playground.AutomaticDifferentiation
     Playground.FFT
     Playground.Foldable
     Playground.LinearAlgebra
@@ -29,9 +30,11 @@ library
     Playground.Rational
     Playground.Language.RegExp
     Playground.Language.FA
+    Playground.Language.Parser
     Playground.Search
     Playground.SearchTree
     Playground.SymbolicDifferentiation
+    Playground.Tropical
     Playground.Polynomial
   hs-source-dirs:   src
   default-language: GHC2024

@@ -114,7 +114,7 @@ newState = state (\(q : qs) -> (q, qs))
 
 -- | Construct an epsilon NFA from a regular expression
 thompson :: RegExp -> EpsNFA
-thompson r = evalState (go r) [0..]
+thompson r = evalState (go r) ([0..] :: [Int])
 #if TEMPLATE
   where
     go = do undefined

@@ -888,8 +888,10 @@
 // TODO move matrix block and unblock here?
 
 #check[
-  Ich bin in der Lage, ...
-  - Pattern Matching zu nutzen.
+  Ich bin in der Lage, Pattern Matching zu nutzen, um
+  - auf Werte zuzugreifen,
+  - Funktionen induktiv zu definieren und
+  - effektiv Fälle zu unterscheiden.
 ]
 
 #pagebreak(weak: true)
@@ -1557,6 +1559,71 @@
   Python zu lösen.
 ]
 
+// https://hackage.haskell.org/package/parsec/docs/Text-Parsec.html
+#test(
+  level: 3,
+  breakable: true,
+  title: "Recursive Descent Parser",
+  clock: true,
+  tags: (tag-deep-dive,)
+)[
+  Ein nicht-deterministischer Parser ist eine Funktion, die eine Folge von
+  Tokens nimmt und versucht aus dieser Folge, einen Wert abzuleiten. Für uns
+  soll die Folge von Tokens ein ```hs String``` sein und das "versucht"
+  modellieren als ```hs [(a, String)]```. Letztere Wahl ermöglicht es uns,
+  keinen Wert, einen Werte oder sogar mehrere Werte als Ergebnisse zuzulassen.
+  Wir betrachten also folgenden den Typ
+  #align(center)[```hs type Parser a = String -> [(a, String)]```.]
+  Das Parsen gilt als erfolgreich, wenn ein Wert mit einem leeren
+  ```hs String``` zurückgegeben wird.
+
+  Zum Beispiel könnte ein Parser ```hs number :: Parser Int``` folgendes
+  Ergebnis liefern, wenn man ihn wie folgt anwendet.
+  ```hs
+  > number "19851026backintime"
+  [(19851026, "backintime")]
+  ```
+
+  - Implementiere eine Funktion
+    ```hs parse :: Parser a -> String -> Maybe a```, die einen Parser nimmt
+    und ihn auf einen gegebenen String anwendet. Falls ein Werte geparst werden
+    konnte, soll der erste solche zurückgegeben werden. Im anderen Fall soll
+    ```hs Nothing``` zurückgegeben werden. Beachte, dass der erste Wert nicht
+    an der ersten Stelle des Ausgabeliste eines Parsers stehen muss.
+  - Implementiere eine Funktion
+    ```hs satisfy :: (Char -> Bool) -> Parser Char```, die einen Parser liefert,
+    der einen Buchstaben nur dann parst, wenn das gegebene Prädikat erfüllt ist,
+    und diesen Buchstaben zusammen mit dem Reststring zurückgibt. Falls der
+    String leer ist oder das Prädikat verletzt ist, soll kein Ergebnis
+    zurückgegeben werden.
+  - Basierend ```hs satisfy```, implementiere die Parser
+    - ```hs anyChar :: Parser Char```, der einen beliebigen Buchstaben parst,
+    - ```hs char :: Char -> Parser Char```, der einen festgelegten Buchstaben parst, und
+    - ```hs digit :: Parser Int```, der eine Zahl parst.
+    Zum Umwandeln der geparsten Ziffer kannst du ```hs read :: String -> Int```
+    verwenden.
+  - Normalerweise möchte man Parser miteinander kombinieren, um mehr als einen
+    Buchstaben der Eingabe zu parsen.
+    - Implementiere einen Parserkombinator
+      ```hs andThen :: Parser a -> (a -> Parser b) -> Parser b```, die einen
+      Parser und eine Funktion nimmt, die das Ergebnis des vorherigen Parsers
+      nimmt und basierend darauf einen neuen Parser konstruiert. Für die
+      Implementierung dieses Kombinators kann die Funktion
+      ```hs concatMap :: (a -> [b]) -> [a] -> [b]``` hilfreich sein.
+      hilfreich sein.
+    - Implementiere einen Parserkombinator
+      ```hs many :: Parser a -> Parser [a]```, der einen Parser beliebig häufig
+      anwendet, bis er fehlschlägt. Zum Beispiel soll das Ergebnis von
+      ```hs many digit "20151021"``` dann ```hs [([2, 0, 1, 5, 1, 0, 2, 1], "")]```
+      sein.
+    - Implementiere einen Parserkombinator
+      ```hs (<*) :: Parser a -> Parser b -> Parser b```, der zwei Parser
+      hintereinander anwendet und die Ergebnisse des ersten Parser behändelt,
+      während die Ergebnisse des zweiten Parser verworfen werden.
+  - Implementiere einen Parser ```hs number :: Parser Int```, der eine
+    nicht-negative Zahl parst.
+] <recursive_descent_parser>
+
 #check[
   Ich bin in der Lage, ...
   - Funktionen höherer Ordnung zu erkennen, zu definieren und zu nutzen,
@@ -1951,37 +2018,6 @@
   ```
 ] <reverse_mode_ad>
 
-// ```hs
-// instance Num a => Num (D a) where
-//   D x1 d1 + D x2 d2 = D (x1 + x2) (d1 + d2)
-//   D x1 d1 - D x2 d2 = D (x1 - x2) (d1 - d2)
-//   D x1 d1 * D x2 d2 = D (x1 * x2) (d1 * x2 + x1 * d2)
-//   negate (D x d)    = D (negate x) (negate d)
-//   abs (D x d)       = D (abs x) (abs d)
-//   signum (D x d)    = D (signum x) (d * signum x)
-//   fromInteger x     = D (fromInteger x) 0
-//
-// instance Fractional a => Fractional (D a) where
-//   D x1 d1 / D x2 d2 = D (x1 / x2) ((d1 * x2 + x1 * d2) / (x2 * x2))
-//   fromRational r    = D (fromRational r) 0
-//
-// instance Floating a => Floating (D a) where
-//   pi = D pi 0
-//   exp (D x d)   = D (exp x)   (d * exp x)
-//   log (D x d)   = D (log x)   (d / x)
-//   sin (D x d)   = D (sin x)   (d * cos x)
-//   cos (D x d)   = D (cos x)   (d * negate (sin x))
-//   tan (D x d)   = D (tan x)   (d / (cos x) ^ 2)
-//   asin (D x d)  = D (asin x)  (d / sqrt (1 - x * x))
-//   acos (D x d)  = D (acos x)  (d / negate (sqrt (1 - x * x)))
-//   atan (D x d)  = D (atan x)  (d / (1 + x * x))
-//   sinh (D x d)  = D (sinh x)  (d * cosh x)
-//   cosh (D x d)  = D (cosh x)  (d * sinh x)
-//   asinh (D x d) = D (asinh x) (d / sqrt (1 + x * x))
-//   acosh (D x d) = D (acosh x) (d / sqrt (x * x - 1))
-//   atanh (D x d) = D (atanh x) (d / (1 - x * x))
-// ```
-
 #challenge(
   level: 3,
   clock: true,
@@ -2071,88 +2107,6 @@
   In @minplus_remark wird auf die offenen Probleme dieser Aufgabe genauer
   eingegangen.
 ] <minplus>
-
-// ```hs
-// import Data.List (transpose)
-//
-//
-// data WithInf a = Number a | Inf
-//   deriving Eq
-//
-// instance Show a => Show (WithInf a) where
-//   show (Number a) = show a
-//   show Inf        = "∞"
-//
-// instance Ord a => Ord (WithInf a) where
-//   Number a <= Number b = a <= b
-//   _        <= Inf      = True
-//   _        <= _        = False
-//
-// instance (Num a, Ord a) => Num (WithInf a) where
-//   Number a + Number b = Number (a + b)
-//   Number _ + Inf      = Inf
-//   Inf      + Number _ = Inf
-//   Inf      + Inf      = Inf
-//
-//   -- (-) omitted for readability, implicitly given via (+) and negate
-//
-//   Number a * Number b            = Number (a * b)
-//   Inf      * Number b | b > 0     = Inf
-//                       | otherwise = undefined
-//   Number a * Inf      | a > 0     = Inf
-//                       | otherwise = undefined
-//   Inf      * Inf                  = Inf
-//
-//   negate (Number a) = Number (negate a)
-//   negate Inf        = undefined
-//
-//   signum (Number a) = Number (signum a)
-//   signum Inf        = Number 1
-//
-//   abs (Number a) = Number (abs a)
-//   abs Inf        = Inf
-//
-//   fromInteger n = Number (fromInteger n)
-//
-//
-// newtype Tropical a = Tropical { getTropical :: WithInf a }
-//   deriving (Eq, Ord)
-//
-// instance Show a => Show (Tropical a) where
-//   show (Tropical x) = show x
-//
-// instance (Num a, Ord a) => Num (Tropical a) where
-//   Tropical a + Tropical b = Tropical (min a b)
-//   Tropical a - Tropical b = undefined
-//   Tropical a * Tropical b = Tropical (a + b)
-//
-//   abs (Tropical a) = Tropical (abs a)
-//   signum (Tropical a) = Tropical (signum a)
-//   fromInteger n = Tropical (fromInteger n)
-//
-//
-// data Mat a = Mat [[a]]
-//   deriving Show
-//
-// dot :: Num a => [a] -> [a] -> a
-// dot a b = foldl1 (+) (zipWith (*) a b)
-//
-// instance Num a => Num (Mat a) where
-//   Mat a + Mat b = Mat (zipWith (zipWith (+)) a b)
-//   Mat a - Mat b = Mat (zipWith (zipWith (-)) a b)
-//   Mat a * Mat b = Mat [map (dot r) (transpose b) | r <- a]
-//
-//   abs = undefined
-//   signum = undefined
-//   fromInteger = undefined
-//
-// instance Functor Mat where
-//   fmap f (Mat a) = Mat (fmap (fmap f) a)
-//
-//
-// shortestPaths :: (Num a, Ord a) => Mat (WithInf a) -> Mat (WithInf a)
-// shortestPaths m@(Mat a) = fmap getTropical ((fmap Tropical m) ^ (length a))
-// ```
 
 #challenge(
   level: 3,
@@ -4835,6 +4789,7 @@ nähern uns dennoch der tatsächlichen Implementierung von QuickCheck stark an.
 
 #challenge(
   level: 3,
+  breakable: true,
   clock: true,
   tags: (tag-deep-dive,),
   title: [Funktionen mit variabler Argumentanzahl am Beispiel ```hs quickCheck```]
@@ -5356,69 +5311,6 @@ Diese Aufgaben haben noch keinen Platz gefunden.
 //              in x : go (drop (length p) bs)
 // ```
 
-#test(
-  level: 3,
-  breakable: true,
-  title: "Recursive Descent Parser",
-  clock: true,
-  tags: (tag-deep-dive,)
-)[
-  Ein nicht-deterministischer Parser ist eine Funktion, die eine Folge von
-  Tokens nimmt und versucht aus dieser Folge, einen Wert abzuleiten. Für uns
-  soll die Folge von Tokens ein ```hs String``` sein und das "versucht"
-  modellieren als ```hs [(a, String)]```. Letztere Wahl ermöglicht es uns,
-  keinen Wert, einen Werte oder sogar mehrere Werte als Ergebnisse zuzulassen.
-  Wir betrachten also folgenden den Typ
-  #align(center)[```hs type Parser a = String -> [(a, String)]```.]
-  Das Parsen gilt als erfolgreich, wenn ein Wert mit einem leeren
-  ```hs String``` zurückgegeben wird.
-
-  Zum Beispiel könnte ein Parser ```hs number :: Parser Int``` folgendes
-  Ergebnis liefern, wenn man ihn wie folgt anwendet.
-  ```hs
-  > number "19851026backintime"
-  [(19851026, "backintime")]
-  ```
-
-  - Implementiere eine Funktion
-    ```hs parse :: Parser a -> String -> Maybe a```, die einen Parser nimmt
-    und ihn auf einen gegebenen String anwendet. Falls ein Werte geparst werden
-    konnte, soll der erste solche zurückgegeben werden. Im anderen Fall soll
-    ```hs Nothing``` zurückgegeben werden. Beachte, dass der erste Wert nicht
-    an der ersten Stelle des Ausgabeliste eines Parsers stehen muss.
-  - Implementiere eine Funktion
-    ```hs satisfy :: (Char -> Bool) -> Parser Char```, die einen Parser liefert,
-    der einen Buchstaben nur dann parst, wenn das gegebene Prädikat erfüllt ist,
-    und diesen Buchstaben zusammen mit dem Reststring zurückgibt. Falls der
-    String leer ist oder das Prädikat verletzt ist, soll kein Ergebnis
-    zurückgegeben werden.
-  - Basierend ```hs satisfy```, implementiere die Parser
-    - ```hs anyChar :: Parser Char```, der einen beliebigen Buchstaben parst,
-    - ```hs char :: Char -> Parser Char```, der einen festgelegten Buchstaben parst, und
-    - ```hs digit :: Parser Int```, der eine Zahl parst.
-    Zum Umwandeln der geparsten Ziffer kannst du ```hs read :: String -> Int```
-    verwenden.
-  - Normalerweise möchte man Parser miteinander kombinieren, um mehr als einen
-    Buchstaben der Eingabe zu parsen.
-    - Implementiere einen Parserkombinator
-      ```hs andThen :: Parser a -> (a -> Parser b) -> Parser b```, die einen
-      Parser und eine Funktion nimmt, die das Ergebnis des vorherigen Parsers
-      nimmt und basierend darauf einen neuen Parser konstruiert. Für die
-      Implementierung dieses Kombinators kann die Funktion
-      ```hs concatMap :: (a -> [b]) -> [a] -> [b]``` hilfreich sein.
-      hilfreich sein.
-    - Implementiere einen Parserkombinator
-      ```hs many :: Parser a -> Parser [a]```, der einen Parser beliebig häufig
-      anwendet, bis er fehlschlägt. Zum Beispiel soll das Ergebnis von
-      ```hs many digit "20151021"``` dann ```hs [([2, 0, 1, 5, 1, 0, 2, 1], "")]```
-      sein.
-    - Implementiere einen Parserkombinator
-      ```hs (<*) :: Parser a -> Parser b -> Parser b```, der zwei Parser
-      hintereinander anwendet und die Ergebnisse des ersten Parser behändelt,
-      während die Ergebnisse des zweiten Parser verworfen werden.
-  - Implementiere einen Parser ```hs number :: Parser Int```, der eine
-    nicht-negative Zahl parst.
-]
 
 #pagebreak(weak: true)
 
