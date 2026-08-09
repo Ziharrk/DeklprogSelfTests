@@ -1560,8 +1560,8 @@
 ]
 
 // https://hackage.haskell.org/package/parsec/docs/Text-Parsec.html
-#test(
-  level: 3,
+#challenge(
+  level: 2,
   breakable: true,
   title: "Recursive Descent Parser",
   clock: true,
@@ -1590,6 +1590,10 @@
     konnte, soll der erste solche zurückgegeben werden. Im anderen Fall soll
     ```hs Nothing``` zurückgegeben werden. Beachte, dass der erste Wert nicht
     an der ersten Stelle des Ausgabeliste eines Parsers stehen muss.
+  - Implementiere Funktionen ```succeed :: a -> Parser a```, die einen Parser
+    zurückgibt, der einen gegeben Wert zurückgibt und die Eingabe für den
+    Parser unangerührt zurückgibt. Implementiere weiter einen Parser
+    ```hs :: Parser a```, der kein Ergebnis liefert.
   - Implementiere eine Funktion
     ```hs satisfy :: (Char -> Bool) -> Parser Char```, die einen Parser liefert,
     der einen Buchstaben nur dann parst, wenn das gegebene Prädikat erfüllt ist,
@@ -1622,7 +1626,7 @@
       während die Ergebnisse des zweiten Parser verworfen werden.
   - Implementiere einen Parser ```hs number :: Parser Int```, der eine
     nicht-negative Zahl parst.
-] <recursive_descent_parser>
+] <parser-1>
 
 #check[
   Ich bin in der Lage, ...
@@ -4503,6 +4507,30 @@ verallgemeinern kannst.
 //             | otherwise   = let (rs, us') = sequence (go <$> succs u g) (u:us)
 //                              in (or rs, us')
 // ```
+
+#challenge(level: 3, clock: true, deps: (<parser-1>,))[
+  Wenn du nochmal einen genaueren Blick auf ein Paar der Funktionen wirfst,
+  die wir in unserem Parser-Code verwendet haben, dann könnte dir im Kontext
+  dieses Kapitels etwas auffallen. Hier sind zwei Funktionen, die wir
+  insbesondere hervorheben möchten.
+
+  ```hs
+  succeed :: a -> Parser a
+  succeed x = \s -> [(x, s)]
+
+  andThen :: Parser a -> (a -> Parser b) -> Parser b
+  andThen p k = concatMap (uncurry k) . p
+  ```
+
+  Arbeite deinen bisherigen Code so um, dass anstatt des Typs
+  ```hs type Parser a = String -> [(a, String)]``` nun
+  #align(center)[```hs newtype Parser a = Parser { getParser :: String -> [(a, String)] }```]
+  verwendet wird und implementiere ```hs Functor```-, ```hs Applicative```- und
+  ```hs Monad```-Instanzen für den neuen Typen. (Falls du @monadzero gemacht
+  hast, kannst du auch diese nutzen, um ```hs fail``` in diese Typklasse
+  auszulagern. Ebenso kannst du dir ```hs Alternative``` bzw. ```hs MonadPlus```
+  anschauen, um Alternation zu implementieren.)
+]
 
 // TODO I am not a friend of introducing these pagebreaks if a test starts
 //      close to the bottom of a page. Long term, it would be nice to detect
