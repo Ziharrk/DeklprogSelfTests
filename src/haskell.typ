@@ -4773,6 +4773,7 @@ verallgemeinern kannst.
   Implementiere eine Funktion ```hs stateElim :: DFA -> RegExp```, die aus einem
   DEA einen regulären Ausdruck erzeugt.
 ][
+  Hier findest du ein Verfahren zur #link("https://web.stanford.edu/class/archive/cs/cs103/cs103.1254/guide_to_state_elimination")[Zustandeliminierung].
   Wenn du bis hierhin gekommen bist, könntest du weiter den DEA mithilfe von
   Hopcrofts Algorithmus minimieren.
 ] <dfa-to-re>
