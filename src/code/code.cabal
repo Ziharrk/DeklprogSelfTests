@@ -31,6 +31,7 @@ library
     Playground.Language.RegExp
     Playground.Language.FA
     Playground.Language.Parser
+    Playground.Language.MonadicParser
     Playground.Search
     Playground.SearchTree
     Playground.SymbolicDifferentiation

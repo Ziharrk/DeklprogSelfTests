@@ -6,6 +6,9 @@ module Playground.Language.RegExp
   , member
   ) where
 
+import Control.Applicative ((<|>), many, some)
+import Playground.Language.MonadicParser
+
 #ifndef TEMPLATE
 import Data.String (IsString(..))
 #endif
@@ -40,6 +43,33 @@ infixl 7 :*:
 instance IsString RegExp where
   fromString "" = Epsilon
   fromString cs = foldr1 (:*:) (map Let cs)
+
+regexpP :: Parser RegExp
+regexpP = do
+  t <- termP
+  ts <- many (char '|' *> termP)
+  return (foldl (:|:) t ts)
+
+termP :: Parser RegExp
+termP = do
+  fs <- many factorP
+  case fs of
+    []      -> return Epsilon
+    (f:fs') -> return (foldl (:*:) f fs')
+
+factorP :: Parser RegExp
+factorP = do
+  a <- atomP
+  ks <- many (char '*')
+  return (foldl (\r _ -> Kleene r) a ks)
+
+atomP :: Parser RegExp
+atomP =
+      (Let <$> anyChar)
+  <|> (char '(' *> regexpP <* char ')')
+
+instance Read RegExp where
+  readsPrec _ = getParser regexpP
 #endif
 
 #ifndef TEMPLATE

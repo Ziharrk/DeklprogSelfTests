@@ -271,7 +271,7 @@
 
   Du kannst davon ausgehen, dass nur valide Indizes zum Löschen von Todos
   verwendet werden.
-]
+] <todolist-state>
 
 // ```hs
 // data TodoList = TodoList [Int] Int
@@ -4530,12 +4530,7 @@ verallgemeinern kannst.
   hast, kannst du auch diese nutzen, um ```hs fail``` in diese Typklasse
   auszulagern. Ebenso kannst du dir ```hs Alternative``` bzw. ```hs MonadPlus```
   anschauen, um Alternation zu implementieren.)
-]
-
-// TODO I am not a friend of introducing these pagebreaks if a test starts
-//      close to the bottom of a page. Long term, it would be nice to detect
-//      this and pagebreak if that is the case.
-#pagebreak(weak: true)
+] <parser-2>
 
 #challenge(
   level: 2,
@@ -4652,9 +4647,6 @@ verallgemeinern kannst.
 
   Die Suche entspricht auch der Vorlage, die du in Franks Einführung in die
   Algorithmik für Backtracking-Algorithmen kennengelernt hast.
-
-  Die hier definierten Funktionen eignen sich für @re-to-dfa. Dort treten
-  Breitensuchen in verschiedenen Situationen auf.
 ] <search>
 
 #test(
@@ -4700,6 +4692,118 @@ verallgemeinern kannst.
       engine: "neato"
     )
   ]
+]
+
+#challenge(
+  breakable: true,
+  clock: true,
+  level: 2,
+  tags: (tag-reg,),
+  deps: (<re-definition>,),
+  title: "Thompson-Konstruktion"
+)[
+  In @re-definition und @brzozowski haben reguläre Ausdrücke als ADTs in
+  Haskell dargestellt und ein erstes Verfahren kennengelernt, wie das
+  Wortproblem entschieden werden kann. In dieser Challenge möchten wir die
+  #link("https://en.wikipedia.org/wiki/Thompson's_construction")[Thompson-Konstruktion]
+  implementieren.
+
+  Implementiere eine Funktion ```hs thompson :: RegExp -> EpsNFA```. Die
+  wesentliche Schwierigkeit in der Implementierung dieses Verfahrens liegt in
+  der Erzeugung von neuen Zuständen, also solche deren Bezeichner noch nicht
+  verwendet wurde. Die Ideen aus @todolist-state können hier hilfreich sein.
+
+  In der Vorlage zu dieser Challenge ist ein Typ für die endlichen Automaten
+  neben anderen Hilfsfunktionen vorbereitet. Ebenso ist Code vorbereitet, der
+  dir helfen kann, die Zustände zu nummerieren.
+][
+  Die Dokumentation von ```hs Map``` findest du
+  #link("https://hackage-content.haskell.org/package/containers-0.8/docs/Data-Map-Lazy.html")[hier].
+] <thompson>
+
+#challenge(
+  breakable: true,
+  clock: true,
+  level: 2,
+  tags: (tag-reg,),
+  deps: (<thompson>,),
+  title: [Elimination von $epsilon$-Transitionen]
+)[
+  - Implementiere eine Funktion ```hs epsilonClosure :: EpsNFA -> [Int] -> [Int]```,
+    die die $epsilon$-Hülle einer Menge von Zuständen berechnet.
+  - Implementiere eine Funktion ```hs epsilonElim :: EpsNFA -> NFA```, die
+    alle $epsilon$-Transitionen des übergebenen nichtdeterministischen endlichen
+    Automaten entfernt. Hier brauchst du dir keine Gedanken über neue Bezeichner
+    für Zustände machen, da du die Zustände des alten Automaten wiederverwenden
+    kannst.
+][
+  ```hs bfsM``` aus @search könnte hier hilfreich sein.
+] <eps-elim>
+
+#challenge(
+  breakable: true,
+  clock: true,
+  level: 2,
+  tags: (tag-reg,),
+  deps: (<eps-elim>,),
+  title: [Potenzmengenkonstruktion]
+)[
+  - Implementiere die Potenzmengenkonstruktion. Dafür bietet es sich an den NEA
+    mit einer Tiefensuche zu durchlaufen, anstatt tabellarisch jede Teilmenge
+    der Zustandsmenge entsprechend zu verbinden. So werden dann nur Zustände
+    durchlaufen, die für den DEA wichtig sind.
+    Hier ist eine wesentliche Schwierigkeit, die neuen Zustände zu benennen.
+    Es bietet sich an, ein Wörterbuch der Form ```hs [([Int], Int)]``` zu
+    verwalten, in dem die neuen Bezeichner nachgeschaut werden können.
+  - Zuletzt, um zu überprüfen, ob der DEA die korrekte Sprache erkennt,
+    implementiere eine Funktion ```hs member :: String -> DFA -> Bool```, die
+    überprüft, ob ein Wort vom übergebenen Automaten erkannt wird.
+][
+  ```hs bfsM``` aus @search könnte hier hilfreich sein.
+] <powerset-construction>
+
+#challenge(
+  level: 2,
+  clock: true,
+  breakable: true,
+  tags: (tag-reg,),
+  deps: (<powerset-construction>,),
+  title: [Zustandeliminierung]
+)[
+  Implementiere eine Funktion ```hs stateElim :: DFA -> RegExp```, die aus einem
+  DEA einen regulären Ausdruck erzeugt.
+][
+  Wenn du bis hierhin gekommen bist, könntest du weiter den DEA mithilfe von
+  Hopcrofts Algorithmus minimieren.
+] <dfa-to-re>
+
+#challenge(
+  level: 2,
+  clock: true,
+  breakable: true,
+  tags: (tag-reg,),
+  deps: (<re-definition>, <parser-2>),
+  title: [Parser für reguläre Ausdrücke]
+)[
+  Um das Abenteuer in den regulären Sprachen abzurunden, kombinieren wir nun
+  unsere Erkenntnisse aus den Challenges zu den regulären Sprachen mit denen
+  zu Parsern.
+
+  Hier ist eine kontextfreie Grammatik für reguläre Ausdrücke, die du nutzen
+  kannst, um einen entsprechenden Parser zu implementieren. Anschließend kannst
+  du mithilfe dieses Parsers eine ```hs Read```-Instanz implementieren.
+
+  $
+  "RegExp" &::= "Term" ('|' "Term")^* \
+  "Term" &::= "Factor"^* \
+  "Factor" &::= "Atom" ('*')^* \
+  "Atom" &::= "Letter" | '(' "RegExp" ')' \
+  $
+
+  Um die leere Sprache parsen zu können, kannst du unter $"Atom"$ ein
+  Buchstaben nutzen, der für die leere Sprache stehen soll --- allerdings
+  kannst du diesen dann nicht mehr als normalen Buchstaben verwenden. Hier
+  müsstest den entsprechenden Buchstaben dann "escapen".
 ]
 
 #check[
@@ -5074,8 +5178,7 @@ nähern uns dennoch der tatsächlichen Implementierung von QuickCheck stark an.
   - einfache ```hs Arbitrary```-Instanzen anzugeben.
 ]
 
-
-#line()
+#pagebreak(weak: true)
 
 Diese Aufgaben haben noch keinen Platz gefunden.
 
@@ -5128,119 +5231,44 @@ Diese Aufgaben haben noch keinen Platz gefunden.
 //     return Array(self.size, data)
 // ```
 
-#draft-note[
-  - Die Datentypen für reguläre Ausdrücke wird inzwischen in @re-definition
-    behandelt.
-  - Das Wortproblem für reguläre Ausdrücke wird in @brzozowski behandelt und
-    kann zum Testen verwendet werden.
-  - In @re-arbitary werden zufällige reguläre Ausdrücke generiert und
-    Positiv-Beispiele für einen solchen Ausdruck.
-]
 
-#challenge(
-  level: 3,
-  clock: true,
-  breakable: true,
-  tags: (tag-reg, tag-deep-dive),
-  deps: (<re-definition>, <brzozowski>, <search>,),
-  title: [Von regulären Ausdrücken zu deterministischen endlichen Automaten]
-)[
-  Du hörst parallel zu diesem Modul "Berechnung und Logik" und möchtest
-  die Automaten-Konstruktionen für reguläre Sprachen in Haskell implementieren?
-  Dann schaue nicht weiter. Du hast die korrekte Challenge gefunden. Dieser Weg
-  ist lang und das erste Mal etwas steinig, also schnappe dir genügend
-  Proviant und bringe genügend Zeit mit.
-
-  In dieser Challenge wollen wir folgende Konstruktionen implementieren.
-  $
-  "Regulärer Ausdruck"
-  stretch(->)^"Thompson-\nKonstruktion"
-  epsilon"-NFA"
-  stretch(->)^(epsilon"-Hüllen")
-  "NFA"
-  stretch(->)^"Potenzmengen-\nkonstruktion"
-  "DFA"
-  $
-  Wir nutzen @re-definition als Basis.
-
-  - Bevor wir mit den Konstruktionen beginnen, müssen wir uns überlegen, wie wir
-    die Automaten darstellen wollen. Überlege dir Typen für
-    nichtdeterministische endliche Automaten mit und ohne $epsilon$-Transitionen
-    und deterministische endliche Automaten. Einen Zustand kannst du z.B. als
-    Ganzzahl darstellen.
-  - Implementiere die Thompson-Konstruktion als Funktion ```hs thompson :: RegExp -> EpsNFA```.
-    Hier ist eine wesentliche Schwierigkeit, neue Zustände zu erzeugen, da die
-    Bezeichnungen verschiedener Teilautomaten miteinander kollidieren können.
-    Das Problem lässt sich z.B. mithilfe eines Zählers lösen, der durch die
-    Konstruktion durchgeführt wird. Eine entsprechende Hilfsfunktion könnte
-    folgenden Typ haben: ```hs RegExp -> Int -> (EpsNFA, Int)```. Wenn du dich an
-    die ```hs State```-Monade wagen möchtest, könnte dies an dieser Stelle auch
-    nützlich sein, um den Zähler mitzuführen -- im Wesentlichen versteckst du
-    damit das explizite Mitführen des Zählers.
-  - Implementiere eine Funktion ```hs epsilonClosure :: EpsNFA -> [Int] -> [Int]```,
-    die die $epsilon$-Hülle einer Menge von Zuständen berechnet.
-  - Implementiere eine Funktion ```hs epsilonElim :: EpsNFA -> NFA```, die
-    alle $epsilon$-Transitionen des übergebenen nichtdeterministischen endlichen
-    Automaten entfernt. Hier brauchst du dir keine Gedanken über neue Bezeichner
-    für Zustände machen, da du die Zustände des alten Automaten wiederverwenden
-    kannst.
-  - Implementiere die Potenzmengenkonstruktion. Dafür bietet es sich an den NEA
-    mit einer Tiefensuche zu durchlaufen, anstatt tabellarisch jede Teilmenge
-    der Zustandsmenge entsprechend zu verbinden. So werden dann nur Zustände
-    durchlaufen, die für den DEA wichtig sind.
-    Hier ist eine wesentliche Schwierigkeit, die neuen Zustände zu benennen.
-    Es bietet sich an, ein Wörterbuch der Form ```hs [([Int], Int)]``` zu
-    verwalten, in dem die neuen Bezeichner nachgeschaut werden können.
-  - Zuletzt, um zu überprüfen, ob der DEA die korrekte Sprache erkennt,
-    implementiere eine Funktion ```hs member :: String -> DFA -> Bool```, die
-    überprüft, ob ein Wort vom übergebenen Automaten erkannt wird.
-
-  Wenn du bis hierhin gekommen bist, könntest du weiter den DEA mithilfe von
-  Hopcrofts Algorithmus minimieren.
-][
-  ```hs bfsM``` aus @search könnte hier hilfreich sein.
-
-  Die Dokumentation von ```hs Map``` findest du
-  #link("https://hackage-content.haskell.org/package/containers-0.8/docs/Data-Map-Lazy.html")[hier].
-] <re-to-dfa>
-
-#remark(breakable: false)[
-  In der Evaluation des Moduls im Wintersemester 2025/2026 hat sich eine Person
-  gewünscht, dass das Prolog-Interpreter-Projekt erweitert wird, sodass auch der
-  Parser selber gebaut werden muss. Leider ist in diesem Modul zu wenig Zeit,
-  um dieses Thema hinreichend zu behandeln. Das rabbit hole soll dir mit dieser
-  Bemerkung allerdigns eröffnet werden.
-
-  - Der Parser aus dem Projekt basiert auf
-    #link("https://hackage.haskell.org/package/parsec")[parsec], einer
-    Bibliothek bestehend aus verschiedenen monadischen Parser-Kombinatoren. Die
-    wesentlichen Ideen, die diese Bibliothek nutzt, findest du in dem
-    paper #link("https://www.cambridge.org/core/journals/journal-of-functional-programming/article/monadic-parsing-in-haskell/E557DFCCE00E0D4B6ED02F3FB0466093")[Monadic parsing in Haskell]
-    beschrieben. Etwas weniger in die Tiefe geht einer der Co-Autoren in diesem
-    Video #link("https://www.youtube.com/watch?v=dDtZLm7HIJs")[Functional Parsing].
-  - Mit dieser Bibliothek lassen sich sogenannte
-    #link("https://en.wikipedia.org/wiki/Recursive_descent_parser")[recursive descent parser]
-    spezifizieren. Die Syntax der Kombinatoren ermöglicht es, dass
-    entsprechende Grammatiken fast direkt aus der mathematischen
-    Notation in ein Haskell-Programm überführt werden können.
-  - Als Nächstes benötigen wir eine Grammatik für die Syntax von Prolog.
-    Nicht jede Grammatik ist dafür geeignet, insbesondere müssen
-    bei rekursiven Abstiegsparsern darauf achten, dass die
-    Grammatik nicht linksrekursiv ist.
-  - So können wir dann einen abstrakten Syntaxbaum berechnen, so wie du ihn aus
-    dem Projekt kennst. Der Baum wird durch die vielen gegebenen Typen
-    dargestellt.
-
-  Je nachdem wie dich das Thema interessiert, behandelt Frank z.B. in seiner
-  Vorlesung "Funktionale Programmierung" monadisches Parsen. Wenn du noch tiefer
-  einsteigen willst, dann wird auch hin und wieder das Modul "Übersetzerbau"
-  angeboten. Für einen tieferen Einstieg wird oft folgende Literatur empfohlen.
-  - Compilers: Principles, Techniques, and Tools von Alfred V. Aho,
-    Monica S. Lam, Ravi Sethi, und Jeffrey D. Ullman (auch dragon book genannt),
-    und
-  - Engineering a Compiler von Keith D. Cooper und Linda Torczon (das Modul
-    Übersetzerbau nutzt dieses Buch)
-]
+// #remark(breakable: false)[
+//   In der Evaluation des Moduls im Wintersemester 2025/2026 hat sich eine Person
+//   gewünscht, dass das Prolog-Interpreter-Projekt erweitert wird, sodass auch der
+//   Parser selber gebaut werden muss. Leider ist in diesem Modul zu wenig Zeit,
+//   um dieses Thema hinreichend zu behandeln. Das rabbit hole soll dir mit dieser
+//   Bemerkung allerdigns eröffnet werden.
+//
+//   - Der Parser aus dem Projekt basiert auf
+//     #link("https://hackage.haskell.org/package/parsec")[parsec], einer
+//     Bibliothek bestehend aus verschiedenen monadischen Parser-Kombinatoren. Die
+//     wesentlichen Ideen, die diese Bibliothek nutzt, findest du in dem
+//     paper #link("https://www.cambridge.org/core/journals/journal-of-functional-programming/article/monadic-parsing-in-haskell/E557DFCCE00E0D4B6ED02F3FB0466093")[Monadic parsing in Haskell]
+//     beschrieben. Etwas weniger in die Tiefe geht einer der Co-Autoren in diesem
+//     Video #link("https://www.youtube.com/watch?v=dDtZLm7HIJs")[Functional Parsing].
+//   - Mit dieser Bibliothek lassen sich sogenannte
+//     #link("https://en.wikipedia.org/wiki/Recursive_descent_parser")[recursive descent parser]
+//     spezifizieren. Die Syntax der Kombinatoren ermöglicht es, dass
+//     entsprechende Grammatiken fast direkt aus der mathematischen
+//     Notation in ein Haskell-Programm überführt werden können.
+//   - Als Nächstes benötigen wir eine Grammatik für die Syntax von Prolog.
+//     Nicht jede Grammatik ist dafür geeignet, insbesondere müssen
+//     bei rekursiven Abstiegsparsern darauf achten, dass die
+//     Grammatik nicht linksrekursiv ist.
+//   - So können wir dann einen abstrakten Syntaxbaum berechnen, so wie du ihn aus
+//     dem Projekt kennst. Der Baum wird durch die vielen gegebenen Typen
+//     dargestellt.
+//
+//   Je nachdem wie dich das Thema interessiert, behandelt Frank z.B. in seiner
+//   Vorlesung "Funktionale Programmierung" monadisches Parsen. Wenn du noch tiefer
+//   einsteigen willst, dann wird auch hin und wieder das Modul "Übersetzerbau"
+//   angeboten. Für einen tieferen Einstieg wird oft folgende Literatur empfohlen.
+//   - Compilers: Principles, Techniques, and Tools von Alfred V. Aho,
+//     Monica S. Lam, Ravi Sethi, und Jeffrey D. Ullman (auch dragon book genannt),
+//     und
+//   - Engineering a Compiler von Keith D. Cooper und Linda Torczon (das Modul
+//     Übersetzerbau nutzt dieses Buch)
+// ]
 
 #challenge(
   level: 2,
