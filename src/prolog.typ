@@ -510,7 +510,12 @@
   miteinander zusammen?
 ]
 
-#challenge(level: 1, clock: true)[
+#challenge(
+  level: 1,
+  breakable: true,
+  clock: true,
+  title: "Erfüllbarkeitsproblem der Aussagenlogik"
+)[
   Das Erfüllbarkeitsproblem der Aussagenlogik fragt, ob es für eine gegebene
   aussagenlogische Formel eine Belegung der Variablen mit wahr oder falsch
   gibt, sodass die Formel insgesamt wahr ist.

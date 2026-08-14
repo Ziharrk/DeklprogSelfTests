@@ -171,6 +171,7 @@
 #let tag-deep-dive = tag(fill: purple, "Deep Dive")
 #let tag-exam25-one = tag(fill: green.darken(20%), "Klausur 1. WS25/26")
 #let tag-reg = tag(fill: olive, "Reguläre Sprachen")
+#let tag-parser = tag(fill: olive, "Parser")
 #let tag-diff = tag(fill: olive, "Numerisches Differenzieren")
 #let tag-lse = tag(fill: olive, "Lineare Gleichungssysteme")
 #let tag-polynomial = tag(fill: olive, "Satz über rationale Nullstellen")
@@ -558,8 +559,13 @@
 
     if type(templates) == list and templates.len() > 0 or templates-from-index.len() > 0 {
       let what = if lower(head) == "challenge" { "Diese Challenge" } else { "Dieser Test" }
-      let templates = if templates == none { templates-from-index } else { templates }
-      let templates = templates.filter(((file, prob)) => prob >= 0.79).map(((file, _)) => file)
+
+      let templates = if templates == none {
+        templates-from-index.filter(((file, prob)) => prob >= 0.79).map(((file, _)) => file)
+      } else {
+        templates
+      }
+
       let block = {
         if templates.len() == 1 {
             [#what hat eine Vorlage: #raw(templates.at(0)).]

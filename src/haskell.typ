@@ -1565,7 +1565,7 @@
   breakable: true,
   title: "Recursive Descent Parser",
   clock: true,
-  tags: (tag-deep-dive,)
+  tags: (tag-deep-dive, tag-parser)
 )[
   Ein nicht-deterministischer Parser ist eine Funktion, die eine Folge von
   Tokens nimmt und versucht aus dieser Folge, einen Wert abzuleiten. Für uns
@@ -2537,6 +2537,102 @@ verallgemeinern kannst.
   // #link(git("blob/main/src/solutions/poly-fft.hs"), raw("poly-fft.hs")).
 ] <roots_of_polynomials>
 
+#challenge(
+  level: 2,
+  clock: true,
+  tags: (tag-deep-dive,),
+  breakable: true,
+  title: [Komprimierung mit Huffman-Kodierung]
+)[
+  In dieser Challenge möchten wir Daten mithilfe der Huffman-Kodierung
+  komprimieren. Wir bekommen als Eingabe eine Folge von Symbolen und geben
+  einen kürzere Folge von Bits zurück. Die Kernidee ist es, Symbole nach der
+  Häufigkeit ihres Vorkommens in der Eingabe zu kodieren. Wenn ein Symbol
+  besonders häufig vorkommt, sollte es eine möglichst kurze Kodierung bekommen.
+
+  Mithilfe von sogenannten Huffman-Bäumen können wir diese Kodierung
+  konstruieren. Dabei starten wir mit Blättern, die das Symbol und dessen
+  Häufigkeit in der Eingabe speichern. Darauf nehmen wir uns zwei Blätter (oder
+  interne Knoten) mit den geringsten Häufigkeiten und verknüpfen diese, indem
+  wir ein internen Knoten einführen, der diese genommenen Knoten als Kindknoten
+  hat und mit der kumulierten Häufigkeit beschriftet ist. Den konstruierten
+  Knoten packen wir dann zu der Auswahl von anderen Knoten zurück. Wir
+  wiederholen das Ziehen der Knoten, solange bis eine nur noch ein Knoten übrig
+  geblieben ist. Durch dieses Verfahren entsteht ein Binärbaum, dessen Blätter
+  mit geringster Häufigkeit am tiefsten im Baum liegen. Wenn wir nun den
+  Huffman-Baum zu den Blättern ablaufen und verfolgen, welche Kanten wir dabei
+  ablaufen, können wir die Folge von Kanten in ein binäres Wort übersetzen.
+  Zum Beispiel können wir dann das Absteigen in einen linken Teilbaum mit Null
+  kodieren und das Absteigen in einen rechten mit Eins. Daraus ergibt sich eine
+  optimale Kodierung für die Eingabe.
+
+  - Implementiere eine Funktion ```hs frequencies :: Eq a => [a] -> [(a, Int)]```,
+    die die Anzahl der Vorkommen eines Elements in einer gegebenen Liste
+    zurückgibt. Die Ausgabe soll als Funktion aufgefasst werden können.
+  - Implementiere einen Datentypen ```hs data HuffmanTree a```, um Huffman-Bäume
+    darzustellen. Definiere weiter eine Ordnung auf diesen basierend auf den
+    in den Knoten abgelegten Häufigkeiten.
+  - Implementiere eine Funktion ```hs huffmanTree :: Ord a => [(a, Int)] -> HuffmanTree a```,
+    die einen Huffman-Baum wie oben beschrieben basierend auf einem Histogramm
+    konstruiert.
+  - Gegeben den Datentypen ```hs data Bit = Zero | One deriving (Eq, Show)```,
+    implementiere eine Funktion ```hs code :: HuffmanTree a -> [(a, [Bit])]```,
+    die eine Kodierung auf Basis eines Huffman-Baumes berechnet.
+  - Implementiere Funktionen ```hs encode :: Eq a => [a] -> [(a, [Bit])] -> [Bit]```
+    und ```hs decode :: [Bit] -> [(a, [Bit]) -> [a]```, die eine Eingabe
+    enkodieren kann und dekodieren können.
+][
+  Eine Kodierung muss bijektiv sein.
+]
+
+// ```hs
+// import Data.List
+// import Data.Maybe
+//
+// frequencies :: Ord a => [a] -> [(a, Int)]
+// frequencies xs = map (\g -> (head g, length g)) (group (sort xs))
+//
+// data HuffmanTree a = Leaf a Int | Node (HuffmanTree a) Int (HuffmanTree a)
+//   deriving (Eq, Show)
+//
+// frequency :: HuffmanTree a -> Int
+// frequency (Leaf _ n)   = n
+// frequency (Node _ n _) = n
+//
+// instance Ord a => Ord (HuffmanTree a) where
+//   Leaf _ x   <= Leaf _ y   = x <= y
+//   Leaf _ x   <= Node _ y _ = x <= y
+//   Node _ x _ <= Leaf _ y   = x <= y
+//   Node _ x _ <= Node _ y _ = x <= y
+//
+// htree :: Ord a => [(a, Int)] -> HuffmanTree a
+// htree p = go (sort (map (uncurry Leaf) p))
+//   where
+//     go [t1]           = t1
+//     go (t1 : t2 : ts) = go (insert (Node t1 (frequency t1 + frequency t2) t2) ts)
+//
+//
+// data Bit = Zero | One
+//   deriving (Eq, Ord, Show)
+//
+// code :: HuffmanTree a -> [(a, [Bit])]
+// code (Leaf c _)     = [(c, [])]
+// code (Node t1 _ t2) = map (\(c, bs) -> (c, Zero : bs)) (code t1) ++ map (\(c, bs) -> (c, One : bs)) (code t2)
+//
+//
+// encode :: Eq a => [a] -> [(a, [Bit])] -> [Bit]
+// encode xs code = concatMap (fromJust . flip lookup code) xs
+//
+// decode :: Eq a => [Bit] -> [(a, [Bit])] -> [a]
+// decode bs code = go bs
+//   where
+//     icode = map (uncurry (flip (,))) code
+//
+//     go [] = []
+//     go bs = let (Just p) = find (`elem` map fst icode) (inits bs)
+//                 (Just x) = lookup p icode
+//              in x : go (drop (length p) bs)
+// ```
 
 #check[
   Ich bin in der Lage, ...
@@ -4260,7 +4356,13 @@ verallgemeinern kannst.
   angeben?
 ]
 
-#test(level: 3, clock: true, tags: (tag-level-up,), title: "Sequenzierung monadischer Aktionen")[
+#test(
+  level: 3,
+  clock: true,
+  breakable: true,
+  tags: (tag-level-up,),
+  title: "Sequenzierung monadischer Aktionen"
+)[
   Oft kommt es vor, dass Berechnungen zustandabhängig verschiedene Ergebnisse
   liefern. Zum Beispiel merken wir uns in einer Tiefensuche durch einen
   Graph, welche Knoten bereits besucht wurden, damit die Tiefensuche sich nicht
@@ -4508,7 +4610,12 @@ verallgemeinern kannst.
 //                              in (or rs, us')
 // ```
 
-#challenge(level: 3, clock: true, deps: (<parser-1>,))[
+#challenge(
+  level: 3,
+  clock: true,
+  tags: (tag-parser,),
+  deps: (<parser-1>,)
+)[
   Wenn du nochmal einen genaueren Blick auf ein Paar der Funktionen wirfst,
   die wir in unserem Parser-Code verwendet haben, dann könnte dir im Kontext
   dieses Kapitels etwas auffallen. Hier sind zwei Funktionen, die wir
@@ -4746,6 +4853,7 @@ verallgemeinern kannst.
   level: 2,
   tags: (tag-reg,),
   deps: (<eps-elim>,),
+  templates: ("Playground/Language/FA.hs",),
   title: [Potenzmengenkonstruktion]
 )[
   - Implementiere die Potenzmengenkonstruktion. Dafür bietet es sich an den NEA
@@ -4782,7 +4890,7 @@ verallgemeinern kannst.
   level: 2,
   clock: true,
   breakable: true,
-  tags: (tag-reg,),
+  tags: (tag-reg, tag-parser),
   deps: (<re-definition>, <parser-2>),
   title: [Parser für reguläre Ausdrücke]
 )[
@@ -4805,6 +4913,45 @@ verallgemeinern kannst.
   Buchstaben nutzen, der für die leere Sprache stehen soll --- allerdings
   kannst du diesen dann nicht mehr als normalen Buchstaben verwenden. Hier
   müsstest den entsprechenden Buchstaben dann "escapen".
+]
+
+#remark(breakable: false)[
+  In der Evaluation des Moduls im Wintersemester 2025/2026 hat sich eine Person
+  gewünscht, dass das Prolog-Interpreter-Projekt erweitert wird, sodass auch
+  der Parser selber gebaut werden muss. Leider ist in diesem Modul zu wenig
+  Zeit, um dieses Thema hinreichend zu behandeln. Das rabbit hole soll dir mit
+  dieser Bemerkung neben den bevorigen Tests und Challenges etwas weiter
+  eröffnet werden.
+
+  - Der Parser aus dem Projekt basiert auf
+    #link("https://hackage.haskell.org/package/parsec")[parsec], einer
+    Bibliothek bestehend aus verschiedenen monadischen Parser-Kombinatoren. Die
+    wesentlichen Ideen, die diese Bibliothek nutzt, findest du in dem
+    paper #link("https://www.cambridge.org/core/journals/journal-of-functional-programming/article/monadic-parsing-in-haskell/E557DFCCE00E0D4B6ED02F3FB0466093")[Monadic parsing in Haskell]
+    beschrieben. Etwas weniger in die Tiefe geht einer der Co-Autoren in diesem
+    Video #link("https://www.youtube.com/watch?v=dDtZLm7HIJs")[Functional Parsing].
+  - Mit dieser Bibliothek lassen sich sogenannte
+    #link("https://en.wikipedia.org/wiki/Recursive_descent_parser")[recursive descent parser]
+    spezifizieren. Die Syntax der Kombinatoren ermöglicht es, dass
+    entsprechende Grammatiken fast direkt aus der mathematischen
+    Notation in ein Haskell-Programm überführt werden können.
+  - Als Nächstes benötigen wir eine Grammatik für die Syntax von Prolog.
+    Nicht jede Grammatik ist dafür geeignet, insbesondere müssen
+    bei rekursiven Abstiegsparsern darauf achten, dass die
+    Grammatik nicht linksrekursiv ist.
+  - So können wir dann einen abstrakten Syntaxbaum berechnen, so wie du ihn aus
+    dem Projekt kennst. Der Baum wird durch die vielen gegebenen Typen
+    dargestellt.
+
+  Je nachdem wie dich das Thema interessiert, behandelt Frank z.B. in seiner
+  Vorlesung "Funktionale Programmierung" monadisches Parsen. Wenn du noch tiefer
+  einsteigen willst, dann wird auch hin und wieder das Modul "Übersetzerbau"
+  angeboten. Für einen tieferen Einstieg wird oft folgende Literatur empfohlen.
+  - Compilers: Principles, Techniques, and Tools von Alfred V. Aho,
+    Monica S. Lam, Ravi Sethi, und Jeffrey D. Ullman (auch dragon book genannt),
+    und
+  - Engineering a Compiler von Keith D. Cooper und Linda Torczon (das Modul
+    Übersetzerbau nutzt dieses Buch)
 ]
 
 #check[
@@ -5232,141 +5379,6 @@ Diese Aufgaben haben noch keinen Platz gefunden.
 //     return Array(self.size, data)
 // ```
 
-
-// #remark(breakable: false)[
-//   In der Evaluation des Moduls im Wintersemester 2025/2026 hat sich eine Person
-//   gewünscht, dass das Prolog-Interpreter-Projekt erweitert wird, sodass auch der
-//   Parser selber gebaut werden muss. Leider ist in diesem Modul zu wenig Zeit,
-//   um dieses Thema hinreichend zu behandeln. Das rabbit hole soll dir mit dieser
-//   Bemerkung allerdigns eröffnet werden.
-//
-//   - Der Parser aus dem Projekt basiert auf
-//     #link("https://hackage.haskell.org/package/parsec")[parsec], einer
-//     Bibliothek bestehend aus verschiedenen monadischen Parser-Kombinatoren. Die
-//     wesentlichen Ideen, die diese Bibliothek nutzt, findest du in dem
-//     paper #link("https://www.cambridge.org/core/journals/journal-of-functional-programming/article/monadic-parsing-in-haskell/E557DFCCE00E0D4B6ED02F3FB0466093")[Monadic parsing in Haskell]
-//     beschrieben. Etwas weniger in die Tiefe geht einer der Co-Autoren in diesem
-//     Video #link("https://www.youtube.com/watch?v=dDtZLm7HIJs")[Functional Parsing].
-//   - Mit dieser Bibliothek lassen sich sogenannte
-//     #link("https://en.wikipedia.org/wiki/Recursive_descent_parser")[recursive descent parser]
-//     spezifizieren. Die Syntax der Kombinatoren ermöglicht es, dass
-//     entsprechende Grammatiken fast direkt aus der mathematischen
-//     Notation in ein Haskell-Programm überführt werden können.
-//   - Als Nächstes benötigen wir eine Grammatik für die Syntax von Prolog.
-//     Nicht jede Grammatik ist dafür geeignet, insbesondere müssen
-//     bei rekursiven Abstiegsparsern darauf achten, dass die
-//     Grammatik nicht linksrekursiv ist.
-//   - So können wir dann einen abstrakten Syntaxbaum berechnen, so wie du ihn aus
-//     dem Projekt kennst. Der Baum wird durch die vielen gegebenen Typen
-//     dargestellt.
-//
-//   Je nachdem wie dich das Thema interessiert, behandelt Frank z.B. in seiner
-//   Vorlesung "Funktionale Programmierung" monadisches Parsen. Wenn du noch tiefer
-//   einsteigen willst, dann wird auch hin und wieder das Modul "Übersetzerbau"
-//   angeboten. Für einen tieferen Einstieg wird oft folgende Literatur empfohlen.
-//   - Compilers: Principles, Techniques, and Tools von Alfred V. Aho,
-//     Monica S. Lam, Ravi Sethi, und Jeffrey D. Ullman (auch dragon book genannt),
-//     und
-//   - Engineering a Compiler von Keith D. Cooper und Linda Torczon (das Modul
-//     Übersetzerbau nutzt dieses Buch)
-// ]
-
-#challenge(
-  level: 2,
-  clock: true,
-  tags: (tag-deep-dive,),
-  breakable: true,
-  title: [Komprimierung mit Huffman-Kodierung]
-)[
-  In dieser Challenge möchten wir Daten mithilfe der Huffman-Kodierung
-  komprimieren. Wir bekommen als Eingabe eine Folge von Symbolen und geben
-  einen kürzere Folge von Bits zurück. Die Kernidee ist es, Symbole nach der
-  Häufigkeit ihres Vorkommens in der Eingabe zu kodieren. Wenn ein Symbol
-  besonders häufig vorkommt, sollte es eine möglichst kurze Kodierung bekommen.
-
-  Mithilfe von sogenannten Huffman-Bäumen können wir diese Kodierung
-  konstruieren. Dabei starten wir mit Blättern, die das Symbol und dessen
-  Häufigkeit in der Eingabe speichern. Darauf nehmen wir uns zwei Blätter (oder
-  interne Knoten) mit den geringsten Häufigkeiten und verknüpfen diese, indem
-  wir ein internen Knoten einführen, der diese genommenen Knoten als Kindknoten
-  hat und mit der kumulierten Häufigkeit beschriftet ist. Den konstruierten
-  Knoten packen wir dann zu der Auswahl von anderen Knoten zurück. Wir
-  wiederholen das Ziehen der Knoten, solange bis eine nur noch ein Knoten übrig
-  geblieben ist. Durch dieses Verfahren entsteht ein Binärbaum, dessen Blätter
-  mit geringster Häufigkeit am tiefsten im Baum liegen. Wenn wir nun den
-  Huffman-Baum zu den Blättern ablaufen und verfolgen, welche Kanten wir dabei
-  ablaufen, können wir die Folge von Kanten in ein binäres Wort übersetzen.
-  Zum Beispiel können wir dann das Absteigen in einen linken Teilbaum mit Null
-  kodieren und das Absteigen in einen rechten mit Eins. Daraus ergibt sich eine
-  optimale Kodierung für die Eingabe.
-
-  - Implementiere eine Funktion ```hs frequencies :: Eq a => [a] -> [(a, Int)]```,
-    die die Anzahl der Vorkommen eines Elements in einer gegebenen Liste
-    zurückgibt. Die Ausgabe soll als Funktion aufgefasst werden können.
-  - Implementiere einen Datentypen ```hs data HuffmanTree a```, um Huffman-Bäume
-    darzustellen. Definiere weiter eine Ordnung auf diesen basierend auf den
-    in den Knoten abgelegten Häufigkeiten.
-  - Implementiere eine Funktion ```hs huffmanTree :: Ord a => [(a, Int)] -> HuffmanTree a```,
-    die einen Huffman-Baum wie oben beschrieben basierend auf einem Histogramm
-    konstruiert.
-  - Gegeben den Datentypen ```hs data Bit = Zero | One deriving (Eq, Show)```,
-    implementiere eine Funktion ```hs code :: HuffmanTree a -> [(a, [Bit])]```,
-    die eine Kodierung auf Basis eines Huffman-Baumes berechnet.
-  - Implementiere Funktionen ```hs encode :: Eq a => [a] -> [(a, [Bit])] -> [Bit]```
-    und ```hs decode :: [Bit] -> [(a, [Bit]) -> [a]```, die eine Eingabe
-    enkodieren kann und dekodieren können.
-][
-  Eine Kodierung muss bijektiv sein.
-]
-
-// ```hs
-// import Data.List
-// import Data.Maybe
-//
-// frequencies :: Ord a => [a] -> [(a, Int)]
-// frequencies xs = map (\g -> (head g, length g)) (group (sort xs))
-//
-// data HuffmanTree a = Leaf a Int | Node (HuffmanTree a) Int (HuffmanTree a)
-//   deriving (Eq, Show)
-//
-// frequency :: HuffmanTree a -> Int
-// frequency (Leaf _ n)   = n
-// frequency (Node _ n _) = n
-//
-// instance Ord a => Ord (HuffmanTree a) where
-//   Leaf _ x   <= Leaf _ y   = x <= y
-//   Leaf _ x   <= Node _ y _ = x <= y
-//   Node _ x _ <= Leaf _ y   = x <= y
-//   Node _ x _ <= Node _ y _ = x <= y
-//
-// htree :: Ord a => [(a, Int)] -> HuffmanTree a
-// htree p = go (sort (map (uncurry Leaf) p))
-//   where
-//     go [t1]           = t1
-//     go (t1 : t2 : ts) = go (insert (Node t1 (frequency t1 + frequency t2) t2) ts)
-//
-//
-// data Bit = Zero | One
-//   deriving (Eq, Ord, Show)
-//
-// code :: HuffmanTree a -> [(a, [Bit])]
-// code (Leaf c _)     = [(c, [])]
-// code (Node t1 _ t2) = map (\(c, bs) -> (c, Zero : bs)) (code t1) ++ map (\(c, bs) -> (c, One : bs)) (code t2)
-//
-//
-// encode :: Eq a => [a] -> [(a, [Bit])] -> [Bit]
-// encode xs code = concatMap (fromJust . flip lookup code) xs
-//
-// decode :: Eq a => [Bit] -> [(a, [Bit])] -> [a]
-// decode bs code = go bs
-//   where
-//     icode = map (uncurry (flip (,))) code
-//
-//     go [] = []
-//     go bs = let (Just p) = find (`elem` map fst icode) (inits bs)
-//                 (Just x) = lookup p icode
-//              in x : go (drop (length p) bs)
-// ```
 
 
 #pagebreak(weak: true)
