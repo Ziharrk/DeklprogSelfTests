@@ -3,19 +3,12 @@
 
 #heading(numbering: none, outlined: false, [Vorwort])
 
-// #text(0.8em)[
-//   Dieses Dokument ist vom #datetime.today().display("[day].[month].[year]"). Die
-//   aktuelle Version des Dokuments kannst du im moodle oder
-//   #link(git("releases/download/latest/main.pdf"))[direkt von GitHub herunterladen].
-//   Dieses Dokument wird ständig aktualisiert.
-// ]
-
 #context {
   let (test: (test,), challenge: (challenge,)) = thmcounters.final().counters
   [
     Dieses Dokument enthält #(test + challenge) Fragen und Aufgaben
-    unterschiedlicher Größe und andere Ressourcen zum Thema Deklarative
-    Programmierung. Die Inhalte dieses Dokuments sollen dir helfen, dein
+    unterschiedlicher Größe und andere Ressourcen zum Thema #emph[Deklarative
+    Programmierung]. Die Inhalte dieses Dokuments sollen dir helfen, dein
     Verständnis über Haskell und Prolog zu prüfen und zu stärken.
   ]
 }
@@ -29,25 +22,29 @@ Die Aufgaben sind grob in drei Schwierigkeitsstufen eingeteilt:
   werden müssen. Es sind erste Ideen oder einfache Lösungsstrategien notwendig.
 - #nemo-make-titlefmt(3, false)("Stufe 3") #h(0.3em) Komplexe Aufgaben, die ein
   vertieftes Verständnis voraussetzen. Die Lösung erfordert mehrere
-  Gedankenschritte, das Verknüpfen verschiedener Inhalte sowie eigenständigen
+  Gedankenschritte, das Verknüpfen verschiedener Inhalte sowie eigenständige
   Lösungsstrategien.
 
 Herausforderndere Aufgaben sind als Challenges gekennzeichet. Sie erfordern
 häufig das Verständnis mehrere Konzepte und führen teilweise zusätzliche Inhalte
 ein, die speziell für deren Bearbeitung relevant sind. Tests, deren Bearbeitung
 voraussichtlich mehr als 10 Minuten dauern, sind mit #hi("clock", solid: false)
-markiert, Challenges bei 30min.
+markiert, und Challenges bei 30min entsprechend markiert.
 
 In dieses Dokument haben es bereits sehr viele Selbsttests geschafft. Das kann
 überwältigend wirken. Um dem etwas entgegenzuwirken und um dir einen ersten
 Lernpfad zu zeigen, haben wir eine Auswahl von Aufgaben mit Tier-Emojis
-hervorgehoben. Es ist nicht notwendig, alle Tests und Challenges zu arbeiten.
+hervorgehoben. Es ist nicht notwendig, alle Tests und Challenges zu bearbeiten.
 Weiter sind Aufgaben mit den #tag-level-up und #tag-deep-dive markiert. Erstere
 gehen über die Lerninhalte der Vorlesung hinaus -- könnten dir aber helfen, die
 eigentlichen Lerninhalte der Vorlesung nochmal besser zu verstehen. Letztere
-solltest du, je nachdem wie viel Zeit du bereit zu investieren, nur dann
-machen, wenn du bereits mit gutem Verständnis dabei bist. Wir hoffen, das hilft
-dir bei deiner Orientierung in diesem Dokument.
+solltest du, je nachdem wie viel Zeit du bereit bist zu investieren, nur dann
+machen, wenn du bereits mit gutem Verständnis dabei bist. Wenn eine Aufgabe
+auf einer anderen aufbaut oder wenn es weiterführende Aufgaben gibt, dann
+findest du am Ende eines Tests Vermerkungen. #emoji.seedling führt dich zu
+grundlegenderen Aufgaben und #emoji.tree.deciduous führt dich zu
+weiterführenden Aufgaben. Wir hoffen, das hilft dir bei deiner Orientierung in
+diesem Dokument.
 
 Für die meisten Selbsttests wird es absehbar keine Lösungen geben. Stattdessen
 möchten wir dich ermutigen, deine Lösungen mit anderen Mitstudierenden oder
@@ -89,7 +86,7 @@ Auseinandersetzung mit den eigentlichen Inhalten.
 
 Aktuell kannst du aus den folgenden Abenteuern wählen.
 
-- *Reguläre Sprachen* #h(1em) Begleitend zum Modul "Berechnungen und Logik"
+- #tag-reg #h(0.5em) Begleitend zum Modul "Berechnungen und Logik"
   kannst du in diesem Abenteuer die dort gelernten und neue Konzepte in Haskell
   programmieren. In den Tests und Challenges wird auf alles Notwendige
   verwiesen oder erneut eingeführt. Wir schauen uns das Wortproblem für
@@ -130,23 +127,30 @@ Aktuell kannst du aus den folgenden Abenteuern wählen.
       }
     })
   }))
-- *Numerisches Differenzieren* #h(1em) In der Vorlesung bzw. im Skript bist du
+  Dieses Abenteuer startet in @re-definition.
+- #tag-diff #h(0.5em) In der Vorlesung bzw. im Skript bist du
   dem Approximieren der Ableitung durch finite Differenzen bereits beiläufig
   begegnet --- ein erster Fußabdruck auf einem viel größeren Terrain. Auf
   diesem Abenteuer brichst du tiefer auf und lernst symbolisches sowie
   automatisches Differenzieren kennen. Beide Methoden lassen sich überraschend
   elegant in Haskell umsetzen. Dabei erkundest du die Typklasse ```hs Num```
   und ihre Subtypklassen aus nächster Nähe. Am Ende deiner Reise wartet die
-  Implementierung des Gradientenverfahrens
-- *Lineare Gleichungssysteme* #h(1em) Das gaußsche Eliminationsverfahren kennst
+  Implementierung des Gradientenverfahrens. Dieses Abenteuer startet in @symbolic_diff.
+- #tag-lse #h(0.5em) Das gaußsche Eliminationsverfahren kennst
   du voraussichtlich bereits aus der Schule. In diese Abenteuer schauen wir uns
   die LR-Zerlegung regulärer Matrizen an und ergründen, wie sie uns hilft,
   verschiedene Probleme der linearen Algebra zu lösen. Die Werkzeuge, die du
   dir dabei erarbeitest, wirst du unterwegs immer wieder auch für andere Zwecke
-  einsetzen können.
-- *Satz über rationale Nullstellen* #h(1em) Dieses Abenteuer schickt dich auf
+  einsetzen können. Dieses Abenteuer startet in @block-matrices.
+- #tag-polynomial #h(0.5em) Dieses Abenteuer schickt dich auf
   eine Reise von ganzzahligen Polynomen über unimodularen Matrizen zu bis hinzu
   Eigenwerten. Dabei treiben wir den Erkenntnisgewinn des Satzes über rationale
-  Nullstellen auf die Spitze.
+  Nullstellen auf die Spitze. Dieses Abenteuer startet in @roots_of_polynomials.
+
+Die zu den Abenteuern gehörenden Tests und Challenges sind die Sektionen dieses
+Dokuments eingegliedert und entsprechend markiert. Die Sektionen orientieren
+sich an der Struktur des Skripts. Dadurch solltest du auch ein Gefühl dafür
+bekommen, ob bereits die notwendigen Konzepte in der Vorlesung besprochen
+wurden.
 
 #pagebreak(weak: true)

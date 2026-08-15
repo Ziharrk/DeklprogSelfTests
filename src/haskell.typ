@@ -2531,10 +2531,6 @@ verallgemeinern kannst.
   Wenn du aus irgendeinem Grund richtig Langeweile haben oder sehr viel Spaß
   solltest, kannst du versuchen, die Polynommultiplikation über die schnelle
   Fourier-Transformation zu berechnen.
-
-  // Lösungsvorschläge für diese Challenge findest du unter
-  // #link(git("blob/main/src/solutions/poly.hs"), raw("poly.hs")) und
-  // #link(git("blob/main/src/solutions/poly-fft.hs"), raw("poly-fft.hs")).
 ] <roots_of_polynomials>
 
 #challenge(
