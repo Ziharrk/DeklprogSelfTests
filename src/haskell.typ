@@ -101,7 +101,7 @@
 #test(level: 1)[
   Auf was müssen wir achten, wenn wir eine rekursive Funktion definieren?
   Die Antwort ist abhängig von dem, was die Funktion berechnen soll. Denke über
-  die verschiedenen Möglichkeiten nach und gebe Beispiele an.
+  die verschiedenen Möglichkeiten nach und gib Beispiele an.
 ]
 
 #test(level: 1, title: "Gegenseitige Rekursion")[
@@ -199,7 +199,7 @@
 
 #test(level: 1)[
   Was ist charakterisierend für Aufzählungstypen, Verbundstypen und rekursive
-  Datentypen? Gebe Beispiele für jeden dieser Typarten an.
+  Datentypen? Gib Beispiele für jeden dieser Typarten an.
 ]
 
 #test(level: 1)[
@@ -238,7 +238,7 @@
 ]
 
 #test(level: 1)[
-  Gebe ein Listendatentypen an, für den es nicht möglich ist, kein Element
+  Gib ein Listendatentypen an, für den es nicht möglich ist, kein Element
   zu enthalten.
 ][
   In Haskell heißt dieser Datentyp ```hs NonEmpty``` und ist definiert in
@@ -293,13 +293,13 @@
   title: "Algebraischer Datentypen für reguläre Ausrücke",
   tags: (tag-reg,)
 )[
-  Gebe einen Datentypen an, der genutzt werden kann, um reguläre Ausdrücke
+  Gib einen Datentypen an, der genutzt werden kann, um reguläre Ausdrücke
   darzustellen. Zum Beispiel soll möglich sein, die folgenden regulären
   Ausdrücke mithilfe des Typs zu spezifizieren.
   - $"Hold the door"|("Hodor")^*$
   - $("Plankton"|"Krabs")^*"Spongebob"$
   Mache ich dir auch über die Präzedenzen von $|$ und der Konkatenation von
-  regulären Ausdrücken Gedanken, und gebe sie ebenso an.
+  regulären Ausdrücken Gedanken, und gib sie ebenso an.
 ] <re-definition>
 
 #test(
@@ -534,7 +534,7 @@
            x3 = x2 :*: x
         in x3 :+: x2 :+: x :+: Num 1.0  -- x^3 + x^2 + x + 1
   ```
-  - Gebe die Funktion $sigma(x) = 1/(1+e^(-x))$ als Wert des Typs ```hs Fun```
+  - Gib die Funktion $sigma(x) = 1/(1+e^(-x))$ als Wert des Typs ```hs Fun```
     an.
   - Implementiere eine Funktion ```hs ($$) :: Fun -> Double -> Double```, die
     eine gegebene Funktion in einem gegebenen Punkt auswertet.
@@ -1039,7 +1039,7 @@
 ]
 
 #test(level: 1)[
-  Gebe ```hs map``` und ```hs filter``` unter der Unterverwendung von
+  Gib ```hs map``` und ```hs filter``` unter der Unterverwendung von
   ```hs foldr``` an.
 ]
 
@@ -1699,7 +1699,7 @@
     bereitstellen, die eine Sekunde vergehen lässt. Wenn keine Zeit mehr
     verblieben ist, dann hat diese Operation keine Auswirkung.
 
-  Gebe für jede Funktion mindestens ein Gesetz an.
+  Gib für jede Funktion mindestens ein Gesetz an.
 ][
   Einen Lösungsvorschlag für diese Aufgabe findest du im Anhang dieses Dokument
   als @timer_adt_solution. Weiter findest du in @timer_adt_mistakes auch
@@ -1708,7 +1708,7 @@
 ] <timer_adt>
 
 #challenge(level: none, clock: true)[
-  Gebe folgende abstrakte Datentypen an: Paar, Menge, stack, queue,
+  Gib folgende abstrakte Datentypen an: Paar, Menge, stack, queue,
   double-ended queue, knotenbeschrifteter Binärbaum, priority queue.
 
   Anschließend kannst du diese auch (naiv) implementieren und deine Implementierung
@@ -2401,7 +2401,7 @@ verallgemeinern kannst.
   ```
   Das ```hs {-# MINIMAL compare | (<=) #-}``` bedeutet, dass es genügt,
   entweder ```hs compare``` oder ```hs (<=)``` zu implementieren.
-  - Gebe Standarddefinitionen für die Funktionen der Typklasse an.
+  - Gib Standarddefinitionen für die Funktionen der Typklasse an.
   - Was ermöglicht es, eine Standarddefinition für ```hs compare``` angeben zu
     können?
   - Deine Standarddefinition von ```hs compare``` ist voraussichtlich
@@ -2439,7 +2439,7 @@ verallgemeinern kannst.
   Ein Monoid erweitert die Halbgruppe um ein neutrales Element bzgl. $ast.op$.
 
   Definiere Typklassen ```hs Semigroup``` und ```hs Monoid```, die diese
-  Strukturen implementieren. Gebe auch beispielhaft ein paar Instanzen für
+  Strukturen implementieren. Gib auch beispielhaft ein paar Instanzen für
   diese an.
 ][
   Diese Typklassen sind vorimplementiert in Haskell. Sie befinden sich in den
@@ -2459,7 +2459,7 @@ verallgemeinern kannst.
 ]
 
 #test(level: 2)[
-  Gebe für die folgenden Funktionsdefinitionen den allgemeisten Typ an.
+  Gib für die folgenden Funktionsdefinitionen den allgemeisten Typ an.
   - ```hs
     f x []     = [x]
     f x (y:ys)
@@ -2656,7 +2656,7 @@ verallgemeinern kannst.
 ]
 
 #test(level: 1)[
-  Gebe ein Beispiel an, das zeigt, dass die faule Auswertung berechnungsstärker
+  Gib ein Beispiel an, das zeigt, dass die faule Auswertung berechnungsstärker
   ist.
 ]
 
@@ -3529,7 +3529,7 @@ verallgemeinern kannst.
 
 #test(level: 1)[
   Was ist der Unterschied zwischen Typklassen und Typkonstruktorklassen?
-  Gebe Beispiele für beide an.
+  Gib Beispiele für beide an.
 ]
 
 #test(level: 1)[
@@ -3587,7 +3587,7 @@ verallgemeinern kannst.
   ```hs b``` auf andere Typen abbilden.
 
   - Überlege dir, wie du die ```hs Functor```-Typkonstruktorklasse für solche
-    Typen verallgemeinern kannst. Gebe eine konkrete Typkonstruktorklasse und
+    Typen verallgemeinern kannst. Gib eine konkrete Typkonstruktorklasse und
     Instanzen für ```hs Either a b``` und ```hs (,,)``` an.
   - Wie kannst du ```hs fmap``` aus deiner Definition zurückgewinnen?
   - Kannst du nun auch eine Funktion ```hs bf a b -> (a -> c) -> bf c b```
@@ -3647,7 +3647,7 @@ verallgemeinern kannst.
 #test(level: 1)[
   Gegeben sei der Datentyp
   #align(center)[```hs data NonEmpty a = a :| [a]```.]
-  Gebe ```hs Functor```-, ```hs Applicative```- und ```hs Monad```-Instanzen
+  Gib ```hs Functor```-, ```hs Applicative```- und ```hs Monad```-Instanzen
   für diesen Typen an.
 ]
 
@@ -3797,7 +3797,7 @@ verallgemeinern kannst.
 #test(level: 1)[
   Argumentiere anhand der Gesetze, die für eine ```hs Functor```-Instanzen
   gelten sollen, dass die folgenden ```hs Functor```-Instanzen keine gültigen
-  Instanzen sind. Gebe auch Beispiele an, die zeigen, dass die Gesetze nicht
+  Instanzen sind. Gib auch Beispiele an, die zeigen, dass die Gesetze nicht
   erfüllt sind.
   ```hs
   instance Functor [] where
@@ -4079,7 +4079,7 @@ verallgemeinern kannst.
     ```hs MonadZero``` zu einer Typkonstruktorklasse ```hs MonadFail```,
     die es erlaubt, eine Beschreibung des Fehlschags anzugeben. Sie soll dafür
     eine Funktion ```hs fail :: String -> m a``` definieren. Verallgemeinere
-    ```hs eval``` erneut mit der neuen Typkonstruktorklasse. Gebe zusätzlich
+    ```hs eval``` erneut mit der neuen Typkonstruktorklasse. Gib zusätzlich
     eine Instanz für den Typ ```hs Either String``` an -- alternativ,
     implementiere eine ```hs Functor```-, ```hs Applicative```-, ```hs Monad```-
     und ```hs MonadFail```-Instanz für den Typen
@@ -4345,7 +4345,7 @@ verallgemeinern kannst.
   data T1 a = A | B [T1 a]
   data T2 a = A | B (Maybe a)
   ```
-  Gebe Faltungsfunktionen an, die bis auf Umbenennung der Funktionsbezeichner
+  Gib Faltungsfunktionen an, die bis auf Umbenennung der Funktionsbezeichner
   und Datentypen in der Signatur identisch sind.
 ][
   Könntest du sogar eine für den Typ ```hs data TX f a = A | B (f (TX f a))```
@@ -4987,7 +4987,7 @@ verallgemeinern kannst.
   infixl 7 :*:
   ```
 
-  - Gebe eine ```hs Arbitrary```-Instanz für reguläre Ausdrücke an.
+  - Gib eine ```hs Arbitrary```-Instanz für reguläre Ausdrücke an.
   - Implementiere eine Funktion ```hs randomWord :: RegExp -> Gen String```, die
     ein Wort generiert, das in der Sprache des regulären Ausdrucks liegt.
   - Implementiere mithilfe des Typen

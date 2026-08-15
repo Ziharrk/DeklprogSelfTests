@@ -77,7 +77,7 @@
 ]
 
 #test(level: 1)[
-  Gebe Beispiele für Formeln an, die zeigen, dass Prolog nur eine echte
+  Gib Beispiele für Formeln an, die zeigen, dass Prolog nur eine echte
   Teilmenge der Prädikatenlogik erster Stufe umsetzt.
 ]
 
@@ -166,7 +166,7 @@
 
   Bewaffnet mit diesen Ideen, modelliere einen fairen 6-seitigen Würfel.
   Berechne alle Möglichkeiten, wie man drei Würfel werfen kann, um die
-  Augenzahl 11 zu erhalten. Gebe deine Lösung sowohl in Prolog als auch in
+  Augenzahl 11 zu erhalten. Gib deine Lösung sowohl in Prolog als auch in
   Haskell an. Um zu prüfen, ob die Summe von drei Zahlen einer anderen Zahl
   entspricht, kannst du ```SWI-Prolog sum3(X, Y, Z, S) :- S is X + Y + Z.```
   nutzen.
@@ -1021,7 +1021,7 @@ atomare Ausdrücke -- wenn nicht anders im Test oder in der Challenge eingeführ
 ]
 
 #test(level: 1)[
-  Gebe ein Beispiel für eine Eingabe an, für das der Unifikationsalgorithmus
+  Gib ein Beispiel für eine Eingabe an, für das der Unifikationsalgorithmus
   exponentielle Laufzeit bzgl. der Größe der Eingabeterme hat.
 
   Die Größe eines Terms $abs(dot)$ wir z.B. wie folgt berechnen:
