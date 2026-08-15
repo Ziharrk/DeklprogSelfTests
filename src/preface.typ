@@ -86,7 +86,7 @@ Auseinandersetzung mit den eigentlichen Inhalten.
 
 Aktuell kannst du aus den folgenden Abenteuern wählen.
 
-- #tag-reg #h(0.5em) Begleitend zum Modul "Berechnungen und Logik"
+- #tag-reg #h(0.5em) Begleitend zum Modul #emph[Berechnungen und Logik]
   kannst du in diesem Abenteuer die dort gelernten und neue Konzepte in Haskell
   programmieren. In den Tests und Challenges wird auf alles Notwendige
   verwiesen oder erneut eingeführt. Wir schauen uns das Wortproblem für
@@ -127,7 +127,8 @@ Aktuell kannst du aus den folgenden Abenteuern wählen.
       }
     })
   }))
-  Dieses Abenteuer startet in @re-definition.
+  Dieses Abenteuer startet in @re-definition. In den Tests und Challenges ist
+  zu den Ressourcen aus dem Modul #emph[Berechnungen und Logik] verlinkt.
 - #tag-diff #h(0.5em) In der Vorlesung bzw. im Skript bist du
   dem Approximieren der Ableitung durch finite Differenzen bereits beiläufig
   begegnet --- ein erster Fußabdruck auf einem viel größeren Terrain. Auf

@@ -4,7 +4,7 @@
 
 = Appendix
 
-Hier findest du Bemerkungen zu Tests und Challenges, die weiteren (interesanten)
+Hier findest du Bemerkungen zu Tests und Challenges, die weiteren (interessanten)
 Kontext geben.
 
 #remark(templates: ())[

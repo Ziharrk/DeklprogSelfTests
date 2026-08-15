@@ -199,7 +199,7 @@
 
 #test(level: 1)[
   Was ist charakterisierend für Aufzählungstypen, Verbundstypen und rekursive
-  Datentypen? Gib Beispiele für jeden dieser Typarten an.
+  Datentypen? Gib Beispiele für jede dieser Typarten an.
 ]
 
 #test(level: 1)[
@@ -238,8 +238,7 @@
 ]
 
 #test(level: 1)[
-  Gib ein Listendatentypen an, für den es nicht möglich ist, kein Element
-  zu enthalten.
+  Gib einen Listendatentypen an, der immer mindestens ein Element enthält.
 ][
   In Haskell heißt dieser Datentyp ```hs NonEmpty``` und ist definiert in
   #link("https://hackage-content.haskell.org/package/base/docs/Data-List-NonEmpty.html")[```hs Data.List.NonEmpty```].
@@ -293,11 +292,13 @@
   title: "Algebraischer Datentypen für reguläre Ausrücke",
   tags: (tag-reg,)
 )[
-  Gib einen Datentypen an, der genutzt werden kann, um reguläre Ausdrücke
+  Gib einen Datentypen an, der genutzt werden kann, um
+  #link("https://eduresources.informatik.uni-kiel.de/ag-wilke/bul/content/1-berechnungen/b8-regulaere-ausdruecke.html#def-b7-syntax-regulaerer-ausdruecke")[reguläre Ausdrücke]
   darzustellen. Zum Beispiel soll möglich sein, die folgenden regulären
   Ausdrücke mithilfe des Typs zu spezifizieren.
   - $"Hold the door"|("Hodor")^*$
   - $("Plankton"|"Krabs")^*"Spongebob"$
+  - $("dubi" ("dam")^* "da" "dubi" "daba" "dibi" "dam")^*$
   Mache ich dir auch über die Präzedenzen von $|$ und der Konkatenation von
   regulären Ausdrücken Gedanken, und gib sie ebenso an.
 ] <re-definition>
@@ -306,10 +307,13 @@
   level: 1,
   clock: true,
   tags: (tag-reg,),
+  breakable: true,
   deps: (<re-definition>,),
   title: "Brzozowski-Ableitung formaler Sprachen"
 )[
-  Das Wortproblem für reguläre Ausdrücke kann mithilfe der Brzozowski-Ableitung
+  Das Wortproblem für reguläre Ausdrücke kann mithilfe der
+  Brzozowski-Ableitung#note[In Berechnungen und Logik werden diese als
+  Linksquotienten vorgestellt, sofern sie behandelt werden.]
   entschieden werden, also $w in L(R)$ für ein Wort $w in Sigma^*$ und einen
   regulären Ausdrück $R$ über $Sigma$ gilt.
 
@@ -319,24 +323,31 @@
   Sprache $u^(-1) L$ ist also die Menge aller Wörter aus $L$ bei denen Präfix
   $u$ entfernt wurde.
 
-  - Betrachte das obige Problem erneut. Für welches $u in Sigma^*$ gilt
+  - Für welches $u in Sigma^*$ gilt
     #block(width: 100%)[$ w in L(R) <=> u in w^(-1) L(R)? $]
   - Implementiere eine Funktion ```hs nullable :: RegExp -> Bool```, die bestimmt,
     ob $L(R)$ bzgl. der Konkatenation ein Monoid ist, also ob $epsilon in L(R)$
     gilt.
   - Die Brzozowski-Ableitung für einen Buchstaben $a in Sigma$ wird wie folgt
     gebildet.
-    #columns(2)[
-      - $a^(-1) a = epsilon$,
-      - $a^(-1) b = emptyset$, falls $a != b$,
-      - $a^(-1) epsilon = emptyset$,
-      - $a^(-1) emptyset = emptyset$
-      #colbreak()
-      - $a^(-1) (R | S) = a^(-1) R | a^(-1) S$,
-      - $a^(-1) (R S) = (a^(-1) R) S$, falls $epsilon in.not L(R)$,
-      - $a^(-1) (R S) = (a^(-1) R) S | a^(-1) S$, falls $epsilon in L(R)$, und
-      - $a^(-1) (R^*) = a^(-1) R R^*$.
-    ]
+    #grid(
+      columns: (auto, auto),
+      gutter: 3em,
+      [
+        #emph[Basiselemente]
+        - $a^(-1) a = epsilon$,
+        - $a^(-1) b = emptyset$, falls $a != b$,
+        - $a^(-1) epsilon = emptyset$,
+        - $a^(-1) emptyset = emptyset$
+      ],
+      [
+        #emph[Induktive Regeln]
+        - $a^(-1) (R | S) = a^(-1) R | a^(-1) S$,
+        - $a^(-1) (R S) = (a^(-1) R) S$, falls $epsilon in.not L(R)$,
+        - $a^(-1) (R S) = (a^(-1) R) S | a^(-1) S$, falls $epsilon in L(R)$, und
+        - $a^(-1) (R^*) = a^(-1) R R^*$.
+      ]
+    )
     Implementiere eine Funktion ```hs brzozowski :: Char -> RegExp -> RegExp```, die die
     Brzozowski-Ableitung bzgl. eines Buchstaben berechnet.
   - Implementiere eine Funktion ```hs derivative :: String -> RegExp -> RegExp```, die
@@ -454,7 +465,7 @@
       m = n `div` 2
   ```
   Warum ist die binäre Suche auf Listen in Haskell ein eher ungeeignetes
-  Verfahren? Was würde man stattdessen vorgehen?
+  Verfahren? Wie würde man stattdessen vorgehen?
 ]
 
 #test(level: 1)[
@@ -547,11 +558,12 @@
 ] <symbolic_diff>
 
 #challenge(level: 1, tags: (tag-deep-dive,), title: "Mergesort")[
-  In Franks Einführung in die Algorithmik hast du verschiedene Varianten des
-  Mergesort-Algorithmus kennengelernt. Eine davon hat ausgenutzt, dass in
-  einer Eingabeliste bereits nicht-absteigend sortierte Teillisten vorkommen
-  können, um den Algorithmus zu beschleunigen. Implementiere diese Variante
-  als Funktion ```hs mergesort :: [Int] -> Int```.
+  In Einführung in die Algorithmik#note[Je nach Durchlauf kann sich das
+  geändert haben.] hast du verschiedene Varianten des Mergesort-Algorithmus
+  kennengelernt. Eine davon hat ausgenutzt, dass in einer Eingabeliste bereits
+  nicht-absteigend sortierte Teillisten vorkommen können, um den Algorithmus zu
+  beschleunigen. Implementiere diese Variante als Funktion
+  ```hs mergesort :: [Int] -> Int```.
 
   Für den Anfang kannst du annehmen, dass die Eingabelisten vom Typ
   ```hs [Int]``` sind. Wenn wir Typklassen behandelt haben, kannst du
@@ -2810,7 +2822,7 @@ verallgemeinern kannst.
   tags: (tag-reg,)
 )[
   Wir können endliche Automaten als unendliche Bäume darstellen.
-  Betrachte z.B. den endlichen Automaten für die reguläre Sprache $mono(a)^* mono(b)^*$.
+  Betrachte z.B. einen endlichen Automaten für die reguläre Sprache $mono(a)^* mono(b)^*$.
   #align(center)[
     #finite.automaton(
       (
@@ -2852,7 +2864,7 @@ verallgemeinern kannst.
         q14: ()
       ),
       initial: "q0",
-      final: ("q2", "q4", "q6"),
+      final: ("q0", "q1", "q2", "q3", "q4", "q6"),
       layout: finite.layout.custom.with(
         positions: (
           q0: (5.5, 6),
@@ -4808,7 +4820,7 @@ verallgemeinern kannst.
   In @re-definition und @brzozowski haben reguläre Ausdrücke als ADTs in
   Haskell dargestellt und ein erstes Verfahren kennengelernt, wie das
   Wortproblem entschieden werden kann. In dieser Challenge möchten wir die
-  #link("https://en.wikipedia.org/wiki/Thompson's_construction")[Thompson-Konstruktion]
+  #link("https://eduresources.informatik.uni-kiel.de/ag-wilke/bul/content/1-berechnungen/b8-regulaere-ausdruecke.html#die-thompson-konstruktion")[Thompson-Konstruktion]
   implementieren.
 
   Implementiere eine Funktion ```hs thompson :: RegExp -> EpsNFA```. Die
@@ -4840,7 +4852,9 @@ verallgemeinern kannst.
     für Zustände machen, da du die Zustände des alten Automaten wiederverwenden
     kannst.
 ][
-  ```hs bfsM``` aus @search könnte hier hilfreich sein.
+  - #link("https://eduresources.informatik.uni-kiel.de/ag-wilke/bul/content/1-berechnungen/b7-nichtdeterministische-endliche-automaten.html#def-b6-epsilon-huelle")[$epsilon$-Hülle -- Berechnungen und Logik]
+  - #link("https://eduresources.informatik.uni-kiel.de/ag-wilke/bul/content/1-berechnungen/b7-nichtdeterministische-endliche-automaten.html#eliminierung-von-varepsilon-transitionen")[Eliminierung von $epsilon$-Tansitionen -- Berechnungen und Logik]
+  - ```hs bfsM``` aus @search könnte hier hilfreich sein.
 ] <eps-elim>
 
 #challenge(
@@ -4852,7 +4866,7 @@ verallgemeinern kannst.
   templates: ("Playground/Language/FA.hs",),
   title: [Potenzmengenkonstruktion]
 )[
-  - Implementiere die Potenzmengenkonstruktion. Dafür bietet es sich an den NEA
+  - Implementiere die #link("https://eduresources.informatik.uni-kiel.de/ag-wilke/bul/content/1-berechnungen/b7-nichtdeterministische-endliche-automaten.html#sec-potenzmengenkonstruktion")[Potenzmengenkonstruktion]. Dafür bietet es sich an den NEA
     mit einer Tiefensuche zu durchlaufen, anstatt tabellarisch jede Teilmenge
     der Zustandsmenge entsprechend zu verbinden. So werden dann nur Zustände
     durchlaufen, die für den DEA wichtig sind.
@@ -4872,12 +4886,13 @@ verallgemeinern kannst.
   breakable: true,
   tags: (tag-reg,),
   deps: (<powerset-construction>,),
-  title: [Zustandeliminierung]
+  title: [Zustandseliminierung]
 )[
   Implementiere eine Funktion ```hs stateElim :: DFA -> RegExp```, die aus einem
   DEA einen regulären Ausdruck erzeugt.
 ][
-  Hier findest du ein Verfahren zur #link("https://web.stanford.edu/class/archive/cs/cs103/cs103.1254/guide_to_state_elimination")[Zustandeliminierung].
+  Hier findest du ein Verfahren zur #link("https://web.stanford.edu/class/archive/cs/cs103/cs103.1254/guide_to_state_elimination")[Zustandseliminierung]. In Berechnungen und Logik
+  findest du es als #link("https://eduresources.informatik.uni-kiel.de/ag-wilke/bul/content/1-berechnungen/b8-regulaere-ausdruecke.html#zusatz-von-automaten-zu-regul%C3%A4ren-ausdr%C3%BCcken")[Zusatz im Kapitel über reguläre Ausdrücke].
   Wenn du bis hierhin gekommen bist, könntest du weiter den DEA mithilfe von
   Hopcrofts Algorithmus minimieren.
 ] <dfa-to-re>
