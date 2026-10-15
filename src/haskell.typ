@@ -161,7 +161,7 @@
 ]
 
 #test(level: 1)[
-  Ist der folgende Ausdruck typkorrekt?
+  Ist der folgende Ausdruck typkorrekt? Begründe deine Antwort.
   #align(center)[```hs if 0 then 3.141 else 3141```]
 ]
 
