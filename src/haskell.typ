@@ -46,7 +46,6 @@
 
 #test(
   level: 1,
-  tags: (tag-exam25-one,),
   animal: true,
   title: "Imperative Variablen in funktionalen Programmiersprachen"
 )[
@@ -436,7 +435,7 @@
   Typkonstruktor?
 ]
 
-#test(level: 1, tags: (tag-exam25-one,))[
+#test(level: 1)[
   Welche der aufgezählten Funktionen ist partiell definiert?
   #align(center)[
     ```hs init, concat, head, (+), tail, div, mod, maximum, sum, zip```
@@ -727,7 +726,7 @@
   wollen.
 ]
 
-#test(level: 1, tags: (tag-exam25-one,))[
+#test(level: 1)[
   Manche Funktionen lassen sich nur partiell sinnvoll definieren. Implementiere
   die Funktionen
   - ```hs head, last :: [a] -> a```, die das erste und letzte Element einer
@@ -1690,7 +1689,6 @@
 
 #test(
   level: 1,
-  tags: (tag-exam25-one,),
   breakable: true,
   animal: true
 )[
@@ -3417,7 +3415,7 @@ verallgemeinern kannst.
   - Wieso können ```hs IO```-Berechnung in Haskell als "pure" betrachtet werden?
 ]
 
-#test(level: 1, tags: (tag-exam25-one,))[
+#test(level: 1)[
   Mit ```hs getLine :: IO String``` können Zeilen aus der Standardeingabe
   gelesen werden. Oft wollen wir den Wert haben, der durch die eingebene
   Zeichenkette repräsentiert wird. Wie können wir diesen Wert erhalten?
@@ -3606,7 +3604,7 @@ verallgemeinern kannst.
     angeben -- also quasi ein ```hs fmap``` für den anderen Typen?
 ]
 
-#test(level: 1, tags: (tag-exam25-one,))[
+#test(level: 1)[
   Gegeben sei folgender Datentyp:
   #align(center)[```hs data Fiction a = Real a | Fake (Fiction a)```.]
 

@@ -98,7 +98,7 @@
   }
 
   set heading(
-    numbering: (..args) => numbering("1.1", ..args) + h(0.5em)
+    numbering: (..args) => numbering("1.1.", ..args) + h(0.5em)
   )
   show heading: set block(above: 1.4em, below: 1em)
   show math.equation.where(block: false): box
@@ -169,7 +169,6 @@
 
 #let tag-level-up = tag(fill: eastern, "Level Up")
 #let tag-deep-dive = tag(fill: purple, "Deep Dive")
-#let tag-exam25-one = tag(fill: green.darken(20%), "Klausur 1. WS25/26")
 #let tag-reg = tag(fill: olive, "Reguläre Sprachen")
 #let tag-parser = tag(fill: olive, "Parser")
 #let tag-diff = tag(fill: olive, "Numerisches Differenzieren")

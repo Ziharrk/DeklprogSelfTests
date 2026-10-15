@@ -1,11 +1,7 @@
-// TODO gebrochene Boxen haben oben und unten gezogene Grenzen, die sind hässlich
-//      deshalb breakable: false, Ziel ist aber wieder true
-// TODO für ein paar Tests Lösungen angeben?
 #import "prelude.typ": *
 #show: config
 
 #set document(..meta)
-#metadata((typst-preview: (title: meta.title)))
 
 #[
   #set align(horizon)
@@ -43,27 +39,4 @@
 
 #context {
   deps-build-backward()
-  // deps-compute-depths()
 }
-
-// #pagebreak(weak: true)
-
-// #context {
-//   let forward-graph = deps-graph-forward.final()
-//   let backward-graph = deps-graph-backward.final()
-//   let labels = deps-labels.final()
-//
-//   let nodes = forward-graph.keys() + backward-graph.keys()
-//   let edges = backward-graph.pairs().map(((v, ws)) => ws.map(w => v + " -> " + w).join(";\n")).join(";\n") + ";"
-//
-//   diagraph.render(
-//     engine: "neato",
-//     "digraph {"
-//     + "node[shape=none];"
-//     + "edge[arrowsize=0.5,len=2];"
-//     + edges
-//     + "}",
-//     labels: labels
-//   )
-// }
-//

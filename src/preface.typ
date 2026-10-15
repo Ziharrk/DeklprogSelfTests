@@ -3,20 +3,21 @@
 
 #heading(numbering: none, outlined: false, [Vorwort])
 
-#context {
+#let num-tests = context {
   let (test: (test,), challenge: (challenge,)) = thmcounters.final().counters
-  [
-    Dieses Dokument enthält #(test + challenge) Fragen und Aufgaben
-    unterschiedlicher Größe und andere Ressourcen zum Thema #emph[Deklarative
-    Programmierung]. Die Inhalte dieses Dokuments sollen dir helfen, dein
-    Verständnis über Haskell und Prolog zu prüfen und zu stärken.
-  ]
+  test + challenge
 }
+
+Dieses Dokument enthält #num-tests Fragen und Aufgaben unterschiedlicher Länge
+und andere Ressourcen zum Thema #emph[Deklarative Programmierung]. Die Inhalte
+dieses Dokuments sollen dir helfen, dein Verständnis über Haskell und Prolog zu
+prüfen und zu stärken.
 
 Die Aufgaben sind grob in drei Schwierigkeitsstufen eingeteilt:
 - #nemo-make-titlefmt(1, false)("Stufe 1") #h(0.3em) Aufgaben zur Überprüfung
   grundlegender Kenntnisse. Die Lösung erfolgt durch direktes Anwenden
-  bekannter Regeln oder Verfahren und erfordert kein vertieftes Nachdenken.
+  bekannter Regeln oder Verfahren und sollten kein vertieftes Nachdenken
+  erfordern.
 - #nemo-make-titlefmt(2, false)("Stufe 2") #h(0.3em) Aufgaben, bei denen
   grundlegende Kenntnisse angewendet und durch eigene Überlegungen ergänzt
   werden müssen. Es sind erste Ideen oder einfache Lösungsstrategien notwendig.
@@ -25,11 +26,12 @@ Die Aufgaben sind grob in drei Schwierigkeitsstufen eingeteilt:
   Gedankenschritte, das Verknüpfen verschiedener Inhalte sowie eigenständige
   Lösungsstrategien.
 
-Herausforderndere Aufgaben sind als Challenges gekennzeichet. Sie erfordern
-häufig das Verständnis mehrere Konzepte und führen teilweise zusätzliche Inhalte
-ein, die speziell für deren Bearbeitung relevant sind. Tests, deren Bearbeitung
-voraussichtlich mehr als 10 Minuten dauern, sind mit #hi("clock", solid: false)
-markiert, und Challenges bei 30min entsprechend markiert.
+Herausforderndere Aufgaben sind als #emph[Challenges] gekennzeichet. Sie
+erfordern häufig das Verständnis mehrere Konzepte und führen teilweise
+zusätzliche Inhalte ein, die speziell für deren Bearbeitung relevant sind.
+Tests, deren Bearbeitung voraussichtlich mehr als 10 Minuten dauern, sind mit
+#hi("clock", solid: false) markiert, und Challenges bei 30min entsprechend
+markiert.
 
 In dieses Dokument haben es bereits sehr viele Selbsttests geschafft. Das kann
 überwältigend wirken. Um dem etwas entgegenzuwirken und um dir einen ersten
