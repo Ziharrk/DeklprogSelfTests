@@ -477,6 +477,60 @@
 // isort(Lt, [X|Xs], Ys, Zs) :- insert(Lt, X, Ys, Us), isort(Lt, Xs, Us, Zs).
 // ```
 
+#test(level: 1)[
+  Der Nichtdeterminismus im Beweis einer Anfrage tritt genau dann auf, wenn
+  mehrere Regeln passen. Hier ist ein einfaches Prolog-Programm, dass auf
+  Basis einer Benutzereingabe $n in NN$, die $n$. Fibonacci-Zahl berechnet.
+  ```SWI-Prolog
+  :- initialization(main, main).
+
+  main :-
+    write('Enter a number (end with a period): '),
+    read(N),
+    fib(N, F),
+    format('fib(~w) = ~w\n', [N, F]),
+    halt.
+
+  fib(0, 0).
+  fib(1, 1).
+  fib(N, F) :-
+    N > 1,
+    N1 is N - 1,
+    N2 is N - 2,
+    fib(N1, F1),
+    fib(N2, F2),
+    F is F1 + F2
+  ```
+  Vergleiche dieses Programm mit dem folgenden Python-Programm bzgl. des
+  Programmablaufs (dabei kannst du die Syntax für das Ein- und Ausgeben von
+  Daten ignorieren). Wie wird der gegenseitige Ausschluss der
+  ```SWI-Prolog fib/2```-Regeln gewährleistet?
+  ```py
+  def main():
+    print('Enter a number: ', end='')
+    n = int(input())
+    f = fib(n)
+    print(f'fib({n}) = {f}')
+    exit()
+
+  def fib(n):
+    if n == 0:
+      return 0
+    if n == 1:
+      return 1
+    if n > 1:
+      n1 = n - 1
+      n2 = n - 2
+      f1 = fib(n1)
+      f2 = fib(n2)
+      f = f1 + f2
+      return f
+  ```
+  Wenn vor dem Literal ```SWI-Prolog N > 1``` ein
+  ```SWI-Prolog writeln('fib')``` eingefügt wird, wie oft wird dann das Wort
+  `fib` ausgegeben und warum?
+]
+
 #check[
   Ich bin in der Lage, ...
   - das Berechnungs- und Ableitungsprinzip von Prolog informell zu erklären und
@@ -860,7 +914,8 @@ atomare Ausdrücke -- wenn nicht anders im Test oder in der Challenge eingeführ
 ]
 
 #test(level: 1)[
-  Was ist ein Unifikator? Was ist ein allgemeinster Unifikator?
+  Was ist ein Unifikator? Was ist ein allgemeinster Unifikator? Ist letzterer
+  eindeutig?
 ]
 
 #test(level: 1)[
@@ -1039,7 +1094,7 @@ atomare Ausdrücke -- wenn nicht anders im Test oder in der Challenge eingeführ
 Zu den am häufigsten gemachten Fehlern beim Angeben eines SLD-Baums ist die
 fehlerhafte Anwendung des Unifikationsalgorithmus.  Beim intuitiven Anwenden des
 Algorithmus suchen wir oftmals nur die Stellen in den Ausgangstermen, an denen
-Variablen auf Terme stoßen und vergessen, zuvor freie und bereits gebundene
+Variablen auf Terme stoßen und vergessen, zuvor freie durch bereits gebundene
 Variablen zu ersetzen. Als Unifikator für z.B. ```SWI-Prolog f(1, Y)``` und
 ```SWI-Prolog f(X, [X|R])``` wird oft $ sigma = { X |-> 1, Y |-> [X|R] } $
 angegeben. Das ist falsch, da
@@ -1048,9 +1103,10 @@ Auf der linken Seite könnten wir den Unifikator zwar erneut anwenden, um den
 korrekten Term zu erhalten, damit halten wir uns allerdings nicht an die
 Definition der Unifizierbarkeit.
 
-Wenn wir den Unifikationsalgorithmus auf die beiden Terme rigoros anwenden,
-sehen wir in der ersten Iterationen, dass der Teilterm $[X|R]$ nicht mehr in
-$sigma_1(t_2) = f(1,[1|R])$ vorkommt.
+Wenn wir den Unifikationsalgorithmus auf die beiden Terme Schritt für Schritt
+mit Zwischenergebnissen anwenden, sehen wir in der ersten Iterationen, dass der
+Teilterm $[X|R]$ nicht
+mehr in $sigma_1(t_2) = f(1,[1|R])$ vorkommt.
 #align(center)[
   #grid(
     columns: (auto, auto, auto, auto, auto),
@@ -1072,8 +1128,8 @@ gebunden wird, dann kann $X$ weder in $sigma_k (t_1)$ noch in $sigma_k (t_2)$
 vorkommen. Für dieses Beispiel bedeutet das, wenn wir kurz davor sind,
 $Y |-> [X|R]$ hinzuschreiben, sollten wir uns vergewissern, ob bereits gebundene
 Variablen auf der rechten Seite vorkommen (hier $X$) und entsprechend ersetzen
-(mit $1$). In einem anderen Fall können wir Variablen haben, die bereits an
-Terme gebunden sind aber noch freie Vorkommen von Variablen haben --
+(hier mit $1$). In einem anderen Fall können wir Variablen haben, die bereits
+an Terme gebunden sind aber noch freie Vorkommen von Variablen haben --
 betrachte z.B. $f(X, 1)$ und $f([Y|R], Y)$ mit
 ${Y |-> 1} compose {X |-> [Y|R]}$. Hier müssen wir andersherum schauen,
 ob die neue Belegung alte Belegungen verändert. Das geht aus der linken Menge
@@ -1086,9 +1142,9 @@ $
 
 Ein Unifikator $sigma$ erfüllt die Eigenschaft
 $ forall v |-> t in sigma : "Vars"(t) inter D(sigma) = emptyset "oder alternativ" sigma compose sigma = sigma. $ Es dürfen also auf den rechten Seiten keine Variablen vorkommen
-können, die durch den Unifikator selber gebunden werden. Solange diese
-Eigenschaft nicht erfüllt ist, müssen wir solche Vorkommen durch die Belegungen
-ersetzen. In @det_mgus findest du Beispiele zum Üben.
+, die durch den Unifikator selber gebunden werden. Solange diese Eigenschaft
+nicht erfüllt ist, müssen wir solche Vorkommen durch die Belegungen ersetzen.
+In @det_mgus findest du Beispiele zum Üben.
 
 // TODO fix
 //
@@ -1176,26 +1232,27 @@ $X$ die nächste linke Seite einer Klausel $X cd R_1, ..., R_m$ ($m >= 0$) mit
 $L_1$ unifizierbar ist, d.h., es existiert $phi = "Unifikator"(L_1, X)$, dann
 ersetzen wir das Literal $L_1$ mit der rechten Seite $R_1, ..., R_m$ und wenden
 auf die neu gewonnene Anfrage $R_1, ..., R_m, L_2, ..., L_n$ den Unifikator an,
-den wir aus der Unifikation des Literals mit der linken Seite erhalten, also
-$phi (R_1, ..., R_m, L_2, ..., L_n)$. Die umbenannte Klausel geben wir neben
-dem berechneten Unifikator als Teil der Kantenbeschriftung als Hilfestellung
-mit an. Wenn die Anfrage bewiesen ist, also die Anfrage aus keinem Literal mehr
-besteht ($qq .$), dann haben wir einen Beweis für die Anfrage gefunden und
-geben das zugehörige Ergebnis $sigma$ an. Das heißt, wir berechnen die
-Komposition der Unifikatoren von der Lösung bis zur Wurzel und schränken sie
-danach die freien Variable der ursprünglichen Anfrage ein. Wenn $A$ die zu
-beweisende Aussage ist und $phi_1, ..., phi_l$ Unifikatoren sind, die wir über
-die Resolutionsschritte von $A$ nach $qq .$ erhalten haben, dann ist die Lösung
-in dem Fall $sigma = (phi_l compose ... compose phi_1) |_("Vars"(A))$. Im
-anderen Fall führen wir weitere SLD-Resolutionsschritte durch. Wenn die Anfrage
-leer ist oder keine weiteren Klauseln zum betrachteten Literal passen,
-backtracken wir. Das heißt, wir betrachten die zuvor bearbeitete Anfrage erneut
-und versuchen, einen alternativen Beweis zu finden, indem wir alternative
-Resolutionsschritte auf Basis von bisher nicht ausprobierten Klausuren
-durchführen. So können wir z.B. zu der Zwischenanfrage $qq L_1, ..., L_n.$
-zurückkommen und finden neben der Klausel $X cd R_1, ..., R_m$ möglicherweise
-weitere passende Klauseln. Das ist hier angedeutet durch die rechteste Kante.
-Im anderen Fall backtracken wir weiter.
+den wir aus der Unifikation des Literals mit der linken Seite erhalten haben,
+also $phi (R_1, ..., R_m, L_2, ..., L_n)$. Die umbenannte Klausel geben wir
+neben dem berechneten Unifikator als Teil der Kantenbeschriftung als
+Hilfestellung mit an. Wenn die Anfrage bewiesen ist, also die Anfrage aus
+keinem Literal mehr besteht ($qq .$), dann haben wir einen Beweis für die
+Anfrage gefunden und geben das zugehörige Ergebnis $sigma$ an. Das heißt, wir
+berechnen die Komposition der Unifikatoren von der Lösung bis zur Wurzel und
+schränken sie danach die freien Variable der ursprünglichen Anfrage ein. Wenn
+$A$ die zu beweisende Aussage ist und $phi_1, ..., phi_l$ Unifikatoren sind,
+die wir über die Resolutionsschritte von $A$ nach $qq .$ erhalten haben, dann
+ist die Lösung in dem Fall
+$sigma = (phi_l compose ... compose phi_1) |_("Vars"(A))$. Im anderen Fall
+führen wir weitere SLD-Resolutionsschritte
+durch. Wenn die Anfrage leer ist oder keine weiteren Klauseln zum betrachteten
+Literal passen, backtracken wir. Das heißt, wir betrachten die zuvor
+bearbeitete Anfrage erneut und versuchen, einen alternativen Beweis zu finden,
+indem wir alternative Resolutionsschritte auf Basis von bisher nicht
+ausprobierten Klausuren durchführen. So können wir z.B. zu der Zwischenanfrage
+$qq L_1, ..., L_n.$ zurückkommen und finden neben der Klausel $X cd R_1, ...,
+R_m$ möglicherweise weitere passende Klauseln. Das ist hier angedeutet durch
+die rechteste Kante. Im anderen Fall backtracken wir weiter.
 
 Wenn das aktuelle Literal ein cut ist, dann betrachten wir im nächsten Schritt
 die Anfrage ohne den cut. Wichtig ist, dass das Beweisen des cuts dazu führt,
